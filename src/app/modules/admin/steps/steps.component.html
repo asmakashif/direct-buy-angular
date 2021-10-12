@@ -1,0 +1,224 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div class="bg-card">
+        <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
+            <div
+                class="
+                    flex flex-col
+                    sm:flex-row
+                    flex-auto
+                    sm:items-center
+                    min-w-0
+                    my-8
+                    sm:my-12
+                "
+            >
+                <!-- Avatar and name -->
+                <div class="flex flex-auto items-center min-w-0">
+                    <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
+                        <img
+                            class="w-full h-full object-cover"
+                            src="assets/images/avatars/brian-hughes.jpg"
+                        />
+                    </div>
+                    <div class="flex flex-col min-w-0 ml-4">
+                        <ng-container *transloco="let t">
+                            <div
+                                class="
+                                    text-2xl
+                                    md:text-5xl
+                                    font-semibold
+                                    tracking-tight
+                                    leading-7
+                                    md:leading-snug
+                                    truncate
+                                "
+                            >
+                                {{ t("welcome-back") }}, Brian!
+                            </div>
+                        </ng-container>
+                        <div class="flex items-center">
+                            <mat-icon
+                                class="icon-size-5"
+                                [svgIcon]="'heroicons_solid:bell'"
+                            ></mat-icon>
+                            <div
+                                class="ml-1.5 leading-6 truncate text-secondary"
+                            >
+                                You have 2 new messages and 15 new tasks
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Actions -->
+                <div class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3">
+                    <button
+                        class="fuse-mat-button-rounded bg-accent-700"
+                        mat-flat-button
+                        [color]="'accent'"
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:mail'"
+                        ></mat-icon>
+                        <span class="ml-2">Messages</span>
+                    </button>
+                    <button
+                        class="fuse-mat-button-rounded"
+                        mat-flat-button
+                        [color]="'primary'"
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:cog'"
+                        ></mat-icon>
+                        <span class="ml-2">Settings</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <div
+                class="
+                    flex flex-col
+                    m-8
+                    p-8
+                    pb-4
+                    bg-card
+                    rounded-2xl
+                    shadow
+                    overflow-hidden
+                "
+            >
+                <div class="step active">
+                    <h2 data-step-id="✓">Create Store</h2>
+                    <p>Congratulation store created successfully</p>
+                </div>
+                <div class="step" *ngIf="product_status == 0">
+                    <h2 data-step-id="2">Add Products</h2>
+                    <p>
+                        Direct-buy will provide you with limited information of
+                        products that Direct-Buy holds in its central database.
+                        Migrate your products from our central databse.
+                    </p>
+
+                    <button (click)="setUpProducts()">Add Product</button>
+                </div>
+                <div class="step active" *ngIf="product_status == 1">
+                    <h2 data-step-id="✓">Add Products</h2>
+                    <p>Congratulations on adding your products to your store</p>
+                </div>
+                <div class="step active" *ngIf="product_status == 0">
+                    <h2 data-step-id="3">Manage Products</h2>
+                    <p>
+                        You can view & edit your products once you select your
+                        products from step-2
+                    </p>
+                </div>
+                <div class="step active" *ngIf="product_status == 1">
+                    <h2 data-step-id="✓">Manage Products</h2>
+                    <p>
+                        You can view & edit your selected products by clicking
+                        on given link
+                    </p>
+                    <a href="javascript:void(0);" (click)="viewProducts()"
+                        >Manage Products</a
+                    >
+                </div>
+
+                <div class="step" *ngIf="payment_g_status == 0">
+                    <h2 data-step-id="4">Add Payment Gateway</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit. Quibusdam inventore quas, nisi cum laboriosam.
+                        Deserunt animi perferendis quidem, maxime, minima atque
+                        at est suscipit modi sit, aliquid perspiciatis! Vitae,
+                        magnam.
+                    </p>
+                    <button (click)="setUpPaymentGateway()">Add Payment</button>
+                </div>
+                <div class="step active" *ngIf="payment_g_status == 1">
+                    <h2 data-step-id="✓">Add Payment Gateway</h2>
+                    <p>Congratulations on adding your own payment gateway</p>
+                </div>
+                <div class="step" *ngIf="payment_status == 0">
+                    <h2 data-step-id="5">Choose Payment Option</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit. Quibusdam inventore quas, nisi cum laboriosam.
+                        Deserunt animi perferendis quidem, maxime, minima atque
+                        at est suscipit modi sit, aliquid perspiciatis! Vitae,
+                        magnam.
+                    </p>
+                    <button (click)="setUpPayment()">
+                        Choose Payment Option
+                    </button>
+                </div>
+                <div class="step active" *ngIf="payment_status == 1">
+                    <h2 data-step-id="✓">Payment Option for Store</h2>
+                    <p>Congratulations on adding your own payment</p>
+                </div>
+                <div class="step" *ngIf="productUpdate_status == 0">
+                    <h2 data-step-id="6">Summarize Details</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit. Quibusdam inventore quas, nisi cum laboriosam.
+                        Deserunt animi perferendis quidem, maxime, minima atque
+                        at est suscipit modi sit, aliquid perspiciatis! Vitae,
+                        magnam.
+                    </p>
+                    <button (click)="storeSummary()">Go there</button>
+                </div>
+                <div class="step active" *ngIf="productUpdate_status == 1">
+                    <h2 data-step-id="✓">Summarize Details</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit. Quibusdam inventore quas, nisi cum laboriosam.
+                        Deserunt animi perferendis quidem, maxime, minima atque
+                        at est suscipit modi sit, aliquid perspiciatis! Vitae,
+                        magnam.
+                    </p>
+                </div>
+                <div class="step active" *ngIf="productUpdate_status == 2">
+                    <h2 data-step-id="✓">Summarize Details</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit. Quibusdam inventore quas, nisi cum laboriosam.
+                        Deserunt animi perferendis quidem, maxime, minima atque
+                        at est suscipit modi sit, aliquid perspiciatis! Vitae,
+                        magnam.
+                    </p>
+                </div>
+                <div class="step">
+                    <h2 data-step-id="7">Activate Store</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit. Quibusdam inventore quas, nisi cum laboriosam.
+                        Deserunt animi perferendis quidem, maxime, minima atque
+                        at est suscipit modi sit, aliquid perspiciatis! Vitae,
+                        magnam.
+                    </p>
+                    <button (click)="storeActivae()">Activate</button>
+                </div>
+                <div class="step" *ngIf="shop_payment_status == 0">
+                    <h2 data-step-id="8">Complete the process!</h2>
+                    <p>Complete the process to access your store!!!</p>
+                </div>
+                <div class="step active" *ngIf="shop_payment_status == 1">
+                    <h2 data-step-id="✓">Done!</h2>
+                    <p>
+                        Congratulations Your store got created and URL of the
+                        store {{ this.data.domainname }}.direct-buy.in/{{
+                            this.data.shop_name
+                        }}
+                        can be provide to your customers to access your store.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

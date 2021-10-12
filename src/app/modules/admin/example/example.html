@@ -1,0 +1,61 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+        <!-- CONTENT GOES HERE -->
+        <div
+            class="
+                h-400
+                min-h-400
+                max-h-400
+                border-2 border-dashed border-gray-300
+                rounded-2xl
+            "
+        >
+            <p>Start editing to see some magic happen :)</p>
+
+            <p>material works!</p>
+
+            <mat-horizontal-stepper linear id="stepper">
+                <ng-template matStepperIcon="done" let-index="index">
+                    {{ (index + 1) * 10 }}
+                </ng-template>
+
+                <mat-step label="Step 1">
+                    <p>Step 1</p>
+                    <button
+                        mat-button
+                        (click)="complete()"
+                        mat-raised-button
+                        color="primary"
+                    >
+                        Complete
+                    </button>
+                </mat-step>
+
+                <mat-step label="Step 2">
+                    <h3>Step 2</h3>
+                    <button
+                        mat-button
+                        (click)="complete()"
+                        mat-raised-button
+                        color="primary"
+                    >
+                        Complete
+                    </button>
+                </mat-step>
+
+                <mat-step label="Step 3">
+                    <h3>Step 3</h3>
+                    <button
+                        mat-button
+                        (click)="complete()"
+                        mat-raised-button
+                        color="primary"
+                    >
+                        Complete
+                    </button>
+                </mat-step>
+            </mat-horizontal-stepper>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,178 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div class="bg-card">
+        <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
+            <div
+                class="
+                    flex flex-col
+                    sm:flex-row
+                    flex-auto
+                    sm:items-center
+                    min-w-0
+                    my-8
+                    sm:my-12
+                "
+            >
+                <!-- Avatar and name -->
+                <div class="flex flex-auto items-center min-w-0">
+                    <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
+                        <img
+                            class="w-full h-full object-cover"
+                            src="assets/images/avatars/brian-hughes.jpg"
+                        />
+                    </div>
+                    <div class="flex flex-col min-w-0 ml-4">
+                        <ng-container *transloco="let t">
+                            <div
+                                class="
+                                    text-2xl
+                                    md:text-5xl
+                                    font-semibold
+                                    tracking-tight
+                                    leading-7
+                                    md:leading-snug
+                                    truncate
+                                "
+                            >
+                                {{ t("welcome-back") }}, Brian!
+                            </div>
+                        </ng-container>
+                        <div class="flex items-center">
+                            <mat-icon
+                                class="icon-size-5"
+                                [svgIcon]="'heroicons_solid:bell'"
+                            ></mat-icon>
+                            <div
+                                class="ml-1.5 leading-6 truncate text-secondary"
+                            >
+                                You have 2 new messages and 15 new tasks
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Actions -->
+                <div class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3">
+                    <button
+                        class="fuse-mat-button-rounded bg-accent-700"
+                        mat-flat-button
+                        [color]="'accent'"
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:mail'"
+                        ></mat-icon>
+                        <span class="ml-2">Messages</span>
+                    </button>
+                    <button
+                        class="fuse-mat-button-rounded"
+                        mat-flat-button
+                        [color]="'primary'"
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:cog'"
+                        ></mat-icon>
+                        <span class="ml-2">Settings</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <div
+                class="
+                    flex flex-col
+                    m-8
+                    p-8
+                    pb-4
+                    bg-card
+                    rounded-2xl
+                    shadow
+                    overflow-hidden
+                "
+            >
+                <div *ngIf="this.data.shop_payment_status == 0">
+                    <div class="row">
+                        <div
+                            class="col-md-6"
+                            *ngIf="this.data.trail_activate == 0"
+                        >
+                            <span>
+                                <strong>
+                                    You are eligible for free trial
+                                </strong>
+                            </span>
+                            <br />
+                            <a
+                                href="javascript:void(0);"
+                                (click)="activateTrial(this.data.shopId)"
+                                class="btn btn-primary"
+                                onclick="return confirm('Are you sure to activate trial period of 3months?')?true:false;"
+                                >Activate 3 months Trial</a
+                            >
+                        </div>
+                        <div
+                            class="col-md-6"
+                            *ngIf="this.data.trail_activate == 1"
+                        >
+                            <button
+                                id="button1"
+                                type="button"
+                                class="btn btn-info"
+                                data-toggle="modal"
+                                data-target="#activate"
+                            >
+                                Activate
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="this.data.shop_payment_status == 1">
+                    <span>
+                        <strong
+                            >Congratulations Your store got created and URL of
+                            the store
+                            <a target="_blank"
+                                >{{ this.data.domainname }}.direct-buy.in/{{
+                                    this.data.shop_name
+                                }}</a
+                            >
+                            can be provide to your customers to access your
+                            store.
+                        </strong>
+                    </span>
+                </div>
+                <!-- <form [formGroup]="storeCheckoutForm" autocomplete="off">
+                    <div class="form-group">
+                        <label for="shop_name"><b>Shop Name:</b></label>
+                        <input
+                            type="text"
+                            formControlName="shop_name"
+                            placeholder="Shop name"
+                            name="shop_name"
+                            id="shop_name"
+                            class="form-control"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <input
+                            type="text"
+                            formControlName="shopId"
+                            placeholder="shopId"
+                            name="shopId"
+                            id="shopId"
+                            class="form-control"
+                        />
+                    </div>
+                    &nbsp;
+                    <button (click)="payWithRazor()" class="btn btn-success">
+                        Pay
+                    </button>
+                </form> -->
+            </div>
+        </div>
+    </div>
+</div>

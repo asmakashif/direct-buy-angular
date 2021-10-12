@@ -1,0 +1,224 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div class="bg-card">
+        <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
+            <div
+                class="
+                    flex flex-col
+                    sm:flex-row
+                    flex-auto
+                    sm:items-center
+                    min-w-0
+                    my-8
+                    sm:my-12
+                "
+            >
+                <!-- Avatar and name -->
+                <div class="flex flex-auto items-center min-w-0">
+                    <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
+                        <img
+                            class="w-full h-full object-cover"
+                            src="assets/images/avatars/brian-hughes.jpg"
+                        />
+                    </div>
+                    <div class="flex flex-col min-w-0 ml-4">
+                        <ng-container *transloco="let t">
+                            <div
+                                class="
+                                    text-2xl
+                                    md:text-5xl
+                                    font-semibold
+                                    tracking-tight
+                                    leading-7
+                                    md:leading-snug
+                                    truncate
+                                "
+                            >
+                                {{ t("welcome-back") }}, Brian!
+                            </div>
+                        </ng-container>
+                        <div class="flex items-center">
+                            <mat-icon
+                                class="icon-size-5"
+                                [svgIcon]="'heroicons_solid:bell'"
+                            ></mat-icon>
+                            <div
+                                class="ml-1.5 leading-6 truncate text-secondary"
+                            >
+                                You have 2 new messages and 15 new tasks
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Actions -->
+                <div class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3">
+                    <button
+                        class="fuse-mat-button-rounded bg-accent-700"
+                        mat-flat-button
+                        [color]="'accent'"
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:mail'"
+                        ></mat-icon>
+                        <span class="ml-2">Messages</span>
+                    </button>
+                    <button
+                        class="fuse-mat-button-rounded"
+                        mat-flat-button
+                        [color]="'primary'"
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:cog'"
+                        ></mat-icon>
+                        <span class="ml-2">Settings</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <!-- Tabs -->
+
+            <!-- <nav mat-tab-nav-bar>
+                <a mat-tab-link label="StoreConfiguration">
+                    Store Configuration
+                </a>
+                <a mat-tab-link label="ProductConfiguration">
+                    Product Configuration
+                </a>
+                <a mat-tab-link label="ProductInformation">
+                    Product Information
+                </a>
+
+                <a
+                    mat-tab-link
+                    (click)="(activeLink)"
+                    [active]="activeLink"
+                    label="StoreSummmary"
+                >
+                    Store Summary
+                </a>
+            </nav> -->
+            <div
+                class="
+                    flex flex-col
+                    m-8
+                    p-8
+                    bg-card
+                    rounded-2xl
+                    shadow
+                    overflow-hidden
+                "
+            >
+                <div class="row">
+                    <div class="col-md-3">
+                        <span><strong>Store Name :</strong></span>
+                    </div>
+                    <div class="col-md-9">{{ this.data.shop_name }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <span><strong>Store Address :</strong></span>
+                    </div>
+                    <div class="col-md-9">{{ this.data.shop_address }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <span><strong>Store Type : </strong></span>
+                    </div>
+                    <div class="col-md-9">
+                        Super Market | Franchisee | Hypermarket |
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <span><strong>Store Unique Code : </strong></span>
+                    </div>
+                    <div class="col-md-9">{{ this.data.shopId }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <span><strong>No of Products : </strong></span>
+                    </div>
+                    <div class="col-md-9">{{ this.countProduct }}</div>
+                </div>
+                <div class="col-md-10">
+                    <span
+                        ><strong
+                            >Do you wish to get updates of products added to our
+                            central repository? You can add products from here
+                            to your store</strong
+                        ></span
+                    >
+                </div>
+                <form [formGroup]="summaryForm" (ngSubmit)="onSubmit()">
+                    <div class="row">
+                        <div
+                            class="col-md-2"
+                            *ngIf="this.data.productUpdate_status == 1"
+                        >
+                            <input
+                                type="checkbox"
+                                id="one"
+                                value="1"
+                                name="productUpdate_status"
+                                (change)="onProductUpdateSelect($event)"
+                                [checked]="this.data.productUpdate_status"
+                            />
+                            Yes
+                        </div>
+                        <div
+                            class="col-md-2"
+                            *ngIf="this.data.productUpdate_status != 1"
+                        >
+                            <input
+                                type="checkbox"
+                                id="one"
+                                value="1"
+                                name="productUpdate_status"
+                                (change)="onProductUpdateSelect($event)"
+                            />
+                            Yes
+                        </div>
+                        <div
+                            class="col-md-2"
+                            *ngIf="this.data.productUpdate_status == 2"
+                        >
+                            <input
+                                type="checkbox"
+                                id="one"
+                                value="2"
+                                name="productUpdate_status"
+                                (change)="onProductUpdateSelect($event)"
+                                [checked]="this.data.productUpdate_status"
+                            />
+                            No
+                        </div>
+                        <div
+                            class="col-md-2"
+                            *ngIf="this.data.productUpdate_status != 2"
+                        >
+                            <input
+                                type="checkbox"
+                                id="one"
+                                value="2"
+                                name="productUpdate_status"
+                                (change)="onProductUpdateSelect($event)"
+                            />
+                            No
+                        </div>
+                    </div>
+                    <br />
+                    <button class="btn btn-success" style="width: 100px">
+                        Save
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
