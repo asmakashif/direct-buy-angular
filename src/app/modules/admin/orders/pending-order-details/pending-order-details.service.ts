@@ -11,13 +11,25 @@ export class PendingOrderDetailsService {
 
     getPendingOrderById(order_code: string): Observable<ApiResponse> {
         return this._http.get<ApiResponse>(
-            '/api/orderDetailsById.php?order_code=' + order_code
+            '/api/orders/orderDetailsById.php?order_code=' + order_code
         );
     }
 
     getPendingOrderDetails(order_code: string): Observable<ApiResponse> {
         return this._http.get<ApiResponse>(
-            '/api/orderDetails.php?order_code=' + order_code
+            '/api/orders/orderDetails.php?order_code=' + order_code
+        );
+    }
+
+    updateOrderStatus(
+        order_code: string,
+        shopId: string
+    ): Observable<ApiResponse> {
+        return this._http.get<ApiResponse>(
+            '/api/orders/updateOrderStatus.php?order_code=' +
+                order_code +
+                '&shopId=' +
+                shopId
         );
     }
 }

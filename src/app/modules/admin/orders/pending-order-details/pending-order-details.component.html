@@ -109,7 +109,11 @@
                         {{ this.orderDetailsById.c_fname }}
                     </div>
                 </div>
-                <table mat-table [dataSource]="dataSource">
+                <table
+                    mat-table
+                    [dataSource]="dataSource"
+                    class="table table-responsive"
+                >
                     <ng-container matColumnDef="product_name">
                         <th mat-header-cell *matHeaderCellDef>Product Name</th>
                         <td mat-cell *matCellDef="let element">
@@ -157,7 +161,10 @@
                 </div>
                 <div class="row">
                     <div class="example-button-row">
-                        <button mat-button color="primary">
+                        <button
+                            class="btn btn-success"
+                            (click)="orderComplete()"
+                        >
                             Order Complete
                         </button>
                     </div>

@@ -43,4 +43,14 @@ export class PendingOrderDetailsComponent implements OnInit {
                 console.log(this.dataSource);
             });
     }
+
+    orderComplete(): void {
+        const routeParams = this.routes.snapshot.params;
+        console.log(routeParams);
+        this.apiService
+            .updateOrderStatus(routeParams.order_code, routeParams.shopId)
+            .subscribe((data) => {
+                this._router.navigate(['dashboard']);
+            });
+    }
 }

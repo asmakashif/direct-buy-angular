@@ -17,8 +17,10 @@ export class CompletedOrdersComponent implements OnInit {
         'order_placed_date',
     ];
     // dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-    dataSource: [];
+
     @ViewChild(MatPaginator) paginator: MatPaginator;
+
+    dataSource: any;
     constructor(
         private apiService: CompletedOrdersService,
         private _router: Router,
@@ -26,11 +28,13 @@ export class CompletedOrdersComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.apiService.getCompletedOrders().subscribe((dataSource) => {
-            // Store the data
-            this.dataSource = dataSource;
-            console.log(this.dataSource);
-        });
+        const routeParams = this.routes.snapshot.params;
+        this.apiService
+            .getCompletedOrdersByStore(routeParams.shopId)
+            .subscribe((completedOrdersByStr) => {
+                this.dataSource = completedOrdersByStr;
+                console.log(this.dataSource);
+            });
     }
 
     completedOrderByCode(order_code): void {

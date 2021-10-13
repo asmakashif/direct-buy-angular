@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 12, 2021 at 11:33 AM
+-- Generation Time: Oct 13, 2021 at 01:00 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -2913,12 +2913,12 @@ CREATE TABLE `order_items` (
 --
 
 INSERT INTO `order_items` (`id`, `order_code`, `customer_id`, `product_name`, `product_id`, `product_qty`, `product_price`, `product_subtotal`, `total`, `c_fname`, `c_lname`, `c_mobile`, `c_address1`, `c_address2`, `city`, `pincode`, `shop_name`, `shopId`, `discount`, `tax`, `order_status`, `order_placed_date`) VALUES
-(1, 'A000000', 1, 'Protien drink', '11', 1, 200, 200, 200, 'Soundarya', 'D', 2147483647, 'House', 'Sadhana building,Uday nagar', 'Dharwad', 580008, 'generalstore', 'zaSBHA', 0, 0, 0, '2021-07-24 16:34:36'),
-(2, 'A000000', 1, 'Protien drink1', '12', 1, 200, 200, 200, 'Soundarya', 'D', 2147483647, 'House', 'Sadhana building,Uday nagar', 'Dharwad', 580008, 'generalstore', 'zaSBHA', 0, 0, 0, '2021-07-24 16:34:42'),
-(3, 'A000002', 1, 'Protien drink', '67', 3, 200, 600, 600, 'Soundarya', 'D', 2147483647, 'House', 'Sadhana building,Uday nagar', 'Dharwad', 580008, 'DMart', 'FrmF2S', 0, 0, 0, '2021-07-25 16:34:47'),
-(4, 'A000003', 1, 'Protien drink', '68', 4, 220, 220, 676, 'Soundarya', 'D', 2147483647, 'House', 'Sadhana building,Uday nagar', 'Dharwad', 580008, 'DMart', 'FrmF2S', 0, 0, 0, '2021-07-24 16:34:52'),
-(5, 'A000004', 1, 'Protien drink', '69', 4, 200, 196, 676, 'Soundarya', 'D', 2147483647, 'House', 'Sadhana building,Uday nagar', 'Dharwad', 580008, 'DMart', 'FrmF2S', 0, 0, 0, '2021-07-24 16:34:52'),
-(6, 'A000004', 1, 'Protien drink', '70', 4, 200, 260, 676, 'Soundarya', 'D', 2147483647, 'House', 'Sadhana building,Uday nagar', 'Dharwad', 580008, 'DMart', 'HYSThA', 0, 0, 0, '2021-07-24 16:34:52');
+(1, 'A000000', 1, 'Protien drink', '563', 1, 200, 200, 200, 'Soundarya', 'D', 2147483647, 'House', 'Sadhana building,Uday nagar', 'Dharwad', 580008, 'generalstore', 'i3s6wp', 0, 0, 0, '2021-09-01 16:34:36'),
+(2, 'A000000', 1, 'Protien drink1', '563', 1, 200, 200, 200, 'Soundarya', 'D', 2147483647, 'House', 'Sadhana building,Uday nagar', 'Dharwad', 580008, 'generalstore', 'i3s6wp', 0, 0, 0, '2021-09-01 16:34:42'),
+(3, 'A000002', 1, 'Protien drink', '563', 3, 200, 600, 600, 'Soundarya', 'D', 2147483647, 'House', 'Sadhana building,Uday nagar', 'Dharwad', 580008, 'DMart', 'i3s6wp', 0, 0, 0, '2021-09-08 16:34:47'),
+(4, 'A000003', 1, 'Protien drink', '563', 4, 220, 220, 676, 'Soundarya', 'D', 2147483647, 'House', 'Sadhana building,Uday nagar', 'Dharwad', 580008, 'DMart', 'i3s6wp', 0, 0, 1, '2021-09-06 16:34:52'),
+(5, 'A000004', 1, 'Protien drink', '564', 4, 200, 196, 676, 'Soundarya', 'D', 2147483647, 'House', 'Sadhana building,Uday nagar', 'Dharwad', 580008, 'DMart', 'i4r7wq', 0, 0, 1, '2021-09-09 16:34:52'),
+(6, 'A000004', 1, 'Protien drink', '565', 4, 200, 260, 676, 'Soundarya', 'D', 2147483647, 'House', 'Sadhana building,Uday nagar', 'Dharwad', 580008, 'DMart', 'i4r7wq', 0, 0, 1, '2021-09-09 16:34:52');
 
 -- --------------------------------------------------------
 
@@ -3048,8 +3048,8 @@ INSERT INTO `shop_details` (`shop_id`, `user_id`, `shopId`, `shop_name`, `shop_t
 (5, 5, 'HYSThA', 'GraceMedical', '', '0', 'gfhfgjnh', '', '', 2999, 'pay_HhSZ8qzRI3cyWa', '2021-07-23 18:06:01', '2021-10-23 18:06:01', 1, 0, 0, 'GraceMedical', '2021-07-23', '2021-08-14 14:28:58', 0, 1, '', 1, 1, 0, 0, 0, 0),
 (6, 5, 'gTQpZW', 'HealthMart', '', '0', 'Mumbai', '', '', 0, '', NULL, NULL, 0, 1, 0, 'HealthMart', '2021-07-30', NULL, 0, 1, 'Uploaded from base DB', 1, 0, 0, 0, 0, 0),
 (7, 5, 'utRsrD', 'General', '', '0', 'vxhgfb', '', '', 0, '', '2021-08-05 20:28:29', '2021-11-05 20:28:29', 1, 0, 0, 'General', '2021-08-05', NULL, 1, 1, '', 1, 1, 0, 0, 0, 0),
-(54, 12, 'i3s6wp', 'Asma', '', '3,', 'JP Nagar', '', '', 0, '', NULL, NULL, 0, 0, 1, '', '0000-00-00', NULL, 0, 0, '', 1, 0, 4, 0, 4, 0),
-(55, 12, 'i4r7wq', 'test', '', '', 'test', '', '', 0, '', NULL, NULL, 0, 1, 1, '', '0000-00-00', NULL, 0, 1, '', 2, 0, 4, 0, 4, 0);
+(54, 12, 'i3s6wp', 'Asma', '', '3,', 'JP Nagar', '', '', 0, '', NULL, NULL, 0, 0, 1, '', '0000-00-00', NULL, 0, 0, '', 1, 0, 3, 1, 2, 0),
+(55, 12, 'i4r7wq', 'test', '', '', 'test', '', '', 0, '', NULL, NULL, 0, 1, 1, '', '0000-00-00', NULL, 0, 1, '', 2, 0, 1, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -3318,7 +3318,7 @@ INSERT INTO `temp_str_config` (`temp_str_config_id`, `user_id`, `temp_shopId`, `
 (222, 0, 'i4r7wq', 'Bakery Products Birthday Party CakesFreshoSignature Fruit Tea Cake,Fruit Tea CakeNA100GM', 'Bakery Products ', 'Birthday Party Cakes', 'Fresho', 'Signature Fruit Tea Cake,', 'Fruit Tea Cake', 'NA', '', 100, 'GM', 1, 79, 79, '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
 (223, 0, 'i4r7wq', 'Bakery Products Birthday Party CakesFreshoSignature Tea Cake - Blueberry CrumbleBlueberry CrumbleNA250GM', 'Bakery Products ', 'Birthday Party Cakes', 'Fresho', 'Signature Tea Cake - Blueberry Crumble', 'Blueberry Crumble', 'NA', '', 250, 'GM', 1, 209, 209, '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
 (224, 0, 'i4r7wq', 'Bakery Products Birthday Party CakesFreshoSignature Rainbow CakeRainbow CakeNA200GM', 'Bakery Products ', 'Birthday Party Cakes', 'Fresho', 'Signature Rainbow Cake', 'Rainbow Cake', 'NA', '', 200, 'GM', 1, 425, 299, '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
-(563, 0, 'i3s6wp', 'Bakery Products Bakery snackFreshoSignature Jeera Bread SticksJeera Bread Sticks,NA100GM', 'Bakery Products ', 'Bakery snack', 'Fresho', 'Signature Jeera Bread Sticks', 'Jeera Bread Sticks,', 'NA', '', 100, 'GM', 1, 59, 54, '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
+(563, 12, 'i3s6wp', 'Bakery Products Bakery snackFreshoSignature Jeera Bread SticksJeera Bread Sticks,NA100GM', 'Bakery Products ', 'Bakery snack', 'Fresho', 'Signature Jeera Bread Sticks', 'Jeera Bread Sticks,', 'NA', '', 100, 'GM', 1, 59, 54, '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
 (564, 0, 'i3s6wp', 'Bakery Products Bakery snacksFreshoSignature Lavash - SpinachSpinachNA100GM', 'Bakery Products ', 'Bakery snacks', 'Fresho', 'Signature Lavash - Spinach', 'Spinach', 'NA', '', 100, 'GM', 1, 65, 59, '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
 (565, 0, 'i3s6wp', 'Bakery Products Bakery snacksFreshoSignature Lavash - BeetrootBeetrootNA100GM', 'Bakery Products ', 'Bakery snacks', 'Fresho', 'Signature Lavash - Beetroot', 'Beetroot', 'NA', '', 100, 'GM', 1, 65, 59, '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
 (566, 0, 'i3s6wp', 'Bakery Products Bakery snacksFreshoSignature Cinnamon SticksBread -SticksNA100GM', 'Bakery Products ', 'Bakery snacks', 'Fresho', 'Signature Cinnamon Sticks', 'Bread -Sticks', 'NA', '', 100, 'GM', 1, 49, 44, '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),

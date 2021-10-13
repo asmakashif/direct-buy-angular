@@ -16,9 +16,9 @@ export class PendingOrdersComponent implements OnInit {
         'total',
         'order_placed_date',
     ];
-    // dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-    dataSource: [];
+
     @ViewChild(MatPaginator) paginator: MatPaginator;
+    dataSource: any;
     constructor(
         private apiService: PendingOrdersService,
         private _router: Router,
@@ -26,11 +26,14 @@ export class PendingOrdersComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.apiService.getPendingOrders().subscribe((dataSource) => {
-            // Store the data
-            this.dataSource = dataSource;
-            console.log(this.dataSource);
-        });
+        const routeParams = this.routes.snapshot.params;
+
+        this.apiService
+            .getPendingOrdersByStore(routeParams.shopId)
+            .subscribe((pendingOrdersByStr) => {
+                this.dataSource = pendingOrdersByStr;
+                console.log(this.dataSource);
+            });
     }
 
     pendingOrderByCode(order_code): void {

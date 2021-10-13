@@ -11,13 +11,13 @@ export class CompletedOrderDetailsService {
 
     getCompletedOrderById(order_code: string): Observable<ApiResponse> {
         return this._http.get<ApiResponse>(
-            '/api/orderDetailsById.php?order_code=' + order_code
+            '/api/orders/orderDetailsById.php?order_code=' + order_code
         );
     }
 
     getCompletedOrderDetails(order_code: string): Observable<ApiResponse> {
         return this._http.get<ApiResponse>(
-            '/api/orderDetails.php?order_code=' + order_code
+            '/api/orders/orderDetails.php?order_code=' + order_code
         );
     }
 }
