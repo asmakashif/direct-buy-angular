@@ -20,4 +20,10 @@ export class DashboardService {
     getNoOfShops(): Observable<any> {
         return this._httpClient.get('/api/countShops.php');
     }
+
+    getPrevMonthOrders(shopId: string): Observable<any> {
+        return this._httpClient.get(
+            '/api/getPrevMonthOrders.php?shopId=' + shopId
+        );
+    }
 }

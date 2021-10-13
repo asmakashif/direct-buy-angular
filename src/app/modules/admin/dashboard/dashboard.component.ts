@@ -23,6 +23,7 @@ export class DashboardComponent {
     countOrders: any;
     queryParam: any;
     queryParamName: string;
+    prevMonthOrdercount: any;
 
     constructor(
         private _dashboardService: DashboardService,
@@ -31,6 +32,7 @@ export class DashboardComponent {
     ) {}
 
     ngOnInit(): void {
+        const routeParams = this.routes.snapshot.params;
         // Get the data
         this._dashboardService.getShops().subscribe((data: any) => {
             // Store the data
@@ -48,10 +50,7 @@ export class DashboardComponent {
             });
 
         this._dashboardService.getNoOfShops().subscribe((count) => {
-            // Store the data
             this.count = count;
-
-            //console.log(this.count);
         });
 
         this.routes.paramMap.subscribe((params) => {
@@ -59,6 +58,13 @@ export class DashboardComponent {
             this.queryParamName = params.get('shop_name');
             console.log(params);
         });
+
+        this._dashboardService
+            .getPrevMonthOrders(routeParams.shopId)
+            .subscribe((prevMonthOrdercount) => {
+                this.prevMonthOrdercount = prevMonthOrdercount;
+                console.log(this.prevMonthOrdercount);
+            });
     }
 
     changeStore(stores): void {
@@ -66,6 +72,7 @@ export class DashboardComponent {
         this._router.navigate([
             'dashboard/' + stores.shopId + '/' + stores.shop_name,
         ]);
+        // window.location.reload();
     }
 
     dashbaord(): void {
