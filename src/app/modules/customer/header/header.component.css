@@ -1,0 +1,120 @@
+.navbar-color {
+  background-color: rgba(255, 255, 255, 0.918);
+}
+
+.navbar-color1 {
+  background-color: #0a472e;
+  /* max-width: 1350px; */
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  padding-left: 30px;
+  padding-right: 30px;
+  margin: auto;
+  color: #fff;
+  height: 80px;
+}
+
+.navbar-color1 ul li a {
+  color: #fff;
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-size: 1rem;
+}
+
+.search-form {
+  background-color: rgb(164, 175, 175);
+  border-radius: 50px;
+  width: 400px;
+  height: 60px;
+  text-align: left;
+  font-size: bold;
+  color: #000;
+}
+
+.shopbydepartment {
+  font-size: 14px;
+  color: #fff;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  height: 100%;
+  cursor: pointer;
+  padding: 12px 35px;
+  padding-top: 14px;
+  background-color: #80891b;
+  border-radius: 30px;
+}
+
+.search-button {
+  width: 100px;
+  height: 60px;
+  border-radius: 40px;
+}
+
+#faHeadset {
+  font-size: 3.2em;
+  color: #000;
+}
+
+#fabar {
+  padding-right: 10px;
+}
+
+#faSearch {
+  font-size: 1.2em;
+  color: red;
+}
+/* .bi-search{} */
+.search-box {
+  position: relative;
+}
+
+.search-box-placeholder-wrapper {
+  pointer-events: none;
+  position: absolute;
+  left: 20%;
+  transform: translateX(-50%);
+  top: 15px;
+}
+
+.search-box-input:focus + .search-box-placeholder-wrapper {
+  display: none;
+}
+
+#icon {
+  font-size: x-large;
+  color: #000;
+  margin: 20px;
+  top: 30%;
+}
+
+.contact {
+  display: block;
+}
+
+.contact-content {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: baseline;
+  -webkit-align-items: baseline;
+  align-items: baseline;
+}
+
+.contact-content h1 {
+  font-size: 1.2rem;
+}
+
+.link-color a {
+  color: #0a472e;
+}

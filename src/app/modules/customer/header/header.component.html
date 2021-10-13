@@ -1,0 +1,71 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body> -->
+  <nav class="navbar navbar-expand-lg navbar-color   hide">
+    <div class="container">
+      <div class="d-flex bd-highlight">
+        <div class="p-2 flex-fill bd-highlight">
+      <a style="margin-right:100px;"><img src="./assets/images/logo_new.png" style="width:100px;"></a></div>
+      <div class="collapse navbar-collapse " id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <div class="p-2 flex-fill bd-highlight">  
+          <form class="d-flex navbar-left" style="margin-right:200px;">
+                <div class="search-box">
+                <input class="form-control me-2  search-form" type="search"   aria-label="Search" results="0" > 
+                <div class="search-box-placeholder-wrapper">
+                  <fa-icon [icon]="faSearch" class="search-box-placeholder"></fa-icon>
+                  <span>&nbsp;Search products...</span>
+                </div>
+              </div>
+              </form></div>
+              <div class="p-2 flex-fill bd-highlight">
+              <div class="d-flex flex-row bd-highlight  mb-1 justify-content-end">
+          <li class="nav-item link-color">
+            <a class="nav-link active contact" aria-current="page" href="#">
+            <div class="contact-content">
+              <div class="d-flex flex-row bd-highlight mb-1">
+                <div class="p-2 bd-highlight"> <fa-icon id="faHeadset" [icon]="faHeadset"></fa-icon></div>
+                <div class="p-2 bd-highlight">
+                <h1>CALL US 24/7</h1>
+           <p>+91-9886523141</p> </div>
+          </div> 
+             </div></a>
+          </li>
+          <li class="nav-item " style="margin-top: 8%;"> <a routerLink="/login"><fa-icon id="icon" [icon]="faUser"></fa-icon></a> </li>
+          <li class="nav-item " style="margin-top: 8%;"><fa-icon id="icon" [icon]="faHeart"></fa-icon></li>
+          <li class="nav-item " style="margin-top: 8%;"> <fa-icon id="icon" [icon]="faShoppingBasket"></fa-icon></li>
+          </div></div>
+        </ul>
+      </div>
+    </div>
+  </div>
+  </nav>
+  <nav class="navbar navbar-expand-lg  navbar-color1 hide">
+    <div class="container ">
+      <div class="collapse navbar-collapse" id="">
+        <button class="shopbydepartment" style="width: 250px;padding:18px;border-radius: 50px;"> <fa-icon [icon]="faBars" id="fabar"></fa-icon>Shop By Department</button>
+        <ul class="nav justify-content-center" >
+
+          <li class="nav-item " >
+            <a class="nav-link" href="#">Home</a>
+          </li>
+          <li class="nav-item " >
+            <a class="nav-link" href="#">Products</a>
+          </li>
+          <li class="nav-item " >
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item " >
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav> 
+<app-navbar></app-navbar>

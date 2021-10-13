@@ -7,7 +7,7 @@ import { InitialDataResolver } from 'app/app.resolvers';
 // @formatter:off
 // tslint:disable:max-line-length
 export const appRoutes: Route[] = [
-    { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+    { path: '', pathMatch: 'full', redirectTo: 'home' },
 
     {
         path: 'signed-in-redirect',
@@ -278,6 +278,21 @@ export const appRoutes: Route[] = [
                     import(
                         'app/modules/admin/mobile/product-info/product-info.module'
                     ).then((m) => m.ProductInfoModule),
+            },
+        ],
+    },
+
+    //Customer Routes
+    {
+        path: '',
+
+        children: [
+            {
+                path: 'home',
+                loadChildren: () =>
+                    import('app/modules/customer/home/home.module').then(
+                        (m) => m.HomeModule
+                    ),
             },
         ],
     },

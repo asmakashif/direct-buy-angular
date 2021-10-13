@@ -1,0 +1,13 @@
+/* .text-center {
+  text-align: center;
+  justify-content: center;
+} */
+
+.navbar-nav li {
+  list-style: none;
+  display: inline-block;
+  /* text-align: end; */
+  padding: 10px;
+  font-size: medium;
+  color: black;
+}
