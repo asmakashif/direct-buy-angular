@@ -23,6 +23,7 @@ import { HotTableModule } from '@handsontable/angular';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { NgxBootstrapMultiselectModule } from 'ngx-bootstrap-multiselect';
 import 'handsontable/dist/handsontable.min.css';
 import 'pikaday/css/pikaday.css';
 import { ProductConfigComponent } from 'app/modules/admin/mobile/product-config/product-config.component';
@@ -62,6 +63,7 @@ const productConfigRoutes: Route[] = [
         MatPaginatorModule,
         NgbModule,
         NgSelectModule,
+        NgxBootstrapMultiselectModule,
         NgMultiSelectDropDownModule.forRoot(),
     ],
 })

@@ -15,6 +15,7 @@ export class StepsComponent implements OnInit {
     payment_g_status: any;
     productUpdate_status: any;
     shop_payment_status: any;
+    firstname: string;
     constructor(
         private _stepsService: StepsService,
         private _router: Router,
@@ -23,8 +24,10 @@ export class StepsComponent implements OnInit {
 
     ngOnInit() {
         const routeParams = this.routes.snapshot.params;
+        const user_id = localStorage.getItem('user_id');
+        this.firstname = localStorage.getItem('firstname');
         this._stepsService
-            .getShopDetailsById(routeParams.shopId)
+            .getShopDetailsById(routeParams.shopId, user_id)
             .subscribe((data: any) => {
                 this.data = data;
                 this.product_status = this.data.product_status;

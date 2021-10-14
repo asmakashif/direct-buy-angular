@@ -9,9 +9,15 @@ import { Observable } from 'rxjs';
 export class StepsService {
     constructor(private _httpClient: HttpClient) {}
 
-    getShopDetailsById(shopId: string): Observable<ApiResponse> {
+    getShopDetailsById(
+        shopId: string,
+        user_id: string
+    ): Observable<ApiResponse> {
         return this._httpClient.get<ApiResponse>(
-            '/api/getShopDetailsById.php?shopId=' + shopId
+            '/api/getShopDetailsById.php?shopId=' +
+                shopId +
+                '&user_id=' +
+                user_id
         );
     }
 }

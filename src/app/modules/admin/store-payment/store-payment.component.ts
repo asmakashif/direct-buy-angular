@@ -28,13 +28,16 @@ export class StorePaymentComponent implements OnInit {
     ngOnInit(): void {
         const routeParams = this.routes.snapshot.params;
         const shopId = routeParams.shopId;
-        this.apiService.getPaymentData(shopId).subscribe((payment: any) => {
-            this.payment = payment;
-            console.log(this.payment);
-        });
+        const user_id = localStorage.getItem('user_id');
+        this.apiService
+            .getPaymentData(shopId, user_id)
+            .subscribe((payment: any) => {
+                this.payment = payment;
+                console.log(this.payment);
+            });
         this.paymentForm = this.formBuilder.group({
+            user_id: [user_id],
             shopId: [shopId],
-            //provider_type: this.formBuilder.array([], [Validators.required]),
             payment_name: this.formBuilder.array([], [Validators.required]),
         });
     }
