@@ -24,6 +24,8 @@ export class DashboardComponent {
     queryParam: any;
     queryParamName: string;
     prevMonthOrdercount: any;
+    accessToken: string;
+    user_id: string;
 
     constructor(
         private _dashboardService: DashboardService,
@@ -32,24 +34,17 @@ export class DashboardComponent {
     ) {}
 
     ngOnInit(): void {
+        this.accessToken = localStorage.getItem('accessToken');
+        const user_id = localStorage.getItem('user_id');
+        if (!this.accessToken) {
+            this._router.navigate(['sign-in']);
+        }
         const routeParams = this.routes.snapshot.params;
-        // Get the data
-        this._dashboardService.getShops().subscribe((data: any) => {
-            // Store the data
+        this._dashboardService.getShops(user_id).subscribe((data: any) => {
             this.data = data;
-            console.log(this.data);
         });
 
-        this._dashboardService
-            .getShopCopletedOrderCount()
-            .subscribe((countOrders) => {
-                // Store the data
-                // this.countOrders = countOrders.map((t) => t.shopId);
-                this.countOrders = countOrders;
-                console.log(this.countOrders);
-            });
-
-        this._dashboardService.getNoOfShops().subscribe((count) => {
+        this._dashboardService.getNoOfShops(user_id).subscribe((count) => {
             this.count = count;
         });
 

@@ -28,6 +28,18 @@ export class AuthService {
         localStorage.setItem('accessToken', token);
     }
 
+    set user_id(id: string) {
+        localStorage.setItem('user_id', id);
+    }
+
+    set firstname(name: string) {
+        localStorage.setItem('firstname', name);
+    }
+
+    set email(email: string) {
+        localStorage.setItem('email', email);
+    }
+
     get accessToken(): string {
         return localStorage.getItem('accessToken') ?? '';
     }
@@ -65,10 +77,13 @@ export class AuthService {
             return throwError('User is already logged in.');
         }
 
-        return this._httpClient.post('api/auth/sign-in', credentials).pipe(
+        return this._httpClient.post('/api/sign-in.php', credentials).pipe(
             switchMap((response: any) => {
                 // Store the access token in the local storage
                 this.accessToken = response.accessToken;
+                this.user_id = response.user_id;
+                this.firstname = response.firstname;
+                this.email = response.email;
 
                 // Set the authenticated flag to true
                 this._authenticated = true;
@@ -172,6 +187,6 @@ export class AuthService {
         }
 
         // If the access token exists and it didn't expire, sign in using it
-        return this.signInUsingToken();
+        //return this.signInUsingToken();
     }
 }

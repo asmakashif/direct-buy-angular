@@ -9,16 +9,12 @@ import { catchError, map, tap } from 'rxjs/operators';
 export class DashboardService {
     constructor(private _httpClient: HttpClient) {}
 
-    getShops(): Observable<any> {
-        return this._httpClient.get('/api/getShops.php');
+    getShops(user_id: string): Observable<any> {
+        return this._httpClient.get('/api/getShops.php?user_id=' + user_id);
     }
 
-    getShopCopletedOrderCount(): Observable<any> {
-        return this._httpClient.get('/api/countCompletedOrders.php');
-    }
-
-    getNoOfShops(): Observable<any> {
-        return this._httpClient.get('/api/countShops.php');
+    getNoOfShops(user_id: string): Observable<any> {
+        return this._httpClient.get('/api/countShops.php?user_id=' + user_id);
     }
 
     getPrevMonthOrders(shopId: string): Observable<any> {
