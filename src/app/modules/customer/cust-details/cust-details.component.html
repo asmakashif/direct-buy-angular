@@ -1,0 +1,71 @@
+<div class="row">
+    <div class="col-md-6">
+<div *ngFor="let dt of details">
+
+<p>Firstname : {{dt.firstname}}</p>
+
+<p>Lastname : {{dt.lastname}}</p>
+
+<p>Email : {{dt.email}}</p>
+
+<p>Mobile Number : {{dt.mobile}}</p>
+
+<a routerLink="">View Order history</a>
+</div>
+</div>
+<div class="col-md-6">
+  <h2>Change Password</h2>
+  <form action="" method="post" class="form form-login" [formGroup]="pswForm" (ngSubmit)="changePswrd()" >
+<div class="form-field">
+   <label class="user" for="login-username"><span class="hidden"> Current Password</span></label>
+  <input  type="text"  formControlName="Cpassword" class="form-input" placeholder="Current Password" required>
+</div>
+<div class="form-field">
+  <label class="user" for="login-username"><span class="hidden"> New Password</span></label>
+ <input  type="text"  formControlName="newpassword" class="form-input" placeholder="Current Password" required>
+</div>
+<div class="form-field">
+  <label class="user" for="login-username"><span class="hidden"> Confirm New Password</span></label>
+ <input  type="text"  formControlName="Cnewpassword" class="form-input" placeholder="Current Password" required>
+</div>
+
+<div class="form-field">
+  <input type="submit" value="Change">
+ 
+</div>
+</form>
+</div>
+
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <form action="" method="post" class="form form-login" [formGroup]="angForm" (ngSubmit)="onSubmit()" >
+            <div class="form-field">
+                <input type="text"  value="{{this.token}}" formControlName="cust_id" class="form-input"  required>
+              <label class="user" for="login-username"><span class="hidden">House/Flat Name</span></label>
+              <input  type="text"  formControlName="houseName" class="form-input" placeholder="House/Flat Name" required>
+            </div>
+    
+            <div class="form-field">
+              <label class="user" for="login-password"><span class="hidden">Street Adrress</span></label>
+              <input type="text" formControlName="streetAddr" class="form-input" placeholder="Street Adrress" required>
+            </div>
+            <div class="form-field">
+                <label class="user" for="login-password"><span class="hidden">City</span></label>
+                <input type="text" formControlName="city" class="form-input" placeholder="City" required>
+              </div>
+              <div class="form-field">
+                <label class="user" for="login-password"><span class="hidden">Pincode</span></label>
+                <input type="text" formControlName="pincode" class="form-input" placeholder="Pincode" required>
+              </div>
+            <div class="form-field">
+              <input type="submit" value="Add Adrress">
+            </div>
+          </form>
+    </div>
+    
+    </div>
+    <div *ngFor="let dt of address">
+        <p>{{dt.address1}} ,{{dt.address2}},{{dt.City}},{{dt.pincode}}</p>
+        <a (click)="delete(dt.id)"> Delete</a> | <a (click)="update(dt.id)">Make Default</a>
+      </div>

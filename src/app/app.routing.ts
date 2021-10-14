@@ -294,6 +294,13 @@ export const appRoutes: Route[] = [
                         (m) => m.HomeModule
                     ),
             },
+            {
+                path: 'cust-details/:id',
+                loadChildren: () =>
+                    import('app/modules/customer/cust-details/cust-details.module').then(
+                        (m) => m.CustomerDetailsModule
+                    ),
+            },
         ],
     },
 ];

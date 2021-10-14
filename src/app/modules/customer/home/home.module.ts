@@ -11,6 +11,7 @@ import { HomeComponent } from 'app/modules/customer/home/home.component';
 import { SliderComponent } from 'app/modules/customer/slider/slider.component';
 import { NavbarComponent } from 'app/modules/customer/navbar/navbar.component';
 import { FooterComponent } from 'app/modules/customer/footer/footer.component';
+
 const homeRoutes: Route[] = [
     {
         path: '',
@@ -25,6 +26,7 @@ const homeRoutes: Route[] = [
         NavbarComponent,
         SliderComponent,
         FooterComponent,
+       
     ],
     imports: [
         RouterModule.forChild(homeRoutes),
