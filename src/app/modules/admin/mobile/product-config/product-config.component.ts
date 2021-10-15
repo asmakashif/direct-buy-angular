@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProductConfigService } from 'app/modules/admin/mobile/product-config/product-config.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import * as _ from 'lodash';
+import { IMultiSelectOption } from 'ngx-bootstrap-multiselect';
 
 @Component({
     selector: 'app-product-config',
@@ -14,6 +15,7 @@ import * as _ from 'lodash';
     styleUrls: ['./product-config.component.scss'],
 })
 export class ProductConfigComponent implements OnInit {
+    isLinear = true;
     shopType: any = [];
     shopId: any;
     productSet: any;
@@ -50,6 +52,11 @@ export class ProductConfigComponent implements OnInit {
     SubCategorySettings: IDropdownSettings;
     BrandSettings: IDropdownSettings;
 
+    myOptions: IMultiSelectOption[];
+    selectedItems: [];
+    filterGroup: FormGroup;
+    dataFilteredGroup: FormGroup;
+
     constructor(
         private apiService: ProductConfigService,
         private _router: Router,
@@ -61,6 +68,7 @@ export class ProductConfigComponent implements OnInit {
         const routeParams = this.routes.snapshot.params;
         this.apiService.getStoreType().subscribe((shopType) => {
             this.shopType = shopType;
+            this.myOptions = shopType;
         });
 
         this.apiService.getCategories().subscribe((categories) => {
@@ -75,11 +83,11 @@ export class ProductConfigComponent implements OnInit {
             this.brand = brand;
         });
 
-        this.apiService.getBaseProducts().subscribe((dataSource) => {
-            this.apiResponse = dataSource;
-            this.dataSource = new MatTableDataSource(dataSource);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.matSort;
+        this.filterGroup = this.fb.group({
+            shopType: ['', [Validators.required]],
+            category: ['', [Validators.required]],
+            sub_category: ['', [Validators.required]],
+            brand: ['', [Validators.required]],
         });
 
         // if (!this.isMobile()) {
@@ -122,86 +130,34 @@ export class ProductConfigComponent implements OnInit {
             singleSelection: false,
             idField: 'brand',
             textField: 'brand',
+            clearSearchFilter: true,
+            maxHeight: 197,
             selectAllText: 'Select All',
             unSelectAllText: 'UnSelect All',
             itemsShowLimit: 3,
             allowSearchFilter: true,
+
+            enableCheckAll: true,
+            limitSelection: -1,
+            searchPlaceholderText: 'Tìm kiếm',
+            noDataAvailablePlaceholderText: 'Không có dữ liệu',
+            closeDropDownOnSelection: false,
+            showSelectedItemsAtTop: false,
+            defaultOpen: false,
         };
     }
 
-    onTypeSelect($event: any) {
-        console.log($event);
-        let filteredData = _.filter(this.apiResponse, (item) => {
-            return (
-                item.shop_type.toLowerCase() ==
-                $event.shop_type_name.toLowerCase()
-            );
-        });
-        console.log(filteredData);
-        this.dataSource = new MatTableDataSource(filteredData);
+    onItemSelect(item: any) {
+        console.log('onItemSelect', item);
     }
 
-    onTypeSelectAll($event: any) {
-        console.log($event);
-        let filteredData = _.filter(this.apiResponse, (item) => {
-            return (
-                item.shop_type.toLowerCase() ==
-                $event.shop_type_name.toLowerCase()
-            );
-        });
-        console.log(filteredData);
-        this.dataSource = new MatTableDataSource(filteredData);
+    onFilterSubmit() {
+        console.log(this.filterGroup.value);
     }
 
-    onCategorySelect($event: any) {
-        console.log($event);
-        let filteredData = _.filter(this.apiResponse, (item) => {
-            return item.category.toLowerCase() == $event.category.toLowerCase();
-        });
-        console.log(filteredData);
-        this.dataSource = new MatTableDataSource(filteredData);
-    }
-
-    onCategorySelectAll($event: any) {
-        console.log($event);
-        let filteredData = _.filter(this.apiResponse, (item) => {
-            return item.category.toLowerCase() == $event.category.toLowerCase();
-        });
-        console.log(filteredData);
-        this.dataSource = new MatTableDataSource(filteredData);
-    }
-
-    filterData($event: any) {
-        this.dataSource.filter = $event.target.value;
-    }
-
-    onSubCategorySelect(item: any) {
-        console.log(item);
-    }
-
-    onSubCategorySelectAll($event: any) {
-        console.log($event);
-        let filteredData = _.filter(this.apiResponse, (item) => {
-            return (
-                item.sub_category.toLowerCase() ==
-                $event.sub_category.toLowerCase()
-            );
-        });
-        console.log(filteredData);
-        this.dataSource = new MatTableDataSource(filteredData);
-    }
-
-    onBrandSelect(item: any) {
-        console.log(item);
-    }
-
-    onBranSelectAll($event: any) {
-        console.log($event);
-        let filteredData = _.filter(this.apiResponse, (item) => {
-            return item.brand.toLowerCase() == $event.brand.toLowerCase();
-        });
-        console.log(filteredData);
-        this.dataSource = new MatTableDataSource(filteredData);
+    done() {
+        const routeParams = this.routes.snapshot.params;
+        this._router.navigate(['/mobile/product-info/' + routeParams.shopId]);
     }
 
     isMobile() {

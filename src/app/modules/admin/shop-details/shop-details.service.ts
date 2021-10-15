@@ -10,15 +10,27 @@ import { Observable } from 'rxjs';
 export class ShopDetailsService {
     constructor(private http: HttpClient) {}
 
-    getShopDetailsById(shopId: string): Observable<ApiResponse> {
+    getShopDetailsById(
+        shopId: string,
+        user_id: string
+    ): Observable<ApiResponse> {
         return this.http.get<ApiResponse>(
-            '/api/getShopDetailsById.php?shopId=' + shopId
+            '/api/getShopDetailsById.php?shopId=' +
+                shopId +
+                '&user_id=' +
+                user_id
         );
     }
 
-    getStrPaymentData(shopId: string): Observable<ApiResponse> {
+    getStrPaymentData(
+        shopId: string,
+        user_id: string
+    ): Observable<ApiResponse> {
         return this.http.get<ApiResponse>(
-            '/api/getStrPaymentData.php?shopId=' + shopId
+            '/api/getStrPaymentData.php?shopId=' +
+                shopId +
+                '&user_id=' +
+                user_id
         );
     }
 

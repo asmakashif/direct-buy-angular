@@ -53,6 +53,7 @@ export class CreateComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        const user_id = localStorage.getItem('user_id');
         this.apiService.getStoreTypes().subscribe((shopType) => {
             // Store the data
             this.shopType = shopType;
@@ -86,7 +87,7 @@ export class CreateComponent implements OnInit {
                 this.productSet = productSet;
             });
         this.summaryService
-            .getShopDetailsById(shopId)
+            .getShopDetailsById(shopId, user_id)
             .subscribe((data: any) => {
                 this.data = data;
                 console.log(this.data);

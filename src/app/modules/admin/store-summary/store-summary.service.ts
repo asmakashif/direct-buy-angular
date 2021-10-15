@@ -10,9 +10,12 @@ import { Observable } from 'rxjs';
 export class StoreSummaryService {
     constructor(private http: HttpClient) {}
 
-    getShopDetailsById(shopId: string): Observable<ApiResponse> {
+    getShopDetailsById(shopId: string, user_id): Observable<ApiResponse> {
         return this.http.get<ApiResponse>(
-            '/api/getShopDetailsById.php?shopId=' + shopId
+            '/api/getShopDetailsById.php?shopId=' +
+                shopId +
+                '&user_id=' +
+                user_id
         );
     }
 

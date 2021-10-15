@@ -1,1 +1,307 @@
-<p>mobile works!</p>
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div class="bg-card">
+        <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
+            <div
+                class="
+                    flex flex-col
+                    sm:flex-row
+                    flex-auto
+                    sm:items-center
+                    min-w-0
+                    my-8
+                    sm:my-12
+                "
+            >
+                <!-- Avatar and name -->
+                <div class="flex flex-auto items-center min-w-0">
+                    <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
+                        <img
+                            class="w-full h-full object-cover"
+                            src="assets/images/avatars/brian-hughes.jpg"
+                        />
+                    </div>
+                    <div class="flex flex-col min-w-0 ml-4">
+                        <ng-container *transloco="let t">
+                            <div
+                                class="
+                                    text-2xl
+                                    md:text-5xl
+                                    font-semibold
+                                    tracking-tight
+                                    leading-7
+                                    md:leading-snug
+                                    truncate
+                                "
+                            >
+                                {{ t("welcome-back") }}, Brian!
+                            </div>
+                        </ng-container>
+                        <div class="flex items-center">
+                            <mat-icon
+                                class="icon-size-5"
+                                [svgIcon]="'heroicons_solid:bell'"
+                            ></mat-icon>
+                            <div
+                                class="ml-1.5 leading-6 truncate text-secondary"
+                            >
+                                Orders Details
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Actions -->
+                <div class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3">
+                    <button
+                        class="fuse-mat-button-rounded bg-accent-700"
+                        mat-flat-button
+                        [color]="'accent'"
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:mail'"
+                        ></mat-icon>
+                        <span class="ml-2">Messages</span>
+                    </button>
+                    <button
+                        class="fuse-mat-button-rounded"
+                        mat-flat-button
+                        [color]="'primary'"
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:cog'"
+                        ></mat-icon>
+                        <span class="ml-2">Settings</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto border-t -mt-px">
+        <div class="w-full max-w-screen-xl mx-auto p-4">
+            <div
+                class="
+                    flex flex-col
+                    m-4
+                    p-8
+                    bg-card
+                    rounded-2xl
+                    shadow
+                    overflow-hidden
+                "
+            >
+                <div class="row">
+                    <div class="col-md-4">
+                        <span class="font-medium mb-2">Select Shop Type</span>
+                        <br />
+                        <!-- <select name="selectedCars" multiple>
+                            <option
+                                *ngFor="let shopType of this.shopType"
+                                [ngValue]="shopType.shop_type_name"
+                            >
+                                {{ shopType.shop_type_name }}
+                            </option>
+                        </select> -->
+                        <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+                            <!-- <ngx-bootstrap-multiselect
+                            [options]="myOptions" formControlName="optionsModel"
+                        ></ngx-bootstrap-multiselect> -->
+                            <ng-multiselect-dropdown
+                                [placeholder]="'Select Store Type'"
+                                [settings]="StoreTypeSettings"
+                                [data]="shopType"
+                                (onSelect)="onTypeSelect($event)"
+                                (onSelectAll)="onTypeSelectAll($event)"
+                                formControlName="optionsModel"
+                            >
+                            </ng-multiselect-dropdown>
+                        </form>
+                        <button class="btn btn-success">Submit</button>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="font-medium mb-2">Select Category</span>
+                        <br />
+                        <ng-multiselect-dropdown
+                            [placeholder]="'Select Category'"
+                            [settings]="CategorySettings"
+                            [data]="categories"
+                            (onSelect)="onCategorySelect($event)"
+                            (onSelectAll)="onCategorySelectAll($event)"
+                        >
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="font-medium mb-2">Select SubCategory</span>
+                        <br />
+                        <ng-multiselect-dropdown
+                            [placeholder]="'Select SubCategory'"
+                            [settings]="SubCategorySettings"
+                            [data]="sub_category"
+                            (onSelect)="onSubCategorySelect($event)"
+                            (onSelectAll)="onSubCategorySelectAll($event)"
+                        >
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="col-md-4">
+                        <span class="font-medium mb-2">Select Brand</span>
+                        <br />
+                        <ng-multiselect-dropdown
+                            [placeholder]="'Select Brand'"
+                            [settings]="BrandSettings"
+                            [data]="brand"
+                            (onSelect)="onBrandSelect($event)"
+                            (onSelectAll)="onBranSelectAll($event)"
+                        >
+                        </ng-multiselect-dropdown>
+                    </div>
+                </div>
+                <br />
+                <br />
+                <div class="fixTableHead">
+                    <table
+                        mat-table
+                        matSort
+                        [dataSource]="dataSource"
+                        class="table table-bordered table-responsive"
+                    >
+                        <ng-container matColumnDef="shop_type">
+                            <th mat-header-cell *matHeaderCellDef>Shop Type</th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.shop_type }}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="category">
+                            <th mat-header-cell *matHeaderCellDef>Category</th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.category }}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="sub_category">
+                            <th mat-header-cell *matHeaderCellDef>
+                                Sub Category
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.sub_category }}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="brand">
+                            <th mat-header-cell *matHeaderCellDef>Brand</th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.brand }}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="product_name">
+                            <th mat-header-cell *matHeaderCellDef>
+                                Product Name
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.product_name }}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="product_type">
+                            <th mat-header-cell *matHeaderCellDef>
+                                Product Type
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.product_type }}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="product_sub_type">
+                            <th mat-header-cell *matHeaderCellDef>
+                                Product SubType
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.product_sub_type }}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="product_weight">
+                            <th mat-header-cell *matHeaderCellDef>
+                                Product Weight
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.product_weight }}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="product_weight_type">
+                            <th mat-header-cell *matHeaderCellDef>
+                                Product Weight Type
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.product_weight_type }}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="product_qty">
+                            <th mat-header-cell *matHeaderCellDef>
+                                Product Name
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.product_qty }}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="product_price">
+                            <th mat-header-cell *matHeaderCellDef>
+                                Product Price
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.product_price }}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="offer_price">
+                            <th mat-header-cell *matHeaderCellDef>
+                                Offer Price
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.offer_price }}
+                            </td>
+                        </ng-container>
+                        <!-- <ng-container matColumnDef="product_img">
+                            <th mat-header-cell *matHeaderCellDef>
+                                Product Image
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.product_img }}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="product_description">
+                            <th mat-header-cell *matHeaderCellDef>
+                                Product Description
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.product_description }}
+                            </td>
+                        </ng-container> -->
+
+                        <tr
+                            mat-header-row
+                            *matHeaderRowDef="displayedColumns"
+                        ></tr>
+                        <tr
+                            mat-row
+                            *matRowDef="let row; columns: displayedColumns"
+                        ></tr>
+                        <tr class="mat-row" *matNoDataRow>
+                            <td class="mat-cell" colspan="4">
+                                No data matching the filter "{{ input.value }}"
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <mat-paginator
+                    #paginator
+                    [pageSize]="25"
+                    [pageSizeOptions]="[2, 5, 10, 25, 100]"
+                >
+                </mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>

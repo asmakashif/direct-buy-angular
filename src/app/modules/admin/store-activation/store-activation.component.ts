@@ -29,11 +29,12 @@ export class StoreActivationComponent implements OnInit {
 
     ngOnInit(): void {
         const routeParams = this.routes.snapshot.params;
+        const user_id = localStorage.getItem('user_id');
         this.apiService
-            .getShopDetailsById(routeParams.shopId)
+            .getShopDetailsById(routeParams.shopId, user_id)
             .subscribe((data: any) => {
-                this.storeCheckoutForm.patchValue(data);
                 this.data = data;
+                console.log(this.data.shopId);
             });
         // this.routes.paramMap.subscribe((params) => {
         //     this.storeCheckoutForm.patchValue(params);

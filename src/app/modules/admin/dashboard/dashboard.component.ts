@@ -26,6 +26,7 @@ export class DashboardComponent {
     prevMonthOrdercount: any;
     accessToken: string;
     user_id: string;
+    firstname: string;
 
     constructor(
         private _dashboardService: DashboardService,
@@ -36,6 +37,7 @@ export class DashboardComponent {
     ngOnInit(): void {
         this.accessToken = localStorage.getItem('accessToken');
         const user_id = localStorage.getItem('user_id');
+        this.firstname = localStorage.getItem('firstname');
         if (!this.accessToken) {
             this._router.navigate(['sign-in']);
         }
@@ -63,15 +65,15 @@ export class DashboardComponent {
     }
 
     changeStore(stores): void {
-        console.log(stores);
         this._router.navigate([
             'dashboard/' + stores.shopId + '/' + stores.shop_name,
         ]);
-        // window.location.reload();
+        this.ngOnInit();
     }
 
     dashbaord(): void {
         this._router.navigate(['dashboard/']);
+        this.ngOnInit();
     }
 
     shopDetails(data: Data): void {

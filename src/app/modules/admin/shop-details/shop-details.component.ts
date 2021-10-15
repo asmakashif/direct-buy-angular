@@ -31,7 +31,7 @@ export class ShopDetailsComponent implements OnInit {
     ngOnInit(): void {
         localStorage.removeItem('redirect');
         const routeParams = this.routes.snapshot.params;
-        //console.log(routeParams);
+        const user_id = localStorage.getItem('user_id');
 
         this.editForm = this.formBuilder.group({
             shop_id: [],
@@ -41,7 +41,7 @@ export class ShopDetailsComponent implements OnInit {
         });
         //console.log(this.editForm);
         this.apiService
-            .getShopDetailsById(routeParams.shopId)
+            .getShopDetailsById(routeParams.shopId, user_id)
             .subscribe((data: any) => {
                 this.editForm.patchValue(data);
                 this.data = data;
@@ -49,7 +49,7 @@ export class ShopDetailsComponent implements OnInit {
             });
 
         this.apiService
-            .getStrPaymentData(routeParams.shopId)
+            .getStrPaymentData(routeParams.shopId, user_id)
             .subscribe((payment: any) => {
                 this.paymentForm.patchValue(payment);
                 this.payment = payment;
@@ -57,8 +57,6 @@ export class ShopDetailsComponent implements OnInit {
             });
 
         this.paymentForm = this.formBuilder.group({
-            //provider_type: ['', Validators.required],
-            //provider_type: this.formBuilder.array([], [Validators.required]),
             shopId: [routeParams.shopId],
             shop_pInfo_id: this.formBuilder.array([], [Validators.required]),
         });
@@ -99,6 +97,7 @@ export class ShopDetailsComponent implements OnInit {
             .subscribe((data) => {
                 this._router.navigate(['/shop-details/' + routeParams.shopId]);
             });
+        this.ngOnInit();
     }
 
     shopConfiguration(shopId): void {

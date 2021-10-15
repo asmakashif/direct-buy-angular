@@ -20,6 +20,7 @@ export class StoreSummaryComponent implements OnInit {
     data: any;
     countProduct: any;
     summaryForm: FormGroup;
+    firstname: string;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -30,12 +31,14 @@ export class StoreSummaryComponent implements OnInit {
 
     ngOnInit(): void {
         const routeParams = this.routes.snapshot.params;
+        const user_id = localStorage.getItem('user_id');
+        this.firstname = localStorage.getItem('firstname');
         const shopId = routeParams.shopId;
         this.apiService
-            .getShopDetailsById(routeParams.shopId)
+            .getShopDetailsById(routeParams.shopId, user_id)
             .subscribe((data: any) => {
                 this.data = data;
-                console.log(this.data);
+                console.log(this.data.shopId);
             });
 
         this.apiService
