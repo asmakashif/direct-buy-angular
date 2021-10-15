@@ -16,6 +16,7 @@ export class CustDetailsComponent implements OnInit {
  
   delete_id1: any;
   details: any;
+  message: [];
 
   constructor(private http:HttpClient,private apiService: CustomerService,
     private router: Router, private route : ActivatedRoute,private formBuilder: FormBuilder) { }
@@ -88,7 +89,7 @@ export class CustDetailsComponent implements OnInit {
   }
   changePswrd()
   {
-    alert('ho');
+  
     if (this.pswForm.invalid) {
       return;
     }
@@ -102,7 +103,13 @@ export class CustDetailsComponent implements OnInit {
   
       this.apiService.updatepswrd(paswrd).subscribe((data:any)=>
       {
-       alert('Password Updated Successfully');
+        //  alert(data1);
+       
+          this.message = data.message;
+          alert(data.message);
+        
+         this.router.navigate(['home']);
+        
       });
   }
  delete(delete_id:any)
