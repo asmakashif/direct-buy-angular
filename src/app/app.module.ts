@@ -12,6 +12,7 @@ import { mockApiServices } from 'app/mock-api';
 import { LayoutModule } from 'app/layout/layout.module';
 import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
+import { SearchPageComponent } from './modules/customer/search-page/search-page.component';
 
 
 
@@ -24,7 +25,7 @@ const routerConfig: ExtraOptions = {
 };
 
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [AppComponent, SearchPageComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,

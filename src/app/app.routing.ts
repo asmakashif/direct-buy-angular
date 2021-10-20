@@ -301,14 +301,14 @@ export const appRoutes: Route[] = [
                         (m) => m.CustomerDetailsModule
                     ),
             },
-            {
-                path: 'searchPage',
-                loadChildren: () =>
-                    import('app/modules/customer/search-page/search-page.module').then(
-                        (m) => m.SearchPageModule
+            // {
+            //     path: 'searchPage',
+            //     loadChildren: () =>
+            //         import('app/modules/customer/search-page/search-page.module').then(
+            //             (m) => m.SearchPageModule
 
-                    ),
-            },
+            //         ),
+            // },
         ],
     },
 ];

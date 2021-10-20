@@ -11,7 +11,8 @@ import { CommonModule } from '@angular/common';
 // import { SliderComponent } from 'app/modules/customer/slider/slider.component';
 // import { NavbarComponent } from 'app/modules/customer/navbar/navbar.component';
 // import { FooterComponent } from 'app/modules/customer/footer/footer.component';
-import {SearchPageComponent} from './search-page.component'
+import { SearchPageComponent } from './search-page.component';
+
 const SearchPageRoutes: Route[] = [
     {
         path: '',
