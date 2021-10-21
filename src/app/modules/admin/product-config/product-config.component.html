@@ -94,25 +94,19 @@
                                 [formGroup]="shopTypeGroup"
                                 (ngSubmit)="onTypeSubmit()"
                             >
-                                <div class="example-form">
-                                    <div class="flex flex-col">
-                                        <span class="font-medium mb-2"
-                                            >Select Shop Type</span
-                                        >
-                                        <div *ngFor="let shopType of shopType">
-                                            <input
-                                                type="checkbox"
-                                                [value]="
-                                                    shopType.shop_type_name
-                                                "
-                                                name="shopType[]"
-                                                (change)="
-                                                    onCheckboxChange($event)
-                                                "
-                                                matCheckbox
-                                            />
-                                            {{ shopType.shop_type_name }}
-                                        </div>
+                                <div class="wj-listbox">
+                                    <div
+                                        class="checkbox"
+                                        *ngFor="let shopType of shopType"
+                                    >
+                                        <input
+                                            type="checkbox"
+                                            [value]="shopType.shop_type_name"
+                                            name="shopType[]"
+                                            (change)="onCheckboxChange($event)"
+                                            matCheckbox
+                                        />
+                                        {{ shopType.shop_type_name }}
                                     </div>
                                 </div>
                                 <br />
@@ -137,27 +131,19 @@
                                 [formGroup]="categoryGroup"
                                 (ngSubmit)="onCategorySubmit()"
                             >
-                                <div class="example-form">
-                                    <div class="flex flex-col">
-                                        <span class="font-medium mb-2"
-                                            >Select Categories</span
-                                        >
-                                        <div
-                                            *ngFor="
-                                                let categories of categories
-                                            "
-                                        >
-                                            <input
-                                                type="checkbox"
-                                                [value]="categories.category"
-                                                name="categories[]"
-                                                (change)="
-                                                    onCategoryChange($event)
-                                                "
-                                                matCheckbox
-                                            />
-                                            {{ categories.category }}
-                                        </div>
+                                <div class="wj-listbox">
+                                    <div
+                                        class="checkbox"
+                                        *ngFor="let categories of categories"
+                                    >
+                                        <input
+                                            type="checkbox"
+                                            [value]="categories.category"
+                                            name="categories[]"
+                                            (change)="onCategoryChange($event)"
+                                            matCheckbox
+                                        />
+                                        {{ categories.category }}
                                     </div>
                                 </div>
                                 <br />
@@ -182,29 +168,23 @@
                                 [formGroup]="subCategoryGroup"
                                 (ngSubmit)="onSubCategorySubmit()"
                             >
-                                <div class="example-form">
-                                    <div class="flex flex-col">
-                                        <span class="font-medium mb-2"
-                                            >Select Sub-Categories</span
-                                        >
-                                        <div
-                                            *ngFor="
-                                                let sub_category of sub_category
+                                <div class="wj-listbox">
+                                    <div
+                                        class="checkbox"
+                                        *ngFor="
+                                            let sub_category of sub_category
+                                        "
+                                    >
+                                        <input
+                                            type="checkbox"
+                                            [value]="sub_category.sub_category"
+                                            name="sub_category[]"
+                                            (change)="
+                                                onSubCategoryChange($event)
                                             "
-                                        >
-                                            <input
-                                                type="checkbox"
-                                                [value]="
-                                                    sub_category.sub_category
-                                                "
-                                                name="sub_category[]"
-                                                (change)="
-                                                    onSubCategoryChange($event)
-                                                "
-                                                matCheckbox
-                                            />
-                                            {{ sub_category.sub_category }}
-                                        </div>
+                                            matCheckbox
+                                        />
+                                        {{ sub_category.sub_category }}
                                     </div>
                                 </div>
                                 <br />
@@ -226,21 +206,19 @@
                                 [formGroup]="brandGroup"
                                 (ngSubmit)="onBrandSubmit()"
                             >
-                                <div class="example-form">
-                                    <div class="flex flex-col">
-                                        <span class="font-medium mb-2"
-                                            >Select Brand</span
-                                        >
-                                        <div *ngFor="let brand of brand">
-                                            <input
-                                                type="checkbox"
-                                                [value]="brand.brand"
-                                                name="brand[]"
-                                                (change)="onBrandChange($event)"
-                                                matCheckbox
-                                            />
-                                            {{ brand.brand }}
-                                        </div>
+                                <div class="wj-listbox">
+                                    <div
+                                        class="checkbox"
+                                        *ngFor="let brand of brand"
+                                    >
+                                        <input
+                                            type="checkbox"
+                                            [value]="brand.brand"
+                                            name="brand[]"
+                                            (change)="onBrandChange($event)"
+                                            matCheckbox
+                                        />
+                                        {{ brand.brand }}
                                     </div>
                                 </div>
                                 <br />
@@ -258,7 +236,7 @@
 
                     <mat-step
                         [stepControl]="productGroup"
-                        label="Select Category"
+                        label="Select Products"
                     >
                         <div style="padding-top: 3%">
                             <span class="font-medium mb-2"

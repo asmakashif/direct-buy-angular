@@ -1,8 +1,11 @@
+import { DOCUMENT } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     Component,
     ViewEncapsulation,
+    Inject,
 } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DashboardService } from 'app/modules/admin/dashboard/dashboard.service';
 import { Data } from '../../../Model/data';
@@ -23,15 +26,24 @@ export class DashboardComponent {
     countOrders: any;
     queryParam: any;
     queryParamName: string;
-    prevMonthOrdercount: any;
     accessToken: string;
     user_id: string;
     firstname: string;
+    prevMonthOrderCount: any;
+    curMonthOrderCount: any;
+    yestOpenOrderCount: any;
+    openOrderCount: any;
+    curFulfilledOrderCount: any;
+    newCustomerCount: any;
+    customerCount: any;
 
     constructor(
+        @Inject(DOCUMENT)
+        private _document: Document,
         private _dashboardService: DashboardService,
         private _router: Router,
-        private routes: ActivatedRoute
+        private routes: ActivatedRoute,
+        private cd: ChangeDetectorRef
     ) {}
 
     ngOnInit(): void {
@@ -58,23 +70,74 @@ export class DashboardComponent {
 
         this._dashboardService
             .getPrevMonthOrders(routeParams.shopId)
-            .subscribe((prevMonthOrdercount) => {
-                this.prevMonthOrdercount = prevMonthOrdercount;
-                console.log(this.prevMonthOrdercount);
+            .subscribe((prevMonthOrderCount) => {
+                this.prevMonthOrderCount = prevMonthOrderCount;
+                console.log(this.prevMonthOrderCount);
+            });
+
+        this._dashboardService
+            .getCurrentMonthOrders(routeParams.shopId)
+            .subscribe((curMonthOrderCount) => {
+                this.curMonthOrderCount = curMonthOrderCount;
+                console.log(this.curMonthOrderCount);
+            });
+
+        this._dashboardService
+            .getYestOpenOrders(routeParams.shopId)
+            .subscribe((yestOpenOrderCount) => {
+                this.yestOpenOrderCount = yestOpenOrderCount;
+                console.log(this.yestOpenOrderCount);
+            });
+        this._dashboardService
+            .getOpenOrders(routeParams.shopId)
+            .subscribe((openOrderCount) => {
+                this.openOrderCount = openOrderCount;
+                console.log(this.openOrderCount);
+            });
+
+        this._dashboardService
+            .getCurFulfilledOrders(routeParams.shopId)
+            .subscribe((curFulfilledOrderCount) => {
+                this.curFulfilledOrderCount = curFulfilledOrderCount;
+                console.log(this.curFulfilledOrderCount);
+            });
+
+        this._dashboardService
+            .getNewRegisteredCustomers(routeParams.shopId)
+            .subscribe((newCustomerCount) => {
+                this.newCustomerCount = newCustomerCount;
+                console.log(this.newCustomerCount);
+            });
+
+        this._dashboardService
+            .getRegisteredCustomers(routeParams.shopId)
+            .subscribe((customerCount) => {
+                this.customerCount = customerCount;
+                console.log(this.customerCount);
             });
     }
 
     changeStore(stores): void {
-        this._router.navigate([
-            'dashboard/' + stores.shopId + '/' + stores.shop_name,
-        ]);
-        this.ngOnInit();
+        // const success = this._router.navigate([
+        //     'dashboard/' + stores.shopId + '/' + stores.shop_name,]);
+        // if (success) {
+        //     this.ngOnInit();
+        // }
+        this._router
+            .navigate(['dashboard/' + stores.shopId + '/' + stores.shop_name])
+            .then(() => {
+                window.location.reload();
+            });
     }
 
     dashbaord(): void {
+        //this.refresh();
         this._router.navigate(['dashboard/']);
-        this.ngOnInit();
     }
+
+    // refresh(): void {
+    //     this._document.defaultView.location.reload();
+    // }
 
     shopDetails(data: Data): void {
         if (!this.isMobile()) {

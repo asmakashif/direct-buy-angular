@@ -1,0 +1,233 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div class="bg-card">
+        <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
+            <div
+                class="
+                    flex flex-col
+                    sm:flex-row
+                    flex-auto
+                    sm:items-center
+                    min-w-0
+                    my-8
+                    sm:my-12
+                "
+            >
+                <!-- Avatar and name -->
+                <div class="flex flex-auto items-center min-w-0">
+                    <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
+                        <img
+                            class="w-full h-full object-cover"
+                            src="assets/images/avatars/brian-hughes.jpg"
+                        />
+                    </div>
+                    <div class="flex flex-col min-w-0 ml-4">
+                        <ng-container *transloco="let t">
+                            <div
+                                class="
+                                    text-2xl
+                                    md:text-5xl
+                                    font-semibold
+                                    tracking-tight
+                                    leading-7
+                                    md:leading-snug
+                                    truncate
+                                "
+                            >
+                                {{ t("welcome-back") }}, Brian!
+                            </div>
+                        </ng-container>
+                        <div class="flex items-center">
+                            <mat-icon
+                                class="icon-size-5"
+                                [svgIcon]="'heroicons_solid:bell'"
+                            ></mat-icon>
+                            <div
+                                class="ml-1.5 leading-6 truncate text-secondary"
+                            >
+                                Orders Details
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Actions -->
+                <div class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3">
+                    <button
+                        class="fuse-mat-button-rounded bg-accent-700"
+                        mat-flat-button
+                        [color]="'accent'"
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:mail'"
+                        ></mat-icon>
+                        <span class="ml-2">Messages</span>
+                    </button>
+                    <button
+                        class="fuse-mat-button-rounded"
+                        mat-flat-button
+                        [color]="'primary'"
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:cog'"
+                        ></mat-icon>
+                        <span class="ml-2">Settings</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto border-t -mt-px overflow-scroll">
+        <div class="w-full max-w-screen-xl mx-auto p-4">
+            <mat-horizontal-stepper
+                [linear]="isLinear"
+                #stepper
+                labelPosition="bottom"
+            >
+                <mat-step
+                    [stepControl]="filterGroup"
+                    label="Select Data to filter"
+                >
+                    <div class="overflow-y-scroll" style="padding-top: 3%">
+                        <form [formGroup]="form" (ngSubmit)="save()">
+                            <div class="example-form">
+                                <div class="flex flex-col">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <span class="font-medium mb-2"
+                                                >Select Shop Type</span
+                                            >
+                                            <br />
+                                            <ng-multiselect-dropdown
+                                                #multiSelect
+                                                [formControl]="f.shopType"
+                                                [placeholder]="
+                                                    'Select Store Type'
+                                                "
+                                                [settings]="StoreTypeSettings"
+                                                [data]="shopType"
+                                                (onSelect)="
+                                                    onItemSelect($event)
+                                                "
+                                            >
+                                            </ng-multiselect-dropdown>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <span class="font-medium mb-2"
+                                                >Select Category</span
+                                            >
+                                            <br />
+                                            <ng-multiselect-dropdown
+                                                #multiSelect
+                                                [formControl]="f.category"
+                                                [placeholder]="
+                                                    'Select Category'
+                                                "
+                                                [settings]="CategorySettings"
+                                                [data]="category"
+                                                (onSelect)="
+                                                    onItemSelect($event)
+                                                "
+                                            >
+                                            </ng-multiselect-dropdown>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <span class="font-medium mb-2"
+                                                >Select SubCategory</span
+                                            >
+                                            <br />
+
+                                            <ng-multiselect-dropdown
+                                                #multiSelect
+                                                [formControl]="f.sub_category"
+                                                [placeholder]="
+                                                    'Select SubCategory'
+                                                "
+                                                [settings]="SubCategorySettings"
+                                                [data]="sub_category"
+                                                (onSelect)="
+                                                    onItemSelect($event)
+                                                "
+                                            >
+                                            </ng-multiselect-dropdown>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <span class="font-medium mb-2"
+                                                >Select Brand</span
+                                            >
+                                            <br />
+                                            <ng-multiselect-dropdown
+                                                #multiSelect
+                                                [formControl]="f.brand"
+                                                [placeholder]="'Select Brand'"
+                                                [settings]="BrandSettings"
+                                                [data]="brand"
+                                                (onSelect)="
+                                                    onItemSelect($event)
+                                                "
+                                            >
+                                            </ng-multiselect-dropdown>
+                                        </div>
+                                    </div>
+                                    <br />
+                                </div>
+                            </div>
+                            <button
+                                mat-raised-button
+                                color="primary"
+                                matStepperNext
+                            >
+                                Next
+                            </button>
+                        </form>
+                    </div>
+                </mat-step>
+                <mat-step
+                    [stepControl]="dataFilteredGroup"
+                    label="Select Filetred Data"
+                >
+                    <div style="padding-top: 3%">
+                        <form>
+                            <div class="example-form">
+                                <div class="flex flex-col">
+                                    <span class="font-medium mb-2"
+                                        >Select Filetred Data</span
+                                    >
+                                </div>
+                            </div>
+                            <br />
+                            <button
+                                mat-raised-button
+                                color="primary"
+                                matStepperNext
+                            >
+                                Next
+                            </button>
+                        </form>
+                    </div>
+                </mat-step>
+                <mat-step>
+                    <ng-template matStepLabel>Congratulations</ng-template>
+                    <h5>Congratulations on adding your 1st product</h5>
+                    <div>
+                        &nbsp; &nbsp;
+                        <a
+                            href="javascript:void(0);"
+                            class="btn btn-success"
+                            id="complete"
+                            (click)="done()"
+                            >Complete</a
+                        >
+                        &nbsp; &nbsp;
+                    </div>
+                </mat-step>
+            </mat-horizontal-stepper>
+        </div>
+    </div>
+</div>

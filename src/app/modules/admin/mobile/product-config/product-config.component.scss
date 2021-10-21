@@ -39,3 +39,18 @@ th {
 .matSelect {
     width: 500vh;
 }
+
+.wj-listbox {
+    max-height: 200px;
+    width: auto;
+    overflow-y: auto;
+    border: 1px solid gray;
+}
+
+.checkbox {
+    margin-left: 4px;
+}
+
+body {
+    margin-bottom: 24pt;
+}

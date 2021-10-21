@@ -1,55 +1,28 @@
-<div class="filters">
-    <!-- <div id="price">
-      <h3>Price: {{rangeValues[0] + ' - ' + rangeValues[1]}}</h3>
-      <p-slider [(ngModel)]="rangeValues" (click)="handleChange()" [min]="0" [max]="2000" [style]="{'width':'14em'}" [range]="true"></p-slider>
-    </div> -->
-    <hr />
-    <div id="duration">
-        <h3>Duration</h3>
-        <li>
-            <input type="checkbox" (click)="checkFilter('2 days')" /> 2 Days
-        </li>
-        <li><input type="checkbox" (click)="checkFilter('6 days')" />6 Days</li>
-    </div>
-    <hr />
-    <div id="Theme">
-        <h3>Theme</h3>
-        <li>
-            <input
-                type="checkbox"
-                id="Wild Life"
-                (click)="filterTheme('Wild Life')"
-            />Wild Life
-        </li>
-        <li>
-            <input
-                type="checkbox"
-                id="Romance"
-                (click)="filterTheme('Romance')"
-            />Romance
-        </li>
-        <li>
-            <input
-                type="checkbox"
-                id="Food & Drink"
-                (click)="filterTheme('Food & Drink')"
-            />Food & Drink
-        </li>
-        <li>
-            <input
-                type="checkbox"
-                id="Adventure"
-                (click)="filterTheme('Adventure')"
-            />Adventure
-        </li>
-    </div>
-    <hr />
-</div>
+<div *ngIf="loadContent">
+    <form [formGroup]="form" (ngSubmit)="save()" (reset)="resetForm()">
+        <ng-multiselect-dropdown
+            #multiSelect
+            [placeholder]="'Select City'"
+            [data]="data"
+            [formControl]="f.name"
+            [settings]="settings"
+            [disabled]="false"
+            (onFilterChange)="onFilterChange($event)"
+            (onDropDownClose)="onDropDownClose($event)"
+            (onSelect)="onItemSelect($event)"
+            (onDeSelect)="onDeSelect($event)"
+            (onSelectAll)="onSelectAll($event)"
+            (onDeSelectAll)="onDeSelectAll($event)"
+        >
+        </ng-multiselect-dropdown>
 
-<div class="results">
-    <h3>Results</h3>
+        <span *ngIf="f?.name?.errors?.required" style="color: red">
+            City is required
+        </span>
 
-    <div *ngFor="let p of package">
-        <p>{{ p.product_name }}</p>
-    </div>
+        <br /><br />
+
+        <input type="submit" value="Submit" /> |
+        <input type="reset" value="Reset" />
+    </form>
 </div>

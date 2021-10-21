@@ -45,7 +45,7 @@
                             <div
                                 class="ml-1.5 leading-6 truncate text-secondary"
                             >
-                                Orders Details
+                                You have 2 new messages and 15 new tasks
                             </div>
                         </div>
                     </div>
@@ -80,113 +80,40 @@
     </div>
 
     <!-- Main -->
-    <div class="flex-auto border-t -mt-px">
-        <div class="w-full max-w-screen-xl mx-auto p-4">
-            <div
-                class="m-4 p-8 bg-card rounded-2xl shadow overflow-auto"
-                style="height: auto"
-            >
+    <div class="flex flex-col flex-auto min-w-0">
+        <div class="flex-auto p-6 sm:p-10">
+            <div class="border-2 border-white-300 rounded-2xl">
                 <mat-horizontal-stepper
                     [linear]="isLinear"
                     #stepper
                     labelPosition="bottom"
                 >
-                    <mat-step
-                        [stepControl]="filterGroup"
-                        label="Select Data to filter"
-                    >
+                    <mat-step [stepControl]="shopTypeGroup" label="1">
                         <div style="padding-top: 3%">
                             <form
-                                [formGroup]="filterGroup"
-                                (ngSubmit)="onFilterSubmit()"
+                                [formGroup]="shopTypeGroup"
+                                (ngSubmit)="onTypeSubmit()"
                             >
-                                <div class="example-form">
-                                    <div class="flex flex-col">
-                                        <!-- <span class="font-medium mb-2"
-                                            >Select Data to filter</span
-                                        > -->
-
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <span class="font-medium mb-2"
-                                                    >Select Shop Type</span
-                                                >
-                                                <br />
-                                                <ng-multiselect-dropdown
-                                                    name="shopType"
-                                                    formControlName="shopType"
-                                                    [placeholder]="
-                                                        'Select Store Type'
-                                                    "
-                                                    [settings]="
-                                                        StoreTypeSettings
-                                                    "
-                                                    [data]="shopType"
-                                                    (onSelect)="
-                                                        onItemSelect($event)
-                                                    "
-                                                >
-                                                </ng-multiselect-dropdown>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <span class="font-medium mb-2"
-                                                    >Select Category</span
-                                                >
-                                                <br />
-                                                <ng-multiselect-dropdown
-                                                    name="category"
-                                                    formControlName="category"
-                                                    [placeholder]="
-                                                        'Select Category'
-                                                    "
-                                                    [settings]="
-                                                        CategorySettings
-                                                    "
-                                                    [data]="categories"
-                                                >
-                                                </ng-multiselect-dropdown>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <span class="font-medium mb-2"
-                                                    >Select SubCategory</span
-                                                >
-                                                <br />
-                                                <ng-multiselect-dropdown
-                                                    name="sub_category"
-                                                    formControlName="sub_category"
-                                                    [placeholder]="
-                                                        'Select SubCategory'
-                                                    "
-                                                    [settings]="
-                                                        SubCategorySettings
-                                                    "
-                                                    [data]="sub_category"
-                                                >
-                                                </ng-multiselect-dropdown>
-                                            </div>
-                                        </div>
-                                        <br />
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <span class="font-medium mb-2"
-                                                    >Select Brand</span
-                                                >
-                                                <br />
-                                                <ng-multiselect-dropdown
-                                                    name="brand"
-                                                    formControlName="brand"
-                                                    [placeholder]="
-                                                        'Select Brand'
-                                                    "
-                                                    [settings]="BrandSettings"
-                                                    [data]="brand"
-                                                >
-                                                </ng-multiselect-dropdown>
-                                            </div>
-                                        </div>
-                                        <br />
+                                <span>Select Shop Type</span>
+                                <br />
+                                <br />
+                                <div class="wj-listbox">
+                                    <div
+                                        class="checkbox"
+                                        *ngFor="let shopType of shopType"
+                                    >
+                                        <input
+                                            type="checkbox"
+                                            [value]="shopType.shop_type_name"
+                                            name="shopType[]"
+                                            (change)="onCheckboxChange($event)"
+                                            matCheckbox
+                                        />
+                                        {{ shopType.shop_type_name }}
                                     </div>
                                 </div>
+                                <br />
+
                                 <button
                                     mat-raised-button
                                     color="primary"
@@ -198,17 +125,391 @@
                         </div>
                     </mat-step>
 
-                    <mat-step
-                        [stepControl]="dataFilteredGroup"
-                        label="Select Filetred Data"
-                    >
+                    <mat-step [stepControl]="categoryGroup" label="2">
                         <div style="padding-top: 3%">
-                            <form>
+                            <form
+                                [formGroup]="categoryGroup"
+                                (ngSubmit)="onCategorySubmit()"
+                            >
+                                <span>Select Category</span>
+                                <br />
+                                <br />
+                                <div class="wj-listbox">
+                                    <div
+                                        class="checkbox"
+                                        *ngFor="let categories of categories"
+                                    >
+                                        <input
+                                            type="checkbox"
+                                            [value]="categories.category"
+                                            name="categories[]"
+                                            (change)="onCategoryChange($event)"
+                                            matCheckbox
+                                        />
+                                        {{ categories.category }}
+                                    </div>
+                                </div>
+                                <br />
+
+                                <button
+                                    mat-raised-button
+                                    color="primary"
+                                    matStepperNext
+                                >
+                                    Next
+                                </button>
+                            </form>
+                        </div>
+                    </mat-step>
+
+                    <mat-step [stepControl]="subCategoryGroup" label="3">
+                        <div style="padding-top: 3%">
+                            <form
+                                [formGroup]="subCategoryGroup"
+                                (ngSubmit)="onSubCategorySubmit()"
+                            >
+                                <span>Select Sub-Category</span>
+                                <br />
+                                <br />
+                                <div class="wj-listbox">
+                                    <div
+                                        class="checkbox"
+                                        *ngFor="
+                                            let sub_category of sub_category
+                                        "
+                                    >
+                                        <input
+                                            type="checkbox"
+                                            [value]="sub_category.sub_category"
+                                            name="sub_category[]"
+                                            (change)="
+                                                onSubCategoryChange($event)
+                                            "
+                                            matCheckbox
+                                        />
+                                        {{ sub_category.sub_category }}
+                                    </div>
+                                </div>
+                                <br />
+
+                                <button
+                                    mat-raised-button
+                                    color="primary"
+                                    matStepperNext
+                                >
+                                    Next
+                                </button>
+                            </form>
+                        </div>
+                    </mat-step>
+
+                    <mat-step [stepControl]="brandGroup" label="4">
+                        <div style="padding-top: 3%">
+                            <form
+                                [formGroup]="brandGroup"
+                                (ngSubmit)="onBrandSubmit()"
+                            >
+                                <span>Select Brand</span>
+                                <br />
+                                <br />
+                                <div class="wj-listbox">
+                                    <div
+                                        class="checkbox"
+                                        *ngFor="let brand of brand"
+                                    >
+                                        <input
+                                            type="checkbox"
+                                            [value]="brand.brand"
+                                            name="brand[]"
+                                            (change)="onBrandChange($event)"
+                                            matCheckbox
+                                        />
+                                        {{ brand.brand }}
+                                    </div>
+                                </div>
+                                <br />
+
+                                <button
+                                    mat-raised-button
+                                    color="primary"
+                                    matStepperNext
+                                >
+                                    Next
+                                </button>
+                            </form>
+                        </div>
+                    </mat-step>
+
+                    <mat-step [stepControl]="productGroup" label="5">
+                        <div style="padding-top: 3%">
+                            <form
+                                [formGroup]="dataFilteredGroup"
+                                (ngSubmit)="onDataFilterSubmit()"
+                            >
                                 <div class="example-form">
                                     <div class="flex flex-col">
-                                        <span class="font-medium mb-2"
-                                            >Select Filetred Data</span
+                                        <span>Select Filetred Data</span>
+                                        <br />
+                                        <br />
+                                        <div class="fixTableHead">
+                                            <table
+                                                mat-table
+                                                matSort
+                                                [dataSource]="dataset"
+                                                class="
+                                                    table
+                                                    table-bordered
+                                                    table-responsive
+                                                "
+                                            >
+                                                <ng-container
+                                                    matColumnDef="base_product_id"
+                                                >
+                                                    <th
+                                                        mat-header-cell
+                                                        *matHeaderCellDef
+                                                    >
+                                                        Select
+                                                    </th>
+                                                    <td
+                                                        mat-cell
+                                                        *matCellDef="
+                                                            let element
+                                                        "
+                                                    >
+                                                        <input
+                                                            type="checkbox"
+                                                            [value]="
+                                                                element.base_product_id
+                                                            "
+                                                            name="base_product_id[]"
+                                                            (change)="
+                                                                onCheckboxChange(
+                                                                    $event
+                                                                )
+                                                            "
+                                                            matCheckbox
+                                                        />
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container
+                                                    matColumnDef="shop_type"
+                                                >
+                                                    <th
+                                                        mat-header-cell
+                                                        *matHeaderCellDef
+                                                    >
+                                                        Shop Type
+                                                    </th>
+                                                    <td
+                                                        mat-cell
+                                                        *matCellDef="
+                                                            let element
+                                                        "
+                                                    >
+                                                        {{ element.shop_type }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container
+                                                    matColumnDef="category"
+                                                >
+                                                    <th
+                                                        mat-header-cell
+                                                        *matHeaderCellDef
+                                                    >
+                                                        Category
+                                                    </th>
+                                                    <td
+                                                        mat-cell
+                                                        *matCellDef="
+                                                            let element
+                                                        "
+                                                    >
+                                                        {{ element.category }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container
+                                                    matColumnDef="sub_category"
+                                                >
+                                                    <th
+                                                        mat-header-cell
+                                                        *matHeaderCellDef
+                                                    >
+                                                        Sub Category
+                                                    </th>
+                                                    <td
+                                                        mat-cell
+                                                        *matCellDef="
+                                                            let element
+                                                        "
+                                                    >
+                                                        {{
+                                                            element.sub_category
+                                                        }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container
+                                                    matColumnDef="brand"
+                                                >
+                                                    <th
+                                                        mat-header-cell
+                                                        *matHeaderCellDef
+                                                    >
+                                                        Brand
+                                                    </th>
+                                                    <td
+                                                        mat-cell
+                                                        *matCellDef="
+                                                            let element
+                                                        "
+                                                    >
+                                                        {{ element.brand }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container
+                                                    matColumnDef="product_name"
+                                                >
+                                                    <th
+                                                        mat-header-cell
+                                                        *matHeaderCellDef
+                                                    >
+                                                        Product Name
+                                                    </th>
+                                                    <td
+                                                        mat-cell
+                                                        *matCellDef="
+                                                            let element
+                                                        "
+                                                    >
+                                                        {{
+                                                            element.product_name
+                                                        }}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container
+                                                    matColumnDef="product_type"
+                                                >
+                                                    <th
+                                                        mat-header-cell
+                                                        *matHeaderCellDef
+                                                    >
+                                                        Product Type
+                                                    </th>
+                                                    <td
+                                                        mat-cell
+                                                        *matCellDef="
+                                                            let element
+                                                        "
+                                                    >
+                                                        {{
+                                                            element.product_type
+                                                        }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <!-- <ng-container
+                                                    matColumnDef="product_weight"
+                                                >
+                                                    <th
+                                                        mat-header-cell
+                                                        *matHeaderCellDef
+                                                    >
+                                                        Product Weight
+                                                    </th>
+                                                    <td
+                                                        mat-cell
+                                                        *matCellDef="
+                                                            let element
+                                                        "
+                                                    >
+                                                        {{
+                                                            element.product_weight
+                                                        }}
+                                                    </td>
+                                                </ng-container> -->
+
+                                                <ng-container
+                                                    matColumnDef="mergedField"
+                                                >
+                                                    <th
+                                                        mat-header-cell
+                                                        *matHeaderCellDef
+                                                    >
+                                                        Product Weight
+                                                    </th>
+                                                    <td
+                                                        mat-cell
+                                                        *matCellDef="
+                                                            let element
+                                                        "
+                                                    >
+                                                        {{
+                                                            element.product_weight
+                                                        }}{{
+                                                            element.product_weight_type
+                                                        }}
+                                                    </td>
+                                                </ng-container>
+                                                <!-- <ng-container
+                                                matColumnDef="product_weight_type"
+                                            >
+                                                <th
+                                                    mat-header-cell
+                                                    *matHeaderCellDef
+                                                >
+                                                    Product Weight Type
+                                                </th>
+                                                <td
+                                                    mat-cell
+                                                    *matCellDef="let element"
+                                                >
+                                                    {{
+                                                        element.product_weight_type
+                                                    }}
+                                                </td>
+                                            </ng-container> -->
+
+                                                <tr
+                                                    mat-header-row
+                                                    *matHeaderRowDef="
+                                                        displayedColumns
+                                                    "
+                                                ></tr>
+                                                <tr
+                                                    mat-row
+                                                    *matRowDef="
+                                                        let row;
+                                                        columns: displayedColumns
+                                                    "
+                                                ></tr>
+                                                <tr
+                                                    class="mat-row"
+                                                    *matNoDataRow
+                                                >
+                                                    <td
+                                                        class="mat-cell"
+                                                        colspan="4"
+                                                    >
+                                                        No data matching the
+                                                        filter "{{
+                                                            input.value
+                                                        }}"
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <mat-paginator
+                                            #paginator
+                                            [pageSize]="25"
+                                            [pageSizeOptions]="[
+                                                2, 5, 10, 25, 100
+                                            ]"
                                         >
+                                        </mat-paginator>
                                     </div>
                                 </div>
                                 <br />
@@ -222,6 +523,7 @@
                             </form>
                         </div>
                     </mat-step>
+
                     <mat-step>
                         <ng-template matStepLabel>Congratulations</ng-template>
                         <h5>Congratulations on adding your 1st product</h5>

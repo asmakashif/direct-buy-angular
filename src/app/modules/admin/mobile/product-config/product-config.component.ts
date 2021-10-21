@@ -1,13 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ProductConfigService } from 'app/modules/admin/mobile/product-config/product-config.service';
+import {
+    FormGroup,
+    FormBuilder,
+    Validators,
+    FormArray,
+    FormControl,
+} from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import * as _ from 'lodash';
-import { IMultiSelectOption } from 'ngx-bootstrap-multiselect';
+import { ProductConfigService } from 'app/modules/admin/mobile/product-config/product-config.service';
+
+declare var $: any;
 
 @Component({
     selector: 'app-product-config',
@@ -15,47 +20,37 @@ import { IMultiSelectOption } from 'ngx-bootstrap-multiselect';
     styleUrls: ['./product-config.component.scss'],
 })
 export class ProductConfigComponent implements OnInit {
+    shopType: any;
     isLinear = true;
-    shopType: any = [];
+    shopTypeGroup: FormGroup;
+    categoryGroup: FormGroup;
+    subCategoryGroup: FormGroup;
+    brandGroup: FormGroup;
+    productGroup: FormGroup;
+    dataFilteredGroup: FormGroup;
+    completeGroup: FormGroup;
+
     shopId: any;
     productSet: any;
     countProduct: any;
     data: any;
+    dataset: any;
     categories: any;
     sub_category: any;
     brand: any;
-    dataset: any;
-    apiResponse: any = [];
-
     displayedColumns: string[] = [
+        'base_product_id',
         'shop_type',
         'category',
         'sub_category',
         'brand',
         'product_name',
         'product_type',
-        'product_sub_type',
-        'product_weight',
-        'product_weight_type',
-        'product_qty',
-        'product_price',
-        'offer_price',
-        // 'product_img',
-        // 'product_description',
+        'mergedField',
     ];
     dataSource!: MatTableDataSource<any>;
     @ViewChild('paginator') paginator!: MatPaginator;
     @ViewChild(MatSort) matSort!: MatSort;
-
-    StoreTypeSettings: IDropdownSettings;
-    CategorySettings: IDropdownSettings;
-    SubCategorySettings: IDropdownSettings;
-    BrandSettings: IDropdownSettings;
-
-    myOptions: IMultiSelectOption[];
-    selectedItems: [];
-    filterGroup: FormGroup;
-    dataFilteredGroup: FormGroup;
 
     constructor(
         private apiService: ProductConfigService,
@@ -66,93 +61,156 @@ export class ProductConfigComponent implements OnInit {
 
     ngOnInit(): void {
         const routeParams = this.routes.snapshot.params;
-        this.apiService.getStoreType().subscribe((shopType) => {
+        const shopId = routeParams.shopId;
+        const user_id = localStorage.getItem('user_id');
+        this.apiService.getStoreTypes().subscribe((shopType) => {
+            // Store the data
             this.shopType = shopType;
-            this.myOptions = shopType;
+            console.log(this.shopType);
         });
 
-        this.apiService.getCategories().subscribe((categories) => {
-            this.categories = categories;
+        // this.apiService.getBaseProducts().subscribe((dataset) => {
+        //     this.dataset = dataset;
+        // });
+
+        this.shopTypeGroup = this.fb.group({
+            shopType: this.fb.array([], [Validators.required]),
         });
 
-        this.apiService.getSubCategories().subscribe((sub_category) => {
-            this.sub_category = sub_category;
+        this.categoryGroup = this.fb.group({
+            categories: this.fb.array([], [Validators.required]),
         });
 
-        this.apiService.getBrand().subscribe((brand) => {
-            this.brand = brand;
+        this.subCategoryGroup = this.fb.group({
+            sub_category: this.fb.array([], [Validators.required]),
         });
 
-        this.filterGroup = this.fb.group({
-            shopType: ['', [Validators.required]],
-            category: ['', [Validators.required]],
-            sub_category: ['', [Validators.required]],
-            brand: ['', [Validators.required]],
+        this.brandGroup = this.fb.group({
+            brand: this.fb.array([], [Validators.required]),
         });
 
-        // if (!this.isMobile()) {
-        //     //alert('desktop');
-        //     this._router.navigate(['/product-config/' + routeParams.shopId]);
-        //     // this._router.resetConfig(this.mobileRoutes);
-        // }
+        this.dataFilteredGroup = this.fb.group({
+            user_id: [user_id],
+            shopId: [shopId],
+            base_product_id: this.fb.array([], [Validators.required]),
+        });
 
-        this.StoreTypeSettings = {
-            singleSelection: false,
-            idField: 'shop_type_id',
-            textField: 'shop_type_name',
-            selectAllText: 'Select All',
-            unSelectAllText: 'UnSelect All',
-            itemsShowLimit: 3,
-            allowSearchFilter: true,
-        };
-
-        this.CategorySettings = {
-            singleSelection: false,
-            idField: 'category',
-            textField: 'category',
-            selectAllText: 'Select All',
-            unSelectAllText: 'UnSelect All',
-            itemsShowLimit: 3,
-            allowSearchFilter: true,
-        };
-
-        this.SubCategorySettings = {
-            singleSelection: false,
-            idField: 'sub_category',
-            textField: 'sub_category',
-            selectAllText: 'Select All',
-            unSelectAllText: 'UnSelect All',
-            itemsShowLimit: 3,
-            allowSearchFilter: true,
-        };
-
-        this.BrandSettings = {
-            singleSelection: false,
-            idField: 'brand',
-            textField: 'brand',
-            clearSearchFilter: true,
-            maxHeight: 197,
-            selectAllText: 'Select All',
-            unSelectAllText: 'UnSelect All',
-            itemsShowLimit: 3,
-            allowSearchFilter: true,
-
-            enableCheckAll: true,
-            limitSelection: -1,
-            searchPlaceholderText: 'Tìm kiếm',
-            noDataAvailablePlaceholderText: 'Không có dữ liệu',
-            closeDropDownOnSelection: false,
-            showSelectedItemsAtTop: false,
-            defaultOpen: false,
-        };
+        if (this.isMobile()) {
+            //alert('mobile');
+            this._router.navigate([
+                '/mobile/product-config/' + routeParams.shopId,
+            ]);
+            // this._router.resetConfig(this.mobileRoutes);
+        }
     }
 
-    onItemSelect(item: any) {
-        console.log('onItemSelect', item);
+    onCheckboxChange(e) {
+        const shopType: FormArray = this.shopTypeGroup.get(
+            'shopType'
+        ) as FormArray;
+
+        if (e.target.checked) {
+            shopType.push(new FormControl(e.target.value));
+        } else {
+            const index = shopType.controls.findIndex(
+                (x) => x.value === e.target.value
+            );
+            shopType.removeAt(index);
+        }
     }
 
-    onFilterSubmit() {
-        console.log(this.filterGroup.value);
+    onTypeSubmit() {
+        //more code
+        this.apiService
+            .getCategoryByShopType(this.shopTypeGroup.value)
+            .subscribe((categories) => {
+                this.categories = categories;
+                console.log(this.categories);
+            });
+    }
+
+    onCategoryChange(e) {
+        const categories: FormArray = this.categoryGroup.get(
+            'categories'
+        ) as FormArray;
+
+        if (e.target.checked) {
+            categories.push(new FormControl(e.target.value));
+        } else {
+            const index = categories.controls.findIndex(
+                (x) => x.value === e.target.value
+            );
+            categories.removeAt(index);
+        }
+    }
+
+    onCategorySubmit() {
+        //more code
+        //console.log(this.categoryGroup.value);
+        this.apiService
+            .getSubCatbyCategory(this.categoryGroup.value)
+            .subscribe((subCategory) => {
+                this.sub_category = subCategory;
+                console.log(this.sub_category);
+            });
+    }
+
+    onSubCategoryChange(e) {
+        const sub_category: FormArray = this.subCategoryGroup.get(
+            'sub_category'
+        ) as FormArray;
+
+        if (e.target.checked) {
+            sub_category.push(new FormControl(e.target.value));
+        } else {
+            const index = sub_category.controls.findIndex(
+                (x) => x.value === e.target.value
+            );
+            sub_category.removeAt(index);
+        }
+    }
+
+    onSubCategorySubmit() {
+        //more code
+        console.log(this.subCategoryGroup.value);
+        this.apiService
+            .getBrandBySubCat(this.subCategoryGroup.value)
+            .subscribe((brand) => {
+                this.brand = brand;
+                console.log(this.brand);
+            });
+    }
+
+    onBrandChange(e) {
+        const brand: FormArray = this.brandGroup.get('brand') as FormArray;
+
+        if (e.target.checked) {
+            brand.push(new FormControl(e.target.value));
+        } else {
+            const index = brand.controls.findIndex(
+                (x) => x.value === e.target.value
+            );
+            brand.removeAt(index);
+        }
+    }
+
+    onBrandSubmit() {
+        //more code
+        console.log(this.brandGroup.value);
+        this.apiService
+            .getProductsByBrand(this.brandGroup.value)
+            .subscribe((products) => {
+                this.dataset = products;
+                console.log(this.dataset);
+            });
+    }
+
+    onDataFilterSubmit() {
+        console.log(this.dataFilteredGroup.value);
+        //more code
+        this.apiService
+            .saveFilteredData(this.dataFilteredGroup.value)
+            .subscribe((data) => {});
     }
 
     done() {

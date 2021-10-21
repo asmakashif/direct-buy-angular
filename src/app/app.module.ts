@@ -17,8 +17,6 @@ import { SearchPageComponent } from './modules/customer/search-page/search-page.
 
 
 
-
-
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
     scrollPositionRestoration: 'enabled',

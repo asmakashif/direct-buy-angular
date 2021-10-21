@@ -17,13 +17,18 @@ declare var $: any;
 export class ProductInfoComponent implements OnInit {
     activeLink = 'ProductInformation';
     otherLink = 'StoreSummary';
+    dateGroup: FormGroup;
     dataset: any;
     visualRow: any;
     shopId: any;
+    TableData: any = [];
+    ShowEditTable: boolean = false;
+    EditRowID: any = '';
     constructor(
         private apiService: ProductInfoService,
         private _router: Router,
-        private routes: ActivatedRoute
+        private routes: ActivatedRoute,
+        private fb: FormBuilder
     ) {}
 
     ngOnInit(): void {
@@ -33,100 +38,185 @@ export class ProductInfoComponent implements OnInit {
             .getTempStrProducts(routeParams.shopId)
             .subscribe((dataset) => {
                 this.dataset = dataset;
-                this.shopId = routeParams.shopId;
-                console.log(this.shopId);
             });
-        if (!this.isMobile()) {
-            //alert('desktop');
-            this._router.navigate(['/product-info/' + routeParams.shopId]);
-            // this._router.resetConfig(this.mobileRoutes);
-        }
+
+        // if (!this.isMobile()) {
+        //     this._router.navigate(['/product-info/' + routeParams.shopId]);
+        // }
+
+        this.TableData = [
+            {
+                id: 1,
+                name: 'Aurelia Vega',
+                age: 30,
+                companyName: 'Deepends',
+                country: 'Spain',
+                city: 'Madrid',
+            },
+            {
+                id: 2,
+                name: 'Guerra Cortez',
+                age: 45,
+                companyName: 'Insectus',
+                country: 'USA',
+                city: 'San Francisco',
+            },
+            {
+                id: 3,
+                name: 'Guadalupe House',
+                age: 26,
+                companyName: 'Isotronic',
+                country: 'Germany',
+                city: 'Frankfurt am Main',
+            },
+            {
+                id: 4,
+                name: 'Aurelia Vega',
+                age: 30,
+                companyName: 'Deepends',
+                country: 'Spain',
+                city: 'Madrid',
+            },
+            {
+                id: 5,
+                name: 'Elisa Gallagher',
+                age: 31,
+                companyName: 'Portica',
+                country: 'United Kingdom',
+                city: 'London',
+            },
+        ];
+
+        // this.dateGroup = this.fb.group({
+        //     id: [''],
+        //     name: [''],
+        //     age: [''],
+        //     companyName: [''],
+        //     country: [''],
+        //     city: [''],
+        // });
     }
 
-    storeSummary(QSYWy7): void {
-        const routeParams = this.routes.snapshot.params;
-        console.log(routeParams.shopId);
-        this._router.navigate(['/store-summary/' + QSYWy7]);
+    edit(val) {
+        console.log(val);
     }
 
-    afterChange = function (changes: any[], source: boolean) {
-        var URL = window.location.href;
-        var arr = URL.split('/');
+    onDataChanged(event: any[]): void {
+        console.log((this.TableData = event));
+    }
 
-        var rowThatHasBeenChanged = changes[0][0];
-        var sourceRow = this.getSourceDataAtRow(rowThatHasBeenChanged),
-            visualRow = this.getDataAtRow(rowThatHasBeenChanged);
-        console.log(visualRow);
-        var id = visualRow[0];
-        console.log(id);
-        var category = visualRow[1];
-        var sub_category = visualRow[2];
-        var brand = visualRow[3];
-        var product_name = visualRow[4];
-        var product_type = visualRow[5];
-        var product_sub_type = visualRow[6];
-        var product_weight = visualRow[7];
-        var product_weight_type = visualRow[8];
-        var product_qty = visualRow[9];
-        var product_price = visualRow[10];
-        var offer_price = visualRow[11];
-        // var productImg = visualRow[13];
-        // var productDescription = visualRow[14];
-        $(document).ready(function () {
-            $('#save_value').click(function () {});
-            $.ajax({
-                url: '/api/updateTempStrProduct.php',
-                method: 'POST',
-                data: {
-                    id: id,
-                    category: category,
-                    sub_category: sub_category,
-                    brand: brand,
-                    product_name: product_name,
-                    product_type: product_type,
-                    product_sub_type: product_sub_type,
-                    product_weight: product_weight,
-                    product_weight_type: product_weight_type,
-                    product_qty: product_qty,
-                    product_price: product_price,
-                    offer_price: offer_price,
-                },
-                success: function (data) {
-                    console.log(data);
-                    //alert('success');
-                },
-            });
-        });
-    };
-    columnHeaders = [
-        [
-            'Id',
-            'Category',
-            'Sub-Category',
-            'Brand',
-            'Product Name',
-            'Product Type',
-            'Product Sub-Type',
-            'Product Weight',
-            'Product Weight-Type',
-            'Product Qty',
-            'Product Price',
-            'Offer Price',
-        ],
-    ];
-    collapsibleColumnsConfig = [
-        {
-            row: -2,
-            col: 0,
-            collapsible: true,
-        },
-        {
-            row: -2,
-            col: 6,
-            collapsible: true,
-        },
-    ];
-    licenseKey = 'non-commercial-and-evaluation';
+    // onDataSubmit() {
+    //     console.log(this.dateGroup.value);
+    // }
+
+    // editField: string;
+    // personList: Array<any> = [
+    //     {
+    //         id: 1,
+    //         name: 'Aurelia Vega',
+    //         age: 30,
+    //         companyName: 'Deepends',
+    //         country: 'Spain',
+    //         city: 'Madrid',
+    //     },
+    //     {
+    //         id: 2,
+    //         name: 'Guerra Cortez',
+    //         age: 45,
+    //         companyName: 'Insectus',
+    //         country: 'USA',
+    //         city: 'San Francisco',
+    //     },
+    //     {
+    //         id: 3,
+    //         name: 'Guadalupe House',
+    //         age: 26,
+    //         companyName: 'Isotronic',
+    //         country: 'Germany',
+    //         city: 'Frankfurt am Main',
+    //     },
+    //     {
+    //         id: 4,
+    //         name: 'Aurelia Vega',
+    //         age: 30,
+    //         companyName: 'Deepends',
+    //         country: 'Spain',
+    //         city: 'Madrid',
+    //     },
+    //     {
+    //         id: 5,
+    //         name: 'Elisa Gallagher',
+    //         age: 31,
+    //         companyName: 'Portica',
+    //         country: 'United Kingdom',
+    //         city: 'London',
+    //     },
+    // ];
+
+    // awaitingPersonList: Array<any> = [
+    //     {
+    //         id: 6,
+    //         name: 'George Vega',
+    //         age: 28,
+    //         companyName: 'Classical',
+    //         country: 'Russia',
+    //         city: 'Moscow',
+    //     },
+    //     {
+    //         id: 7,
+    //         name: 'Mike Low',
+    //         age: 22,
+    //         companyName: 'Lou',
+    //         country: 'USA',
+    //         city: 'Los Angeles',
+    //     },
+    //     {
+    //         id: 8,
+    //         name: 'John Derp',
+    //         age: 36,
+    //         companyName: 'Derping',
+    //         country: 'USA',
+    //         city: 'Chicago',
+    //     },
+    //     {
+    //         id: 9,
+    //         name: 'Anastasia John',
+    //         age: 21,
+    //         companyName: 'Ajo',
+    //         country: 'Brazil',
+    //         city: 'Rio',
+    //     },
+    //     {
+    //         id: 10,
+    //         name: 'John Maklowicz',
+    //         age: 36,
+    //         companyName: 'Mako',
+    //         country: 'Poland',
+    //         city: 'Bialystok',
+    //     },
+    // ];
+
+    // updateList(id: number, property: string, event: any) {
+    //     const editField = event.target.textContent;
+    //     this.personList[id][property] = editField;
+    // }
+
+    // remove(id: any) {
+    //     this.awaitingPersonList.push(this.personList[id]);
+    //     this.personList.splice(id, 1);
+    // }
+
+    // add() {
+    //     if (this.awaitingPersonList.length > 0) {
+    //         const person = this.awaitingPersonList[0];
+    //         this.personList.push(person);
+    //         this.awaitingPersonList.splice(0, 1);
+    //     }
+    // }
+
+    // changeValue(id: number, property: string, event: any) {
+    //     this.editField = event.target.textContent;
+    // }
 
     isMobile() {
         let check = false;

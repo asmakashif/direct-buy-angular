@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { FilterData } from '../../../../Model/filter-data';
 import { Data } from '../../../../Model/data';
 import { HttpClient } from '@angular/common/http';
 import { ApiResponse } from '../../../../Model/api-response';
@@ -14,24 +15,8 @@ export class ProductConfigService {
         return this.http.get('/api/getBaseProducts.php');
     }
 
-    getStoreType(): Observable<any> {
-        return this.http.get('/api/mobileAPI/getStoreType.php');
-    }
-
-    getCategories(): Observable<any> {
-        return this.http.get('/api/mobileAPI/getCategory.php');
-    }
-
-    getSubCategories(): Observable<any> {
-        return this.http.get('/api/mobileAPI/getSubCategory.php');
-    }
-
-    getBrand(): Observable<any> {
-        return this.http.get('/api/mobileAPI/getBrand.php');
-    }
-
-    createUser(user: Data): Observable<ApiResponse> {
-        return this.http.post<ApiResponse>('/api/createShop.php', user);
+    getStoreTypes(): Observable<any> {
+        return this.http.get('/api/getStoreTypes.php');
     }
 
     getCategoryByShopType(user: Data): Observable<ApiResponse> {
@@ -56,11 +41,24 @@ export class ProductConfigService {
         return this.http.post<ApiResponse>('/api/getProductsByBrand.php', user);
     }
 
+    saveFilteredData(data: FilterData): Observable<ApiResponse> {
+        return this.http.post<ApiResponse>(
+            '/api/mobileAPI/saveFilteredData.php',
+            data
+        );
+    }
+
     getTempStrProducts(shopId: string): Observable<any> {
         return this.http.get('/api/getTempStrProducts.php?shopId=' + shopId);
     }
 
     updateProductStatus(shopId: string): Observable<any> {
-        return this.http.get('/api/updateProductStatus.php?shopId=' + shopId);
+        return this.http.post('/api/updateProductStatus.php', shopId);
+    }
+
+    countStrProducts(shopId: string): Observable<ApiResponse> {
+        return this.http.get<ApiResponse>(
+            '/api/countStrProducts.php?shopId=' + shopId
+        );
     }
 }

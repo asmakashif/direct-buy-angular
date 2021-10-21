@@ -84,45 +84,139 @@
         <div class="w-full max-w-screen-xl mx-auto">
             <div class="card m-8">
                 <div class="card-body">
-                    <hot-table
-                        class="hot"
-                        [data]="dataset"
-                        height="450"
-                        [colWidths]="[
-                            99, 99, 140, 150, 150, 160, 192, 192, 192, 192, 192,
-                            192, 192
-                        ]"
-                        [nestedHeaders]="columnHeaders"
-                        [collapsibleColumns]="collapsibleColumnsConfig"
-                        [colHeaders]="true"
-                        [rowHeaders]="false"
-                        [afterChange]="afterChange"
-                        [dropdownMenu]="true"
-                        [multiColumnSorting]="true"
-                        [filters]="true"
-                        licenseKey="non-commercial-and-evaluation"
-                        [hiddenColumns]="{
-                            columns: [0],
-                            indicators: false
-                        }"
-                    >
-                        <hot-column
-                            data="temp_str_config_id"
-                            type="numeric"
-                            className="htCenter"
-                        ></hot-column>
-                        <hot-column data="category"></hot-column>
-                        <hot-column data="sub_category"></hot-column>
-                        <hot-column data="brand"></hot-column>
-                        <hot-column data="product_name"></hot-column>
-                        <hot-column data="product_type"></hot-column>
-                        <hot-column data="product_sub_type"></hot-column>
-                        <hot-column data="product_weight"></hot-column>
-                        <hot-column data="product_weight_type"></hot-column>
-                        <hot-column data="product_qty"></hot-column>
-                        <hot-column data="product_price"></hot-column>
-                        <hot-column data="offer_price"></hot-column>
-                    </hot-table>
+                    <table class="table table-bordered table-responsive">
+                        <thead>
+                            <th class="text-center">Person Name</th>
+                            <th class="text-center">Age</th>
+                            <th class="text-center">Company Name</th>
+                            <th class="text-center">Country</th>
+                            <th class="text-center">City</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let person of TableData">
+                                <td
+                                    contenteditable="true"
+                                    (click)="edit(person.id)"
+                                >
+                                    <input
+                                        type="text"
+                                        [(ngModel)]="person.name"
+                                    />
+                                </td>
+                                <td
+                                    contenteditable="true"
+                                    (click)="edit(person.id)"
+                                >
+                                    <input
+                                        type="text"
+                                        [(ngModel)]="person.age"
+                                    />
+                                </td>
+                                <td
+                                    contenteditable="true"
+                                    (click)="edit(person.id)"
+                                >
+                                    <input
+                                        type="text"
+                                        [(ngModel)]="person.companyName"
+                                    />
+                                </td>
+                                <td
+                                    contenteditable="true"
+                                    (click)="edit(person.id)"
+                                >
+                                    <input
+                                        type="text"
+                                        [(ngModel)]="person.country"
+                                    />
+                                </td>
+                                <td
+                                    contenteditable="true"
+                                    (click)="edit(person.id)"
+                                >
+                                    <input
+                                        type="text"
+                                        [(ngModel)]="person.city"
+                                    />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="row">
+                        <pre>
+                            {{ TableData | json }}
+                        </pre>
+                    </div>
+                    <!-- <div id="table" class="table-editable">
+                        <table
+                            class="
+                                table
+                                table-bordered
+                                table-responsive-md
+                                table-striped
+                                text-center
+                            "
+                        >
+                            <tr>
+                                <th class="text-center">Person Name</th>
+                                <th class="text-center">Age</th>
+                                <th class="text-center">Company Name</th>
+                                <th class="text-center">Country</th>
+                                <th class="text-center">City</th>
+                            </tr>
+                            <tr
+                                *ngFor="
+                                    let person of personList;
+                                    let id = index
+                                "
+                            >
+                                <td>
+                                    <span
+                                        (blur)="updateList(id, 'name', $event)"
+                                        contenteditable="true"
+                                        >{{ person.name }}</span
+                                    >
+                                </td>
+                                <td>
+                                    <span
+                                        contenteditable="true"
+                                        (blur)="updateList(id, 'age', $event)"
+                                        >{{ person.age }}</span
+                                    >
+                                </td>
+                                <td>
+                                    <span
+                                        contenteditable="true"
+                                        (blur)="
+                                            updateList(
+                                                id,
+                                                'companyName',
+                                                $event
+                                            )
+                                        "
+                                        >{{ person.companyName }}</span
+                                    >
+                                </td>
+                                <td>
+                                    <span
+                                        contenteditable="true"
+                                        (blur)="
+                                            updateList(id, 'country', $event)
+                                        "
+                                        >{{ person.country }}</span
+                                    >
+                                </td>
+                                <td>
+                                    <span
+                                        contenteditable="true"
+                                        (blur)="updateList(id, 'city', $event)"
+                                        >{{ person.city }}</span
+                                    >
+                                </td>
+                            </tr>
+                        </table>
+                    </div> -->
                 </div>
             </div>
         </div>

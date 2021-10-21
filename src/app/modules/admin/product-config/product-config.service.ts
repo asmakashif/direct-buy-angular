@@ -49,6 +49,6 @@ export class ProductConfigService {
     }
 
     updateProductStatus(shopId: string): Observable<any> {
-        return this.http.get('/api/updateProductStatus.php?shopId=' + shopId);
+        return this.http.post('/api/updateProductStatus.php', shopId);
     }
 }

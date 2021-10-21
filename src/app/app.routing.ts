@@ -279,6 +279,13 @@ export const appRoutes: Route[] = [
                         'app/modules/admin/mobile/product-info/product-info.module'
                     ).then((m) => m.ProductInfoModule),
             },
+            {
+                path: 'table-edit/:shopId',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/table-edit/table-edit.module'
+                    ).then((m) => m.TableEditModule),
+            },
         ],
     },
 
@@ -297,9 +304,9 @@ export const appRoutes: Route[] = [
             {
                 path: 'cust-details/:id',
                 loadChildren: () =>
-                    import('app/modules/customer/cust-details/cust-details.module').then(
-                        (m) => m.CustomerDetailsModule
-                    ),
+                    import(
+                        'app/modules/customer/cust-details/cust-details.module'
+                    ).then((m) => m.CustomerDetailsModule),
             },
             // {
             //     path: 'searchPage',

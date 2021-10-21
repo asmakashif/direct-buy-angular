@@ -17,17 +17,16 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { SharedModule } from 'app/shared/shared.module';
-import { HotTableModule } from '@handsontable/angular';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { NgxBootstrapMultiselectModule } from 'ngx-bootstrap-multiselect';
+import { WjInputModule } from '@grapecity/wijmo.angular2.input';
 import 'handsontable/dist/handsontable.min.css';
 import 'pikaday/css/pikaday.css';
 import { ProductConfigComponent } from 'app/modules/admin/mobile/product-config/product-config.component';
-//import { projectRoutes } from 'app/modules/admin/dashboards/project/project.routing';
 
 const productConfigRoutes: Route[] = [
     {
@@ -59,11 +58,12 @@ const productConfigRoutes: Route[] = [
         MatSelectModule,
         MatStepperModule,
         SharedModule,
-        HotTableModule,
+        FormsModule,
+        ReactiveFormsModule,
         MatPaginatorModule,
         NgbModule,
         NgSelectModule,
-        NgxBootstrapMultiselectModule,
+        WjInputModule,
         NgMultiSelectDropDownModule.forRoot(),
     ],
 })
