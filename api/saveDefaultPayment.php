@@ -39,7 +39,7 @@
     {
         $DecodedData=json_decode($EncodedData,true);
         
-        //$user_id = 12;
+     
         $shopId=$DecodedData['shopId']; 
         $shop_pInfo_id=$DecodedData['shop_pInfo_id']; 
         // $shopId='zaSBHA'; 

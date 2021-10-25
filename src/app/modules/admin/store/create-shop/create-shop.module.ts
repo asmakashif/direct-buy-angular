@@ -18,10 +18,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SharedModule } from 'app/shared/shared.module';
-import { HotTableModule } from '@handsontable/angular';
 
-import 'handsontable/dist/handsontable.min.css';
-import 'pikaday/css/pikaday.css';
 import { CreateShopComponent } from 'app/modules/admin/store/create-shop/create-shop.component';
 //import { projectRoutes } from 'app/modules/admin/dashboards/project/project.routing';
 
@@ -55,7 +52,6 @@ const createShopRoutes: Route[] = [
         MatSelectModule,
         MatStepperModule,
         SharedModule,
-        HotTableModule,
     ],
 })
 export class CreateShopModule {}

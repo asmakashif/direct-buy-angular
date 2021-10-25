@@ -22,6 +22,7 @@
             while($row = mysqli_fetch_assoc($result))
             {
                 $users['base_product_id'] = $row['base_product_id'];
+                $users['shop_type'] = $row['shop_type'];
                 $users['category'] = $row['category'];
                 $users['sub_category'] = $row['sub_category'];
                 $users['brand'] = $row['brand'];

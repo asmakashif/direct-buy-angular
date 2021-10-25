@@ -11,7 +11,7 @@
 
     $users = [];
     $shopId = $_GET['shopId'];
-    $user_id = 12;
+    $user_id = $_GET['user_id'];
     //$shopId = 'i3s6wp';
     //print_r($shopId);
 

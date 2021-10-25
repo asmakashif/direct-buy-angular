@@ -11,7 +11,7 @@
     $DB=mysqli_select_db($CN,"formal_store");
 
     $orders = [];
-    $user_id = 12;
+    $user_id = $_GET['user_id'];
     $sql = "SELECT * FROM `shop_details`as sd JOIN `tbl_user` as tu ON tu.id=sd.user_id WHERE `user_id` = '$user_id' ";
     //$sql = "SELECT * FROM shop_details JOIN tbl_user";
 
@@ -28,8 +28,8 @@
             $users[$cr]['shopId'] = $row1['shopId'];
             $users[$cr]['shop_name'] = $row1['shop_name'];
             $users[$cr]['shop_payment_status'] = $row1['shop_payment_status'];
-            // $users[$cr]['shopId'] = $row1['shopId'];
-            // $users[$cr]['order_status'] = $row1['order_status'];
+            $users[$cr]['completed_orders'] = $row1['completed_orders'];
+            $users[$cr]['pending_orders'] = $row1['pending_orders'];
             // $shopId = (array_column($users, 'shopId'));
             // $count = array_count_values($shopId);
             $cr++;

@@ -15,7 +15,7 @@
     {
         $DecodedData=json_decode($EncodedData,true);
         
-        $user_id = 12;
+        $user_id=$DecodedData['user_id']; 
         $shopId=$DecodedData['shopId']; 
         $payment_name=$DecodedData['payment_name']; 
 
@@ -26,7 +26,7 @@
             { 
             	//echo $key;
                 //$payment_name = $DecodedData['payment_name'][$key];  
-                $sql="INSERT INTO `shop_payment_info`(pInfo_shopId,pInfo_payment_name) values('$shopId','$key')";
+                $sql="INSERT INTO `shop_payment_info`(pInfo_userId,pInfo_shopId,pInfo_payment_name) values('$user_id','$shopId','$key')";
                 $R=mysqli_query($CN,$sql);
             
     	        if($R)

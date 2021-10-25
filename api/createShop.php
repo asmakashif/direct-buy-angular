@@ -17,19 +17,20 @@
 
         //print_r($DecodedData);
         //die();
+        $user_id=$DecodedData['user_id'];
         $shopId=$DecodedData['shopId'];
         
         $shop_name=$DecodedData['shop_name'];
         $shop_address=$DecodedData['shop_address'];
-        $checkbox1=$DecodedData['shopType']; 
+        // $checkbox1=$DecodedData['shopType']; 
 
-        $chk="";  
-        foreach($checkbox1 as $chk1)  
-        { 
-            $chk .= $chk1.",";  
-        }  
+        // $chk="";  
+        // foreach($checkbox1 as $chk1)  
+        // { 
+        //     $chk .= $chk1.",";  
+        // }  
         
-        $sql="INSERT INTO `shop_details`(shopId,shop_name,shop_address,shopType) values('$shopId','$shop_name','$shop_address','$chk')";
+        $sql="INSERT INTO `shop_details`(user_id,shopId,shop_name,shop_address) values('$user_id','$shopId','$shop_name','$shop_address')";
         
         $R=mysqli_query($CN,$sql);
         

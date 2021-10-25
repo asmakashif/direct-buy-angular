@@ -12,7 +12,7 @@
     $DB=mysqli_select_db($CN,"formal_store");
 
 
-    $sql = "SELECT * from ((SELECT pi.payment_id,pi.user_id,pi.payment_name,pi.provider_type,spi.pInfo_payment_name,spi.pInfo_shopId FROM payment_integration as pi LEFT JOIN shop_payment_info as spi ON spi.pInfo_payment_name=pi.payment_name WHERE pi.user_id = '$user_id' AND spi.pInfo_shopId = '$shopId') UNION (SELECT pi.payment_id,pi.user_id,pi.payment_name,pi.provider_type,pi.payment_api_key,pi.payment_secret_key FROM payment_integration as pi WHERE pi.user_id='$user_id')) as payment group by payment.payment_name"
+    $sql = "SELECT * from ((SELECT * FROM shop_details) UNION (SELECT oi.order_code,oi.shopId,oi.order_status FROM `order_items` as oi JOIN `shop_details` as sd ON sd.shopId=oi.shopId WHERE order_status = 1 GROUP BY order_code)) as payment group by payment.payment_name"
     if($result = mysqli_query($CN,$qry))
     {
 

@@ -161,42 +161,42 @@ export const appRoutes: Route[] = [
                     ).then((m) => m.CreateModule),
             },
             {
-                path: 'create-shop',
+                path: 'store/create-shop',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/store/create-shop/create-shop.module'
                     ).then((m) => m.CreateShopModule),
             },
             {
-                path: 'product-config/:shopId',
+                path: 'product/product-config/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/product/product-config/product-config.module'
                     ).then((m) => m.ProductConfigModule),
             },
             {
-                path: 'product-info/:shopId',
+                path: 'product/product-info/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/product/product-info/product-info.module'
                     ).then((m) => m.ProductInfoModule),
             },
             {
-                path: 'store-summary/:shopId',
+                path: 'store/store-summary/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/store/store-summary/store-summary.module'
                     ).then((m) => m.StoreSummaryModule),
             },
             {
-                path: 'shop-details/:shopId',
+                path: 'store/shop-details/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/store/shop-details/shop-details.module'
                     ).then((m) => m.ShopDetailsModule),
             },
             {
-                path: 'shop-configuration/:shopId',
+                path: 'store/shop-configuration/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/store/shop-configuration/shop-configuration.module'
@@ -259,14 +259,14 @@ export const appRoutes: Route[] = [
                     ).then((m) => m.ManagePaymentGatewayModule),
             },
             {
-                path: 'store-payment/:shopId',
+                path: 'store/store-payment/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/store/store-payment/store-payment.module'
                     ).then((m) => m.StorePaymentModule),
             },
             {
-                path: 'store-activation/:shopId',
+                path: 'store/store-activation/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/store/store-activation/store-activation.module'
@@ -294,7 +294,7 @@ export const appRoutes: Route[] = [
                     ).then((m) => m.ProductInfoModule),
             },
             {
-                path: 'table-edit/:shopId',
+                path: 'testing/table-edit/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/testing/table-edit/table-edit.module'

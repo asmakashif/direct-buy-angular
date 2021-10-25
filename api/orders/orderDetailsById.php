@@ -9,26 +9,24 @@
     $CN= mysqli_connect("localhost","root","");
     $DB=mysqli_select_db($CN,"formal_store");
 
-    $users = [];
-    $shopId = $_GET['shopId'];
-    $user_id = $_GET['user_id'];
-    
-    $sql = "SELECT * FROM `shop_payment_info`as spi WHERE `pInfo_shopId` = '$shopId' AND `pInfo_userId` = '$user_id'";
-    //$sql = "SELECT * FROM `shop_details` WHERE `shopId` = '$shopId'  LIMIT 1 ";
+    //$users = [];
+    $order_code = $_GET['order_code'];
+    //$order_code = 'A000002';
+
+    $sql = "SELECT * FROM `order_items` WHERE `order_code` = '$order_code' GROUP BY order_code";
 
     if($result = mysqli_query($CN,$sql))
     {
-        $cr = 0;
+        
         while($row = mysqli_fetch_assoc($result))
         {
-            $users[$cr]['shop_pInfo_id'] = $row['shop_pInfo_id'];
-            $users[$cr]['pInfo_shopId'] = $row['pInfo_shopId'];
-            $users[$cr]['pInfo_payment_name'] = $row['pInfo_payment_name'];
-            $users[$cr]['default_payment'] = $row['default_payment'];
-            $cr++;
+            $orders['order_code'] = $row['order_code'];
+            $orders['c_fname'] = $row['c_fname'];
+            $orders['total'] = $row['total'];
+            $orders['order_placed_date'] = $row['order_placed_date'];
         }
 
-        echo json_encode($users);
+        echo json_encode($orders);
     }
     else
     {

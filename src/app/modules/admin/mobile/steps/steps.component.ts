@@ -53,7 +53,7 @@ export class StepsComponent implements OnInit {
     viewProducts() {
         const routeParams = this.routes.snapshot.params;
         this._router.navigate([]).then((result) => {
-            window.open('/mobile/product-info/' + routeParams.shopId, '_blank');
+            window.open('/mobile/product-info/' + routeParams.shopId);
         });
     }
 

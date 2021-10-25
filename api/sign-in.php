@@ -1,4 +1,5 @@
 <?php 
+    session_start();
     header("Access-Control-Allow-Origin: http://localhost:4200");
     header("Access-Control-Allow-Origin: *");
     header('Access-Control-Allow-Credentials: true');
@@ -48,13 +49,23 @@
         $Sql_Query = "SELECT * from `tbl_user` WHERE `email` = '$email' and `password` = '$password' ";
 
         $check = mysqli_fetch_array(mysqli_query($CN,$Sql_Query));
-        //print_r($check);
-        if(isset($check)){
+        
+        if(isset($check))
+        {
+            $user_id = $check['id'];
+            $firstname = $check['firstname'];
+            //echo $firstname;
+            // $_SESSION["user_id"] = $check['id'];
+            // $_SESSION["firstname"] = $check['firstname'];
+            // $_SESSION["email"] = $check['email'];
+            
             echo json_encode(
                 array(
                     "message" => "Successful login",
                     "accessToken"=> $jwt,
-                    "email"=>$email
+                    "email"=>$email,
+                    "firstname"=>$firstname,
+                    "user_id"=>$user_id
                 )
             );
             http_response_code(200);

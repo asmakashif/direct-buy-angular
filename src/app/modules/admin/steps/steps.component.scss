@@ -1,7 +1,7 @@
 .step {
     position: relative;
     padding: 10px;
-    border-left: 5px solid rgb(122, 197, 228);
+    border-left: 5px solid #0f172a;
     position: relative;
     margin-left: 1em;
     padding-left: 2em;
@@ -9,10 +9,10 @@
 .step h2 {
     border-top-right-radius: 1em;
     border-bottom-right-radius: 1em;
-    border: 3px solid rgb(122, 197, 228);
+    border: 3px solid #0f172a;
     margin: 0;
     text-indent: 1em;
-    color: rgb(122, 197, 228);
+    color: #0f172a;
     font-weight: normal;
     font-size: 1.3em;
     margin-left: -1em;
@@ -21,7 +21,7 @@
 .step h2::before {
     content: attr(data-step-id);
     border-radius: 2em;
-    background-color: rgb(198, 228, 241);
+    background-color: #0f172a;
     width: 2em;
     height: 2em;
     display: inline-block;
@@ -32,7 +32,7 @@
     line-height: 2em;
     font-size: 1.2em;
     font-weight: normal;
-    color: #1b8ad4;
+    color: #f8f8f8;
     text-indent: 0;
 }
 
@@ -40,7 +40,7 @@
 .step.active h2::before {
     content: attr(data-step-id);
     border-radius: 2em;
-    background-color: rgb(122, 197, 228);
+    background-color: #0f172a;
     width: 2em;
     height: 2em;
     display: inline-block;
@@ -57,7 +57,7 @@
 
 /* Active step: */
 .step.active h2 {
-    background-color: rgb(122, 197, 228);
+    background-color: #0f172a;
     color: #ffffff;
     font-weight: bold;
 }
@@ -69,7 +69,7 @@
 .step::before {
     content: "";
     border: 0.8em solid transparent;
-    border-top-color: rgb(122, 197, 228);
+    border-top-color: #0f172a;
     border-top-width: 1.5em;
     position: absolute;
     display: inline-block;
@@ -102,7 +102,7 @@
 /* ----------------------- */
 /* The button*/
 button {
-    background-color: rgb(122, 197, 228);
+    background-color: #0f172a;
     // pointer-events: none;
     border: none;
     color: #ffffff;
@@ -113,7 +113,7 @@ button {
 }
 .step.active .back,
 .step.active .next {
-    background-color: rgb(122, 197, 228);
+    background-color: #0f172a;
     cursor: pointer;
     pointer-events: auto;
 }

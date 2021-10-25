@@ -10,7 +10,7 @@
     $CN= mysqli_connect("localhost","root","");
     $DB=mysqli_select_db($CN,"formal_store");
 
-    $user_id = 12;
+    $user_id = $_GET['user_id'];
     $shopId = $_GET['shopId'];
     $payment = [];
 

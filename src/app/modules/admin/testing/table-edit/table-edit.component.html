@@ -93,15 +93,17 @@
                     overflow-hidden
                 "
             >
-                <div class="table-responsive">
-                    <generic-table
-                        [gtClasses]="'table-sm'"
-                        #myTable
-                        [gtSettings]="configObject.settings"
-                        [gtFields]="configObject.fields"
-                        [gtData]="data"
-                        (gtEvent)="trigger($event)"
-                    ></generic-table>
+                <div class="fixTableHead">
+                    <div class="table-responsive">
+                        <generic-table
+                            [gtClasses]="'table-sm'"
+                            #myTable
+                            [gtSettings]="configObject.settings"
+                            [gtFields]="configObject.fields"
+                            [gtData]="data"
+                            (gtEvent)="trigger($event)"
+                        ></generic-table>
+                    </div>
                 </div>
                 <div class="text-center">
                     <small

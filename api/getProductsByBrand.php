@@ -14,10 +14,12 @@
     // echo $string;
     
     $EncodedData=file_get_contents('php://input');
+    //print_r($EncodedData);
+
     if(isset($EncodedData) && !empty($EncodedData))
     {
         $DecodedData=json_decode($EncodedData,true);
-
+        
         $brand=$DecodedData['brand'];
         $brand = "'" . implode ( "', '", $brand ) . "'";
         //$ids = implode(', ', $shopType);
@@ -33,6 +35,7 @@
             while($row = mysqli_fetch_assoc($result))
             {
                 $product[$cr]['base_product_id'] = $row['base_product_id'];
+                $product[$cr]['shop_type'] = $row['shop_type'];
                 $product[$cr]['category'] = $row['category'];
                 $product[$cr]['sub_category'] = $row['sub_category'];
                 $product[$cr]['brand'] = $row['brand'];

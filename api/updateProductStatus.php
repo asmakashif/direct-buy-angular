@@ -8,29 +8,28 @@
 
     $CN= mysqli_connect("localhost","root","");
     $DB=mysqli_select_db($CN,"formal_store");
-
-    
-    
         
+    $EncodedData=file_get_contents('php://input');
+    
+    if(isset($EncodedData) && !empty($EncodedData))
+    {
+        $DecodedData=json_decode($EncodedData,true);
 
-        // $shopId = 'i3s6wp';
-    $storeId=$_POST['storeId'];
+        $shopId=$DecodedData['shopId'];
         $product_status = 1;
 
 
-        $sql="UPDATE `shop_details` SET `product_status`='$product_status' WHERE `shopId`='{$storeId}' ";
+        $sql="UPDATE `shop_details` SET `product_status`='$product_status' WHERE `shopId`='{$shopId}' ";
 
         $R=mysqli_query($CN,$sql);
         if($R)
         {
+            echo 'success';
             http_response_code(204);
-            // $Message = "Student has been registered successfully";
         }
         else{
             http_response_code(422);
-            // $Message = "Server error please try later";
         }
-        // $response[] = array("Message"=>$Message);
-        // echo json_encode($response);
+    }
     
 ?>
