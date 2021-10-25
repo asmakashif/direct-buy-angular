@@ -38,19 +38,20 @@ export class CreateShopComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        const user_id = localStorage.getItem('user_id');
         var shop_id = this.randomString(6);
 
-        this.apiService.getStoreTypes().subscribe((shopType) => {
-            // Store the data
-            this.shopType = shopType;
-        });
+        // this.apiService.getStoreTypes().subscribe((shopType) => {
+        //     this.shopType = shopType;
+        // });
 
         this.addForm = this.formBuilder.group({
             id: [],
+            user_id: [user_id],
             shopId: [shop_id],
             shop_name: ['', Validators.required],
             shop_address: ['', Validators.required],
-            shopType: this.formBuilder.array([], [Validators.required]),
+            //shopType: this.formBuilder.array([], [Validators.required]),
         });
 
         this.validateShop();

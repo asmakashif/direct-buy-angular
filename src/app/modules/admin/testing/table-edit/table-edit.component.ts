@@ -9,7 +9,7 @@ import {
     GtOptions,
     GtRow,
 } from '@angular-generic-table/core';
-import { ProductInfoService } from 'app/modules/admin/mobile/product-info/product-info.service';
+import { ProductInfoService } from 'app/modules/admin/product-info/product-info.service';
 import { ActivatedRoute } from '@angular/router';
 
 export interface RowData extends GtRow {
@@ -19,10 +19,11 @@ export interface RowData extends GtRow {
 }
 
 @Component({
-    selector: 'app-product-info',
-    templateUrl: './product-info.component.html',
+    selector: 'app-table-edit',
+    templateUrl: './table-edit.component.html',
+    styleUrls: ['./table-edit.component.scss'],
 })
-export class ProductInfoComponent {
+export class TableEditComponent {
     public data: Array<RowData> = [];
     public configObject: GtConfig<RowData>;
     public inlineEditState = true;

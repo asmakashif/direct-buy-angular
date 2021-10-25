@@ -1,0 +1,224 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div class="bg-card">
+        <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
+            <div
+                class="
+                    flex flex-col
+                    sm:flex-row
+                    flex-auto
+                    sm:items-center
+                    min-w-0
+                    my-8
+                    sm:my-12
+                "
+            >
+                <!-- Avatar and name -->
+                <div class="flex flex-auto items-center min-w-0">
+                    <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
+                        <img
+                            class="w-full h-full object-cover"
+                            src="assets/images/avatars/brian-hughes.jpg"
+                        />
+                    </div>
+                    <div class="flex flex-col min-w-0 ml-4">
+                        <ng-container *transloco="let t">
+                            <div
+                                class="
+                                    text-2xl
+                                    md:text-5xl
+                                    font-semibold
+                                    tracking-tight
+                                    leading-7
+                                    md:leading-snug
+                                    truncate
+                                "
+                            >
+                                {{ t("welcome-back") }}, Brian!
+                            </div>
+                        </ng-container>
+                        <div class="flex items-center">
+                            <mat-icon
+                                class="icon-size-5"
+                                [svgIcon]="'heroicons_solid:bell'"
+                            ></mat-icon>
+                            <div
+                                class="ml-1.5 leading-6 truncate text-secondary"
+                            >
+                                You have 2 new messages and 15 new tasks
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Actions -->
+                <div class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3">
+                    <button
+                        class="fuse-mat-button-rounded bg-accent-700"
+                        mat-flat-button
+                        [color]="'accent'"
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:mail'"
+                        ></mat-icon>
+                        <span class="ml-2">Messages</span>
+                    </button>
+                    <button
+                        class="fuse-mat-button-rounded"
+                        mat-flat-button
+                        [color]="'primary'"
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:cog'"
+                        ></mat-icon>
+                        <span class="ml-2">Settings</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <div class="card m-8">
+                <div class="card-body">
+                    <table class="table table-bordered table-responsive">
+                        <thead>
+                            <th class="text-center">Person Name</th>
+                            <th class="text-center">Age</th>
+                            <th class="text-center">Company Name</th>
+                            <th class="text-center">Country</th>
+                            <th class="text-center">City</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let person of TableData">
+                                <td
+                                    contenteditable="true"
+                                    (click)="edit(person.id)"
+                                >
+                                    <input
+                                        type="text"
+                                        [(ngModel)]="person.name"
+                                    />
+                                </td>
+                                <td
+                                    contenteditable="true"
+                                    (click)="edit(person.id)"
+                                >
+                                    <input
+                                        type="text"
+                                        [(ngModel)]="person.age"
+                                    />
+                                </td>
+                                <td
+                                    contenteditable="true"
+                                    (click)="edit(person.id)"
+                                >
+                                    <input
+                                        type="text"
+                                        [(ngModel)]="person.companyName"
+                                    />
+                                </td>
+                                <td
+                                    contenteditable="true"
+                                    (click)="edit(person.id)"
+                                >
+                                    <input
+                                        type="text"
+                                        [(ngModel)]="person.country"
+                                    />
+                                </td>
+                                <td
+                                    contenteditable="true"
+                                    (click)="edit(person.id)"
+                                >
+                                    <input
+                                        type="text"
+                                        [(ngModel)]="person.city"
+                                    />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="row">
+                        <pre>
+                            {{ TableData | json }}
+                        </pre>
+                    </div>
+                    <!-- <div id="table" class="table-editable">
+                        <table
+                            class="
+                                table
+                                table-bordered
+                                table-responsive-md
+                                table-striped
+                                text-center
+                            "
+                        >
+                            <tr>
+                                <th class="text-center">Person Name</th>
+                                <th class="text-center">Age</th>
+                                <th class="text-center">Company Name</th>
+                                <th class="text-center">Country</th>
+                                <th class="text-center">City</th>
+                            </tr>
+                            <tr
+                                *ngFor="
+                                    let person of personList;
+                                    let id = index
+                                "
+                            >
+                                <td>
+                                    <span
+                                        (blur)="updateList(id, 'name', $event)"
+                                        contenteditable="true"
+                                        >{{ person.name }}</span
+                                    >
+                                </td>
+                                <td>
+                                    <span
+                                        contenteditable="true"
+                                        (blur)="updateList(id, 'age', $event)"
+                                        >{{ person.age }}</span
+                                    >
+                                </td>
+                                <td>
+                                    <span
+                                        contenteditable="true"
+                                        (blur)="
+                                            updateList(
+                                                id,
+                                                'companyName',
+                                                $event
+                                            )
+                                        "
+                                        >{{ person.companyName }}</span
+                                    >
+                                </td>
+                                <td>
+                                    <span
+                                        contenteditable="true"
+                                        (blur)="
+                                            updateList(id, 'country', $event)
+                                        "
+                                        >{{ person.country }}</span
+                                    >
+                                </td>
+                                <td>
+                                    <span
+                                        contenteditable="true"
+                                        (blur)="updateList(id, 'city', $event)"
+                                        >{{ person.city }}</span
+                                    >
+                                </td>
+                            </tr>
+                        </table>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

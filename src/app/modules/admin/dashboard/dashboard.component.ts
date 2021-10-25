@@ -36,6 +36,7 @@ export class DashboardComponent {
     curFulfilledOrderCount: any;
     newCustomerCount: any;
     customerCount: any;
+    payment: any;
 
     constructor(
         @Inject(DOCUMENT)
@@ -115,6 +116,13 @@ export class DashboardComponent {
                 this.customerCount = customerCount;
                 console.log(this.customerCount);
             });
+
+        this._dashboardService
+            .getPaymentGateway(user_id)
+            .subscribe((payment: any) => {
+                this.payment = payment;
+                console.log(this.payment);
+            });
     }
 
     changeStore(stores): void {
@@ -141,9 +149,9 @@ export class DashboardComponent {
 
     shopDetails(data: Data): void {
         if (!this.isMobile()) {
-            this._router.navigate(['/shop-details/' + data.shopId]);
+            this._router.navigate(['/store/shop-details/' + data.shopId]);
         } else {
-            this._router.navigate(['/shop-details/' + data.shopId]);
+            this._router.navigate(['/store/shop-details/' + data.shopId]);
         }
     }
 
@@ -153,7 +161,6 @@ export class DashboardComponent {
         } else {
             this._router.navigate(['/mobile/steps/' + data.shopId]);
         }
-        //this._router.navigate(['/steps/' + data.shopId]);
     }
 
     completedOrders(data: Data): void {

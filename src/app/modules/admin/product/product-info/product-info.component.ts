@@ -1,12 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-    FormGroup,
-    FormBuilder,
-    Validators,
-    FormArray,
-    FormControl,
-} from '@angular/forms';
 import { ProductInfoService } from 'app/modules/admin/product-info/product-info.service';
 
 declare var $: any;
@@ -34,7 +27,7 @@ export class ProductInfoComponent implements OnInit {
             .subscribe((dataset) => {
                 this.dataset = dataset;
                 this.shopId = routeParams.shopId;
-                console.log(this.shopId);
+                console.log(this.dataset);
             });
         if (this.isMobile()) {
             //alert('mobile');
@@ -51,95 +44,85 @@ export class ProductInfoComponent implements OnInit {
         this._router.navigate(['/store-summary/' + QSYWy7]);
     }
 
-    // beforeChange = function (changes: any[], source: boolean) {
-    //     var URL = window.location.href;
-    //     var arr = URL.split('/');
+    settingsObj = {
+        afterChange: function (changes: any[], source: boolean) {
+            var rowThatHasBeenChanged = changes[0][0];
+            var sourceRow = this.getSourceDataAtRow(rowThatHasBeenChanged),
+                visualRow = this.getDataAtRow(rowThatHasBeenChanged);
+            console.log(visualRow);
+            var id = visualRow[0];
+            var category = visualRow[1];
+            var sub_category = visualRow[2];
+            var brand = visualRow[3];
+            var product_name = visualRow[4];
+            var product_type = visualRow[5];
+            var product_sub_type = visualRow[6];
+            var product_weight = visualRow[7];
+            var product_weight_type = visualRow[8];
+            var product_qty = visualRow[9];
+            var product_price = visualRow[10];
+            var offer_price = visualRow[11];
+            // var productImg = visualRow[13];
+            // var productDescription = visualRow[14];
+            $(document).ready(function () {
+                $('#save_value').click(function () {});
+                $.ajax({
+                    url: '/api/updateTempStrProduct.php',
+                    method: 'POST',
+                    data: {
+                        id: id,
+                        category: category,
+                        sub_category: sub_category,
+                        brand: brand,
+                        product_name: product_name,
+                        product_type: product_type,
+                        product_sub_type: product_sub_type,
+                        product_weight: product_weight,
+                        product_weight_type: product_weight_type,
+                        product_qty: product_qty,
+                        product_price: product_price,
+                        offer_price: offer_price,
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        alert('success');
+                    },
+                });
+            });
+        },
+    };
 
-    //     var rowThatHasBeenChanged = changes[0][0];
-    //     var sourceRow = this.getSourceDataAtRow(rowThatHasBeenChanged),
-    //         visualRow = this.getDataAtRow(rowThatHasBeenChanged);
-    //     console.log(visualRow);
-    //     var id = visualRow[0];
-    //     console.log(id);
-    // };
-    ngOnChanges = function (changes: any[], source: boolean) {
-        var URL = window.location.href;
-        var arr = URL.split('/');
+    colHeaders = [
+        'Id',
+        'Category',
+        'Sub-Category',
+        'Brand',
+        'Product Name',
+        'Product Type',
+        'Product Sub-Type',
+        'Product Weight',
+        'Product Weight-Type',
+        'Product Qty',
+        'Product Price',
+        'Offer Price',
+    ];
+    hiddenColumns = {
+        columns: [0],
+        indicators: false,
+    };
+    licenseKey = 'non-commercial-and-evaluation';
 
-        var rowThatHasBeenChanged = changes[0][0];
-        var sourceRow = this.getSourceDataAtRow(rowThatHasBeenChanged),
-            visualRow = this.getDataAtRow(rowThatHasBeenChanged);
-        console.log(visualRow);
-        var id = visualRow[0];
-        console.log(id);
-        var category = visualRow[1];
-        var sub_category = visualRow[2];
-        var brand = visualRow[3];
-        var product_name = visualRow[4];
-        var product_type = visualRow[5];
-        var product_sub_type = visualRow[6];
-        var product_weight = visualRow[7];
-        var product_weight_type = visualRow[8];
-        var product_qty = visualRow[9];
-        var product_price = visualRow[10];
-        var offer_price = visualRow[11];
-        // var productImg = visualRow[13];
-        // var productDescription = visualRow[14];
+    nextStep() {
+        const routeParams = this.routes.snapshot.params;
+        var storeId = routeParams.shopId;
+
         $(document).ready(function () {
-            $('#save_value').click(function () {});
-            $.ajax({
-                url: '/api/updateTempStrProduct.php',
-                method: 'POST',
-                data: {
-                    id: id,
-                    category: category,
-                    sub_category: sub_category,
-                    brand: brand,
-                    product_name: product_name,
-                    product_type: product_type,
-                    product_sub_type: product_sub_type,
-                    product_weight: product_weight,
-                    product_weight_type: product_weight_type,
-                    product_qty: product_qty,
-                    product_price: product_price,
-                    offer_price: offer_price,
-                },
-                success: function (data) {
-                    console.log(data);
-                    alert('success');
-                },
+            $('#nextStep').click(function () {
+                var base_url = window.location.origin;
+                window.location.href = base_url + '/steps/' + storeId;
             });
         });
-    };
-    columnHeaders = [
-        [
-            'Id',
-            'Category',
-            'Sub-Category',
-            'Brand',
-            'Product Name',
-            'Product Type',
-            'Product Sub-Type',
-            'Product Weight',
-            'Product Weight-Type',
-            'Product Qty',
-            'Product Price',
-            'Offer Price',
-        ],
-    ];
-    collapsibleColumnsConfig = [
-        {
-            row: -2,
-            col: 0,
-            collapsible: true,
-        },
-        {
-            row: -2,
-            col: 6,
-            collapsible: true,
-        },
-    ];
-    licenseKey = 'non-commercial-and-evaluation';
+    }
 
     isMobile() {
         let check = false;

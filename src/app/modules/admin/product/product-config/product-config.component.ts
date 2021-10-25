@@ -220,6 +220,7 @@ export class ProductConfigComponent implements OnInit {
     // };
 
     afterChange = function (changes: any[], source: boolean) {
+        const user_id = localStorage.getItem('user_id');
         var URL = window.location.href;
         var arr = URL.split('/');
         //console.log(arr);
@@ -244,8 +245,10 @@ export class ProductConfigComponent implements OnInit {
                         data: { id: id },
                         success: function (data) {
                             //console.log(data);
-
                             var obj = JSON.parse(data);
+                            // console.log(obj);
+                            var base_product_id = obj.base_product_id;
+                            var shop_type = obj.shop_type;
                             var category = obj.category;
                             var sub_category = obj.sub_category;
                             var brand = obj.brand;
@@ -270,12 +273,14 @@ export class ProductConfigComponent implements OnInit {
                                 method: 'POST',
                                 data: { storeId: storeId },
                                 success: function (data) {
-                                    const that = this;
                                     $.ajax({
                                         url: '/api/saveBaseProductsToTemp.php',
                                         method: 'POST',
                                         data: {
+                                            user_id: user_id,
                                             storeId: storeId,
+                                            base_product_id: base_product_id,
+                                            shop_type: shop_type,
                                             category: category,
                                             sub_category: sub_category,
                                             brand: brand,
@@ -331,21 +336,10 @@ export class ProductConfigComponent implements OnInit {
         console.log(storeId);
         $(document).ready(function () {
             $('#complete').click(function () {
-                $.ajax({
-                    url: '/api/updateProductStatus.php',
-                    type: 'POST',
-                    data: { storeId: storeId },
-                    success: function (data) {
-                        var base_url = window.location.origin;
-                        window.location.href = base_url + '/steps/' + storeId;
-                        // window.location.href =
-                        //     'http://localhost:4200/steps/' + storeId;
-                    },
-                });
+                var base_url = window.location.origin;
+                window.location.href = base_url + '/steps/' + storeId;
             });
         });
-        // const routeParams = this.routes.snapshot.params;
-        // this._router.navigate(['/steps/' + routeParams.shopId]);
     }
 
     beforeChange = function (changes: any[]) {
@@ -394,52 +388,75 @@ export class ProductConfigComponent implements OnInit {
         });
     };
 
-    configColumnHeaders = [
-        [
-            'Select',
-            'Id',
-            'Category',
-            'Sub-Category',
-            'Brand',
-            'Product Name',
-            'Product Type',
-            'Product Sub-Type',
-            'Product Weight',
-            'Product Weight-Type',
-            'Product Qty',
-            'Product Price',
-            'Offer Price',
-        ],
+    colHeaders = [
+        'Select',
+        'Id',
+        'Shop Type',
+        'Category',
+        'Sub-Category',
+        'Brand',
+        'Product Name',
+        'Product Type',
+        'Product Sub-Type',
+        'Product Weight',
+        'Product Weight-Type',
+        'Product Qty',
+        'Product Price',
+        'Offer Price',
     ];
-    columnHeaders = [
-        [
-            'Id',
-            'Category',
-            'Sub-Category',
-            'Brand',
-            'Product Name',
-            'Product Type',
-            'Product Sub-Type',
-            'Product Weight',
-            'Product Weight-Type',
-            'Product Qty',
-            'Product Price',
-            'Offer Price',
-        ],
-    ];
-    collapsibleColumnsConfig = [
-        {
-            row: -2,
-            col: 0,
-            collapsible: true,
-        },
-        {
-            row: -2,
-            col: 6,
-            collapsible: true,
-        },
-    ];
+    hiddenColumns = {
+        columns: [1, 8, 10, 11, 12, 13],
+        indicators: false,
+    };
     licenseKey = 'non-commercial-and-evaluation';
+
+    // configColumnHeaders = [
+    //     [
+    //         'Select',
+    //         'Id',
+    //         'Shop Type',
+    //         'Category',
+    //         'Sub-Category',
+    //         'Brand',
+    //         'Product Name',
+    //         'Product Type',
+    //         'Product Sub-Type',
+    //         'Product Weight',
+    //         'Product Weight-Type',
+    //         'Product Qty',
+    //         'Product Price',
+    //         'Offer Price',
+    //     ],
+    // ];
+    // columnHeaders = [
+    //     [
+    //         'Id',
+    //         'Category',
+    //         'Sub-Category',
+    //         'Brand',
+    //         'Product Name',
+    //         'Product Type',
+    //         'Product Sub-Type',
+    //         'Product Weight',
+    //         'Product Weight-Type',
+    //         'Product Qty',
+    //         'Product Price',
+    //         'Offer Price',
+    //     ],
+    // ];
+    // collapsibleColumnsConfig = [
+    //     {
+    //         row: -2,
+    //         col: 0,
+    //         collapsible: true,
+    //     },
+    //     {
+    //         row: -2,
+    //         col: 6,
+    //         collapsible: true,
+    //     },
+    // ];
+    // licenseKey = 'non-commercial-and-evaluation';
 
     isMobile() {
         let check = false;

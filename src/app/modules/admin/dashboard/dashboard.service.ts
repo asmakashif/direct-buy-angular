@@ -13,6 +13,12 @@ export class DashboardService {
         return this._httpClient.get('/api/getShops.php?user_id=' + user_id);
     }
 
+    getPaymentGateway(user_id: string): Observable<any> {
+        return this._httpClient.get(
+            '/api/payments/getPaymentGateway.php?user_id=' + user_id
+        );
+    }
+
     getNoOfShops(user_id: string): Observable<any> {
         return this._httpClient.get('/api/countShops.php?user_id=' + user_id);
     }

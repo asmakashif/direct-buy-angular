@@ -142,64 +142,64 @@ export const appRoutes: Route[] = [
             {
                 path: 'project',
                 loadChildren: () =>
-                    import('app/modules/admin/project/project.module').then(
-                        (m) => m.ProjectModule
-                    ),
+                    import(
+                        'app/modules/admin/testing/project/project.module'
+                    ).then((m) => m.ProjectModule),
             },
             {
                 path: 'example',
                 loadChildren: () =>
-                    import('app/modules/admin/example/example.module').then(
-                        (m) => m.ExampleModule
-                    ),
+                    import(
+                        'app/modules/admin/testing/example/example.module'
+                    ).then((m) => m.ExampleModule),
             },
             {
                 path: 'create',
                 loadChildren: () =>
-                    import('app/modules/admin/create/create.module').then(
-                        (m) => m.CreateModule
-                    ),
+                    import(
+                        'app/modules/admin/testing/create/create.module'
+                    ).then((m) => m.CreateModule),
             },
             {
                 path: 'create-shop',
                 loadChildren: () =>
                     import(
-                        'app/modules/admin/create-shop/create-shop.module'
+                        'app/modules/admin/store/create-shop/create-shop.module'
                     ).then((m) => m.CreateShopModule),
             },
             {
                 path: 'product-config/:shopId',
                 loadChildren: () =>
                     import(
-                        'app/modules/admin/product-config/product-config.module'
+                        'app/modules/admin/product/product-config/product-config.module'
                     ).then((m) => m.ProductConfigModule),
             },
             {
                 path: 'product-info/:shopId',
                 loadChildren: () =>
                     import(
-                        'app/modules/admin/product-info/product-info.module'
+                        'app/modules/admin/product/product-info/product-info.module'
                     ).then((m) => m.ProductInfoModule),
             },
             {
                 path: 'store-summary/:shopId',
                 loadChildren: () =>
                     import(
-                        'app/modules/admin/store-summary/store-summary.module'
+                        'app/modules/admin/store/store-summary/store-summary.module'
                     ).then((m) => m.StoreSummaryModule),
             },
             {
                 path: 'shop-details/:shopId',
                 loadChildren: () =>
                     import(
-                        'app/modules/admin/shop-details/shop-details.module'
+                        'app/modules/admin/store/shop-details/shop-details.module'
                     ).then((m) => m.ShopDetailsModule),
             },
             {
                 path: 'shop-configuration/:shopId',
                 loadChildren: () =>
                     import(
-                        'app/modules/admin/shop-configuration/shop-configuration.module'
+                        'app/modules/admin/store/shop-configuration/shop-configuration.module'
                     ).then((m) => m.ShopConfigurationModule),
             },
             {
@@ -238,24 +238,38 @@ export const appRoutes: Route[] = [
                     ),
             },
             {
-                path: 'payment-gateway/:shopId',
+                path: 'payment/payment-gateway/:shopId',
                 loadChildren: () =>
                     import(
-                        'app/modules/admin/payment-gateway/payment-gateway.module'
+                        'app/modules/admin/payment/payment-gateway/payment-gateway.module'
                     ).then((m) => m.PaymentGatewayModule),
+            },
+            {
+                path: 'payment/payment-gateway',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/payment/payment-gateway/payment-gateway.module'
+                    ).then((m) => m.PaymentGatewayModule),
+            },
+            {
+                path: 'payment/manage-payment-gateway',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/payment/manage-payment-gateway/manage-payment-gateway.module'
+                    ).then((m) => m.ManagePaymentGatewayModule),
             },
             {
                 path: 'store-payment/:shopId',
                 loadChildren: () =>
                     import(
-                        'app/modules/admin/store-payment/store-payment.module'
+                        'app/modules/admin/store/store-payment/store-payment.module'
                     ).then((m) => m.StorePaymentModule),
             },
             {
                 path: 'store-activation/:shopId',
                 loadChildren: () =>
                     import(
-                        'app/modules/admin/store-activation/store-activation.module'
+                        'app/modules/admin/store/store-activation/store-activation.module'
                     ).then((m) => m.StoreActivationModule),
             },
             {
@@ -283,7 +297,7 @@ export const appRoutes: Route[] = [
                 path: 'table-edit/:shopId',
                 loadChildren: () =>
                     import(
-                        'app/modules/admin/table-edit/table-edit.module'
+                        'app/modules/admin/testing/table-edit/table-edit.module'
                     ).then((m) => m.TableEditModule),
             },
         ],

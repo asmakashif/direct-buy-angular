@@ -6,7 +6,7 @@ import {
     Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PaymentGatewayService } from 'app/modules/admin/payment-gateway/payment-gateway.service';
+import { PaymentGatewayService } from 'app/modules/admin/payment/payment-gateway/payment-gateway.service';
 
 interface Animal {
     name: string;
@@ -30,8 +30,9 @@ export class PaymentGatewayComponent implements OnInit {
     providerType = [{ provider_name: 'Razorpay' }, { provider_name: 'Paytm' }];
 
     ngOnInit(): void {
+        const user_id = localStorage.getItem('user_id');
         this.paymentGatewayForm = this.formBuilder.group({
-            user_id: [12],
+            user_id: [user_id],
             provider_type: ['', Validators.required],
             payment_name: ['', Validators.required],
             payment_api_key: ['', Validators.required],
@@ -45,11 +46,19 @@ export class PaymentGatewayComponent implements OnInit {
         if (this.paymentGatewayForm.invalid) {
             return;
         }
-        this.apiService
-            .savePaymentIntegration(this.paymentGatewayForm.value)
-            .subscribe((data) => {
-                this._router.navigate(['/steps/' + routeParams.shopId]);
-            });
+        if (routeParams.shopId) {
+            this.apiService
+                .savePaymentIntegration(this.paymentGatewayForm.value)
+                .subscribe((data) => {
+                    this._router.navigate(['/steps/' + routeParams.shopId]);
+                });
+        } else {
+            this.apiService
+                .savePaymentIntegration(this.paymentGatewayForm.value)
+                .subscribe((data) => {
+                    this._router.navigate(['/dashboard/']);
+                });
+        }
     }
 
     onChange(val) {
