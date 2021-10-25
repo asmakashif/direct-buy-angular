@@ -7,7 +7,7 @@ import {
     FormArray,
     FormControl,
 } from '@angular/forms';
-import { CreateShopService } from 'app/modules/admin/create-shop/create-shop.service';
+import { CreateShopService } from 'app/modules/admin/store/create-shop/create-shop.service';
 
 declare var $: any;
 @Component({

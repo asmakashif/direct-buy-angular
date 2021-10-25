@@ -21,7 +21,7 @@ import { SharedModule } from 'app/shared/shared.module';
 import { HotTableModule } from '@handsontable/angular';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
-import { ShopConfigurationComponent } from 'app/modules/admin/shop-configuration/shop-configuration.component';
+import { ShopConfigurationComponent } from 'app/modules/admin/store/shop-configuration/shop-configuration.component';
 //import { projectRoutes } from 'app/modules/admin/dashboards/project/project.routing';
 
 const shopConfigurationRoutes: Route[] = [

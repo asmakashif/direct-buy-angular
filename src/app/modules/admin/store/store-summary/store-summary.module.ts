@@ -22,7 +22,7 @@ import { HotTableModule } from '@handsontable/angular';
 
 import 'handsontable/dist/handsontable.min.css';
 import 'pikaday/css/pikaday.css';
-import { StoreSummaryComponent } from 'app/modules/admin/store-summary/store-summary.component';
+import { StoreSummaryComponent } from 'app/modules/admin/store/store-summary/store-summary.component';
 //import { projectRoutes } from 'app/modules/admin/dashboards/project/project.routing';
 
 const storeSummaryRoutes: Route[] = [

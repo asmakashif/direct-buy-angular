@@ -22,7 +22,7 @@ import { HotTableModule } from '@handsontable/angular';
 
 import 'handsontable/dist/handsontable.min.css';
 import 'pikaday/css/pikaday.css';
-import { ProductConfigComponent } from 'app/modules/admin/product-config/product-config.component';
+import { ProductConfigComponent } from 'app/modules/admin/product/product-config/product-config.component';
 //import { projectRoutes } from 'app/modules/admin/dashboards/project/project.routing';
 
 const productConfigRoutes: Route[] = [

@@ -7,9 +7,8 @@ import {
     FormArray,
     FormControl,
 } from '@angular/forms';
-import { StoreSummaryService } from 'app/modules/admin/store-summary/store-summary.service';
+import { StoreSummaryService } from 'app/modules/admin/store/store-summary/store-summary.service';
 import { Router, Params, ActivatedRoute } from '@angular/router';
-import { Data } from '../../../Model/data';
 
 @Component({
     selector: 'app-store-summary',

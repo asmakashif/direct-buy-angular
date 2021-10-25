@@ -7,7 +7,7 @@ import {
     FormControl,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { StoreActivationService } from 'app/modules/admin/store-activation/store-activation.service';
+import { StoreActivationService } from 'app/modules/admin/store/store-activation/store-activation.service';
 
 @Component({
     selector: 'app-store-activation',

@@ -9,7 +9,7 @@ import {
     GtOptions,
     GtRow,
 } from '@angular-generic-table/core';
-import { ProductInfoService } from 'app/modules/admin/product-info/product-info.service';
+import { ProductInfoService } from 'app/modules/admin/product/product-info/product-info.service';
 import { ActivatedRoute } from '@angular/router';
 
 export interface RowData extends GtRow {

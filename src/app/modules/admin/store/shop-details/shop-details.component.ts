@@ -7,9 +7,8 @@ import {
     FormArray,
     FormControl,
 } from '@angular/forms';
-import { ShopDetailsService } from 'app/modules/admin/shop-details/shop-details.service';
+import { ShopDetailsService } from 'app/modules/admin/store/shop-details/shop-details.service';
 import { Router, Params, ActivatedRoute } from '@angular/router';
-import { Data } from '../../../Model/data';
 
 @Component({
     selector: 'app-shop-details',

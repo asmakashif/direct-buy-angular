@@ -19,7 +19,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SharedModule } from 'app/shared/shared.module';
 import { HotTableModule } from '@handsontable/angular';
-import { ExampleComponent } from 'app/modules/admin/example/example.component';
+import { ExampleComponent } from 'app/modules/admin/testing/example/example.component';
 
 const exampleRoutes: Route[] = [
     {

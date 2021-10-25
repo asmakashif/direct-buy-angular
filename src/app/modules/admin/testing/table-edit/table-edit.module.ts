@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { SharedModule } from 'app/shared/shared.module';
 import { MatButtonModule } from '@angular/material/button';
 import { GenericTableModule } from '@angular-generic-table/core';
-import { TableEditComponent } from 'app/modules/admin/table-edit/table-edit.component';
+import { TableEditComponent } from 'app/modules/admin/testing/table-edit/table-edit.component';
 
 const tableEditRoutes: Route[] = [
     {

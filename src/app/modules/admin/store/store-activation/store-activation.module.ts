@@ -14,7 +14,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { TranslocoModule } from '@ngneat/transloco';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { SharedModule } from 'app/shared/shared.module';
-import { StoreActivationComponent } from 'app/modules/admin/store-activation/store-activation.component';
+import { StoreActivationComponent } from 'app/modules/admin/store/store-activation/store-activation.component';
 //import { projectRoutes } from 'app/modules/admin/dashboards/project/project.routing';
 
 const storeActivationRoutes: Route[] = [

@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 // import { alignHeaders, afterChanges } from '../../../../utils/hooks-callbacks';
 // import * as Handsontable from 'handsontable';
-import { ProductConfigService } from 'app/modules/admin/product-config/product-config.service';
+import { ProductConfigService } from 'app/modules/admin/product/product-config/product-config.service';
 
 declare var $: any;
 

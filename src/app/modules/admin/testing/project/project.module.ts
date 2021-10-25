@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 import { SharedModule } from 'app/shared/shared.module';
-import { ProjectComponent } from 'app/modules/admin/project/project.component';
+import { ProjectComponent } from 'app/modules/admin/testing/project/project.component';
 //import { projectRoutes } from 'app/modules/admin/dashboards/project/project.routing';
 
 const projectRoutes: Route[] = [

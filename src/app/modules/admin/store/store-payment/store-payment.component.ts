@@ -7,7 +7,7 @@ import {
     FormArray,
     FormControl,
 } from '@angular/forms';
-import { StorePaymentService } from 'app/modules/admin/store-payment/store-payment.service';
+import { StorePaymentService } from 'app/modules/admin/store/store-payment/store-payment.service';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 
 @Component({

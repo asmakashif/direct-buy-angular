@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductInfoService } from 'app/modules/admin/product-info/product-info.service';
+import { ProductInfoService } from 'app/modules/admin/product/product-info/product-info.service';
 
 declare var $: any;
 @Component({

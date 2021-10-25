@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ShopConfigurationService } from 'app/modules/admin/shop-configuration/shop-configuration.service';
+import { ShopConfigurationService } from 'app/modules/admin/store/shop-configuration/shop-configuration.service';
 
 @Component({
     selector: 'app-shop-configuration',

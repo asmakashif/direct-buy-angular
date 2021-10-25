@@ -7,9 +7,9 @@ import {
     FormControl,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CreateShopService } from 'app/modules/admin/create-shop/create-shop.service';
-import { ProductInfoService } from 'app/modules/admin/product-info/product-info.service';
-import { StoreSummaryService } from 'app/modules/admin/store-summary/store-summary.service';
+import { CreateShopService } from 'app/modules/admin/store/create-shop/create-shop.service';
+import { ProductInfoService } from 'app/modules/admin/product/product-info/product-info.service';
+import { StoreSummaryService } from 'app/modules/admin/store/store-summary/store-summary.service';
 
 declare var $: any;
 
