@@ -196,7 +196,7 @@
                         magnam.
                     </p>
                 </div>
-                <div class="step">
+                <div class="step" *ngIf="shop_payment_status == 0">
                     <h2 data-step-id="7">Activate Store</h2>
                     <p>
                         Lorem ipsum dolor sit amet, consectetur adipisicing
@@ -206,6 +206,10 @@
                         magnam.
                     </p>
                     <button (click)="storeActivae()">Activate</button>
+                </div>
+                <div class="step active" *ngIf="shop_payment_status == 1">
+                    <h2 data-step-id="✓">Activate Store</h2>
+                    <p>Hoorraayy!!! Store activated successfully</p>
                 </div>
                 <div class="step" *ngIf="shop_payment_status == 0">
                     <h2 data-step-id="8">Complete the process!</h2>
@@ -220,6 +224,9 @@
                         }}
                         can be provide to your customers to access your store.
                     </p>
+                    <a [routerLink]="['/dashboard']" class="btn btn-success"
+                        >Done</a
+                    >
                 </div>
             </div>
         </div>

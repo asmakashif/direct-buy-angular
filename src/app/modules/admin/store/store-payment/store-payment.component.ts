@@ -70,7 +70,7 @@ export class StorePaymentComponent implements OnInit {
                 .saveStrPayments(this.paymentForm.value)
                 .subscribe((data) => {
                     this._router.navigate([
-                        '/shop-details/' + routeParams.shopId,
+                        '/store/shop-details/' + routeParams.shopId,
                     ]);
                 });
         } else {
