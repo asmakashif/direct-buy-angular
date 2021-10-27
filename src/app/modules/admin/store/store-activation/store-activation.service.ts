@@ -32,13 +32,19 @@ export class StoreActivationService {
         return this.http.post<ApiResponse>('/api/updateShopPayment.php', user);
     }
 
-    updateTrialStatus(shopId: string): Observable<ApiResponse> {
+    updateTrialStatus(
+        shopId: string,
+        user_id: string
+    ): Observable<ApiResponse> {
         // return this.http.post<ApiResponse>(
         //     '/api/updateTrialStatus.php',
         //     shopId
         // );
         return this.http.get<ApiResponse>(
-            '/api/updateTrialStatus.php?shopId=' + shopId
+            '/api/updateTrialStatus.php?shopId=' +
+                shopId +
+                '&user_id=' +
+                user_id
         );
     }
 }
