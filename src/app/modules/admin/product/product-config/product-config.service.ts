@@ -44,6 +44,13 @@ export class ProductConfigService {
         return this.http.post<ApiResponse>('/api/getProductsByBrand.php', user);
     }
 
+    getProductsByBrandGroup(user: Data): Observable<ApiResponse> {
+        return this.http.post<ApiResponse>(
+            '/api/getProductsByBrandGroup.php',
+            user
+        );
+    }
+
     getTempStrProducts(shopId: string): Observable<any> {
         return this.http.get('/api/getTempStrProducts.php?shopId=' + shopId);
     }

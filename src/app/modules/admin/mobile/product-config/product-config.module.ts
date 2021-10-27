@@ -15,6 +15,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -52,6 +53,7 @@ const productConfigRoutes: Route[] = [
         MatTabsModule,
         MatCheckboxModule,
         MatFormFieldModule,
+        FlexLayoutModule,
         MatIconModule,
         MatInputModule,
         MatRadioModule,

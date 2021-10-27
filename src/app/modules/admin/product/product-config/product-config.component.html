@@ -94,10 +94,20 @@
                                 [formGroup]="shopTypeGroup"
                                 (ngSubmit)="onTypeSubmit()"
                             >
-                                <span>Select Shop Type</span>
+                                <span><b>Select Shop Type</b></span>
                                 <br />
-                                <br />
+
                                 <div class="wj-listbox">
+                                    <div class="inputChk">
+                                        <input
+                                            type="checkbox"
+                                            [value]="shopType"
+                                            (change)="selectAllShopType($event)"
+                                            style="margin-left: 4px"
+                                            matCheckbox
+                                        />&nbsp;
+                                        <label><b>Select All</b></label>
+                                    </div>
                                     <div
                                         class="checkbox"
                                         *ngFor="let shopType of shopType"
@@ -106,7 +116,8 @@
                                             type="checkbox"
                                             [value]="shopType.shop_type_name"
                                             name="shopType[]"
-                                            (change)="onCheckboxChange($event)"
+                                            [checked]="shopType.selected"
+                                            (change)="onShopTypeChange($event)"
                                             matCheckbox
                                         />
                                         {{ shopType.shop_type_name }}
@@ -131,10 +142,21 @@
                                 [formGroup]="categoryGroup"
                                 (ngSubmit)="onCategorySubmit()"
                             >
-                                <span>Select Category</span>
+                                <span> <b>Select Category</b></span>
                                 <br />
-                                <br />
+
                                 <div class="wj-listbox">
+                                    <div class="inputChk">
+                                        <input
+                                            type="checkbox"
+                                            [value]="categories"
+                                            (change)="selectAllCategory($event)"
+                                            style="margin-left: 4px"
+                                            matCheckbox
+                                        />&nbsp;
+                                        <label><b>Select All</b></label>
+                                    </div>
+
                                     <div
                                         class="checkbox"
                                         *ngFor="let categories of categories"
@@ -143,6 +165,7 @@
                                             type="checkbox"
                                             [value]="categories.category"
                                             name="categories[]"
+                                            [checked]="categories.selected"
                                             (change)="onCategoryChange($event)"
                                             matCheckbox
                                         />
@@ -171,10 +194,23 @@
                                 [formGroup]="subCategoryGroup"
                                 (ngSubmit)="onSubCategorySubmit()"
                             >
-                                <span>Select Sub Category</span>
+                                <span> <b>Select Sub-Category</b></span>
                                 <br />
-                                <br />
+
                                 <div class="wj-listbox">
+                                    <div class="inputChk">
+                                        <input
+                                            type="checkbox"
+                                            [value]="sub_category"
+                                            (change)="
+                                                selectAllSubCategory($event)
+                                            "
+                                            style="margin-left: 4px"
+                                            matCheckbox
+                                        />&nbsp;
+                                        <label><b>Select All</b></label>
+                                    </div>
+
                                     <div
                                         class="checkbox"
                                         *ngFor="
@@ -185,6 +221,7 @@
                                             type="checkbox"
                                             [value]="sub_category.sub_category"
                                             name="sub_category[]"
+                                            [checked]="sub_category.selected"
                                             (change)="
                                                 onSubCategoryChange($event)
                                             "
@@ -212,10 +249,21 @@
                                 [formGroup]="brandGroup"
                                 (ngSubmit)="onBrandSubmit()"
                             >
-                                <span>Select Brand</span>
+                                <span><b>Select Brand</b></span>
                                 <br />
-                                <br />
+
                                 <div class="wj-listbox">
+                                    <div class="inputChk">
+                                        <input
+                                            type="checkbox"
+                                            [value]="brand"
+                                            (change)="selectAllBrand($event)"
+                                            style="margin-left: 4px"
+                                            matCheckbox
+                                        />&nbsp;
+                                        <label><b>Select All</b></label>
+                                    </div>
+
                                     <div
                                         class="checkbox"
                                         *ngFor="let brand of brand"
@@ -224,6 +272,7 @@
                                             type="checkbox"
                                             [value]="brand.brand"
                                             name="brand[]"
+                                            [checked]="brand.selected"
                                             (change)="onBrandChange($event)"
                                             matCheckbox
                                         />
@@ -247,6 +296,16 @@
                         <div style="padding-top: 3%">
                             <span>Select Product Items</span>
                             <br />
+                            <span><b>ShopType:</b> {{ this.shop_type }}</span>
+                            <br />
+                            <span><b>Category:</b> {{ this.category }}</span>
+                            <br />
+                            <span
+                                ><b>SubCategory:</b>
+                                {{ this.subCategory }}</span
+                            >
+                            <br />
+                            <span><b>Brand:</b> {{ this.brands }}</span>
                             <br />
                             <div>
                                 <hot-table
@@ -459,14 +518,37 @@
                                     Submit
                                 </button>
                             </form> -->
-                            <a
+                            <button
+                                mat-raised-button
+                                color="accent"
+                                (click)="move(0)"
+                            >
+                                Add More Products
+                            </button>
+                            &nbsp; &nbsp;
+                            <!-- <a
+                                href="javascript:void(0);"
+                                class="btn btn-primary"
+                                
+                                (click)="move(0)"
+                                >Add More Products</a
+                            > -->
+                            <button
+                                mat-raised-button
+                                color="primary"
+                                id="complete"
+                                (click)="done()"
+                            >
+                                Submit
+                            </button>
+                            <!-- <a
                                 href="javascript:void(0);"
                                 class="btn btn-success"
                                 id="complete"
                                 (click)="done()"
                                 >Complete</a
                             >
-                            &nbsp; &nbsp;
+                            &nbsp; &nbsp; -->
                         </div>
                     </mat-step>
                 </mat-horizontal-stepper>

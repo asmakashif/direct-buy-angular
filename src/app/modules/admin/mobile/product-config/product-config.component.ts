@@ -11,6 +11,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ProductConfigService } from 'app/modules/admin/mobile/product-config/product-config.service';
+import { MatStepper } from '@angular/material/stepper';
 
 declare var $: any;
 
@@ -20,8 +21,8 @@ declare var $: any;
     styleUrls: ['./product-config.component.scss'],
 })
 export class ProductConfigComponent implements OnInit {
-    shopType: any;
     isLinear = true;
+
     shopTypeGroup: FormGroup;
     categoryGroup: FormGroup;
     subCategoryGroup: FormGroup;
@@ -30,6 +31,7 @@ export class ProductConfigComponent implements OnInit {
     dataFilteredGroup: FormGroup;
     completeGroup: FormGroup;
 
+    shopType: any;
     shopId: any;
     productSet: any;
     countProduct: any;
@@ -40,17 +42,35 @@ export class ProductConfigComponent implements OnInit {
     brand: any;
     displayedColumns: string[] = [
         'base_product_id',
-        'shop_type',
-        'category',
-        'sub_category',
-        'brand',
         'product_name',
         'product_type',
         'mergedField',
     ];
+    // displayedColumns: string[] = [
+    //     'base_product_id',
+    //     'shop_type',
+    //     'category',
+    //     'sub_category',
+    //     'brand',
+    //     'product_name',
+    //     'product_type',
+    //     'product_sub_type',
+    //     'product_weight',
+    //     'product_weight_type',
+    //     'product_qty',
+    //     'product_price',
+    //     'offer_price',
+    // ];
     dataSource!: MatTableDataSource<any>;
     @ViewChild('paginator') paginator!: MatPaginator;
     @ViewChild(MatSort) matSort!: MatSort;
+    @ViewChild('stepper') stepper: MatStepper;
+    datasetgroup: any;
+    baseProducts: any;
+    subCategory: any;
+    category: any;
+    brands: any;
+    shop_type: any;
 
     constructor(
         private apiService: ProductConfigService,
@@ -69,9 +89,9 @@ export class ProductConfigComponent implements OnInit {
             console.log(this.shopType);
         });
 
-        // this.apiService.getBaseProducts().subscribe((dataset) => {
-        //     this.dataset = dataset;
-        // });
+        this.apiService.getBaseProducts().subscribe((baseProducts) => {
+            this.baseProducts = baseProducts;
+        });
 
         this.shopTypeGroup = this.fb.group({
             shopType: this.fb.array([], [Validators.required]),
@@ -104,7 +124,27 @@ export class ProductConfigComponent implements OnInit {
         }
     }
 
-    onCheckboxChange(e) {
+    selectAllShopType(e) {
+        const checked = e.target.checked;
+        this.shopType.forEach((item) => (item.selected = checked));
+
+        const shopType: FormArray = this.shopTypeGroup.get(
+            'shopType'
+        ) as FormArray;
+
+        if (e.target.checked) {
+            this.shopType.forEach((row) => {
+                //console.log(row.shop_type_name);
+                shopType.push(new FormControl(row.shop_type_name));
+            });
+        }
+        // else {
+        //     // console.log('checked false');
+        //     this.shopType.length = 0;
+        // }
+    }
+
+    onShopTypeChange(e) {
         const shopType: FormArray = this.shopTypeGroup.get(
             'shopType'
         ) as FormArray;
@@ -120,13 +160,31 @@ export class ProductConfigComponent implements OnInit {
     }
 
     onTypeSubmit() {
-        //more code
+        const arr = this.shopTypeGroup.value;
+        localStorage.setItem('shop_type', JSON.stringify(arr.shopType));
+
         this.apiService
             .getCategoryByShopType(this.shopTypeGroup.value)
             .subscribe((categories) => {
                 this.categories = categories;
                 console.log(this.categories);
             });
+    }
+
+    selectAllCategory(e) {
+        const checked = e.target.checked;
+        this.categories.forEach((item) => (item.selected = checked));
+
+        const categories: FormArray = this.categoryGroup.get(
+            'categories'
+        ) as FormArray;
+
+        if (e.target.checked) {
+            this.categories.forEach((row) => {
+                //console.log(row.shop_type_name);
+                categories.push(new FormControl(row.category));
+            });
+        }
     }
 
     onCategoryChange(e) {
@@ -147,12 +205,30 @@ export class ProductConfigComponent implements OnInit {
     onCategorySubmit() {
         //more code
         //console.log(this.categoryGroup.value);
+        const arr = this.categoryGroup.value;
+        localStorage.setItem('category', JSON.stringify(arr.categories));
         this.apiService
             .getSubCatbyCategory(this.categoryGroup.value)
             .subscribe((subCategory) => {
                 this.sub_category = subCategory;
                 console.log(this.sub_category);
             });
+    }
+
+    selectAllSubCategory(e) {
+        const checked = e.target.checked;
+        this.sub_category.forEach((item) => (item.selected = checked));
+
+        const sub_category: FormArray = this.subCategoryGroup.get(
+            'sub_category'
+        ) as FormArray;
+
+        if (e.target.checked) {
+            this.sub_category.forEach((row) => {
+                //console.log(row.shop_type_name);
+                sub_category.push(new FormControl(row.sub_category));
+            });
+        }
     }
 
     onSubCategoryChange(e) {
@@ -173,12 +249,28 @@ export class ProductConfigComponent implements OnInit {
     onSubCategorySubmit() {
         //more code
         console.log(this.subCategoryGroup.value);
+        const arr = this.subCategoryGroup.value;
+        localStorage.setItem('subCategory', JSON.stringify(arr.sub_category));
         this.apiService
             .getBrandBySubCat(this.subCategoryGroup.value)
             .subscribe((brand) => {
                 this.brand = brand;
                 console.log(this.brand);
             });
+    }
+
+    selectAllBrand(e) {
+        const checked = e.target.checked;
+        this.brand.forEach((item) => (item.selected = checked));
+
+        const brand: FormArray = this.brandGroup.get('brand') as FormArray;
+
+        if (e.target.checked) {
+            this.brand.forEach((row) => {
+                //console.log(row.shop_type_name);
+                brand.push(new FormControl(row.brand));
+            });
+        }
     }
 
     onBrandChange(e) {
@@ -197,12 +289,55 @@ export class ProductConfigComponent implements OnInit {
     onBrandSubmit() {
         //more code
         console.log(this.brandGroup.value);
+        const arr = this.brandGroup.value;
+        localStorage.setItem('brands', JSON.stringify(arr.brand));
+
         this.apiService
             .getProductsByBrand(this.brandGroup.value)
             .subscribe((products) => {
                 this.dataset = products;
+                this.shop_type = JSON.parse(localStorage.getItem('shop_type'));
+                this.category = JSON.parse(localStorage.getItem('category'));
+
+                this.subCategory = JSON.parse(
+                    localStorage.getItem('subCategory')
+                );
+
+                this.brands = JSON.parse(localStorage.getItem('brands'));
+
                 console.log(this.dataset);
             });
+    }
+
+    selectAllProducts(e) {
+        const checked = e.target.checked;
+        this.dataset.forEach((item) => (item.selected = checked));
+
+        const base_product_id: FormArray = this.dataFilteredGroup.get(
+            'base_product_id'
+        ) as FormArray;
+
+        if (e.target.checked) {
+            this.dataset.forEach((row) => {
+                //console.log(row.shop_type_name);
+                base_product_id.push(new FormControl(row.base_product_id));
+            });
+        }
+    }
+
+    onCheckboxChange(e) {
+        const base_product_id: FormArray = this.dataFilteredGroup.get(
+            'base_product_id'
+        ) as FormArray;
+
+        if (e.target.checked) {
+            base_product_id.push(new FormControl(e.target.value));
+        } else {
+            const index = base_product_id.controls.findIndex(
+                (x) => x.value === e.target.value
+            );
+            base_product_id.removeAt(index);
+        }
     }
 
     onDataFilterSubmit() {
@@ -211,6 +346,10 @@ export class ProductConfigComponent implements OnInit {
         this.apiService
             .saveFilteredData(this.dataFilteredGroup.value)
             .subscribe((data) => {});
+    }
+
+    move(index: number) {
+        this.stepper.selectedIndex = index;
     }
 
     done() {

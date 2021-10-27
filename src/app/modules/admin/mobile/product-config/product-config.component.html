@@ -88,16 +88,26 @@
                     #stepper
                     labelPosition="bottom"
                 >
-                    <mat-step [stepControl]="shopTypeGroup" label="1">
+                    <mat-step [stepControl]="shopTypeGroup" label="ShopType">
                         <div style="padding-top: 3%">
                             <form
                                 [formGroup]="shopTypeGroup"
                                 (ngSubmit)="onTypeSubmit()"
                             >
-                                <span>Select Shop Type</span>
+                                <span><b>Select Shop Type</b></span>
                                 <br />
-                                <br />
+
                                 <div class="wj-listbox">
+                                    <div class="inputChk">
+                                        <input
+                                            type="checkbox"
+                                            [value]="shopType"
+                                            (change)="selectAllShopType($event)"
+                                            style="margin-left: 4px"
+                                            matCheckbox
+                                        />&nbsp;
+                                        <label><b>Select All</b></label>
+                                    </div>
                                     <div
                                         class="checkbox"
                                         *ngFor="let shopType of shopType"
@@ -106,7 +116,8 @@
                                             type="checkbox"
                                             [value]="shopType.shop_type_name"
                                             name="shopType[]"
-                                            (change)="onCheckboxChange($event)"
+                                            [checked]="shopType.selected"
+                                            (change)="onShopTypeChange($event)"
                                             matCheckbox
                                         />
                                         {{ shopType.shop_type_name }}
@@ -125,16 +136,27 @@
                         </div>
                     </mat-step>
 
-                    <mat-step [stepControl]="categoryGroup" label="2">
+                    <mat-step [stepControl]="categoryGroup" label="Category">
                         <div style="padding-top: 3%">
                             <form
                                 [formGroup]="categoryGroup"
                                 (ngSubmit)="onCategorySubmit()"
                             >
-                                <span>Select Category</span>
+                                <span> <b>Select Category</b></span>
                                 <br />
-                                <br />
+
                                 <div class="wj-listbox">
+                                    <div class="inputChk">
+                                        <input
+                                            type="checkbox"
+                                            [value]="categories"
+                                            (change)="selectAllCategory($event)"
+                                            style="margin-left: 4px"
+                                            matCheckbox
+                                        />&nbsp;
+                                        <label><b>Select All</b></label>
+                                    </div>
+
                                     <div
                                         class="checkbox"
                                         *ngFor="let categories of categories"
@@ -143,6 +165,7 @@
                                             type="checkbox"
                                             [value]="categories.category"
                                             name="categories[]"
+                                            [checked]="categories.selected"
                                             (change)="onCategoryChange($event)"
                                             matCheckbox
                                         />
@@ -162,16 +185,32 @@
                         </div>
                     </mat-step>
 
-                    <mat-step [stepControl]="subCategoryGroup" label="3">
+                    <mat-step
+                        [stepControl]="subCategoryGroup"
+                        label="SubCategory"
+                    >
                         <div style="padding-top: 3%">
                             <form
                                 [formGroup]="subCategoryGroup"
                                 (ngSubmit)="onSubCategorySubmit()"
                             >
-                                <span>Select Sub-Category</span>
+                                <span> <b>Select Sub-Category</b></span>
                                 <br />
-                                <br />
+
                                 <div class="wj-listbox">
+                                    <div class="inputChk">
+                                        <input
+                                            type="checkbox"
+                                            [value]="sub_category"
+                                            (change)="
+                                                selectAllSubCategory($event)
+                                            "
+                                            style="margin-left: 4px"
+                                            matCheckbox
+                                        />&nbsp;
+                                        <label><b>Select All</b></label>
+                                    </div>
+
                                     <div
                                         class="checkbox"
                                         *ngFor="
@@ -182,6 +221,7 @@
                                             type="checkbox"
                                             [value]="sub_category.sub_category"
                                             name="sub_category[]"
+                                            [checked]="sub_category.selected"
                                             (change)="
                                                 onSubCategoryChange($event)
                                             "
@@ -203,16 +243,27 @@
                         </div>
                     </mat-step>
 
-                    <mat-step [stepControl]="brandGroup" label="4">
+                    <mat-step [stepControl]="brandGroup" label="Brand">
                         <div style="padding-top: 3%">
                             <form
                                 [formGroup]="brandGroup"
                                 (ngSubmit)="onBrandSubmit()"
                             >
-                                <span>Select Brand</span>
+                                <span><b>Select Brand</b></span>
                                 <br />
-                                <br />
+
                                 <div class="wj-listbox">
+                                    <div class="inputChk">
+                                        <input
+                                            type="checkbox"
+                                            [value]="brand"
+                                            (change)="selectAllBrand($event)"
+                                            style="margin-left: 4px"
+                                            matCheckbox
+                                        />&nbsp;
+                                        <label><b>Select All</b></label>
+                                    </div>
+
                                     <div
                                         class="checkbox"
                                         *ngFor="let brand of brand"
@@ -221,6 +272,7 @@
                                             type="checkbox"
                                             [value]="brand.brand"
                                             name="brand[]"
+                                            [checked]="brand.selected"
                                             (change)="onBrandChange($event)"
                                             matCheckbox
                                         />
@@ -240,7 +292,7 @@
                         </div>
                     </mat-step>
 
-                    <mat-step [stepControl]="productGroup" label="5">
+                    <mat-step [stepControl]="productGroup" label="Products">
                         <div style="padding-top: 3%">
                             <form
                                 [formGroup]="dataFilteredGroup"
@@ -248,10 +300,39 @@
                             >
                                 <div class="example-form">
                                     <div class="flex flex-col">
-                                        <span>Select Filetred Data</span>
+                                        <span
+                                            ><b>ShopType:</b>
+                                            {{ this.shop_type }}</span
+                                        >
                                         <br />
+                                        <span
+                                            ><b>Category:</b>
+                                            {{ this.category }}</span
+                                        >
                                         <br />
+                                        <span
+                                            ><b>SubCategory:</b>
+                                            {{ this.subCategory }}</span
+                                        >
+                                        <br />
+                                        <span
+                                            ><b>Brand:</b>
+                                            {{ this.brands }}</span
+                                        >
+                                        <br />
+                                        <!-- <input
+                                            type="checkbox"
+                                            [value]="dataset"
+                                            (change)="selectAllProducts($event)"
+                                        />Select All -->
+                                        <br />
+
                                         <div class="fixTableHead">
+                                            <span
+                                                ><b
+                                                    >Select Filetred Data</b
+                                                ></span
+                                            >
                                             <table
                                                 mat-table
                                                 matSort
@@ -269,7 +350,16 @@
                                                         mat-header-cell
                                                         *matHeaderCellDef
                                                     >
-                                                        Select
+                                                        <input
+                                                            type="checkbox"
+                                                            [value]="dataset"
+                                                            (change)="
+                                                                selectAllProducts(
+                                                                    $event
+                                                                )
+                                                            "
+                                                        />
+                                                        &nbsp; Select All
                                                     </th>
                                                     <td
                                                         mat-cell
@@ -283,6 +373,9 @@
                                                                 element.base_product_id
                                                             "
                                                             name="base_product_id[]"
+                                                            [checked]="
+                                                                element.selected
+                                                            "
                                                             (change)="
                                                                 onCheckboxChange(
                                                                     $event
@@ -292,7 +385,7 @@
                                                         />
                                                     </td>
                                                 </ng-container>
-                                                <ng-container
+                                                <!-- <ng-container
                                                     matColumnDef="shop_type"
                                                 >
                                                     <th
@@ -368,7 +461,7 @@
                                                     >
                                                         {{ element.brand }}
                                                     </td>
-                                                </ng-container>
+                                                </ng-container> -->
 
                                                 <ng-container
                                                     matColumnDef="product_name"
@@ -412,6 +505,27 @@
                                                 </ng-container>
 
                                                 <!-- <ng-container
+                                                    matColumnDef="product_sub_type"
+                                                >
+                                                    <th
+                                                        mat-header-cell
+                                                        *matHeaderCellDef
+                                                    >
+                                                        Product SubType
+                                                    </th>
+                                                    <td
+                                                        mat-cell
+                                                        *matCellDef="
+                                                            let element
+                                                        "
+                                                    >
+                                                        {{
+                                                            element.product_sub_type
+                                                        }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container
                                                     matColumnDef="product_weight"
                                                 >
                                                     <th
@@ -455,23 +569,87 @@
                                                     </td>
                                                 </ng-container>
                                                 <!-- <ng-container
-                                                matColumnDef="product_weight_type"
-                                            >
-                                                <th
-                                                    mat-header-cell
-                                                    *matHeaderCellDef
+                                                    matColumnDef="product_weight_type"
                                                 >
-                                                    Product Weight Type
-                                                </th>
-                                                <td
-                                                    mat-cell
-                                                    *matCellDef="let element"
+                                                    <th
+                                                        mat-header-cell
+                                                        *matHeaderCellDef
+                                                    >
+                                                        Product Weight Type
+                                                    </th>
+                                                    <td
+                                                        mat-cell
+                                                        *matCellDef="
+                                                            let element
+                                                        "
+                                                    >
+                                                        {{
+                                                            element.product_weight_type
+                                                        }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container
+                                                    matColumnDef="product_qty"
                                                 >
-                                                    {{
-                                                        element.product_weight_type
-                                                    }}
-                                                </td>
-                                            </ng-container> -->
+                                                    <th
+                                                        mat-header-cell
+                                                        *matHeaderCellDef
+                                                    >
+                                                        Product Qty
+                                                    </th>
+                                                    <td
+                                                        mat-cell
+                                                        *matCellDef="
+                                                            let element
+                                                        "
+                                                    >
+                                                        {{
+                                                            element.product_qty
+                                                        }}
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container
+                                                    matColumnDef="product_price"
+                                                >
+                                                    <th
+                                                        mat-header-cell
+                                                        *matHeaderCellDef
+                                                    >
+                                                        Product Price
+                                                    </th>
+                                                    <td
+                                                        mat-cell
+                                                        *matCellDef="
+                                                            let element
+                                                        "
+                                                    >
+                                                        {{
+                                                            element.product_price
+                                                        }}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container
+                                                    matColumnDef="offer_price"
+                                                >
+                                                    <th
+                                                        mat-header-cell
+                                                        *matHeaderCellDef
+                                                    >
+                                                        Offer Price
+                                                    </th>
+                                                    <td
+                                                        mat-cell
+                                                        *matCellDef="
+                                                            let element
+                                                        "
+                                                    >
+                                                        {{
+                                                            element.offer_price
+                                                        }}
+                                                    </td>
+                                                </ng-container> -->
 
                                                 <tr
                                                     mat-header-row
@@ -526,16 +704,41 @@
 
                     <mat-step>
                         <ng-template matStepLabel>Congratulations</ng-template>
-                        <h5>Congratulations on adding your 1st product</h5>
+                        <h5>
+                            Congratulations on adding products to your store
+                        </h5>
                         <div>
                             &nbsp; &nbsp;
-                            <a
+                            <button
+                                mat-raised-button
+                                color="accent"
+                                (click)="move(0)"
+                            >
+                                Add More Products
+                            </button>
+                            &nbsp; &nbsp;
+                            <!-- <a
+                                href="javascript:void(0);"
+                                class="btn btn-primary"
+                                
+                                (click)="move(0)"
+                                >Add More Products</a
+                            > -->
+                            <button
+                                mat-raised-button
+                                color="primary"
+                                id="complete"
+                                (click)="done()"
+                            >
+                                Submit
+                            </button>
+                            <!-- <a
                                 href="javascript:void(0);"
                                 class="btn btn-success"
                                 id="complete"
                                 (click)="done()"
-                                >Complete</a
-                            >
+                                >Submit</a
+                            > -->
                             &nbsp; &nbsp;
                         </div>
                     </mat-step>

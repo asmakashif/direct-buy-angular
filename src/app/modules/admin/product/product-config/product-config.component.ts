@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
     FormGroup,
@@ -10,6 +10,7 @@ import {
 // import { alignHeaders, afterChanges } from '../../../../utils/hooks-callbacks';
 // import * as Handsontable from 'handsontable';
 import { ProductConfigService } from 'app/modules/admin/product/product-config/product-config.service';
+import { MatStepper } from '@angular/material/stepper';
 
 declare var $: any;
 
@@ -19,6 +20,7 @@ declare var $: any;
     styleUrls: ['./product-config.component.scss'],
 })
 export class ProductConfigComponent implements OnInit {
+    @ViewChild('stepper') stepper: MatStepper;
     shopType: any;
     isLinear = true;
     shopTypeGroup: FormGroup;
@@ -36,6 +38,10 @@ export class ProductConfigComponent implements OnInit {
     categories: any;
     sub_category: any;
     brand: any;
+    shop_type: any;
+    category: any;
+    subCategory: any;
+    brands: any;
 
     constructor(
         private apiService: ProductConfigService,
@@ -81,7 +87,27 @@ export class ProductConfigComponent implements OnInit {
         }
     }
 
-    onCheckboxChange(e) {
+    selectAllShopType(e) {
+        const checked = e.target.checked;
+        this.shopType.forEach((item) => (item.selected = checked));
+
+        const shopType: FormArray = this.shopTypeGroup.get(
+            'shopType'
+        ) as FormArray;
+
+        if (e.target.checked) {
+            this.shopType.forEach((row) => {
+                //console.log(row.shop_type_name);
+                shopType.push(new FormControl(row.shop_type_name));
+            });
+        }
+        // else {
+        //     // console.log('checked false');
+        //     this.shopType.length = 0;
+        // }
+    }
+
+    onShopTypeChange(e) {
         const shopType: FormArray = this.shopTypeGroup.get(
             'shopType'
         ) as FormArray;
@@ -97,13 +123,31 @@ export class ProductConfigComponent implements OnInit {
     }
 
     onTypeSubmit() {
-        //more code
+        const arr = this.shopTypeGroup.value;
+        localStorage.setItem('dshop_type', JSON.stringify(arr.shopType));
+
         this.apiService
             .getCategoryByShopType(this.shopTypeGroup.value)
             .subscribe((categories) => {
                 this.categories = categories;
                 console.log(this.categories);
             });
+    }
+
+    selectAllCategory(e) {
+        const checked = e.target.checked;
+        this.categories.forEach((item) => (item.selected = checked));
+
+        const categories: FormArray = this.categoryGroup.get(
+            'categories'
+        ) as FormArray;
+
+        if (e.target.checked) {
+            this.categories.forEach((row) => {
+                //console.log(row.shop_type_name);
+                categories.push(new FormControl(row.category));
+            });
+        }
     }
 
     onCategoryChange(e) {
@@ -124,12 +168,30 @@ export class ProductConfigComponent implements OnInit {
     onCategorySubmit() {
         //more code
         //console.log(this.categoryGroup.value);
+        const arr = this.categoryGroup.value;
+        localStorage.setItem('dcategory', JSON.stringify(arr.categories));
         this.apiService
             .getSubCatbyCategory(this.categoryGroup.value)
             .subscribe((subCategory) => {
                 this.sub_category = subCategory;
                 console.log(this.sub_category);
             });
+    }
+
+    selectAllSubCategory(e) {
+        const checked = e.target.checked;
+        this.sub_category.forEach((item) => (item.selected = checked));
+
+        const sub_category: FormArray = this.subCategoryGroup.get(
+            'sub_category'
+        ) as FormArray;
+
+        if (e.target.checked) {
+            this.sub_category.forEach((row) => {
+                //console.log(row.shop_type_name);
+                sub_category.push(new FormControl(row.sub_category));
+            });
+        }
     }
 
     onSubCategoryChange(e) {
@@ -150,12 +212,28 @@ export class ProductConfigComponent implements OnInit {
     onSubCategorySubmit() {
         //more code
         console.log(this.subCategoryGroup.value);
+        const arr = this.subCategoryGroup.value;
+        localStorage.setItem('dsubCategory', JSON.stringify(arr.sub_category));
         this.apiService
             .getBrandBySubCat(this.subCategoryGroup.value)
             .subscribe((brand) => {
                 this.brand = brand;
                 console.log(this.brand);
             });
+    }
+
+    selectAllBrand(e) {
+        const checked = e.target.checked;
+        this.brand.forEach((item) => (item.selected = checked));
+
+        const brand: FormArray = this.brandGroup.get('brand') as FormArray;
+
+        if (e.target.checked) {
+            this.brand.forEach((row) => {
+                //console.log(row.shop_type_name);
+                brand.push(new FormControl(row.brand));
+            });
+        }
     }
 
     onBrandChange(e) {
@@ -174,11 +252,19 @@ export class ProductConfigComponent implements OnInit {
     onBrandSubmit() {
         //more code
         console.log(this.brandGroup.value);
+        const arr = this.brandGroup.value;
+        localStorage.setItem('dbrands', JSON.stringify(arr.brand));
+
         this.apiService
             .getProductsByBrand(this.brandGroup.value)
             .subscribe((products) => {
                 this.dataset = products;
-                console.log(this.dataset);
+                this.shop_type = JSON.parse(localStorage.getItem('dshop_type'));
+                this.category = JSON.parse(localStorage.getItem('dcategory'));
+                this.subCategory = JSON.parse(
+                    localStorage.getItem('dsubCategory')
+                );
+                this.brands = JSON.parse(localStorage.getItem('dbrands'));
             });
     }
 
@@ -236,7 +322,7 @@ export class ProductConfigComponent implements OnInit {
             $('#save_value').click(function () {
                 var id = visualRow[1];
                 //alert(id);
-                var storeId = arr[4];
+                var storeId = arr[5];
                 //alert(storeId);
                 if (id != '') {
                     $.ajax({
@@ -330,6 +416,10 @@ export class ProductConfigComponent implements OnInit {
         });
     };
 
+    move(index: number) {
+        this.stepper.selectedIndex = index;
+    }
+
     done() {
         const routeParams = this.routes.snapshot.params;
         var storeId = routeParams.shopId;
@@ -405,7 +495,7 @@ export class ProductConfigComponent implements OnInit {
         'Offer Price',
     ];
     hiddenColumns = {
-        columns: [1, 8, 10, 11, 12, 13],
+        columns: [1, 2, 3, 4, 5, 8, 11, 12, 13],
         indicators: false,
     };
     licenseKey = 'non-commercial-and-evaluation';
