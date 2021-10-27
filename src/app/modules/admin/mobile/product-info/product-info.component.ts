@@ -108,7 +108,7 @@ export class ProductInfoComponent implements OnInit {
         $(document).ready(function () {
             $('#nextStep').click(function () {
                 var base_url = window.location.origin;
-                window.location.href = base_url + '/steps/' + storeId;
+                window.location.href = base_url + '/mobile/steps/' + storeId;
             });
         });
     }
