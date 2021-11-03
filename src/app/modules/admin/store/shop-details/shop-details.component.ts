@@ -18,9 +18,12 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 })
 export class ShopDetailsComponent implements OnInit {
     editForm: FormGroup;
+    formGroup: FormGroup;
+    minOrderValGroup: FormGroup;
     data: any;
     payment: any;
     paymentForm: FormGroup;
+    isChecked = true;
     constructor(
         private flashMessagesService: FlashMessagesService,
         // private ngFlashMessageService: NgFlashMessageService,
@@ -41,13 +44,19 @@ export class ShopDetailsComponent implements OnInit {
             shop_name: ['', Validators.required],
             shop_address: ['', Validators.required],
         });
+
+        this.minOrderValGroup = this.formBuilder.group({
+            shopId: [routeParams.shopId],
+            min_order_val: ['', Validators.required],
+        });
         //console.log(this.editForm);
         this.apiService
             .getShopDetailsById(routeParams.shopId, user_id)
             .subscribe((data: any) => {
                 this.editForm.patchValue(data);
+                this.minOrderValGroup.patchValue(data);
                 this.data = data;
-                console.log(this.data.shopId);
+                console.log(this.data);
             });
 
         this.apiService
@@ -62,6 +71,44 @@ export class ShopDetailsComponent implements OnInit {
             shopId: [routeParams.shopId],
             shop_pInfo_id: this.formBuilder.array([], [Validators.required]),
         });
+
+        this.formGroup = this.formBuilder.group({
+            shopId: [routeParams.shopId],
+            home_delivery: [false, Validators.requiredTrue],
+        });
+    }
+
+    onFormSubmit(formValue: any) {
+        //alert(JSON.stringify(formValue, null, 2));
+        console.log(formValue);
+        this.apiService.updateAdditionalSetting(formValue).subscribe((data) => {
+            this.flashMessagesService.show(
+                // Array of messages each will be displayed in new line
+                'Updated Successfully',
+                {
+                    cssClass: 'alert-success', // Type of flash message, it defaults to info and success, warning, danger types can also be used
+                    timeout: 4000, // Time after which the flash disappears defaults to 4000ms
+                }
+            );
+            this.ngOnInit();
+        });
+    }
+
+    onMinOrderValGroupSubmit() {
+        console.log(this.minOrderValGroup.value);
+        this.apiService
+            .updateAdditionalSetting(this.minOrderValGroup.value)
+            .subscribe((data) => {
+                this.flashMessagesService.show(
+                    // Array of messages each will be displayed in new line
+                    'Updated Successfully',
+                    {
+                        cssClass: 'alert-success', // Type of flash message, it defaults to info and success, warning, danger types can also be used
+                        timeout: 4000, // Time after which the flash disappears defaults to 4000ms
+                    }
+                );
+                this.ngOnInit();
+            });
     }
 
     setUpPayment(): void {

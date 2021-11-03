@@ -290,6 +290,110 @@
                                 </mat-expansion-panel-header>
                             </mat-expansion-panel>
                         </a> -->
+                        <mat-expansion-panel
+                            [expanded]="step === 2"
+                            (opened)="setStep(2)"
+                            hideToggle
+                        >
+                            <mat-expansion-panel-header>
+                                <mat-panel-title> Additional </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <form
+                                class="example-form"
+                                [formGroup]="formGroup"
+                                (ngSubmit)="onFormSubmit(formGroup.value)"
+                                ngNativeValidate
+                            >
+                                <div class="row">
+                                    <div
+                                        class="col-md-3"
+                                        *ngIf="data.home_delivery == 0"
+                                    >
+                                        <span>
+                                            <strong
+                                                >Home Delivery-<span
+                                                    style="color: red"
+                                                    >Off</span
+                                                ></strong
+                                            >
+                                        </span>
+                                    </div>
+                                    <div
+                                        class="col-md-3"
+                                        *ngIf="data.home_delivery == 1"
+                                    >
+                                        <span>
+                                            <strong
+                                                >Home Delivery-<span
+                                                    style="color: green"
+                                                    >On</span
+                                                ></strong
+                                            >
+                                        </span>
+                                    </div>
+                                    <div
+                                        class="col-md-3"
+                                        *ngIf="data.home_delivery == 1"
+                                    >
+                                        <mat-slide-toggle
+                                            color="accent"
+                                            checked
+                                        ></mat-slide-toggle>
+                                    </div>
+                                    <div
+                                        class="col-md-3"
+                                        *ngIf="data.home_delivery == 0"
+                                    >
+                                        <mat-slide-toggle
+                                            color="primary"
+                                            formControlName="home_delivery"
+                                        ></mat-slide-toggle>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input
+                                            type="submit"
+                                            class="btn btn-success"
+                                            name="submit"
+                                            value="Save"
+                                        />
+                                    </div>
+                                </div>
+                            </form>
+                            <br />
+                            <br />
+                            <form
+                                [formGroup]="minOrderValGroup"
+                                (ngSubmit)="onMinOrderValGroupSubmit()"
+                            >
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <span>
+                                            <strong>Minimum Order Value</strong>
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            formControlName="min_order_val"
+                                            name="min_order_val"
+                                            placeholder="Enter Minimum order value"
+                                        />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <input
+                                                type="submit"
+                                                class="btn btn-success"
+                                                name="submit"
+                                                value="Save"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </mat-expansion-panel>
                     </mat-accordion>
                 </mat-tab>
             </mat-tab-group>

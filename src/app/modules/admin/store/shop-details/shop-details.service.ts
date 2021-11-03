@@ -41,4 +41,11 @@ export class ShopDetailsService {
     updateUser(user: Data): Observable<ApiResponse> {
         return this.http.post<ApiResponse>('/api/updateShop.php', user);
     }
+
+    updateAdditionalSetting(user: Data): Observable<ApiResponse> {
+        return this.http.post<ApiResponse>(
+            '/api/updateAdditionalSetting.php',
+            user
+        );
+    }
 }
