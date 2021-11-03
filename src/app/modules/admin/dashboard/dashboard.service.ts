@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+import { ApiResponse } from 'app/Model/api-response';
+import { Data } from 'app/Model/data';
 
 @Injectable({
     providedIn: 'root',
@@ -62,6 +64,19 @@ export class DashboardService {
     getRegisteredCustomers(shopId: string): Observable<any> {
         return this._httpClient.get(
             '/api/customers/getRegisteredCustomers.php?shopId=' + shopId
+        );
+    }
+
+    getRetailerDetailsById(user_id): Observable<ApiResponse> {
+        return this._httpClient.get<ApiResponse>(
+            '/api/getRetailerDetailsById.php?user_id=' + user_id
+        );
+    }
+
+    updateRetailerDetails(user: Data): Observable<ApiResponse> {
+        return this._httpClient.post<ApiResponse>(
+            '/api/updateRetailerDetails.php',
+            user
         );
     }
 }

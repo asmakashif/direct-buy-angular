@@ -294,6 +294,13 @@ export const appRoutes: Route[] = [
                     ).then((m) => m.ProductInfoModule),
             },
             {
+                path: 'profile',
+                loadChildren: () =>
+                    import('app/modules/auth/profile/profile.module').then(
+                        (m) => m.ProfileModule
+                    ),
+            },
+            {
                 path: 'testing/table-edit/:shopId',
                 loadChildren: () =>
                     import(

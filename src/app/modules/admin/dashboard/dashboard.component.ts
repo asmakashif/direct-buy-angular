@@ -5,12 +5,16 @@ import {
     ViewEncapsulation,
     Inject,
 } from '@angular/core';
+import { FlashMessagesService } from 'angular2-flash-messages';
 import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DashboardService } from 'app/modules/admin/dashboard/dashboard.service';
 import { Data } from '../../../Model/data';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { FormBuilder, Validators } from '@angular/forms';
+
+declare var $: any;
 
 @Component({
     selector: 'dashboard',
@@ -37,10 +41,16 @@ export class DashboardComponent {
     newCustomerCount: any;
     customerCount: any;
     payment: any;
+    messageForm: any;
+
+    message: any;
+    profileData: any;
 
     constructor(
         @Inject(DOCUMENT)
         private _document: Document,
+        private flashMessagesService: FlashMessagesService,
+        private formBuilder: FormBuilder,
         private _dashboardService: DashboardService,
         private _router: Router,
         private routes: ActivatedRoute,
@@ -55,6 +65,10 @@ export class DashboardComponent {
             this._router.navigate(['sign-in']);
         }
         const routeParams = this.routes.snapshot.params;
+        this.messageForm = this.formBuilder.group({
+            id: [user_id],
+            str_msg: ['', Validators.required],
+        });
         this._dashboardService.getShops(user_id).subscribe((data: any) => {
             this.data = data;
         });
@@ -123,6 +137,15 @@ export class DashboardComponent {
                 this.payment = payment;
                 console.log(this.payment);
             });
+
+        this._dashboardService
+            .getRetailerDetailsById(user_id)
+            .subscribe((data) => {
+                this.messageForm.patchValue(data);
+                this.profileData = data;
+                console.log(this.profileData);
+            });
+        //this.editMessage();
     }
 
     changeStore(stores): void {
@@ -169,6 +192,35 @@ export class DashboardComponent {
 
     pendingOrders(data: Data): void {
         this._router.navigate(['/orders/pending-orders/' + data.shopId]);
+    }
+
+    enableMessageField() {
+        console.log('keyup');
+
+        $(document).ready(function () {
+            $('#str_msg').prop('readonly', false);
+            $('#editMessage').prop('disabled', false);
+        });
+    }
+
+    onMessageUpdate() {
+        console.log(this.messageForm.value);
+        this._dashboardService
+            .updateRetailerDetails(this.messageForm.value)
+            .subscribe((data) => {
+                this.flashMessagesService.show(
+                    // Array of messages each will be displayed in new line
+                    'Updated Successfully',
+                    {
+                        cssClass: 'alert-success', // Type of flash message, it defaults to info and success, warning, danger types can also be used
+                        timeout: 4000, // Time after which the flash disappears defaults to 4000ms
+                    }
+                );
+                //this.ngOnInit();
+                this._router.navigate(['dashboard/']).then(() => {
+                    window.location.reload();
+                });
+            });
     }
 
     isMobile() {

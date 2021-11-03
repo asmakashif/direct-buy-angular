@@ -48,6 +48,7 @@
                                 You have 2 new messages and 15 new tasks
                             </div>
                         </div>
+                        <flash-messages></flash-messages>
                     </div>
                 </div>
                 <!-- Actions -->
@@ -191,7 +192,9 @@
                                         </button>
                                         <mat-menu #summaryMenu="matMenu">
                                             <button
-                                                [routerLink]="['/store/create-shop']"
+                                                [routerLink]="[
+                                                    '/store/create-shop'
+                                                ]"
                                                 mat-menu-item
                                             >
                                                 Create Shop
@@ -258,6 +261,7 @@
                                         <!-- <a
                                             href="javascript:void(0);"
                                             (click)="shopDetails(data)"
+                                            style="text-decoration: none"
                                         > -->
                                         <div
                                             class="
@@ -347,6 +351,7 @@
                                         <a
                                             href="javascript:void(0);"
                                             (click)="completedOrders(data)"
+                                            style="text-decoration: none"
                                         >
                                             <div
                                                 class="
@@ -362,6 +367,7 @@
                                         <a
                                             href="javascript:void(0);"
                                             (click)="pendingOrders(data)"
+                                            style="text-decoration: none"
                                         >
                                             <div
                                                 class="
@@ -565,6 +571,7 @@
                                         <a
                                             href="javascript:void(0);"
                                             (click)="completedOrders(data)"
+                                            style="text-decoration: none"
                                         >
                                             <div
                                                 class="
@@ -580,6 +587,7 @@
                                         <a
                                             href="javascript:void(0);"
                                             (click)="pendingOrders(data)"
+                                            style="text-decoration: none"
                                         >
                                             <div
                                                 class="
@@ -638,17 +646,46 @@
                 <!-- Communication -->
                 <mat-tab label="Communication">
                     <ng-template matTabContent>
-                        <div
-                            class="
-                                grid grid-cols-1
-                                sm:grid-cols-2
-                                md:grid-cols-3
-                                lg:grid-cols-4
-                                gap-6
-                                w-full
-                                min-w-0
-                            "
-                        ></div>
+                        <form
+                            [formGroup]="messageForm"
+                            (ngSubmit)="onMessageUpdate()"
+                            autocomplete="off"
+                        >
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <span
+                                        >Enter Message for Store
+                                        <br />
+                                        <small style="color: red"
+                                            >Click on text field to edit message</small
+                                        ></span
+                                    >
+                                </div>
+                                <div class="col-md-6">
+                                    <input
+                                        readonly=""
+                                        (click)="enableMessageField()"
+                                        formControlName="str_msg"
+                                        name="str_msg"
+                                        type="text"
+                                        class="form-control"
+                                        id="str_msg"
+                                    />
+                                </div>
+                                <div class="col-md-3">
+                                    <button
+                                        type=""
+                                        id="editMessage"
+                                        (click)="enableMessageField()"
+                                        disabled="true"
+                                        class="btn btn-info"
+                                        style="height: 40px"
+                                    >
+                                        Edit Message
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </ng-template>
                 </mat-tab>
             </mat-tab-group>

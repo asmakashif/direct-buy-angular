@@ -33,7 +33,14 @@
     <mat-divider class="my-2"></mat-divider>
     <button mat-menu-item>
         <mat-icon [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
-        <span>Profile</span>
+        <span
+            ><a
+                href="javascript:void(0);"
+                (click)="profile()"
+                style="text-decoration: none; color: black"
+                >Profile
+            </a></span
+        >
     </button>
     <button mat-menu-item>
         <mat-icon [svgIcon]="'heroicons_outline:cog'"></mat-icon>
