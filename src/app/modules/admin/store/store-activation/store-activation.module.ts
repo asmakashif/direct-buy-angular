@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { FlashMessagesModule } from 'angular2-flash-messages';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
@@ -28,6 +29,7 @@ const storeActivationRoutes: Route[] = [
     declarations: [StoreActivationComponent],
     imports: [
         RouterModule.forChild(storeActivationRoutes),
+        FlashMessagesModule.forRoot(),
         MatButtonModule,
         MatButtonToggleModule,
         MatDividerModule,

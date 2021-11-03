@@ -85,7 +85,7 @@ export class ProductInfoComponent implements OnInit {
                     },
                     success: function (data) {
                         console.log(data);
-                        alert('success');
+                        //alert('success');
                     },
                 });
             });

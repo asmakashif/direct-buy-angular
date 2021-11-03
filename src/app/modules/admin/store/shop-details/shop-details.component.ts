@@ -7,6 +7,7 @@ import {
     FormArray,
     FormControl,
 } from '@angular/forms';
+import { FlashMessagesService } from 'angular2-flash-messages';
 import { ShopDetailsService } from 'app/modules/admin/store/shop-details/shop-details.service';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 
@@ -21,6 +22,8 @@ export class ShopDetailsComponent implements OnInit {
     payment: any;
     paymentForm: FormGroup;
     constructor(
+        private flashMessagesService: FlashMessagesService,
+        // private ngFlashMessageService: NgFlashMessageService,
         private formBuilder: FormBuilder,
         private apiService: ShopDetailsService,
         private _router: Router,
@@ -94,11 +97,19 @@ export class ShopDetailsComponent implements OnInit {
         this.apiService
             .saveDefaultPayment(this.paymentForm.value)
             .subscribe((data) => {
-                this._router.navigate([
-                    '/store/shop-details/' + routeParams.shopId,
-                ]);
+                // this._router.navigate([
+                //     '/store/shop-details/' + routeParams.shopId,
+                // ]);
+                this.flashMessagesService.show(
+                    // Array of messages each will be displayed in new line
+                    'Default store added',
+                    {
+                        cssClass: 'alert-success', // Type of flash message, it defaults to info and success, warning, danger types can also be used
+                        timeout: 4000, // Time after which the flash disappears defaults to 4000ms
+                    }
+                );
+                this.ngOnInit();
             });
-        this.ngOnInit();
     }
 
     shopConfiguration(shopId): void {

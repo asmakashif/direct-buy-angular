@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { FlashMessagesModule } from 'angular2-flash-messages';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -35,6 +36,7 @@ const shopDetailsRoutes: Route[] = [
     declarations: [ShopDetailsComponent],
     imports: [
         RouterModule.forChild(shopDetailsRoutes),
+        FlashMessagesModule.forRoot(),
         MatButtonModule,
         MatButtonToggleModule,
         MatDividerModule,

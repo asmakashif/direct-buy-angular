@@ -6,6 +6,7 @@ import {
     FormArray,
     FormControl,
 } from '@angular/forms';
+import { FlashMessagesService } from 'angular2-flash-messages';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StoreActivationService } from 'app/modules/admin/store/store-activation/store-activation.service';
 
@@ -21,6 +22,7 @@ export class StoreActivationComponent implements OnInit {
     data: any;
 
     constructor(
+        private flashMessagesService: FlashMessagesService,
         private formBuilder: FormBuilder,
         private apiService: StoreActivationService,
         private routes: ActivatedRoute,
@@ -107,8 +109,24 @@ export class StoreActivationComponent implements OnInit {
             .subscribe((data) => {
                 //window.location.reload();
                 if (!this.isMobile()) {
+                    this.flashMessagesService.show(
+                        // Array of messages each will be displayed in new line
+                        'Store activated successfully',
+                        {
+                            cssClass: 'alert-success', // Type of flash message, it defaults to info and success, warning, danger types can also be used
+                            timeout: 4000, // Time after which the flash disappears defaults to 4000ms
+                        }
+                    );
                     this._router.navigate(['/steps/' + routeParams.shopId]);
                 } else {
+                    this.flashMessagesService.show(
+                        // Array of messages each will be displayed in new line
+                        'Store activated successfully',
+                        {
+                            cssClass: 'alert-success', // Type of flash message, it defaults to info and success, warning, danger types can also be used
+                            timeout: 4000, // Time after which the flash disappears defaults to 4000ms
+                        }
+                    );
                     this._router.navigate([
                         '/mobile/steps/' + routeParams.shopId,
                     ]);
