@@ -154,6 +154,13 @@ export const appRoutes: Route[] = [
                     ).then((m) => m.ExampleModule),
             },
             {
+                path: 'example/:shopId',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/testing/example/example.module'
+                    ).then((m) => m.ExampleModule),
+            },
+            {
                 path: 'create',
                 loadChildren: () =>
                     import(

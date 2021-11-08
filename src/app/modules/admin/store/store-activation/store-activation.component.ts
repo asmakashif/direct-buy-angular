@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
     FormGroup,
     FormBuilder,
@@ -26,7 +26,8 @@ export class StoreActivationComponent implements OnInit {
         private formBuilder: FormBuilder,
         private apiService: StoreActivationService,
         private routes: ActivatedRoute,
-        private _router: Router
+        private _router: Router,
+        private cd: ChangeDetectorRef
     ) {}
 
     ngOnInit(): void {
@@ -36,6 +37,7 @@ export class StoreActivationComponent implements OnInit {
             .getShopDetailsById(routeParams.shopId, user_id)
             .subscribe((data: any) => {
                 this.data = data;
+                this.cd.detectChanges();
                 console.log(this.data.shopId);
             });
         // this.routes.paramMap.subscribe((params) => {
@@ -107,7 +109,7 @@ export class StoreActivationComponent implements OnInit {
         this.apiService
             .updateTrialStatus(routeParams.shopId, user_id)
             .subscribe((data) => {
-                //window.location.reload();
+                this.cd.detectChanges();
                 if (!this.isMobile()) {
                     this.flashMessagesService.show(
                         // Array of messages each will be displayed in new line

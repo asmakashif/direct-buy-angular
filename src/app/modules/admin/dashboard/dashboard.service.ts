@@ -25,6 +25,12 @@ export class DashboardService {
         return this._httpClient.get('/api/countShops.php?user_id=' + user_id);
     }
 
+    getNoOfPayment(user_id: string): Observable<any> {
+        return this._httpClient.get(
+            '/api/payments/countPayment.php?user_id=' + user_id
+        );
+    }
+
     getPrevMonthOrders(shopId: string): Observable<any> {
         return this._httpClient.get(
             '/api/orders/getPrevMonthOrders.php?shopId=' + shopId

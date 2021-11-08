@@ -7,9 +7,7 @@ import {
     FormArray,
     FormControl,
 } from '@angular/forms';
-// import { alignHeaders, afterChanges } from '../../../../utils/hooks-callbacks';
-// import * as Handsontable from 'handsontable';
-import { ProductConfigService } from 'app/modules/admin/product/product-config/product-config.service';
+import { ProductConfigService } from 'app/modules/admin/mobile/product-config/product-config.service';
 import { MatStepper } from '@angular/material/stepper';
 
 declare var $: any;
@@ -305,172 +303,164 @@ export class ProductConfigComponent implements OnInit {
     //     }
     // };
 
-    hotSettings = {
-        afterChange: function (changes, src) {
-            if (changes) {
-                const user_id = localStorage.getItem('user_id');
-                var URL = window.location.href;
-                var arr = URL.split('/');
-                //console.log(arr);
-                var rowThatHasBeenChanged = changes[0][0];
-                var sourceRow = this.getSourceDataAtRow(rowThatHasBeenChanged),
-                    visualRow = this.getDataAtRow(rowThatHasBeenChanged);
+    afterChange = function (changes: any[], source: boolean) {
+        const user_id = localStorage.getItem('user_id');
+        var URL = window.location.href;
+        var arr = URL.split('/');
+        //console.log(arr);
+        var rowThatHasBeenChanged = changes[0][0];
+        var sourceRow = this.getSourceDataAtRow(rowThatHasBeenChanged),
+            visualRow = this.getDataAtRow(rowThatHasBeenChanged);
 
-                var row = this.getSelectedLast()[0];
-                console.log(row);
-                console.log(visualRow);
+        var row = this.getSelectedLast()[0];
+        console.log(row);
+        console.log(visualRow);
 
-                $(document).ready(function () {
-                    $('#save_value').click(function () {
-                        var select = visualRow[0];
-                        var storeId = arr[5];
-                        var base_product_id = visualRow[1];
-                        var shop_type = visualRow[2];
-                        var category = visualRow[3];
-                        var sub_category = visualRow[4];
-                        var brand = visualRow[5];
-                        var product_name = visualRow[6];
-                        var product_type = visualRow[7];
-                        var product_sub_type = visualRow[8];
-                        var product_weight = visualRow[9];
-                        var product_weight_type = visualRow[10];
-                        var product_qty = visualRow[11];
-                        var product_price = visualRow[12];
-                        var offer_price = visualRow[13];
+        $(document).ready(function () {
+            $('#save_value').click(function () {
+                var select = visualRow[0];
+                var storeId = arr[5];
+                var base_product_id = visualRow[1];
+                var shop_type = visualRow[2];
+                var category = visualRow[3];
+                var sub_category = visualRow[4];
+                var brand = visualRow[5];
+                var product_name = visualRow[6];
+                var product_type = visualRow[7];
+                var product_sub_type = visualRow[8];
+                var product_weight = visualRow[9];
+                var product_weight_type = visualRow[10];
+                var product_qty = visualRow[11];
+                var product_price = visualRow[12];
+                var offer_price = visualRow[13];
 
+                $.ajax({
+                    url: '/api/checkBaseProductInTemp.php/' + storeId + '',
+                    method: 'POST',
+                    data: { storeId: storeId },
+                    success: function (data) {
                         $.ajax({
-                            url:
-                                '/api/checkBaseProductInTemp.php/' +
-                                storeId +
-                                '',
+                            url: '/api/saveBaseProductsToTemp.php',
                             method: 'POST',
-                            data: { storeId: storeId },
+                            data: {
+                                user_id: user_id,
+                                storeId: storeId,
+                                base_product_id: base_product_id,
+                                shop_type: shop_type,
+                                category: category,
+                                sub_category: sub_category,
+                                brand: brand,
+                                product_name: product_name,
+                                product_type: product_type,
+                                product_sub_type: product_sub_type,
+                                product_weight: product_weight,
+                                product_weight_type: product_weight_type,
+                                product_qty: product_qty,
+                                product_price: product_price,
+                                offer_price: offer_price,
+                            },
                             success: function (data) {
-                                $.ajax({
-                                    url: '/api/saveBaseProductsToTemp.php',
-                                    method: 'POST',
-                                    data: {
-                                        user_id: user_id,
-                                        storeId: storeId,
-                                        base_product_id: base_product_id,
-                                        shop_type: shop_type,
-                                        category: category,
-                                        sub_category: sub_category,
-                                        brand: brand,
-                                        product_name: product_name,
-                                        product_type: product_type,
-                                        product_sub_type: product_sub_type,
-                                        product_weight: product_weight,
-                                        product_weight_type:
-                                            product_weight_type,
-                                        product_qty: product_qty,
-                                        product_price: product_price,
-                                        offer_price: offer_price,
-                                    },
-                                    success: function (data) {
-                                        console.log(data);
-                                    },
-                                });
+                                console.log(data);
                             },
                         });
-                    });
-                    // $('#save_value').click(function () {
-                    //     var id = visualRow[1];
-                    //     //alert(id);
-                    //     var storeId = arr[5];
-                    //     //alert(storeId);
-                    //     if (id != '') {
-                    //         $.ajax({
-                    //             url: '/api/fetchBaseProductsById.php',
-                    //             method: 'POST',
-                    //             data: { id: id },
-                    //             success: function (data) {
-                    //                 //console.log(data);
-                    //                 var obj = JSON.parse(data);
-                    //                 // console.log(obj);
-                    //                 var base_product_id = obj.base_product_id;
-                    //                 var shop_type = obj.shop_type;
-                    //                 var category = obj.category;
-                    //                 var sub_category = obj.sub_category;
-                    //                 var brand = obj.brand;
-                    //                 var product_name = obj.product_name;
-                    //                 var product_type = obj.product_type;
-                    //                 var product_sub_type = obj.product_sub_type;
-                    //                 // var product_description = obj.product_description;
-                    //                 // console.log(product_description);
-                    //                 var product_weight = obj.product_weight;
-                    //                 var product_weight_type = obj.product_weight_type;
-                    //                 var product_qty = obj.product_qty;
-                    //                 var product_price = obj.product_price;
-                    //                 var offer_price = obj.offer_price;
-                    //                 // var product_img = obj.product_img;
-                    //                 // console.log(product_img);
-
-                    //                 $.ajax({
-                    //                     url:
-                    //                         '/api/checkBaseProductInTemp.php/' +
-                    //                         storeId +
-                    //                         '',
-                    //                     method: 'POST',
-                    //                     data: { storeId: storeId },
-                    //                     success: function (data) {
-                    //                         $.ajax({
-                    //                             url: '/api/saveBaseProductsToTemp.php',
-                    //                             method: 'POST',
-                    //                             data: {
-                    //                                 user_id: user_id,
-                    //                                 storeId: storeId,
-                    //                                 base_product_id: base_product_id,
-                    //                                 shop_type: shop_type,
-                    //                                 category: category,
-                    //                                 sub_category: sub_category,
-                    //                                 brand: brand,
-                    //                                 product_name: product_name,
-                    //                                 product_type: product_type,
-                    //                                 product_sub_type: product_sub_type,
-                    //                                 // product_description:
-                    //                                 //     product_description,
-                    //                                 product_weight: product_weight,
-                    //                                 product_weight_type:
-                    //                                     product_weight_type,
-                    //                                 product_qty: product_qty,
-                    //                                 product_price: product_price,
-                    //                                 offer_price: offer_price,
-                    //                                 // product_img: product_img,
-                    //                             },
-                    //                             success: function (data) {
-                    //                                 console.log(data);
-
-                    //                                 // $.ajax({
-                    //                                 //     url: '/api/countInsertedRow.php',
-                    //                                 //     type: 'POST',
-                    //                                 //     data: { storeId: storeId },
-                    //                                 //     success: function (data) {
-                    //                                 //         var res = JSON.parse(data);
-
-                    //                                 //         console.log(res);
-                    //                                 //         if (res == row) {
-                    //                                 //             var su = 'success';
-                    //                                 //             console.log('su');
-                    //                                 //             if (su) {
-                    //                                 //                 window.location.href =
-                    //                                 //                     'http://localhost:4200/product-info/' +
-                    //                                 //                     storeId;
-                    //                                 //             }
-                    //                                 //         }
-                    //                                 //     },
-                    //                                 // });
-                    //                             },
-                    //                         });
-                    //                     },
-                    //                 });
-                    //             },
-                    //         });
-                    //     }
-                    // });
+                    },
                 });
-            }
-        },
+            });
+            // $('#save_value').click(function () {
+            //     var id = visualRow[1];
+            //     //alert(id);
+            //     var storeId = arr[5];
+            //     //alert(storeId);
+            //     if (id != '') {
+            //         $.ajax({
+            //             url: '/api/fetchBaseProductsById.php',
+            //             method: 'POST',
+            //             data: { id: id },
+            //             success: function (data) {
+            //                 //console.log(data);
+            //                 var obj = JSON.parse(data);
+            //                 // console.log(obj);
+            //                 var base_product_id = obj.base_product_id;
+            //                 var shop_type = obj.shop_type;
+            //                 var category = obj.category;
+            //                 var sub_category = obj.sub_category;
+            //                 var brand = obj.brand;
+            //                 var product_name = obj.product_name;
+            //                 var product_type = obj.product_type;
+            //                 var product_sub_type = obj.product_sub_type;
+            //                 // var product_description = obj.product_description;
+            //                 // console.log(product_description);
+            //                 var product_weight = obj.product_weight;
+            //                 var product_weight_type = obj.product_weight_type;
+            //                 var product_qty = obj.product_qty;
+            //                 var product_price = obj.product_price;
+            //                 var offer_price = obj.offer_price;
+            //                 // var product_img = obj.product_img;
+            //                 // console.log(product_img);
+
+            //                 $.ajax({
+            //                     url:
+            //                         '/api/checkBaseProductInTemp.php/' +
+            //                         storeId +
+            //                         '',
+            //                     method: 'POST',
+            //                     data: { storeId: storeId },
+            //                     success: function (data) {
+            //                         $.ajax({
+            //                             url: '/api/saveBaseProductsToTemp.php',
+            //                             method: 'POST',
+            //                             data: {
+            //                                 user_id: user_id,
+            //                                 storeId: storeId,
+            //                                 base_product_id: base_product_id,
+            //                                 shop_type: shop_type,
+            //                                 category: category,
+            //                                 sub_category: sub_category,
+            //                                 brand: brand,
+            //                                 product_name: product_name,
+            //                                 product_type: product_type,
+            //                                 product_sub_type: product_sub_type,
+            //                                 // product_description:
+            //                                 //     product_description,
+            //                                 product_weight: product_weight,
+            //                                 product_weight_type:
+            //                                     product_weight_type,
+            //                                 product_qty: product_qty,
+            //                                 product_price: product_price,
+            //                                 offer_price: offer_price,
+            //                                 // product_img: product_img,
+            //                             },
+            //                             success: function (data) {
+            //                                 console.log(data);
+
+            //                                 // $.ajax({
+            //                                 //     url: '/api/countInsertedRow.php',
+            //                                 //     type: 'POST',
+            //                                 //     data: { storeId: storeId },
+            //                                 //     success: function (data) {
+            //                                 //         var res = JSON.parse(data);
+
+            //                                 //         console.log(res);
+            //                                 //         if (res == row) {
+            //                                 //             var su = 'success';
+            //                                 //             console.log('su');
+            //                                 //             if (su) {
+            //                                 //                 window.location.href =
+            //                                 //                     'http://localhost:4200/product-info/' +
+            //                                 //                     storeId;
+            //                                 //             }
+            //                                 //         }
+            //                                 //     },
+            //                                 // });
+            //                             },
+            //                         });
+            //                     },
+            //                 });
+            //             },
+            //         });
+            //     }
+            // });
+        });
     };
 
     move(index: number) {

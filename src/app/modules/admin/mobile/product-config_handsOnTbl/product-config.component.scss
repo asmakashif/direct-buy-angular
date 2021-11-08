@@ -1,0 +1,70 @@
+/* _print.scss:116 */
+.table-bordered {
+    th,
+    td {
+        border: 1px solid grey !important;
+    }
+}
+
+.fixTableHead {
+    overflow-y: auto;
+    height: 510px;
+}
+
+.fixTableHead {
+    overflow-y: auto;
+    height: 510px;
+}
+
+@media screen and (max-width: 906px) {
+    .fixTableHead {
+        overflow-y: auto;
+        height: 510px;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+.fixTableHead th {
+    position: sticky;
+    top: 0;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th,
+td {
+    padding: 8px 15px;
+    border: 2px solid rgb(8, 8, 8);
+}
+th {
+    background: #ededed;
+}
+
+.matSelect {
+    width: 500vh;
+}
+
+.wj-listbox {
+    max-height: 200px;
+    width: auto;
+    overflow-y: auto;
+    border: 1px solid gray;
+}
+
+.checkbox {
+    margin-left: 4px;
+}
+
+.inputChk {
+    background-color: #0f172a;
+    color: white;
+}
+
+body {
+    margin-bottom: 24pt;
+}
+
+// .hidden ng-container {
+//     display: none;
+// }

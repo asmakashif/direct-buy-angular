@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductInfoService } from 'app/modules/admin/product/product-info/product-info.service';
 
@@ -16,7 +16,8 @@ export class ProductInfoComponent implements OnInit {
     constructor(
         private apiService: ProductInfoService,
         private _router: Router,
-        private routes: ActivatedRoute
+        private routes: ActivatedRoute,
+        private cd: ChangeDetectorRef
     ) {}
 
     ngOnInit(): void {
@@ -27,6 +28,7 @@ export class ProductInfoComponent implements OnInit {
             .subscribe((dataset) => {
                 this.dataset = dataset;
                 this.shopId = routeParams.shopId;
+                this.cd.detectChanges();
                 console.log(this.dataset);
             });
         if (this.isMobile()) {
@@ -44,51 +46,54 @@ export class ProductInfoComponent implements OnInit {
         this._router.navigate(['/store-summary/' + QSYWy7]);
     }
 
-    settingsObj = {
-        afterChange: function (changes: any[], source: boolean) {
-            var rowThatHasBeenChanged = changes[0][0];
-            var sourceRow = this.getSourceDataAtRow(rowThatHasBeenChanged),
-                visualRow = this.getDataAtRow(rowThatHasBeenChanged);
-            console.log(visualRow);
-            var id = visualRow[0];
-            var category = visualRow[1];
-            var sub_category = visualRow[2];
-            var brand = visualRow[3];
-            var product_name = visualRow[4];
-            var product_type = visualRow[5];
-            var product_sub_type = visualRow[6];
-            var product_weight = visualRow[7];
-            var product_weight_type = visualRow[8];
-            var product_qty = visualRow[9];
-            var product_price = visualRow[10];
-            var offer_price = visualRow[11];
-            // var productImg = visualRow[13];
-            // var productDescription = visualRow[14];
-            $(document).ready(function () {
-                $('#save_value').click(function () {});
-                $.ajax({
-                    url: '/api/updateTempStrProduct.php',
-                    method: 'POST',
-                    data: {
-                        id: id,
-                        category: category,
-                        sub_category: sub_category,
-                        brand: brand,
-                        product_name: product_name,
-                        product_type: product_type,
-                        product_sub_type: product_sub_type,
-                        product_weight: product_weight,
-                        product_weight_type: product_weight_type,
-                        product_qty: product_qty,
-                        product_price: product_price,
-                        offer_price: offer_price,
-                    },
-                    success: function (data) {
-                        console.log(data);
-                        //alert('success');
-                    },
+    hotSettings = {
+        afterChange: function (changes, src) {
+            if (changes) {
+                var rowThatHasBeenChanged = changes[0][0];
+
+                var sourceRow = this.getSourceDataAtRow(rowThatHasBeenChanged),
+                    visualRow = this.getDataAtRow(rowThatHasBeenChanged);
+                console.log(visualRow);
+                var id = visualRow[0];
+                var category = visualRow[1];
+                var sub_category = visualRow[2];
+                var brand = visualRow[3];
+                var product_name = visualRow[4];
+                var product_type = visualRow[5];
+                var product_sub_type = visualRow[6];
+                var product_weight = visualRow[7];
+                var product_weight_type = visualRow[8];
+                var product_qty = visualRow[9];
+                var product_price = visualRow[10];
+                var offer_price = visualRow[11];
+                // var productImg = visualRow[13];
+                // var productDescription = visualRow[14];
+                $(document).ready(function () {
+                    $('#save_value').click(function () {});
+                    $.ajax({
+                        url: '/api/updateTempStrProduct.php',
+                        method: 'POST',
+                        data: {
+                            id: id,
+                            category: category,
+                            sub_category: sub_category,
+                            brand: brand,
+                            product_name: product_name,
+                            product_type: product_type,
+                            product_sub_type: product_sub_type,
+                            product_weight: product_weight,
+                            product_weight_type: product_weight_type,
+                            product_qty: product_qty,
+                            product_price: product_price,
+                            offer_price: offer_price,
+                        },
+                        success: function (data) {
+                            console.log(data);
+                            alert('success');
+                        },
+                    });
                 });
-            });
+            }
         },
     };
 

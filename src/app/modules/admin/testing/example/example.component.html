@@ -93,6 +93,34 @@
                     overflow-hidden
                 "
             >
+                <div class="card-body">
+                    <!-- <button>Click me</button>
+                    <span class="edit">ncmnm</span> -->
+                    <table class="table table-bordered table-responsive">
+                        <thead>
+                            <th class="text-center">Category</th>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let dataset of dataset">
+                                <span class="edit">dbv zcnz v</span>
+                                <!-- <td>
+                                    <span class="edit">{{
+                                        dataset.category
+                                    }}</span>
+                                    <input
+                                        type="text"
+                                        class="txtedit"
+                                        data-field="category"
+                                        data-id="dataset.temp_str_config_id"
+                                        id='nametxt_"dataset.dataset.temp_str_config_id"'
+                                        [value]="dataset.category"
+                                    />
+                                </td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <mat-form-field appearance="standard">
                     <mat-label>Filter</mat-label>
                     <input

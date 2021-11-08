@@ -25,26 +25,28 @@ declare var $: any;
 export class DashboardComponent {
     selectedProject: string = 'Dashbaord';
     dateObj: number = Date.now();
-    data: any;
-    count: any;
-    countOrders: any;
+    data: [];
+    count: [];
+    countOrders: [];
     queryParam: any;
     queryParamName: string;
     accessToken: string;
     user_id: string;
     firstname: string;
-    prevMonthOrderCount: any;
-    curMonthOrderCount: any;
-    yestOpenOrderCount: any;
-    openOrderCount: any;
-    curFulfilledOrderCount: any;
-    newCustomerCount: any;
-    customerCount: any;
-    payment: any;
+    prevMonthOrderCount: [];
+    curMonthOrderCount: [];
+    yestOpenOrderCount: [];
+    openOrderCount: [];
+    curFulfilledOrderCount: [];
+    newCustomerCount: [];
+    customerCount: [];
+    payment: [];
     messageForm: any;
 
-    message: any;
+    message: [];
     profileData: any;
+    changeDetectRef: [];
+    paymentCount: [];
 
     constructor(
         @Inject(DOCUMENT)
@@ -69,12 +71,24 @@ export class DashboardComponent {
             id: [user_id],
             str_msg: ['', Validators.required],
         });
-        this._dashboardService.getShops(user_id).subscribe((data: any) => {
-            this.data = data;
-        });
+        this._dashboardService.getShops(user_id).subscribe(
+            (data: any) => {
+                this.data = data;
+                this.cd.detectChanges();
+            },
+            (error) => {
+                alert(error.message);
+            }
+        );
 
         this._dashboardService.getNoOfShops(user_id).subscribe((count) => {
             this.count = count;
+            this.cd.detectChanges();
+        });
+
+        this._dashboardService.getNoOfPayment(user_id).subscribe((count) => {
+            this.paymentCount = count;
+            this.cd.detectChanges();
         });
 
         this.routes.paramMap.subscribe((params) => {
@@ -87,6 +101,7 @@ export class DashboardComponent {
             .getPrevMonthOrders(routeParams.shopId)
             .subscribe((prevMonthOrderCount) => {
                 this.prevMonthOrderCount = prevMonthOrderCount;
+                this.cd.detectChanges();
                 console.log(this.prevMonthOrderCount);
             });
 
@@ -94,6 +109,7 @@ export class DashboardComponent {
             .getCurrentMonthOrders(routeParams.shopId)
             .subscribe((curMonthOrderCount) => {
                 this.curMonthOrderCount = curMonthOrderCount;
+                this.cd.detectChanges();
                 console.log(this.curMonthOrderCount);
             });
 
@@ -101,12 +117,14 @@ export class DashboardComponent {
             .getYestOpenOrders(routeParams.shopId)
             .subscribe((yestOpenOrderCount) => {
                 this.yestOpenOrderCount = yestOpenOrderCount;
+                this.cd.detectChanges();
                 console.log(this.yestOpenOrderCount);
             });
         this._dashboardService
             .getOpenOrders(routeParams.shopId)
             .subscribe((openOrderCount) => {
                 this.openOrderCount = openOrderCount;
+                this.cd.detectChanges();
                 console.log(this.openOrderCount);
             });
 
@@ -114,6 +132,7 @@ export class DashboardComponent {
             .getCurFulfilledOrders(routeParams.shopId)
             .subscribe((curFulfilledOrderCount) => {
                 this.curFulfilledOrderCount = curFulfilledOrderCount;
+                this.cd.detectChanges();
                 console.log(this.curFulfilledOrderCount);
             });
 
@@ -121,6 +140,7 @@ export class DashboardComponent {
             .getNewRegisteredCustomers(routeParams.shopId)
             .subscribe((newCustomerCount) => {
                 this.newCustomerCount = newCustomerCount;
+                this.cd.detectChanges();
                 console.log(this.newCustomerCount);
             });
 
@@ -128,6 +148,7 @@ export class DashboardComponent {
             .getRegisteredCustomers(routeParams.shopId)
             .subscribe((customerCount) => {
                 this.customerCount = customerCount;
+                this.cd.detectChanges();
                 console.log(this.customerCount);
             });
 
@@ -135,6 +156,7 @@ export class DashboardComponent {
             .getPaymentGateway(user_id)
             .subscribe((payment: any) => {
                 this.payment = payment;
+                this.cd.detectChanges();
                 console.log(this.payment);
             });
 
@@ -143,21 +165,18 @@ export class DashboardComponent {
             .subscribe((data) => {
                 this.messageForm.patchValue(data);
                 this.profileData = data;
+                this.cd.detectChanges();
                 console.log(this.profileData);
             });
         //this.editMessage();
     }
 
     changeStore(stores): void {
-        // const success = this._router.navigate([
-        //     'dashboard/' + stores.shopId + '/' + stores.shop_name,]);
-        // if (success) {
-        //     this.ngOnInit();
-        // }
         this._router
             .navigate(['dashboard/' + stores.shopId + '/' + stores.shop_name])
             .then(() => {
-                window.location.reload();
+                this.ngOnInit();
+                // window.location.reload();
             });
     }
 
@@ -208,6 +227,8 @@ export class DashboardComponent {
         this._dashboardService
             .updateRetailerDetails(this.messageForm.value)
             .subscribe((data) => {
+                this.cd.detectChanges();
+
                 this.flashMessagesService.show(
                     // Array of messages each will be displayed in new line
                     'Updated Successfully',
@@ -216,9 +237,10 @@ export class DashboardComponent {
                         timeout: 4000, // Time after which the flash disappears defaults to 4000ms
                     }
                 );
-                //this.ngOnInit();
+
                 this._router.navigate(['dashboard/']).then(() => {
-                    window.location.reload();
+                    this.ngOnInit();
+                    // window.location.reload();
                 });
             });
     }
