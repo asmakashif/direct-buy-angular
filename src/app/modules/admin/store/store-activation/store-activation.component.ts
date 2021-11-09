@@ -10,6 +10,8 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StoreActivationService } from 'app/modules/admin/store/store-activation/store-activation.service';
 
+declare var $: any;
+
 @Component({
     selector: 'app-store-activation',
     templateUrl: './store-activation.component.html',
@@ -110,31 +112,38 @@ export class StoreActivationComponent implements OnInit {
             .updateTrialStatus(routeParams.shopId, user_id)
             .subscribe((data) => {
                 this.cd.detectChanges();
-                if (!this.isMobile()) {
-                    this.flashMessagesService.show(
-                        // Array of messages each will be displayed in new line
-                        'Store activated successfully',
-                        {
-                            cssClass: 'alert-success', // Type of flash message, it defaults to info and success, warning, danger types can also be used
-                            timeout: 4000, // Time after which the flash disappears defaults to 4000ms
-                        }
-                    );
-                    this._router.navigate(['/steps/' + routeParams.shopId]);
-                } else {
-                    this.flashMessagesService.show(
-                        // Array of messages each will be displayed in new line
-                        'Store activated successfully',
-                        {
-                            cssClass: 'alert-success', // Type of flash message, it defaults to info and success, warning, danger types can also be used
-                            timeout: 4000, // Time after which the flash disappears defaults to 4000ms
-                        }
-                    );
-                    this._router.navigate([
-                        '/mobile/steps/' + routeParams.shopId,
-                    ]);
-                }
+
+                this._router.navigate(['store/store-activation/']).then(() => {
+                    window.location.reload();
+                });
+                this.flashMessagesService.show(
+                    // Array of messages each will be displayed in new line
+                    'Store activated successfully',
+                    {
+                        cssClass: 'alert-success', // Type of flash message, it defaults to info and success, warning, danger types can also be used
+                        timeout: 4000, // Time after which the flash disappears defaults to 4000ms
+                    }
+                );
             });
     }
+
+    nextStep() {
+        const routeParams = this.routes.snapshot.params;
+
+        this._router.navigate(['/steps/' + routeParams.shopId]);
+    }
+
+    // nextStep() {
+    //     const routeParams = this.routes.snapshot.params;
+    //     var storeId = routeParams.shopId;
+
+    //     $(document).ready(function () {
+    //         $('#nextStep').click(function () {
+    //             var base_url = window.location.origin;
+    //             window.location.href = base_url + '/steps/' + storeId;
+    //         });
+    //     });
+    // }
 
     isMobile() {
         let check = false;

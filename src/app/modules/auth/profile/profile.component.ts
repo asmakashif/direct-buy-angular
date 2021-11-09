@@ -68,10 +68,10 @@ export class ProfileComponent implements OnInit {
                         timeout: 4000, // Time after which the flash disappears defaults to 4000ms
                     }
                 );
-                //this.ngOnInit();
-                this._router.navigate(['profile/']).then(() => {
-                    window.location.reload();
-                });
+                this.ngOnInit();
+                // this._router.navigate(['profile/']).then(() => {
+                //     this.ngOnInit();
+                // });
             });
     }
 }

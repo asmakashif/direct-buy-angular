@@ -308,6 +308,13 @@ export const appRoutes: Route[] = [
                     ),
             },
             {
+                path: 'my-account',
+                loadChildren: () =>
+                    import(
+                        'app/modules/auth/my-account/my-account.module'
+                    ).then((m) => m.MyAccountModule),
+            },
+            {
                 path: 'testing/table-edit/:shopId',
                 loadChildren: () =>
                     import(
