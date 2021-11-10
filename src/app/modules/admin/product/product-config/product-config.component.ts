@@ -259,6 +259,7 @@ export class ProductConfigComponent implements OnInit {
             .getProductsByBrand(this.brandGroup.value)
             .subscribe((products) => {
                 this.dataset = products;
+                console.log(this.dataset);
                 this.shop_type = JSON.parse(localStorage.getItem('dshop_type'));
                 this.category = JSON.parse(localStorage.getItem('dcategory'));
                 this.subCategory = JSON.parse(
@@ -332,11 +333,15 @@ export class ProductConfigComponent implements OnInit {
                         var product_name = visualRow[6];
                         var product_type = visualRow[7];
                         var product_sub_type = visualRow[8];
-                        var product_weight = visualRow[9];
-                        var product_weight_type = visualRow[10];
-                        var product_qty = visualRow[11];
-                        var product_price = visualRow[12];
-                        var offer_price = visualRow[13];
+                        var product_description = visualRow[9];
+                        console.log(product_description);
+                        var product_weight = visualRow[10];
+                        var product_weight_type = visualRow[11];
+                        var product_qty = visualRow[12];
+                        var product_price = visualRow[13];
+                        var offer_price = visualRow[14];
+                        var product_img = visualRow[15];
+                        console.log(product_img);
 
                         $.ajax({
                             url:
@@ -360,12 +365,15 @@ export class ProductConfigComponent implements OnInit {
                                         product_name: product_name,
                                         product_type: product_type,
                                         product_sub_type: product_sub_type,
+                                        product_description:
+                                            product_description,
                                         product_weight: product_weight,
                                         product_weight_type:
                                             product_weight_type,
                                         product_qty: product_qty,
                                         product_price: product_price,
                                         offer_price: offer_price,
+                                        product_img: product_img,
                                     },
                                     success: function (data) {
                                         console.log(data);
@@ -545,14 +553,16 @@ export class ProductConfigComponent implements OnInit {
         'Product Name',
         'Product Type',
         'Product Sub-Type',
+        'Product Description',
         'Product Weight',
         'Product Weight-Type',
         'Product Qty',
         'Product Price',
         'Offer Price',
+        'Product Img',
     ];
     hiddenColumns = {
-        columns: [1, 2, 3, 4, 5, 8, 11, 12, 13],
+        columns: [1, 2, 3, 4, 5, 8, 9, 11, 12, 13, 15],
         indicators: false,
     };
     licenseKey = 'non-commercial-and-evaluation';

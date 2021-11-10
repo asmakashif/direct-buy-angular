@@ -152,7 +152,7 @@ export class AuthService {
         password: string;
         company: string;
     }): Observable<any> {
-        return this._httpClient.post('api/auth/sign-up', user);
+        return this._httpClient.post('api/sign-up.php', user);
     }
 
     /**

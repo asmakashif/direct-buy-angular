@@ -1,10 +1,12 @@
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, Location } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     Component,
     ViewEncapsulation,
     Inject,
+    Injectable,
 } from '@angular/core';
+
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -56,10 +58,18 @@ export class DashboardComponent {
         private _dashboardService: DashboardService,
         private _router: Router,
         private routes: ActivatedRoute,
-        private cd: ChangeDetectorRef
+        private cd: ChangeDetectorRef,
+        private Location: Location
     ) {}
 
     ngOnInit(): void {
+        var URL = window.location.href;
+        var arr = URL.split('.');
+        //var data = arr.split('.');
+        console.log(arr);
+        //console.log(this.routes.snapshot);
+        //console.log(this._router.url);
+        //console.log(this.Location.path());
         this.accessToken = localStorage.getItem('accessToken');
         const user_id = localStorage.getItem('user_id');
         this.firstname = localStorage.getItem('firstname');

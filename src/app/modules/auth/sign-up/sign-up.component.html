@@ -67,7 +67,7 @@
             </fuse-alert>
 
             <!-- Sign Up form -->
-            <form class="mt-8" [formGroup]="signUpForm">
+            <form class="mt-8" [formGroup]="signUpForm" (ngSubmit)="signUp()">
                 <!-- Name field -->
                 <mat-form-field class="w-full">
                     <mat-label>Full name</mat-label>
@@ -161,7 +161,15 @@
                 </div>
 
                 <!-- Submit button -->
-                <button
+                <input
+                    type="submit"
+                    class="btn btn-success"
+                    value="Create"
+                    id="checkBtn"
+                    name="submit"
+                    style="width: 100px"
+                />
+                <!-- <button
                     class="fuse-mat-button-large w-full mt-6"
                     mat-flat-button
                     [color]="'primary'"
@@ -176,7 +184,7 @@
                         [diameter]="24"
                         [mode]="'indeterminate'"
                     ></mat-progress-spinner>
-                </button>
+                </button> -->
             </form>
         </div>
     </div>
