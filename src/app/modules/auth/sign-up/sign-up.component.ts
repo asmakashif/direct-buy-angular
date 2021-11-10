@@ -43,6 +43,13 @@ export class AuthSignUpComponent implements OnInit {
         // Create the form
         this.signUpForm = this._formBuilder.group({
             name: ['', Validators.required],
+            contact: [
+                '',
+                [
+                    Validators.required,
+                    Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$'),
+                ],
+            ],
             email: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required],
             company: [''],

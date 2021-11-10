@@ -148,6 +148,7 @@ export class AuthService {
      */
     signUp(user: {
         name: string;
+        contact: number;
         email: string;
         password: string;
         company: string;
