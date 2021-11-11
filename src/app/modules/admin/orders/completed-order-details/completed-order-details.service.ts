@@ -15,9 +15,15 @@ export class CompletedOrderDetailsService {
         );
     }
 
-    getCompletedOrderDetails(order_code: string): Observable<ApiResponse> {
+    getCompletedOrderDetails(
+        order_code: string,
+        shopId: string
+    ): Observable<ApiResponse> {
         return this._http.get<ApiResponse>(
-            '/api/orders/orderDetails.php?order_code=' + order_code
+            '/api/orders/orderDetails.php?order_code=' +
+                order_code +
+                '&shopId=' +
+                shopId
         );
     }
 }

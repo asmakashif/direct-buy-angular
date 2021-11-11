@@ -1,9 +1,7 @@
 import { AfterViewInit, Component, ViewChild, OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CompletedOrdersService } from 'app/modules/admin/orders/completed-orders/completed-orders.service';
-import { DashboardService } from '../../dashboard/dashboard.service';
 
 @Component({
     selector: 'app-completed-orders',
@@ -25,7 +23,6 @@ export class CompletedOrdersComponent implements OnInit {
     profileData: any;
     firstname: any;
     constructor(
-        private _dashboardService: DashboardService,
         private apiService: CompletedOrdersService,
         private _router: Router,
         private routes: ActivatedRoute
@@ -38,12 +35,6 @@ export class CompletedOrdersComponent implements OnInit {
             .subscribe((completedOrdersByStr) => {
                 this.dataSource = completedOrdersByStr;
                 console.log(this.dataSource);
-            });
-        this._dashboardService
-            .getRetailerDetailsById(routeParams.user_id)
-            .subscribe((data) => {
-                this.profileData = data;
-                this.firstname = this.profileData.firstname;
             });
     }
 

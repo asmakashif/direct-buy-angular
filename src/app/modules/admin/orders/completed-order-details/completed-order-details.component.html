@@ -34,7 +34,7 @@
                                     truncate
                                 "
                             >
-                                {{ t("welcome-back") }}, {{ firstname }}!
+                                {{ t("welcome-back") }}
                             </div>
                         </ng-container>
                         <div class="flex items-center">
@@ -98,7 +98,7 @@
                         <span><strong>Product id :</strong></span>
                     </div>
                     <div class="col-md-9">
-                        {{ this.orderDetailsById.order_code }}
+                        {{ order_code }}
                     </div>
                 </div>
                 <div class="row">
@@ -106,7 +106,7 @@
                         <span><strong>Billing Name :</strong></span>
                     </div>
                     <div class="col-md-9">
-                        {{ this.orderDetailsById.c_fname }}
+                        {{ c_fname }}
                     </div>
                 </div>
                 <table mat-table [dataSource]="dataSource">
@@ -152,7 +152,7 @@
                         <span><strong>Total :</strong></span>
                     </div>
                     <div class="col-md-3 pl-18">
-                        {{ this.orderDetailsById.total }}
+                        {{ total }}
                     </div>
                 </div>
             </div>
