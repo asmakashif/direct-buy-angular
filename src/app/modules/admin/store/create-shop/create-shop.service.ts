@@ -22,6 +22,10 @@ export class CreateShopService {
         return this.http.post<ApiResponse>('/api/createShop.php', user);
     }
 
+    signup(user: Data): Observable<ApiResponse> {
+        return this.http.post<ApiResponse>('/api/sign-up.php', user);
+    }
+
     getBaseProducts(): Observable<any> {
         return this.http.get('/api/getBaseProducts.php');
     }

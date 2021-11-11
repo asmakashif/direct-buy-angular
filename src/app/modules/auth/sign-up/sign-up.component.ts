@@ -4,20 +4,20 @@ import { Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
+import { CreateShopService } from 'app/modules/admin/store/create-shop/create-shop.service';
 
 @Component({
-    selector     : 'auth-sign-up',
-    templateUrl  : './sign-up.component.html',
+    selector: 'auth-sign-up',
+    templateUrl: './sign-up.component.html',
     encapsulation: ViewEncapsulation.None,
-    animations   : fuseAnimations
+    animations: fuseAnimations,
 })
-export class AuthSignUpComponent implements OnInit
-{
+export class AuthSignUpComponent implements OnInit {
     @ViewChild('signUpNgForm') signUpNgForm: NgForm;
 
     alert: { type: FuseAlertType; message: string } = {
-        type   : 'success',
-        message: ''
+        type: 'success',
+        message: '',
     };
     signUpForm: FormGroup;
     showAlert: boolean = false;
@@ -26,12 +26,11 @@ export class AuthSignUpComponent implements OnInit
      * Constructor
      */
     constructor(
+        private apiService: CreateShopService,
         private _authService: AuthService,
         private _formBuilder: FormBuilder,
         private _router: Router
-    )
-    {
-    }
+    ) {}
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -40,17 +39,22 @@ export class AuthSignUpComponent implements OnInit
     /**
      * On init
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         // Create the form
         this.signUpForm = this._formBuilder.group({
-                name      : ['', Validators.required],
-                email     : ['', [Validators.required, Validators.email]],
-                password  : ['', Validators.required],
-                company   : [''],
-                agreements: ['', Validators.requiredTrue]
-            }
-        );
+            name: ['', Validators.required],
+            contact: [
+                '',
+                [
+                    Validators.required,
+                    Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$'),
+                ],
+            ],
+            email: ['', [Validators.required, Validators.email]],
+            password: ['', Validators.required],
+            company: [''],
+            agreements: ['', Validators.requiredTrue],
+        });
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -60,11 +64,9 @@ export class AuthSignUpComponent implements OnInit
     /**
      * Sign up
      */
-    signUp(): void
-    {
+    signUp(): void {
         // Do nothing if the form is invalid
-        if ( this.signUpForm.invalid )
-        {
+        if (this.signUpForm.invalid) {
             return;
         }
 
@@ -75,30 +77,42 @@ export class AuthSignUpComponent implements OnInit
         this.showAlert = false;
 
         // Sign up
-        this._authService.signUp(this.signUpForm.value)
-            .subscribe(
-                (response) => {
+        this._authService.signUp(this.signUpForm.value).subscribe(
+            (response) => {
+                // Navigate to the confirmation required page
+                this._router.navigateByUrl('/confirmation-required');
+            },
+            (response) => {
+                // Re-enable the form
+                this.signUpForm.enable();
 
-                    // Navigate to the confirmation required page
-                    this._router.navigateByUrl('/confirmation-required');
-                },
-                (response) => {
+                // Reset the form
+                this.signUpNgForm.resetForm();
 
-                    // Re-enable the form
-                    this.signUpForm.enable();
+                // Set the alert
+                this.alert = {
+                    type: 'error',
+                    message: 'Something went wrong, please try again.',
+                };
 
-                    // Reset the form
-                    this.signUpNgForm.resetForm();
-
-                    // Set the alert
-                    this.alert = {
-                        type   : 'error',
-                        message: 'Something went wrong, please try again.'
-                    };
-
-                    // Show the alert
-                    this.showAlert = true;
-                }
-            );
+                // Show the alert
+                this.showAlert = true;
+            }
+        );
     }
+
+    // onSubmit() {
+    //     //more code
+    //     console.log(this.signUpForm.value);
+
+    //     if (this.signUpForm.invalid) {
+    //         return;
+    //     }
+
+    //     //alert('desktop');
+    //     this.apiService.signup(this.signUpForm.value).subscribe((data) => {
+    //         // this.router.navigate(['/product-config/' + shopId]);
+    //         this._router.navigate(['/sign-in/']);
+    //     });
+    // }
 }

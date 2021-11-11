@@ -148,11 +148,12 @@ export class AuthService {
      */
     signUp(user: {
         name: string;
+        contact: number;
         email: string;
         password: string;
         company: string;
     }): Observable<any> {
-        return this._httpClient.post('api/auth/sign-up', user);
+        return this._httpClient.post('api/sign-up.php', user);
     }
 
     /**

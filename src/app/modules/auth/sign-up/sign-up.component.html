@@ -67,7 +67,7 @@
             </fuse-alert>
 
             <!-- Sign Up form -->
-            <form class="mt-8" [formGroup]="signUpForm">
+            <form class="mt-8" [formGroup]="signUpForm" (ngSubmit)="signUp()">
                 <!-- Name field -->
                 <mat-form-field class="w-full">
                     <mat-label>Full name</mat-label>
@@ -76,6 +76,25 @@
                         *ngIf="signUpForm.get('name').hasError('required')"
                     >
                         Full name is required
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-full">
+                    <mat-label>Contact</mat-label>
+                    <input
+                        id="contact"
+                        matInput
+                        [formControlName]="'contact'"
+                    />
+                    <mat-error
+                        *ngIf="signUpForm.get('contact').hasError('required')"
+                    >
+                        Contact is required
+                    </mat-error>
+                    <mat-error
+                        *ngIf="signUpForm.get('contact').hasError('pattern')"
+                    >
+                        Please, Enter 10 digit Mobile Number.
                     </mat-error>
                 </mat-form-field>
 
@@ -131,7 +150,7 @@
 
                 <!-- Company field -->
                 <mat-form-field class="w-full">
-                    <mat-label>Company</mat-label>
+                    <mat-label>Domain</mat-label>
                     <input
                         id="company-confirm"
                         matInput
@@ -161,7 +180,15 @@
                 </div>
 
                 <!-- Submit button -->
-                <button
+                <input
+                    type="submit"
+                    class="btn btn-success"
+                    value=" Create your account"
+                    id="checkBtn"
+                    name="submit"
+                    style="width: 100px"
+                />
+                <!-- <button
                     class="fuse-mat-button-large w-full mt-6"
                     mat-flat-button
                     [color]="'primary'"
@@ -176,7 +203,7 @@
                         [diameter]="24"
                         [mode]="'indeterminate'"
                     ></mat-progress-spinner>
-                </button>
+                </button> -->
             </form>
         </div>
     </div>
