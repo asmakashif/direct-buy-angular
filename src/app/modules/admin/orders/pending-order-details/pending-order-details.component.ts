@@ -20,6 +20,9 @@ export class PendingOrderDetailsComponent implements OnInit {
     ];
     dataSource: any;
     orderDetailsById: any;
+    order_code: any;
+    c_fname: any;
+    total: any;
     constructor(
         private apiService: PendingOrderDetailsService,
         private _router: Router,
@@ -33,11 +36,14 @@ export class PendingOrderDetailsComponent implements OnInit {
             .getPendingOrderById(routeParams.order_code)
             .subscribe((orderDetailsById) => {
                 this.orderDetailsById = orderDetailsById;
+                this.order_code = this.orderDetailsById.order_code;
+                this.c_fname = this.orderDetailsById.c_fname;
+                this.total = this.orderDetailsById.total;
                 console.log(this.orderDetailsById);
             });
 
         this.apiService
-            .getPendingOrderDetails(routeParams.order_code)
+            .getPendingOrderDetails(routeParams.order_code, routeParams.shopId)
             .subscribe((dataSource) => {
                 this.dataSource = dataSource;
                 console.log(this.dataSource);

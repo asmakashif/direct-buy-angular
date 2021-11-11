@@ -67,14 +67,15 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        const routeParams = this.routes.snapshot.params;
-        console.log(routeParams);
+        const user_id = localStorage.getItem('user_id');
+
         //Get retailer details
         this._dashboardService
-            .getRetailerDetailsById(routeParams.user_id)
+            .getRetailerDetailsById(user_id)
             .subscribe((data) => {
                 this.profileData = data;
                 this.firstname = this.profileData.firstname;
+                this.email = this.profileData.email;
                 this.cd.detectChanges();
                 console.log(this.firstname);
                 console.log(this.profileData);

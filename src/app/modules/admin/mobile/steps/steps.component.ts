@@ -17,7 +17,7 @@ export class StepsComponent implements OnInit {
     productUpdate_status: any;
     shop_payment_status: any;
 
-    profileData: import('c:/Users/UmmeAsmaSultana/Desktop/direct-buy-angular-project/src/app/Model/api-response').ApiResponse;
+    profileData: any;
     firstname: any;
     constructor(
         private _dashboardService: DashboardService,

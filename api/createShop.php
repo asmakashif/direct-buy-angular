@@ -32,7 +32,7 @@
         
         $sql="INSERT INTO `shop_details`(user_id,shopId,shop_name,shop_address) values('$user_id','$shopId','$shop_name','$shop_address')";
         
-        $R=mysqli_query($CN,$sql);
+        $R=mysqli_query($CN,$sql) or die("database error:". mysqli_error($CN));
         
         if($R)
         {

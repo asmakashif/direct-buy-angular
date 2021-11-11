@@ -31,8 +31,8 @@
             $users[$cr]['product_qty'] = $row['product_qty'];
             $users[$cr]['product_price'] = $row['product_price'];
             $users[$cr]['offer_price'] = $row['offer_price'];
-            $users[$cr]['product_img'] = $row['product_img'];
-            $users[$cr]['product_description'] = $row['product_description'];
+            // $users[$cr]['product_img'] = $row['product_img'];
+            // $users[$cr]['product_description'] = $row['product_description'];
             $cr++;
             //print_r($users);
         }

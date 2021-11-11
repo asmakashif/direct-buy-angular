@@ -22,7 +22,7 @@ export class CompletedOrdersComponent implements OnInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     dataSource: any;
-    profileData: import('c:/Users/UmmeAsmaSultana/Desktop/direct-buy-angular-project/src/app/Model/api-response').ApiResponse;
+    profileData: any;
     firstname: any;
     constructor(
         private _dashboardService: DashboardService,

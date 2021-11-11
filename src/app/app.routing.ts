@@ -126,14 +126,14 @@ export const appRoutes: Route[] = [
         },
         children: [
             {
-                path: 'dashboard/:user_id',
+                path: 'dashboard',
                 loadChildren: () =>
                     import('app/modules/admin/dashboard/dashboard.module').then(
                         (m) => m.DashboardModule
                     ),
             },
             {
-                path: 'dashboard/:user_id/:shopId/:shop_name',
+                path: 'dashboard/:shopId/:shop_name',
                 loadChildren: () =>
                     import('app/modules/admin/dashboard/dashboard.module').then(
                         (m) => m.DashboardModule
@@ -238,35 +238,35 @@ export const appRoutes: Route[] = [
                     ).then((m) => m.PendingOrderDetailsModule),
             },
             {
-                path: 'orders/new-registration/:user_id/:shopId',
+                path: 'orders/new-registration/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/orders/new-registration/new-registration.module'
                     ).then((m) => m.NewRegistrationModule),
             },
             {
-                path: 'orders/open-orders/:user_id/:shopId',
+                path: 'orders/open-orders/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/orders/open-orders/open-orders.module'
                     ).then((m) => m.OpenOrdersModule),
             },
             {
-                path: 'orders/orders-fulfilled/:user_id/:shopId',
+                path: 'orders/orders-fulfilled/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/orders/orders-fulfilled/orders-fulfilled.module'
                     ).then((m) => m.OrdersFulfilledModule),
             },
             {
-                path: 'orders/sales/:user_id/:shopId',
+                path: 'orders/sales/:shopId',
                 loadChildren: () =>
                     import('app/modules/admin/orders/sales/sales.module').then(
                         (m) => m.SalesModule
                     ),
             },
             {
-                path: 'orders/unique-orders/:user_id/:shopId',
+                path: 'orders/unique-orders/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/orders/unique-orders/unique-orders.module'

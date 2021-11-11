@@ -36,7 +36,8 @@
             $users['trail_activate'] = $row['trail_activate'];
             $users['domainname'] = $row['domainname'];
             $users['shop_payment_status'] = $row['shop_payment_status'];
-            
+            $users['home_delivery'] = $row['home_delivery'];
+            $users['min_order_val'] = $row['min_order_val'];
             
         }
 

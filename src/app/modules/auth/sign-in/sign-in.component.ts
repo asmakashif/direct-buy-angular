@@ -94,10 +94,10 @@ export class AuthSignInComponent implements OnInit {
                 // to the correct page after a successful sign in. This way, that url can be set via
                 // routing file and we don't have to touch here.
 
-                var domainanme = localStorage.getItem('domainname');
-                const retailerId = localStorage.getItem('user_id');
-                window.location.href =
-                    'http://localhost:4200/dashboard/' + retailerId;
+                // var domainanme = localStorage.getItem('domainname');
+                // const retailerId = localStorage.getItem('user_id');
+                // window.location.href =
+                //     'http://localhost:4200/dashboard/' + retailerId;
                 // window.location.href =
                 //     'https://' +
                 //     domainanme +
@@ -106,13 +106,13 @@ export class AuthSignInComponent implements OnInit {
                 // this.document.location.href =
                 //     'https://' + domainanme + '.brokeronline.in/dashboard';
 
-                // const redirectURL =
-                //     this._activatedRoute.snapshot.queryParamMap.get(
-                //         'redirectURL'
-                //     ) || '/signed-in-redirect';
+                const redirectURL =
+                    this._activatedRoute.snapshot.queryParamMap.get(
+                        'redirectURL'
+                    ) || '/signed-in-redirect';
 
-                // // // Navigate to the redirect url
-                // this._router.navigateByUrl(redirectURL);
+                // // Navigate to the redirect url
+                this._router.navigateByUrl(redirectURL);
             },
             (response) => {
                 // Re-enable the form

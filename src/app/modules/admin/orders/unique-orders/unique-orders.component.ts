@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PendingOrdersService } from 'app/modules/admin/orders/pending-orders/pending-orders.service';
+import { UniqueOrdersService } from './unique-orders.service';
 
 @Component({
     selector: 'app-unique-orders',
@@ -19,7 +19,7 @@ export class UniqueOrdersComponent implements OnInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     dataSource: any;
     constructor(
-        private apiService: PendingOrdersService,
+        private apiService: UniqueOrdersService,
         private _router: Router,
         private routes: ActivatedRoute
     ) {}
@@ -28,7 +28,7 @@ export class UniqueOrdersComponent implements OnInit {
         const routeParams = this.routes.snapshot.params;
 
         this.apiService
-            .getPendingOrdersByStore(routeParams.shopId)
+            .getPendingOrdersByStoreCurMonth(routeParams.shopId)
             .subscribe((pendingOrdersByStr) => {
                 this.dataSource = pendingOrdersByStr;
                 console.log(this.dataSource);

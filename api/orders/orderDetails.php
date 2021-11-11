@@ -11,9 +11,12 @@
 
     //$users = [];
     $order_code = $_GET['order_code'];
-    //$order_code = 'A000002';
+    $shopId = $_GET['shopId'];
+    // $order_code = 'A000004';
+    // $shopId = 'i3s6wp';
+
     $orders = [];
-    $sql = "SELECT oi.order_code,oi.product_qty,oi.product_subtotal,tsc.product_name,tsc.product_price FROM `order_items`as oi JOIN `temp_str_config` as tsc ON tsc.temp_str_config_id=oi.product_id WHERE `order_code` = '$order_code' ";
+    $sql = "SELECT oi.order_code,oi.product_qty,oi.product_subtotal,tsc.product_name,tsc.product_price FROM `order_items`as oi JOIN `temp_str_config` as tsc ON tsc.base_product_id=oi.product_id WHERE `order_code` = '$order_code' and `temp_shopId` = '$shopId' ";
 
     if($result = mysqli_query($CN,$sql))
     {

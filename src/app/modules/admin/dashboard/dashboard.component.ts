@@ -65,6 +65,8 @@ export class DashboardComponent {
     ngOnInit(): void {
         this.accessToken = localStorage.getItem('accessToken');
         this.validateSignIn = localStorage.getItem('validateSignIn');
+        const user_id = localStorage.getItem('user_id');
+        console.log(user_id);
         const routeParams = this.routes.snapshot.params;
 
         if (!this.accessToken) {
@@ -74,32 +76,28 @@ export class DashboardComponent {
         }
 
         this.messageForm = this.formBuilder.group({
-            id: [routeParams.user_id],
+            id: [user_id],
             str_msg: ['', Validators.required],
         });
-        this._dashboardService.getShops(routeParams.user_id).subscribe(
+        this._dashboardService.getShops(user_id).subscribe(
             (data: any) => {
                 this.data = data;
                 this.cd.detectChanges();
+            },
+            (error) => {
+                alert(error.message);
             }
-            // (error) => {
-            //     alert(error.message);
-            // }
         );
 
-        this._dashboardService
-            .getNoOfShops(routeParams.user_id)
-            .subscribe((count) => {
-                this.count = count;
-                this.cd.detectChanges();
-            });
+        this._dashboardService.getNoOfShops(user_id).subscribe((count) => {
+            this.count = count;
+            this.cd.detectChanges();
+        });
 
-        this._dashboardService
-            .getNoOfPayment(routeParams.user_id)
-            .subscribe((count) => {
-                this.paymentCount = count;
-                this.cd.detectChanges();
-            });
+        this._dashboardService.getNoOfPayment(user_id).subscribe((count) => {
+            this.paymentCount = count;
+            this.cd.detectChanges();
+        });
 
         this.routes.paramMap.subscribe((params) => {
             this.queryParam = params.get('shopId');
@@ -108,7 +106,7 @@ export class DashboardComponent {
         });
 
         this._dashboardService
-            .getPrevMonthOrders(routeParams.shopId)
+            .getPrevMonthOrderCount(routeParams.shopId)
             .subscribe((prevMonthOrderCount) => {
                 this.prevMonthOrderCount = prevMonthOrderCount;
                 this.cd.detectChanges();
@@ -116,7 +114,7 @@ export class DashboardComponent {
             });
 
         this._dashboardService
-            .getCurrentMonthOrders(routeParams.shopId)
+            .getCurrentMonthOrderCount(routeParams.shopId)
             .subscribe((curMonthOrderCount) => {
                 this.curMonthOrderCount = curMonthOrderCount;
                 this.cd.detectChanges();
@@ -124,14 +122,14 @@ export class DashboardComponent {
             });
 
         this._dashboardService
-            .getYestOpenOrders(routeParams.shopId)
+            .getYestOpenOrderCount(routeParams.shopId)
             .subscribe((yestOpenOrderCount) => {
                 this.yestOpenOrderCount = yestOpenOrderCount;
                 this.cd.detectChanges();
                 console.log(this.yestOpenOrderCount);
             });
         this._dashboardService
-            .getOpenOrders(routeParams.shopId)
+            .getOpenOrderCount(routeParams.shopId)
             .subscribe((openOrderCount) => {
                 this.openOrderCount = openOrderCount;
                 this.cd.detectChanges();
@@ -139,7 +137,7 @@ export class DashboardComponent {
             });
 
         this._dashboardService
-            .getCurFulfilledOrders(routeParams.shopId)
+            .getCurFulfilledOrderCount(routeParams.shopId)
             .subscribe((curFulfilledOrderCount) => {
                 this.curFulfilledOrderCount = curFulfilledOrderCount;
                 this.cd.detectChanges();
@@ -163,7 +161,7 @@ export class DashboardComponent {
             });
 
         this._dashboardService
-            .getPaymentGateway(routeParams.user_id)
+            .getPaymentGateway(user_id)
             .subscribe((payment: any) => {
                 this.payment = payment;
                 this.cd.detectChanges();
@@ -171,7 +169,7 @@ export class DashboardComponent {
             });
 
         this._dashboardService
-            .getRetailerDetailsById(routeParams.user_id)
+            .getRetailerDetailsById(user_id)
             .subscribe((data) => {
                 this.messageForm.patchValue(data);
                 this.profileData = data;
@@ -183,16 +181,8 @@ export class DashboardComponent {
     }
 
     changeStore(stores): void {
-        const routeParams = this.routes.snapshot.params;
         this._router
-            .navigate([
-                'dashboard/' +
-                    routeParams.user_id +
-                    '/' +
-                    stores.shopId +
-                    '/' +
-                    stores.shop_name,
-            ])
+            .navigate(['dashboard/' + stores.shopId + '/' + stores.shop_name])
             .then(() => {
                 this.ngOnInit();
                 // window.location.reload();
@@ -200,8 +190,7 @@ export class DashboardComponent {
     }
 
     dashbaord(): void {
-        const routeParams = this.routes.snapshot.params;
-        this._router.navigate(['dashboard/' + routeParams.user_id]);
+        this._router.navigate(['dashboard/']);
     }
 
     // refresh(): void {
@@ -266,48 +255,30 @@ export class DashboardComponent {
 
     uniqueOrdersCurMonth(): void {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate([
-            '/orders/unique-orders/' +
-                routeParams.user_id +
-                '/' +
-                routeParams.shopId,
-        ]);
+        this._router.navigate(['/orders/unique-orders/' + routeParams.shopId]);
     }
 
     ordersFulFilledPrevMonth() {
         const routeParams = this.routes.snapshot.params;
         this._router.navigate([
-            '/orders/orders-fulfilled/' +
-                routeParams.user_id +
-                '/' +
-                routeParams.shopId,
+            '/orders/orders-fulfilled/' + routeParams.shopId,
         ]);
     }
 
     openOrdersAllMonth() {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate([
-            '/orders/open-orders/' +
-                routeParams.user_id +
-                '/' +
-                routeParams.shopId,
-        ]);
+        this._router.navigate(['/orders/open-orders/' + routeParams.shopId]);
     }
 
     allSales() {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate([
-            '/orders/sales/' + routeParams.user_id + '/' + routeParams.shopId,
-        ]);
+        this._router.navigate(['/orders/sales/' + routeParams.shopId]);
     }
 
     newRegistration() {
         const routeParams = this.routes.snapshot.params;
         this._router.navigate([
-            '/orders/new-registration/' +
-                routeParams.user_id +
-                '/' +
-                routeParams.shopId,
+            '/orders/new-registration/' + routeParams.shopId,
         ]);
     }
 

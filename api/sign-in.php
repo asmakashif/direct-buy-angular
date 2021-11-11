@@ -29,6 +29,7 @@
     {
         $DecodedData=json_decode($EncodedData,true);
         //print_r($DecodedData);
+        //$domainname=$DecodedData['domainname'];
         $email=$DecodedData['email'];
         $password=$DecodedData['password'];
         //$pass = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyz"), 0, 6);
@@ -46,6 +47,7 @@
         $jwt = $base64UrlHeader . "." . $base64UrlPayload . "." . $base64UrlSignature;
         
 
+        // $Sql_Query = "SELECT * from `tbl_user` WHERE `email` = '$email' and `password` = '$password' and `domainname` = '$domainname'  ";
         $Sql_Query = "SELECT * from `tbl_user` WHERE `email` = '$email' and `password` = '$password' ";
 
         $check = mysqli_fetch_array(mysqli_query($CN,$Sql_Query));
@@ -53,22 +55,38 @@
         if(isset($check))
         {
             $user_id = $check['id'];
-            $firstname = $check['firstname'];
-            //echo $firstname;
-            // $_SESSION["user_id"] = $check['id'];
-            // $_SESSION["firstname"] = $check['firstname'];
-            // $_SESSION["email"] = $check['email'];
             
-            echo json_encode(
-                array(
-                    "message" => "Successful login",
-                    "accessToken"=> $jwt,
-                    "email"=>$email,
-                    "firstname"=>$firstname,
-                    "user_id"=>$user_id
-                )
-            );
-            http_response_code(200);
+            $qry="UPDATE `tbl_user` SET `validateSignIn`=1 WHERE `id`='{$user_id}' LIMIT 1  ";
+            if(mysqli_query($CN,$qry))
+            {
+                $sql = "SELECT * from `tbl_user` WHERE `id`='{$user_id}' ";
+                $res = mysqli_fetch_array(mysqli_query($CN,$sql));
+                if(isset($res))
+                {
+                    $user_id = $res['id'];
+                    $firstname = $res['firstname'];
+                    $domainname = $res['domainname'];
+                    $validateSignIn = $res['validateSignIn'];
+
+                    echo json_encode(
+                        array(
+                            "message" => "Successful login",
+                            "accessToken"=> $jwt,
+                            "email"=>$email,
+                            "firstname"=>$firstname,
+                            "user_id"=>$user_id,
+                            "domainname"=>$domainname,
+                            "validateSignIn"=>$validateSignIn,
+                        )
+                    );
+                    http_response_code(200);
+                }
+            }
+            else{
+                http_response_code(422);
+            }
+            
+
         }
         else
         {

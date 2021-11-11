@@ -31,33 +31,33 @@ export class DashboardService {
         );
     }
 
-    getPrevMonthOrders(shopId: string): Observable<any> {
+    getPrevMonthOrderCount(shopId: string): Observable<any> {
         return this._httpClient.get(
-            '/api/orders/getPrevMonthOrders.php?shopId=' + shopId
+            '/api/orders/getPrevMonthOrderCount.php?shopId=' + shopId
         );
     }
 
-    getCurrentMonthOrders(shopId: string): Observable<any> {
+    getCurrentMonthOrderCount(shopId: string): Observable<any> {
         return this._httpClient.get(
-            '/api/orders/getCurrentMonthOrders.php?shopId=' + shopId
+            '/api/orders/getCurrentMonthOrderCount.php?shopId=' + shopId
         );
     }
 
-    getYestOpenOrders(shopId: string): Observable<any> {
+    getYestOpenOrderCount(shopId: string): Observable<any> {
         return this._httpClient.get(
-            '/api/orders/getYestOpenOrders.php?shopId=' + shopId
+            '/api/orders/getYestOpenOrderCount.php?shopId=' + shopId
         );
     }
 
-    getOpenOrders(shopId: string): Observable<any> {
+    getOpenOrderCount(shopId: string): Observable<any> {
         return this._httpClient.get(
-            '/api/orders/getOpenOrders.php?shopId=' + shopId
+            '/api/orders/getOpenOrderCount.php?shopId=' + shopId
         );
     }
 
-    getCurFulfilledOrders(shopId: string): Observable<any> {
+    getCurFulfilledOrderCount(shopId: string): Observable<any> {
         return this._httpClient.get(
-            '/api/orders/getCurFulfilledOrders.php?shopId=' + shopId
+            '/api/orders/getCurFulfilledOrderCount.php?shopId=' + shopId
         );
     }
 

@@ -40,11 +40,13 @@
                     $product[$cr]['product_name'] = $row['product_name'];
                     $product[$cr]['product_type'] = $row['product_type'];
                     $product[$cr]['product_sub_type'] = $row['product_sub_type'];
+                    $product[$cr]['product_description'] = $row['product_description'];
                     $product[$cr]['product_weight'] = $row['product_weight'];
                     $product[$cr]['product_weight_type'] = $row['product_weight_type'];
                     $product[$cr]['product_qty'] = $row['product_qty'];
                     $product[$cr]['product_price'] = $row['product_price'];
                     $product[$cr]['offer_price'] = $row['offer_price'];
+                    $product[$cr]['product_img'] = $row['product_img'];
                     $cr++;
                 }
                 $encode = json_encode($product);
@@ -52,23 +54,23 @@
                 
                 foreach($decode as $row) {
                     $base_product_id= $row->base_product_id;
-                    $shop_type=$row->shop_type;
-                    $category=$row->category;
-                    $sub_category=$row->sub_category;
-                    $brand=$row->brand;
-                    $product_name=$row->product_name;
-                    $product_type=$row->product_type;
-                    $product_sub_type=$row->product_sub_type;
-                    //$product_description = $row->product_description;
+                    $shop_type=addslashes($row->shop_type);
+                    $category=addslashes($row->category);
+                    $sub_category=addslashes($row->sub_category);
+                    $brand=addslashes($row->brand);
+                    $product_name=addslashes($row->product_name);
+                    $product_type=addslashes($row->product_type);
+                    $product_sub_type=addslashes($row->product_sub_type);
+                    $product_description = addslashes($row->product_description);
                     $product_weight=$row->product_weight;
-                    $product_weight_type=$row->product_weight_type;
+                    $product_weight_type=addslashes($row->product_weight_type);
                     $product_qty=$row->product_qty;
                     $product_price=$row->product_price;
                     $offer_price=$row->offer_price;
-                    //$product_img = $row->product_img;
+                    $product_img = addslashes($row->product_img);
                     $db_SKU = $category.$sub_category.$brand.$product_name.$product_type.$product_sub_type.$product_weight.$product_weight_type;
 
-                    $qry1="INSERT INTO temp_str_config(user_id,temp_shopId,base_product_id,db_SKU,category,sub_category,brand,product_name,product_type,product_sub_type,product_weight,product_weight_type,product_qty,product_price,offer_price) values('$user_id','$shopId','$base_product_id','$db_SKU','$category','$sub_category','$brand','$product_name','$product_type','$product_sub_type','$product_weight','$product_weight_type','$product_qty','$product_price','$offer_price')";
+                    $qry1="INSERT INTO temp_str_config(user_id,temp_shopId,base_product_id,db_SKU,category,sub_category,brand,product_name,product_type,product_sub_type,product_description,product_weight,product_weight_type,product_qty,product_price,offer_price,product_img) values('$user_id','$shopId','$base_product_id','$db_SKU','$category','$sub_category','$brand','$product_name','$product_type','$product_sub_type','$product_description','$product_weight','$product_weight_type','$product_qty','$product_price','$offer_price','$product_img')";
             
                     $R=mysqli_query($CN,$qry1);
                     

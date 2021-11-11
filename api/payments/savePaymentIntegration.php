@@ -10,6 +10,21 @@
     $CN= mysqli_connect("localhost","root","");
     $DB=mysqli_select_db($CN,"formal_store");
 
+    // $string = 'Sammy says: "This string\'s in single quotes."' ;
+    // echo $string;
+
+    // $sql="INSERT INTO `payment_integration`(payment_name) values('Asma''s Paytm')";
+        
+    // $R=mysqli_query($CN,$sql);
+    
+    // if($R)
+    // {
+    //     echo 'success';
+    //     http_response_code(201);
+    // }
+    // else{
+    //     http_response_code(422);
+    // }
 
     $EncodedData=file_get_contents('php://input');
     if(isset($EncodedData) && !empty($EncodedData))
@@ -20,7 +35,8 @@
         //die();
         $user_id = $DecodedData['user_id'];
         $provider_type=$DecodedData['provider_type'];
-        $payment_name=$DecodedData['payment_name'];
+        $str=$DecodedData['payment_name'];
+        $payment_name = addslashes($str);
         $payment_api_key=$DecodedData['payment_api_key'];
         $payment_secret_key=$DecodedData['payment_secret_key'];
 
