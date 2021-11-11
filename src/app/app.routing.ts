@@ -321,6 +321,13 @@ export const appRoutes: Route[] = [
                         'app/modules/admin/testing/table-edit/table-edit.module'
                     ).then((m) => m.TableEditModule),
             },
+            {
+                path: 'minOrderValue/:shop_id',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/min-order-val/min-order-val.module'
+                    ).then((m) => m.MinOrderValModule),
+            },
         ],
     },
 
