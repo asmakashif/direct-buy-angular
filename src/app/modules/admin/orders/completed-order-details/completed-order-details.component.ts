@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { CompletedOrderDetailsService } from 'app/modules/admin/orders/completed-order-details/completed-order-details.service';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Data } from '../../../../Model/data';
+import { DashboardService } from '../../dashboard/dashboard.service';
 
 @Component({
     selector: 'app-completed-order-details',
@@ -20,8 +21,11 @@ export class CompletedOrderDetailsComponent implements OnInit {
     ];
     dataSource: any;
     orderDetailsById: any;
+    profileData: any;
+    firstname: any;
 
     constructor(
+        private _dashboardService: DashboardService,
         private apiService: CompletedOrderDetailsService,
         private _router: Router,
         private routes: ActivatedRoute
@@ -42,6 +46,13 @@ export class CompletedOrderDetailsComponent implements OnInit {
             .subscribe((dataSource) => {
                 this.dataSource = dataSource;
                 console.log(this.dataSource);
+            });
+
+        this._dashboardService
+            .getRetailerDetailsById(routeParams.user_id)
+            .subscribe((data) => {
+                this.profileData = data;
+                this.firstname = this.profileData.firstname;
             });
     }
 }

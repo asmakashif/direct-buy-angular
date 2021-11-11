@@ -156,6 +156,16 @@
                         matInput
                         [formControlName]="'company'"
                     />
+                    <mat-error
+                        *ngIf="signUpForm.get('company').hasError('required')"
+                    >
+                        Domain is required
+                    </mat-error>
+                    <mat-error
+                        *ngIf="signUpForm.get('company').hasError('pattern')"
+                    >
+                        Please, Enter valid name .
+                    </mat-error>
                 </mat-form-field>
 
                 <!-- ToS and PP -->

@@ -52,7 +52,11 @@ export class AuthSignUpComponent implements OnInit {
             ],
             email: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required],
-            company: [''],
+            company: [
+                '',
+                [Validators.required, Validators.pattern("^[a-zA-Z']+")],
+            ],
+            // title: ['', [Validators.pattern('^[A-Za-z0-9ñÑáéíóúÁÉÍÓÚ ]+$')],
             agreements: ['', Validators.requiredTrue],
         });
     }

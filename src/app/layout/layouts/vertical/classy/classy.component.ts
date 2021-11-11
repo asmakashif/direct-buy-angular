@@ -17,6 +17,7 @@ import { Navigation } from 'app/core/navigation/navigation.types';
 import { NavigationService } from 'app/core/navigation/navigation.service';
 import { User } from 'app/core/user/user.types';
 import { UserService } from 'app/core/user/user.service';
+import { DashboardService } from 'app/modules/admin/dashboard/dashboard.service';
 
 @Component({
     selector: 'classy-layout',
@@ -30,6 +31,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     profileData: any;
     email: string;
+    firstname: any;
 
     /**
      * Constructor
@@ -41,7 +43,9 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
         private _userService: UserService,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _fuseNavigationService: FuseNavigationService,
-        private cd: ChangeDetectorRef
+        private cd: ChangeDetectorRef,
+        private routes: ActivatedRoute,
+        private _dashboardService: DashboardService
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -63,14 +67,18 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        const user_id = localStorage.getItem('user_id');
-
+        const routeParams = this.routes.snapshot.params;
+        console.log(routeParams);
         //Get retailer details
-        this._userService.getRetailerDetailsById(user_id).subscribe((data) => {
-            this.profileData = data;
-            this.cd.detectChanges();
-            console.log(this.profileData);
-        });
+        this._dashboardService
+            .getRetailerDetailsById(routeParams.user_id)
+            .subscribe((data) => {
+                this.profileData = data;
+                this.firstname = this.profileData.firstname;
+                this.cd.detectChanges();
+                console.log(this.firstname);
+                console.log(this.profileData);
+            });
 
         // Subscribe to navigation data
         this._navigationService.navigation$

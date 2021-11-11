@@ -34,7 +34,7 @@
                                     truncate
                                 "
                             >
-                                {{ t("welcome-back") }}, {{ this.firstname }}!
+                                {{ t("welcome-back") }}, {{ firstname }}!
                             </div>
                         </ng-container>
                         <div class="flex items-center">
@@ -774,16 +774,22 @@
                                     >
                                         {{ this.curMonthOrderCount }}
                                     </div>
-                                    <div
-                                        class="
-                                            text-lg
-                                            font-medium
-                                            text-red-600
-                                            dark:text-red-500
-                                        "
-                                    >
-                                        Unique Orders
-                                    </div>
+                                    <a
+                                            href="javascript:void(0);"
+                                            (click)="uniqueOrdersCurMonth()"
+                                            style="text-decoration: none"
+                                        >
+                                        <div
+                                            class="
+                                                text-lg
+                                                font-medium
+                                                text-red-600
+                                                dark:text-red-500
+                                            "
+                                        >
+                                            Unique Orders
+                                        </div>
+                                    </a>
                                     <div
                                         class="
                                             flex
@@ -868,16 +874,22 @@
                                     >
                                         {{ this.prevMonthOrderCount }}
                                     </div>
-                                    <div
-                                        class="
-                                            text-lg
-                                            font-medium
-                                            text-blue-600
-                                            dark:text-blue-500
-                                        "
-                                    >
-                                        Orders Fulfilled
-                                    </div>
+                                    <a
+                                            href="javascript:void(0);"
+                                            (click)="ordersFulFilledPrevMonth()"
+                                            style="text-decoration: none"
+                                        >
+                                        <div
+                                            class="
+                                                text-lg
+                                                font-medium
+                                                text-blue-600
+                                                dark:text-blue-500
+                                            "
+                                        >
+                                            Orders Fulfilled
+                                        </div>
+                                        </a>
                                     <div
                                         class="
                                             flex
@@ -963,16 +975,22 @@
                                     >
                                         {{ this.openOrderCount }}
                                     </div>
-                                    <div
-                                        class="
-                                            text-lg
-                                            font-medium
-                                            text-amber-600
-                                            dark:text-amber-500
-                                        "
-                                    >
-                                        Open
-                                    </div>
+                                    <a
+                                            href="javascript:void(0);"
+                                            (click)="openOrdersAllMonth()"
+                                            style="text-decoration: none"
+                                        >
+                                        <div
+                                            class="
+                                                text-lg
+                                                font-medium
+                                                text-amber-600
+                                                dark:text-amber-500
+                                            "
+                                        >
+                                            Open Orders
+                                        </div>
+                                        </a>
                                     <div
                                         class="
                                             flex
@@ -996,6 +1014,107 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- Sales -->
+                            <div
+                                class="
+                                    flex flex-col flex-auto
+                                    p-6
+                                    bg-card
+                                    shadow
+                                    rounded-2xl
+                                    overflow-hidden
+                                "
+                            >
+                                <div class="flex items-start justify-between">
+                                    <div
+                                        class="
+                                            text-lg
+                                            font-medium
+                                            tracking-tight
+                                            leading-6
+                                            truncate
+                                        "
+                                    >
+                                        Sales
+                                    </div>
+                                    <div class="ml-2 -mt-2 -mr-3">
+                                        <button
+                                            mat-icon-button
+                                            [matMenuTriggerFor]="summaryMenu"
+                                        >
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                [svgIcon]="
+                                                    'heroicons_solid:dots-vertical'
+                                                "
+                                            ></mat-icon>
+                                        </button>
+                                        <mat-menu #summaryMenu="matMenu">
+                                            <button mat-menu-item>
+                                                Summary
+                                            </button>
+                                            <button mat-menu-item>
+                                                Reports
+                                            </button>
+                                            <button mat-menu-item>
+                                                Others
+                                            </button>
+                                        </mat-menu>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col items-center mt-2">
+                                    <div
+                                        class="
+                                            text-7xl
+                                            sm:text-8xl
+                                            font-bold
+                                            tracking-tight
+                                            leading-none
+                                            text-amber-500
+                                        "
+                                    >
+                                        {{ this.openOrderCount }}
+                                    </div>
+                                    <a
+                                            href="javascript:void(0);"
+                                            (click)="allSales()"
+                                            style="text-decoration: none"
+                                        >
+                                        <div
+                                            class="
+                                                text-lg
+                                                font-medium
+                                                text-amber-600
+                                                dark:text-amber-500
+                                            "
+                                        >
+                                            Sales
+                                        </div>
+                                        </a>
+                                    <div
+                                        class="
+                                            flex
+                                            items-baseline
+                                            justify-center
+                                            w-full
+                                            mt-5
+                                            text-secondary
+                                        "
+                                    >
+                                        <div
+                                            class="text-md font-medium truncate"
+                                        >
+                                            Fulfilled Today:
+                                        </div>
+                                        <div
+                                            class="ml-1.5 text-lg font-semibold"
+                                        >
+                                            {{ this.curFulfilledOrderCount }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Customers -->
                             <div
                                 class="
@@ -1057,16 +1176,22 @@
                                     >
                                         {{ this.newCustomerCount }}
                                     </div>
-                                    <div
-                                        class="
-                                            text-lg
-                                            font-medium
-                                            text-green-600
-                                            dark:text-green-500
-                                        "
-                                    >
-                                        New Registrations
-                                    </div>
+                                    <a
+                                            href="javascript:void(0);"
+                                            (click)="newRegistration()"
+                                            style="text-decoration: none"
+                                        >
+                                        <div
+                                            class="
+                                                text-lg
+                                                font-medium
+                                                text-green-600
+                                                dark:text-green-500
+                                            "
+                                        >
+                                            New Registrations
+                                        </div>
+                                        </a>
                                     <div
                                         class="
                                             flex
@@ -1095,7 +1220,7 @@
                 </mat-tab>
 
                 <!-- Sales -->
-                <mat-tab label="Sales">
+                <mat-tab label="Product">
                     <ng-template matTabContent>
                         <div
                             class="

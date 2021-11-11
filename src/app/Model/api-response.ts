@@ -1,3 +1,4 @@
 export class ApiResponse {
-  result: any;
+    result: any;
+    firstname: any;
 }

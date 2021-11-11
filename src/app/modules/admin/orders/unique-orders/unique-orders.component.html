@@ -34,7 +34,7 @@
                                     truncate
                                 "
                             >
-                                {{ t("welcome-back") }}, {{ firstname }}!
+                                {{ t("welcome-back") }}, Brian!
                             </div>
                         </ng-container>
                         <div class="flex items-center">
@@ -45,7 +45,7 @@
                             <div
                                 class="ml-1.5 leading-6 truncate text-secondary"
                             >
-                                Completed Orders
+                                Pending Orders
                             </div>
                         </div>
                     </div>
@@ -93,9 +93,7 @@
                         <td mat-cell *matCellDef="let element">
                             <a
                                 href="javascript:void(0);"
-                                (click)="
-                                    completedOrderByCode(element.order_code)
-                                "
+                                (click)="pendingOrderByCode(element.order_code)"
                                 >{{ element.order_code }}</a
                             >
                         </td>

@@ -40,6 +40,14 @@ export class AuthService {
         localStorage.setItem('email', email);
     }
 
+    set domainname(domainname: string) {
+        localStorage.setItem('domainname', domainname);
+    }
+
+    set validateSignIn(validateSignIn: string) {
+        localStorage.setItem('validateSignIn', validateSignIn);
+    }
+
     get accessToken(): string {
         return localStorage.getItem('accessToken') ?? '';
     }
@@ -84,6 +92,8 @@ export class AuthService {
                 this.user_id = response.user_id;
                 this.firstname = response.firstname;
                 this.email = response.email;
+                this.domainname = response.domainname;
+                this.validateSignIn = response.validateSignIn;
 
                 // Set the authenticated flag to true
                 this._authenticated = true;

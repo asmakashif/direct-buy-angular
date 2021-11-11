@@ -12,8 +12,6 @@ import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DashboardService } from 'app/modules/admin/dashboard/dashboard.service';
 import { Data } from '../../../Model/data';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { FormBuilder, Validators } from '@angular/forms';
 
 declare var $: any;
@@ -49,6 +47,8 @@ export class DashboardComponent {
     profileData: any;
     changeDetectRef: [];
     paymentCount: [];
+    domain: string;
+    validateSignIn: string;
 
     constructor(
         @Inject(DOCUMENT)
@@ -63,43 +63,43 @@ export class DashboardComponent {
     ) {}
 
     ngOnInit(): void {
-        var URL = window.location.href;
-        var arr = URL.split('.');
-        //var data = arr.split('.');
-        console.log(arr);
-        //console.log(this.routes.snapshot);
-        //console.log(this._router.url);
-        //console.log(this.Location.path());
         this.accessToken = localStorage.getItem('accessToken');
-        const user_id = localStorage.getItem('user_id');
-        this.firstname = localStorage.getItem('firstname');
-        if (!this.accessToken) {
-            this._router.navigate(['sign-in']);
-        }
+        this.validateSignIn = localStorage.getItem('validateSignIn');
         const routeParams = this.routes.snapshot.params;
+
+        if (!this.accessToken) {
+            if (this.validateSignIn == '0') {
+                this._router.navigate(['sign-in']);
+            }
+        }
+
         this.messageForm = this.formBuilder.group({
-            id: [user_id],
+            id: [routeParams.user_id],
             str_msg: ['', Validators.required],
         });
-        this._dashboardService.getShops(user_id).subscribe(
+        this._dashboardService.getShops(routeParams.user_id).subscribe(
             (data: any) => {
                 this.data = data;
                 this.cd.detectChanges();
-            },
-            (error) => {
-                alert(error.message);
             }
+            // (error) => {
+            //     alert(error.message);
+            // }
         );
 
-        this._dashboardService.getNoOfShops(user_id).subscribe((count) => {
-            this.count = count;
-            this.cd.detectChanges();
-        });
+        this._dashboardService
+            .getNoOfShops(routeParams.user_id)
+            .subscribe((count) => {
+                this.count = count;
+                this.cd.detectChanges();
+            });
 
-        this._dashboardService.getNoOfPayment(user_id).subscribe((count) => {
-            this.paymentCount = count;
-            this.cd.detectChanges();
-        });
+        this._dashboardService
+            .getNoOfPayment(routeParams.user_id)
+            .subscribe((count) => {
+                this.paymentCount = count;
+                this.cd.detectChanges();
+            });
 
         this.routes.paramMap.subscribe((params) => {
             this.queryParam = params.get('shopId');
@@ -163,7 +163,7 @@ export class DashboardComponent {
             });
 
         this._dashboardService
-            .getPaymentGateway(user_id)
+            .getPaymentGateway(routeParams.user_id)
             .subscribe((payment: any) => {
                 this.payment = payment;
                 this.cd.detectChanges();
@@ -171,19 +171,28 @@ export class DashboardComponent {
             });
 
         this._dashboardService
-            .getRetailerDetailsById(user_id)
+            .getRetailerDetailsById(routeParams.user_id)
             .subscribe((data) => {
                 this.messageForm.patchValue(data);
                 this.profileData = data;
+                this.firstname = this.profileData.firstname;
                 this.cd.detectChanges();
-                console.log(this.profileData);
+                //console.log(this.profileData);
             });
         //this.editMessage();
     }
 
     changeStore(stores): void {
+        const routeParams = this.routes.snapshot.params;
         this._router
-            .navigate(['dashboard/' + stores.shopId + '/' + stores.shop_name])
+            .navigate([
+                'dashboard/' +
+                    routeParams.user_id +
+                    '/' +
+                    stores.shopId +
+                    '/' +
+                    stores.shop_name,
+            ])
             .then(() => {
                 this.ngOnInit();
                 // window.location.reload();
@@ -191,8 +200,8 @@ export class DashboardComponent {
     }
 
     dashbaord(): void {
-        //this.refresh();
-        this._router.navigate(['dashboard/']);
+        const routeParams = this.routes.snapshot.params;
+        this._router.navigate(['dashboard/' + routeParams.user_id]);
     }
 
     // refresh(): void {
@@ -253,6 +262,53 @@ export class DashboardComponent {
                     // window.location.reload();
                 });
             });
+    }
+
+    uniqueOrdersCurMonth(): void {
+        const routeParams = this.routes.snapshot.params;
+        this._router.navigate([
+            '/orders/unique-orders/' +
+                routeParams.user_id +
+                '/' +
+                routeParams.shopId,
+        ]);
+    }
+
+    ordersFulFilledPrevMonth() {
+        const routeParams = this.routes.snapshot.params;
+        this._router.navigate([
+            '/orders/orders-fulfilled/' +
+                routeParams.user_id +
+                '/' +
+                routeParams.shopId,
+        ]);
+    }
+
+    openOrdersAllMonth() {
+        const routeParams = this.routes.snapshot.params;
+        this._router.navigate([
+            '/orders/open-orders/' +
+                routeParams.user_id +
+                '/' +
+                routeParams.shopId,
+        ]);
+    }
+
+    allSales() {
+        const routeParams = this.routes.snapshot.params;
+        this._router.navigate([
+            '/orders/sales/' + routeParams.user_id + '/' + routeParams.shopId,
+        ]);
+    }
+
+    newRegistration() {
+        const routeParams = this.routes.snapshot.params;
+        this._router.navigate([
+            '/orders/new-registration/' +
+                routeParams.user_id +
+                '/' +
+                routeParams.shopId,
+        ]);
     }
 
     isMobile() {

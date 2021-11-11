@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Routes } from '@angular/router';
+import { DashboardService } from '../../dashboard/dashboard.service';
 import { StepsService } from './steps.service';
 //import { MatStepper } from '@angular/material/stepper';
 
@@ -15,8 +16,11 @@ export class StepsComponent implements OnInit {
     payment_g_status: any;
     productUpdate_status: any;
     shop_payment_status: any;
-    firstname: string;
+
+    profileData: import('c:/Users/UmmeAsmaSultana/Desktop/direct-buy-angular-project/src/app/Model/api-response').ApiResponse;
+    firstname: any;
     constructor(
+        private _dashboardService: DashboardService,
         private _stepsService: StepsService,
         private _router: Router,
         private routes: ActivatedRoute
@@ -24,10 +28,8 @@ export class StepsComponent implements OnInit {
 
     ngOnInit() {
         const routeParams = this.routes.snapshot.params;
-        const user_id = localStorage.getItem('user_id');
-        this.firstname = localStorage.getItem('firstname');
         this._stepsService
-            .getShopDetailsById(routeParams.shopId, user_id)
+            .getShopDetailsById(routeParams.shopId, routeParams.user_id)
             .subscribe((data: any) => {
                 this.data = data;
                 this.product_status = this.data.product_status;
@@ -36,6 +38,13 @@ export class StepsComponent implements OnInit {
                 this.productUpdate_status = this.data.productUpdate_status;
                 this.shop_payment_status = this.data.shop_payment_status;
                 console.log(this.data.product_status);
+            });
+
+        this._dashboardService
+            .getRetailerDetailsById(routeParams.user_id)
+            .subscribe((data) => {
+                this.profileData = data;
+                this.firstname = this.profileData.firstname;
             });
 
         if (!this.isMobile()) {
