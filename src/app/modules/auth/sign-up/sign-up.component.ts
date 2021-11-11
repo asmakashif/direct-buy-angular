@@ -87,6 +87,7 @@ export class AuthSignUpComponent implements OnInit {
                 this._router.navigateByUrl('/confirmation-required');
             },
             (response) => {
+                this._router.navigateByUrl('/confirmation-required');
                 // Re-enable the form
                 this.signUpForm.enable();
 
