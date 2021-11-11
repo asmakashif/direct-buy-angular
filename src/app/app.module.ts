@@ -14,6 +14,7 @@ import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
 import { SearchPageComponent } from './modules/customer/search-page/search-page.component';
 import { MinOrderValComponent } from './modules/admin/min-order-val/min-order-val.component';
+import { HomeDeliverySettingComponent } from './modules/admin/home-delivery-setting/home-delivery-setting.component';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,

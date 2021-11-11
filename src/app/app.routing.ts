@@ -363,6 +363,13 @@ export const appRoutes: Route[] = [
                         'app/modules/admin/min-order-val/min-order-val.module'
                     ).then((m) => m.MinOrderValModule),
             },
+            {
+                path: 'HomeDeliverySetting/:shop_id',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/home-delivery-setting/home-delivery-setting.module'
+                    ).then((m) => m.HomeDeliverySettingModule),
+            },
         ],
     },
 
