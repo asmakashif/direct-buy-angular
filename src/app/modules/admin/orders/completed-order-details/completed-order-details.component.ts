@@ -23,9 +23,11 @@ export class CompletedOrderDetailsComponent implements OnInit {
     orderDetailsById: any;
     profileData: any;
     firstname: any;
+    order_code: any;
+    c_fname: any;
+    total: any;
 
     constructor(
-        private _dashboardService: DashboardService,
         private apiService: CompletedOrderDetailsService,
         private _router: Router,
         private routes: ActivatedRoute
@@ -38,21 +40,20 @@ export class CompletedOrderDetailsComponent implements OnInit {
             .getCompletedOrderById(routeParams.order_code)
             .subscribe((orderDetailsById) => {
                 this.orderDetailsById = orderDetailsById;
+                this.order_code = this.orderDetailsById.order_code;
+                this.c_fname = this.orderDetailsById.c_fname;
+                this.total = this.orderDetailsById.total;
                 console.log(this.orderDetailsById);
             });
 
         this.apiService
-            .getCompletedOrderDetails(routeParams.order_code)
+            .getCompletedOrderDetails(
+                routeParams.order_code,
+                routeParams.shopId
+            )
             .subscribe((dataSource) => {
                 this.dataSource = dataSource;
                 console.log(this.dataSource);
-            });
-
-        this._dashboardService
-            .getRetailerDetailsById(routeParams.user_id)
-            .subscribe((data) => {
-                this.profileData = data;
-                this.firstname = this.profileData.firstname;
             });
     }
 }

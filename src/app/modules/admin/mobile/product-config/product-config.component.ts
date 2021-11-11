@@ -11,7 +11,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ProductConfigService } from 'app/modules/admin/mobile/product-config/product-config.service';
-import { DashboardService } from 'app/modules/admin/dashboard/dashboard.service';
 import { MatStepper } from '@angular/material/stepper';
 
 declare var $: any;
@@ -76,7 +75,6 @@ export class ProductConfigComponent implements OnInit {
     firstname: any;
 
     constructor(
-        private _dashboardService: DashboardService,
         private apiService: ProductConfigService,
         private _router: Router,
         private routes: ActivatedRoute,
@@ -86,6 +84,7 @@ export class ProductConfigComponent implements OnInit {
     ngOnInit(): void {
         const routeParams = this.routes.snapshot.params;
         const shopId = routeParams.shopId;
+        const user_id = localStorage.getItem('user_id');
 
         this.apiService.getStoreTypes().subscribe((shopType) => {
             // Store the data
@@ -114,7 +113,7 @@ export class ProductConfigComponent implements OnInit {
         });
 
         this.dataFilteredGroup = this.fb.group({
-            user_id: [routeParams.user_id],
+            user_id: [user_id],
             shopId: [shopId],
             base_product_id: this.fb.array([], [Validators.required]),
         });
@@ -126,12 +125,6 @@ export class ProductConfigComponent implements OnInit {
             ]);
             // this._router.resetConfig(this.mobileRoutes);
         }
-        this._dashboardService
-            .getRetailerDetailsById(routeParams.user_id)
-            .subscribe((data) => {
-                this.profileData = data;
-                this.firstname = this.profileData.firstname;
-            });
     }
 
     selectAllShopType(e) {

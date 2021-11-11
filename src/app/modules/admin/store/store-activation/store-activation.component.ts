@@ -22,6 +22,7 @@ export class StoreActivationComponent implements OnInit {
     sub;
     params: any;
     data: any;
+    shop_payment_status: any;
 
     constructor(
         private flashMessagesService: FlashMessagesService,
@@ -39,6 +40,7 @@ export class StoreActivationComponent implements OnInit {
             .getShopDetailsById(routeParams.shopId, user_id)
             .subscribe((data: any) => {
                 this.data = data;
+                this.shop_payment_status = this.data.shop_payment_status;
                 this.cd.detectChanges();
                 console.log(this.data.shopId);
             });
@@ -113,9 +115,11 @@ export class StoreActivationComponent implements OnInit {
             .subscribe((data) => {
                 this.cd.detectChanges();
 
-                this._router.navigate(['store/store-activation/']).then(() => {
-                    window.location.reload();
-                });
+                this._router
+                    .navigate(['store/store-activation/' + routeParams.shopId])
+                    .then(() => {
+                        window.location.reload();
+                    });
                 this.flashMessagesService.show(
                     // Array of messages each will be displayed in new line
                     'Store activated successfully',

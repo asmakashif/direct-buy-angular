@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Routes } from '@angular/router';
-import { DashboardService } from '../../dashboard/dashboard.service';
 import { StepsService } from './steps.service';
 //import { MatStepper } from '@angular/material/stepper';
 
@@ -20,7 +19,6 @@ export class StepsComponent implements OnInit {
     profileData: any;
     firstname: any;
     constructor(
-        private _dashboardService: DashboardService,
         private _stepsService: StepsService,
         private _router: Router,
         private routes: ActivatedRoute
@@ -28,8 +26,9 @@ export class StepsComponent implements OnInit {
 
     ngOnInit() {
         const routeParams = this.routes.snapshot.params;
+        const user_id = localStorage.getItem('user_id');
         this._stepsService
-            .getShopDetailsById(routeParams.shopId, routeParams.user_id)
+            .getShopDetailsById(routeParams.shopId, user_id)
             .subscribe((data: any) => {
                 this.data = data;
                 this.product_status = this.data.product_status;
@@ -38,13 +37,6 @@ export class StepsComponent implements OnInit {
                 this.productUpdate_status = this.data.productUpdate_status;
                 this.shop_payment_status = this.data.shop_payment_status;
                 console.log(this.data.product_status);
-            });
-
-        this._dashboardService
-            .getRetailerDetailsById(routeParams.user_id)
-            .subscribe((data) => {
-                this.profileData = data;
-                this.firstname = this.profileData.firstname;
             });
 
         if (!this.isMobile()) {
