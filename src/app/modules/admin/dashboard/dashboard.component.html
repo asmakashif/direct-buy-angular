@@ -688,6 +688,7 @@
                         </form>
                     </ng-template>
                 </mat-tab>
+
                 <mat-tab label="General Settings">
                     <ng-template matTabContent>
                         <div
@@ -748,7 +749,7 @@
                                                 ]"
                                                 mat-menu-item
                                             >
-                                                    Minimum order value 
+                                                    Manage 
                                                 </button>
                                             </mat-menu>
                                         </div>
@@ -851,7 +852,7 @@
                                             <button
                                                 mat-icon-button
                                                 [matMenuTriggerFor]="
-                                                    summaryMenu
+                                                homeDeliveryMenu
                                                 "
                                             >
                                                 <mat-icon
@@ -861,14 +862,14 @@
                                                     "
                                                 ></mat-icon>
                                             </button>
-                                            <mat-menu #summaryMenu="matMenu">
+                                            <mat-menu #homeDeliveryMenu="matMenu">
                                                 <button
                                                 [routerLink]="[
-                                                    '/payment/payment-gateway'
+                                                    '/HomeDeliverySetting/i3s6wp'
                                                 ]"
                                                 mat-menu-item
                                             >
-                                                    Home Delivery Setting
+                                                    Manage
                                                 </button>
                                             </mat-menu>
                                         </div>
@@ -945,6 +946,7 @@
                         </div>
                     </ng-template> 
                 </mat-tab>
+                
             </mat-tab-group>
         </div>
     </div>

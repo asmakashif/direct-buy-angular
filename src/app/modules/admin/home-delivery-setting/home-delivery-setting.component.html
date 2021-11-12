@@ -1,4 +1,4 @@
-<div class="checkbox">
+<!-- <div class="checkbox">
     <label><input type="checkbox" value="" (change)="update($event,'Monday')">Monday</label>
   </div>
   <div class="checkbox">
@@ -18,4 +18,246 @@
 </div>
 <div class="checkbox">
     <label><input type="checkbox" value="" (change)="update($event,'Sunday')">Sunday</label>
+</div> -->
+<div class="flex flex-col flex-auto min-w-0">
+  <!-- Header -->
+  <div class="bg-card">
+      <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
+          <div
+              class="
+                  flex flex-col
+                  sm:flex-row
+                  flex-auto
+                  sm:items-center
+                  min-w-0
+                  my-8
+                  sm:my-12
+              "
+          >
+              <!-- Avatar and name -->
+              <div class="flex flex-auto items-center min-w-0">
+                  <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
+                      <img
+                          class="w-full h-full object-cover"
+                          src="assets/images/avatars/brian-hughes.jpg"
+                      />
+                  </div>
+                  <div class="flex flex-col min-w-0 ml-4">
+                      <ng-container *transloco="let t">
+                          <div
+                              class="
+                                  text-2xl
+                                  md:text-5xl
+                                  font-semibold
+                                  tracking-tight
+                                  leading-7
+                                  md:leading-snug
+                                  truncate
+                              "
+                          >
+                              {{ t("welcome-back") }}, Brian!
+                          </div>
+                      </ng-container>
+                      <div class="flex items-center">
+                          <mat-icon
+                              class="icon-size-5"
+                              [svgIcon]="'heroicons_solid:bell'"
+                          ></mat-icon>
+                          <div
+                              class="ml-1.5 leading-6 truncate text-secondary"
+                          >
+                              You have 2 new messages and 15 new tasks
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <!-- Actions -->
+              <div class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3">
+                  <button
+                      class="fuse-mat-button-rounded bg-accent-700"
+                      mat-flat-button
+                      [color]="'accent'"
+                  >
+                      <mat-icon
+                          class="icon-size-5"
+                          [svgIcon]="'heroicons_solid:mail'"
+                      ></mat-icon>
+                      <span class="ml-2">Messages</span>
+                  </button>
+                  <button
+                      class="fuse-mat-button-rounded"
+                      mat-flat-button
+                      [color]="'primary'"
+                  >
+                      <mat-icon
+                          class="icon-size-5"
+                          [svgIcon]="'heroicons_solid:cog'"
+                      ></mat-icon>
+                      <span class="ml-2">Settings</span>
+                  </button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <!-- Main -->
+  <div class="flex flex-col flex-auto min-w-0">
+      <div class="flex-auto p-6 sm:p-10">
+          <div class="border-2 border-white-300 rounded-2xl">
+              <mat-horizontal-stepper
+                  [linear]=""
+                  #stepper
+                  labelPosition="bottom"
+              >
+                  
+                  <mat-step [stepControl]="" label="Category">
+                      <div style="padding-top: 3%">
+                          <form
+                             
+                          >
+                              <span> <b>Select Days</b></span>
+                              <br />
+                              <br />
+                              <ul>
+  <li> <input type="checkbox" [(ngModel)]="selectedAll" (change)="selectAll();"/>
+    <label><b>Select All</b></label>
+  </li>
+  <li *ngFor="let n of names"> 
+  <input type="checkbox" [(ngModel)]="n.selected" (change)="update($event,n.name)">
+  {{n.name}}
+  </li>
+</ul>
+                              <!-- <div class="wj-listbox">
+                                  <div class="inputChk">
+                                      <input
+                                          type="checkbox"
+                                          [value]=""
+                                          [(ngModel)]="selectedAll"
+                                          (change)="selectAll();"
+                                          style="margin-left: 4px"
+                                          matCheckbox
+                                      />&nbsp;
+                                      <label><b>Select All</b></label>
+                                  </div>
+                                  
+
+                                 
+                              </div>
+                              
+                              <div class="wj-listbox" *ngFor="let n of names">
+                                <div class="inputChk">
+                                    <input
+                                        type="checkbox"
+                                        name="Monday"
+                                        [(ngModel)]="n.selected" (change)="checkIfAllSelected();"
+                                        [value]=""
+                                        
+                                        style="margin-left: 4px"
+                                        matCheckbox
+                                    />&nbsp;
+                                    <label>{{n.name}} </label>
+                                </div>
+                              </div> -->
+                              <!-- <div class="wj-listbox">
+                                <div class="inputChk">
+                                    <input
+                                        type="checkbox"
+                                        name="Tuesday"
+                                        [value]=""
+                                        (change)="update($event,'Tuesday')"
+                                        style="margin-left: 4px"
+                                        matCheckbox
+                                    />&nbsp;
+                                    <label>Tuesday</label>
+                                </div>
+                              </div>
+                              <div class="wj-listbox">
+                                <div class="inputChk">
+                                    <input
+                                        type="checkbox"
+                                        name="Wednesday"
+                                        [value]=""
+                                        (change)="update($event,'Wednesday')"
+                                        style="margin-left: 4px"
+                                        matCheckbox
+                                    />&nbsp;
+                                    <label>Wednesday</label>
+                                </div>
+                              </div>
+                              <div class="wj-listbox">
+                                <div class="inputChk">
+                                    <input
+                                        type="checkbox"
+                                        name="Thursday"
+                                        [value]=""
+                                        (change)="update($event,'Thursday')"
+                                        style="margin-left: 4px"
+                                        matCheckbox
+                                    />&nbsp;
+                                    <label>Thursday</label>
+                                </div>
+                              </div>
+                              <div class="wj-listbox">
+                                <div class="inputChk">
+                                    <input
+                                        type="checkbox"
+                                        name="Friday"
+                                        [value]=""
+                                        (change)="update($event,'Friday')"
+                                        style="margin-left: 4px"
+                                        matCheckbox
+                                    />&nbsp;
+                                    <label>Friday</label>
+                                </div>
+                              </div>
+                              <div class="wj-listbox">
+                                <div class="inputChk">
+                                    <input
+                                        type="checkbox"
+                                        name="Saturday"
+                                        [value]=""
+                                        (change)="update($event,'Saturday')"
+                                        style="margin-left: 4px"
+                                        matCheckbox
+                                    />&nbsp;
+                                    <label>Saturday</label>
+                                </div>
+                              </div>
+                              <div class="wj-listbox">
+                                <div class="inputChk">
+                                    <input
+                                        type="checkbox"
+                                        name="Sunday"
+                                        [value]=""
+                                        (change)="update($event,'Sunday')"
+                                        style="margin-left: 4px"
+                                        matCheckbox
+                                    />&nbsp;
+                                    <label>Sunday</label>
+                                </div>
+                              </div> -->
+                              <br />
+
+                             
+                          </form>
+                      </div>
+                  </mat-step>
+
+                  >
+
+                 
+
+                                </mat-horizontal-stepper>
+          </div>
+      </div>
+  </div>
 </div>
+
+<!-- <ul>
+  <li> <input type="checkbox" [(ngModel)]="selectedAll" (change)="selectAll();"/>
+  </li>
+  <li *ngFor="let n of names"> 
+  <input type="checkbox" [(ngModel)]="n.selected" (change)="checkIfAllSelected();">
+  {{n.name}}
+  </li>
+</ul> -->

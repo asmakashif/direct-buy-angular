@@ -10,8 +10,7 @@ import { MinOrderValService } from './min-order-val.service';
 })
 export class MinOrderValComponent implements OnInit {
  
- 
-  constructor(private router: Router, private route : ActivatedRoute,private fb: FormBuilder,private apiservice:MinOrderValService) { }
+constructor(private router: Router, private route : ActivatedRoute,private fb: FormBuilder,private apiservice:MinOrderValService) { }
   signinForm: FormGroup;
   shop_id:any;
   params:any;

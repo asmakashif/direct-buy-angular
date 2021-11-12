@@ -10,10 +10,10 @@ import { Observable } from 'rxjs';
 export class HomeDeliverySettingService {
     constructor(private http: HttpClient) {}
 
-    saveMinimumOrderValue(data:any): Observable<ApiResponse> {
+    saveWorkingDays(days:any): Observable<ApiResponse> {
         return this.http.post<ApiResponse>(
-            'api/customers/saveMinimumOrderValue.php',
-            data
+            'api/customers/saveWorkingDays.php',
+            days
         );
     }
     getMinimumOrderValue(shop_id:any){
