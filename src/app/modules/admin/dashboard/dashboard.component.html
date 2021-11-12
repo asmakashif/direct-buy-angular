@@ -657,7 +657,8 @@
                                         >Enter Message for Store
                                         <br />
                                         <small style="color: red"
-                                            >Click on text field to edit message</small
+                                            >Click on text field to edit
+                                            message</small
                                         ></span
                                     >
                                 </div>
@@ -689,6 +690,166 @@
                     </ng-template>
                 </mat-tab>
                 <mat-tab label="General Settings">
+                    <!-- <ng-template matTabContent>
+                        <div
+                            class="
+                                grid grid-cols-1
+                                sm:grid-cols-2
+                                md:grid-cols-3
+                                lg:grid-cols-4
+                                gap-6
+                                w-full
+                                min-w-0
+                            "
+                        >
+                            
+                            <div
+                                class="
+                                    flex flex-col flex-auto
+                                    p-6
+                                    bg-card
+                                    shadow
+                                    rounded-2xl
+                                    overflow-hidden
+                                "
+                            >
+                                <div class="flex items-start justify-between">
+                                    <div
+                                        class="
+                                            text-lg
+                                            font-medium
+                                            tracking-tight
+                                            leading-6
+                                            truncate
+                                        "
+                                    >
+                                        Minimum Order Value
+                                    </div>
+                                    <div class="ml-2 -mt-2 -mr-3">
+                                        <button
+                                            mat-icon-button
+                                            [matMenuTriggerFor]="summaryMenu"
+                                        >
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                [svgIcon]="
+                                                    'heroicons_solid:dots-vertical'
+                                                "
+                                            ></mat-icon>
+                                        </button>
+                                        <mat-menu #summaryMenu="matMenu">
+                                            <button mat-menu-item>
+                                                Manage
+                                            </button>
+                                        </mat-menu>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col items-center mt-2">
+                                    <div
+                                        class="
+                                            text-7xl
+                                            sm:text-8xl
+                                            font-bold
+                                            tracking-tight
+                                            leading-none
+                                            text-red-500
+                                        "
+                                    >
+                                        1
+                                    </div>
+                                    <a
+                                        href="javascript:void(0);"
+                                        (click)="uniqueOrdersCurMonth()"
+                                        style="text-decoration: none"
+                                    >
+                                        <div
+                                            class="
+                                                text-lg
+                                                font-medium
+                                                text-red-600
+                                                dark:text-red-500
+                                            "
+                                        >
+                                            Manage Minimum Order Val
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            Home Delivery
+                            <div
+                                class="
+                                    flex flex-col flex-auto
+                                    p-6
+                                    bg-card
+                                    shadow
+                                    rounded-2xl
+                                    overflow-hidden
+                                "
+                            >
+                                <div class="flex items-start justify-between">
+                                    <div
+                                        class="
+                                            text-lg
+                                            font-medium
+                                            tracking-tight
+                                            leading-6
+                                            truncate
+                                        "
+                                    >
+                                        Home Delivery
+                                    </div>
+                                    <div class="ml-2 -mt-2 -mr-3">
+                                        <button
+                                            mat-icon-button
+                                            [matMenuTriggerFor]="summaryMenu"
+                                        >
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                [svgIcon]="
+                                                    'heroicons_solid:dots-vertical'
+                                                "
+                                            ></mat-icon>
+                                        </button>
+                                        <mat-menu #summaryMenu="matMenu">
+                                            <button mat-menu-item>
+                                                Home delivery
+                                            </button>
+                                        </mat-menu>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col items-center mt-2">
+                                    <div
+                                        class="
+                                            text-7xl
+                                            sm:text-8xl
+                                            font-bold
+                                            tracking-tight
+                                            leading-none
+                                            text-blue-500
+                                        "
+                                    >
+                                        1
+                                    </div>
+                                    <a
+                                        href="javascript:void(0);"
+                                        (click)="ordersFulFilledPrevMonth()"
+                                        style="text-decoration: none"
+                                    >
+                                        <div
+                                            class="
+                                                text-lg
+                                                font-medium
+                                                text-blue-600
+                                                dark:text-blue-500
+                                            "
+                                        >
+                                            Home Delivery
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template> -->
                     <ng-template matTabContent>
                         <div
                             class="
@@ -701,249 +862,225 @@
                                 min-w-0
                             "
                         >
-                           
-                            <ng-container >
-                                <div
-                                    class="
-                                        flex flex-col flex-auto
-                                        p-6
-                                        bg-card
-                                        shadow
-                                        rounded-2xl
-                                        overflow-hidden
-                                    "
-                                >
+                            <div
+                                class="
+                                    flex flex-col flex-auto
+                                    p-6
+                                    bg-card
+                                    shadow
+                                    rounded-2xl
+                                    overflow-hidden
+                                "
+                            >
+                                <div class="flex items-start justify-between">
                                     <div
-                                        class="flex items-start justify-between"
+                                        class="
+                                            text-lg
+                                            font-medium
+                                            tracking-tight
+                                            leading-6
+                                            truncate
+                                        "
                                     >
-                                        <div
-                                            class="
-                                                text-lg
-                                                font-medium
-                                                tracking-tight
-                                                leading-6
-                                                truncate
-                                            "
+                                        Manage minimum order value
+                                    </div>
+                                    <div class="ml-2 -mt-2 -mr-3">
+                                        <button
+                                            mat-icon-button
+                                            [matMenuTriggerFor]="summaryMenu"
                                         >
-                                           Manage minimum order value
-                                        </div>
-                                        <div class="ml-2 -mt-2 -mr-3">
-                                            <button
-                                                mat-icon-button
-                                                [matMenuTriggerFor]="
-                                                    summaryMenu
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                [svgIcon]="
+                                                    'heroicons_solid:dots-vertical'
                                                 "
-                                            >
-                                                <mat-icon
-                                                    class="icon-size-5"
-                                                    [svgIcon]="
-                                                        'heroicons_solid:dots-vertical'
-                                                    "
-                                                ></mat-icon>
-                                            </button>
-                                            <mat-menu #summaryMenu="matMenu">
-                                                <button
+                                            ></mat-icon>
+                                        </button>
+                                        <mat-menu #summaryMenu="matMenu">
+                                            <button
                                                 [routerLink]="[
                                                     '/minOrderValue/i3s6wp'
                                                 ]"
                                                 mat-menu-item
                                             >
-                                                    Minimum order value 
-                                                </button>
-                                            </mat-menu>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="flex flex-col items-center mt-2"
-                                    >
-                                        <div
-                                            class="
-                                                text-7xl
-                                                sm:text-8xl
-                                                font-bold
-                                                tracking-tight
-                                                leading-none
-                                                text-blue-500
-                                            "
-                                        >
-                                            1
-                                        </div>
-                                        <a
-                                            href="javascript:void(0);"
-                                            (click)="completedOrders(data)"
-                                            style="text-decoration: none"
-                                        >
-                                            <div
-                                                class="
-                                                    text-lg
-                                                    font-medium
-                                                    text-blue-600
-                                                    dark:text-blue-500
-                                                "
-                                            >
-                                                Minimum Order Value
-                                            </div>
-                                        </a>
-                                        <a
-                                            href="javascript:void(0);"
-                                            (click)="pendingOrders(data)"
-                                            style="text-decoration: none"
-                                        >
-                                            <div
-                                                class="
-                                                    flex
-                                                    items-baseline
-                                                    justify-center
-                                                    w-full
-                                                    mt-5
-                                                    text-secondary
-                                                "
-                                            >
-                                                <div
-                                                    class="
-                                                        text-md
-                                                        font-medium
-                                                        truncate
-                                                    "
-                                                >
-                                                    
-                                                </div>
-                                                <div
-                                                    class="
-                                                        ml-1.5
-                                                        text-lg
-                                                        font-semibold
-                                                    "
-                                                >
-                                                    
-                                                </div>
-                                            </div>
-                                        </a>
+                                                Minimum order value
+                                            </button>
+                                        </mat-menu>
                                     </div>
                                 </div>
-                            </ng-container>
-                            <ng-container >
-                                <div
-                                    class="
-                                        flex flex-col flex-auto
-                                        p-6
-                                        bg-card
-                                        shadow
-                                        rounded-2xl
-                                        overflow-hidden
-                                    "
-                                >
+                                <div class="flex flex-col items-center mt-2">
                                     <div
-                                        class="flex items-start justify-between"
+                                        class="
+                                            text-7xl
+                                            sm:text-8xl
+                                            font-bold
+                                            tracking-tight
+                                            leading-none
+                                            text-blue-500
+                                        "
+                                    >
+                                        1
+                                    </div>
+                                    <a
+                                        href="javascript:void(0);"
+                                        (click)="completedOrders(data)"
+                                        style="text-decoration: none"
                                     >
                                         <div
                                             class="
                                                 text-lg
                                                 font-medium
-                                                tracking-tight
-                                                leading-6
-                                                truncate
+                                                text-blue-600
+                                                dark:text-blue-500
                                             "
                                         >
-                                           Manage Home  Delivery
+                                            Minimum Order Value
                                         </div>
-                                        <div class="ml-2 -mt-2 -mr-3">
-                                            <button
-                                                mat-icon-button
-                                                [matMenuTriggerFor]="
-                                                    summaryMenu
+                                    </a>
+                                    <a
+                                        href="javascript:void(0);"
+                                        (click)="pendingOrders(data)"
+                                        style="text-decoration: none"
+                                    >
+                                        <div
+                                            class="
+                                                flex
+                                                items-baseline
+                                                justify-center
+                                                w-full
+                                                mt-5
+                                                text-secondary
+                                            "
+                                        >
+                                            <div
+                                                class="
+                                                    text-md
+                                                    font-medium
+                                                    truncate
                                                 "
-                                            >
-                                                <mat-icon
-                                                    class="icon-size-5"
-                                                    [svgIcon]="
-                                                        'heroicons_solid:dots-vertical'
-                                                    "
-                                                ></mat-icon>
-                                            </button>
-                                            <mat-menu #summaryMenu="matMenu">
-                                                <button
+                                            ></div>
+                                            <div
+                                                class="
+                                                    ml-1.5
+                                                    text-lg
+                                                    font-semibold
+                                                "
+                                            ></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div
+                                class="
+                                    flex flex-col flex-auto
+                                    p-6
+                                    bg-card
+                                    shadow
+                                    rounded-2xl
+                                    overflow-hidden
+                                "
+                            >
+                                <div class="flex items-start justify-between">
+                                    <div
+                                        class="
+                                            text-lg
+                                            font-medium
+                                            tracking-tight
+                                            leading-6
+                                            truncate
+                                        "
+                                    >
+                                        Manage Home Delivery
+                                    </div>
+                                    <div class="ml-2 -mt-2 -mr-3">
+                                        <button
+                                            mat-icon-button
+                                            [matMenuTriggerFor]="summaryMenu"
+                                        >
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                [svgIcon]="
+                                                    'heroicons_solid:dots-vertical'
+                                                "
+                                            ></mat-icon>
+                                        </button>
+                                        <mat-menu #summaryMenu="matMenu">
+                                            <button
                                                 [routerLink]="[
                                                     '/payment/payment-gateway'
                                                 ]"
                                                 mat-menu-item
                                             >
-                                                    Home Delivery Setting
-                                                </button>
-                                            </mat-menu>
-                                        </div>
+                                                Home Delivery Setting
+                                            </button>
+                                        </mat-menu>
                                     </div>
+                                </div>
+                                <div class="flex flex-col items-center mt-2">
                                     <div
-                                        class="flex flex-col items-center mt-2"
+                                        class="
+                                            text-7xl
+                                            sm:text-8xl
+                                            font-bold
+                                            tracking-tight
+                                            leading-none
+                                            text-blue-500
+                                        "
+                                    >
+                                        1
+                                    </div>
+                                    <a
+                                        href="javascript:void(0);"
+                                        (click)="completedOrders(data)"
+                                        style="text-decoration: none"
                                     >
                                         <div
                                             class="
-                                                text-7xl
-                                                sm:text-8xl
-                                                font-bold
-                                                tracking-tight
-                                                leading-none
-                                                text-blue-500
+                                                text-lg
+                                                font-medium
+                                                text-blue-600
+                                                dark:text-blue-500
                                             "
                                         >
-                                            1
+                                            Minimum Order Value
                                         </div>
-                                        <a
-                                            href="javascript:void(0);"
-                                            (click)="completedOrders(data)"
-                                            style="text-decoration: none"
+                                    </a>
+                                    <a
+                                        href="javascript:void(0);"
+                                        (click)="pendingOrders(data)"
+                                        style="text-decoration: none"
+                                    >
+                                        <div
+                                            class="
+                                                flex
+                                                items-baseline
+                                                justify-center
+                                                w-full
+                                                mt-5
+                                                text-secondary
+                                            "
                                         >
                                             <div
                                                 class="
-                                                    text-lg
+                                                    text-md
                                                     font-medium
-                                                    text-blue-600
-                                                    dark:text-blue-500
+                                                    truncate
                                                 "
-                                            >
-                                                Minimum Order Value
-                                            </div>
-                                        </a>
-                                        <a
-                                            href="javascript:void(0);"
-                                            (click)="pendingOrders(data)"
-                                            style="text-decoration: none"
-                                        >
+                                            ></div>
                                             <div
                                                 class="
-                                                    flex
-                                                    items-baseline
-                                                    justify-center
-                                                    w-full
-                                                    mt-5
-                                                    text-secondary
+                                                    ml-1.5
+                                                    text-lg
+                                                    font-semibold
                                                 "
-                                            >
-                                                <div
-                                                    class="
-                                                        text-md
-                                                        font-medium
-                                                        truncate
-                                                    "
-                                                >
-                                                    
-                                                </div>
-                                                <div
-                                                    class="
-                                                        ml-1.5
-                                                        text-lg
-                                                        font-semibold
-                                                    "
-                                                >
-                                                    
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
+                                            ></div>
+                                        </div>
+                                    </a>
                                 </div>
-                            </ng-container>
+                            </div>
                         </div>
-                    </ng-template> 
+                    </ng-template>
                 </mat-tab>
             </mat-tab-group>
         </div>
@@ -996,7 +1133,7 @@
                                     <div class="ml-2 -mt-2 -mr-3">
                                         <button
                                             mat-icon-button
-                                            [matMenuTriggerFor]="summaryMenu"
+                                            [matMenuTriggerFor]="uniqueMenu"
                                         >
                                             <mat-icon
                                                 class="icon-size-5"
@@ -1005,7 +1142,7 @@
                                                 "
                                             ></mat-icon>
                                         </button>
-                                        <mat-menu #summaryMenu="matMenu">
+                                        <mat-menu #uniqueMenu="matMenu">
                                             <button mat-menu-item>
                                                 Summary
                                             </button>
@@ -1032,10 +1169,10 @@
                                         {{ this.curMonthOrderCount }}
                                     </div>
                                     <a
-                                            href="javascript:void(0);"
-                                            (click)="uniqueOrdersCurMonth()"
-                                            style="text-decoration: none"
-                                        >
+                                        href="javascript:void(0);"
+                                        (click)="uniqueOrdersCurMonth()"
+                                        style="text-decoration: none"
+                                    >
                                         <div
                                             class="
                                                 text-lg
@@ -1096,7 +1233,7 @@
                                     <div class="ml-2 -mt-2 -mr-3">
                                         <button
                                             mat-icon-button
-                                            [matMenuTriggerFor]="summaryMenu"
+                                            [matMenuTriggerFor]="prevMonthMenu"
                                         >
                                             <mat-icon
                                                 class="icon-size-5"
@@ -1105,7 +1242,7 @@
                                                 "
                                             ></mat-icon>
                                         </button>
-                                        <mat-menu #summaryMenu="matMenu">
+                                        <mat-menu #prevMonthMenu="matMenu">
                                             <button mat-menu-item>
                                                 Summary
                                             </button>
@@ -1132,10 +1269,10 @@
                                         {{ this.prevMonthOrderCount }}
                                     </div>
                                     <a
-                                            href="javascript:void(0);"
-                                            (click)="ordersFulFilledPrevMonth()"
-                                            style="text-decoration: none"
-                                        >
+                                        href="javascript:void(0);"
+                                        (click)="ordersFulFilledPrevMonth()"
+                                        style="text-decoration: none"
+                                    >
                                         <div
                                             class="
                                                 text-lg
@@ -1146,7 +1283,7 @@
                                         >
                                             Orders Fulfilled
                                         </div>
-                                        </a>
+                                    </a>
                                     <div
                                         class="
                                             flex
@@ -1197,7 +1334,7 @@
                                     <div class="ml-2 -mt-2 -mr-3">
                                         <button
                                             mat-icon-button
-                                            [matMenuTriggerFor]="summaryMenu"
+                                            [matMenuTriggerFor]="newOrdersMenu"
                                         >
                                             <mat-icon
                                                 class="icon-size-5"
@@ -1206,7 +1343,7 @@
                                                 "
                                             ></mat-icon>
                                         </button>
-                                        <mat-menu #summaryMenu="matMenu">
+                                        <mat-menu #newOrdersMenu="matMenu">
                                             <button mat-menu-item>
                                                 Summary
                                             </button>
@@ -1233,10 +1370,10 @@
                                         {{ this.openOrderCount }}
                                     </div>
                                     <a
-                                            href="javascript:void(0);"
-                                            (click)="openOrdersAllMonth()"
-                                            style="text-decoration: none"
-                                        >
+                                        href="javascript:void(0);"
+                                        (click)="openOrdersAllMonth()"
+                                        style="text-decoration: none"
+                                    >
                                         <div
                                             class="
                                                 text-lg
@@ -1247,7 +1384,7 @@
                                         >
                                             Open Orders
                                         </div>
-                                        </a>
+                                    </a>
                                     <div
                                         class="
                                             flex
@@ -1297,7 +1434,7 @@
                                     <div class="ml-2 -mt-2 -mr-3">
                                         <button
                                             mat-icon-button
-                                            [matMenuTriggerFor]="summaryMenu"
+                                            [matMenuTriggerFor]="salesMenu"
                                         >
                                             <mat-icon
                                                 class="icon-size-5"
@@ -1306,15 +1443,9 @@
                                                 "
                                             ></mat-icon>
                                         </button>
-                                        <mat-menu #summaryMenu="matMenu">
+                                        <mat-menu #salesMenu="matMenu">
                                             <button mat-menu-item>
                                                 Summary
-                                            </button>
-                                            <button mat-menu-item>
-                                                Reports
-                                            </button>
-                                            <button mat-menu-item>
-                                                Others
                                             </button>
                                         </mat-menu>
                                     </div>
@@ -1333,10 +1464,10 @@
                                         {{ this.openOrderCount }}
                                     </div>
                                     <a
-                                            href="javascript:void(0);"
-                                            (click)="allSales()"
-                                            style="text-decoration: none"
-                                        >
+                                        href="javascript:void(0);"
+                                        (click)="allSales()"
+                                        style="text-decoration: none"
+                                    >
                                         <div
                                             class="
                                                 text-lg
@@ -1347,7 +1478,7 @@
                                         >
                                             Sales
                                         </div>
-                                        </a>
+                                    </a>
                                     <div
                                         class="
                                             flex
@@ -1398,7 +1529,7 @@
                                     <div class="ml-2 -mt-2 -mr-3">
                                         <button
                                             mat-icon-button
-                                            [matMenuTriggerFor]="summaryMenu"
+                                            [matMenuTriggerFor]="customerMenu"
                                         >
                                             <mat-icon
                                                 class="icon-size-5"
@@ -1407,15 +1538,9 @@
                                                 "
                                             ></mat-icon>
                                         </button>
-                                        <mat-menu #summaryMenu="matMenu">
+                                        <mat-menu #customerMenu="matMenu">
                                             <button mat-menu-item>
-                                                Summary
-                                            </button>
-                                            <button mat-menu-item>
-                                                Reports
-                                            </button>
-                                            <button mat-menu-item>
-                                                Others
+                                                Manage
                                             </button>
                                         </mat-menu>
                                     </div>
@@ -1434,10 +1559,10 @@
                                         {{ this.newCustomerCount }}
                                     </div>
                                     <a
-                                            href="javascript:void(0);"
-                                            (click)="newRegistration()"
-                                            style="text-decoration: none"
-                                        >
+                                        href="javascript:void(0);"
+                                        (click)="newRegistration()"
+                                        style="text-decoration: none"
+                                    >
                                         <div
                                             class="
                                                 text-lg
@@ -1448,7 +1573,7 @@
                                         >
                                             New Registrations
                                         </div>
-                                        </a>
+                                    </a>
                                     <div
                                         class="
                                             flex
@@ -1476,7 +1601,7 @@
                     </ng-template>
                 </mat-tab>
 
-                <!-- Sales -->
+                <!-- Product -->
                 <mat-tab label="Product">
                     <ng-template matTabContent>
                         <div
