@@ -39,7 +39,7 @@ export class HomeDeliverySettingComponent implements OnInit {
         day: day,
         shop_id:this.shop_id
       }
-     alert('hi');
+  
       this.apiservice.saveWorkingDays(days).subscribe((data)=>
       {
         
@@ -49,6 +49,14 @@ export class HomeDeliverySettingComponent implements OnInit {
     }
     else{
      // alert('bye'+day);
+     const days={
+      day: day,
+      shop_id:this.shop_id
+    }
+     this.apiservice.uncheckWorkingDays(days).subscribe((data)=>
+     {
+       
+     })
     }
   }
   selectAll() {
@@ -60,5 +68,18 @@ export class HomeDeliverySettingComponent implements OnInit {
     this.selectedAll = this.names.every(function(item:any) {
         return item.selected == true;
       })
+  }
+  updatetime(e:any,day:any,type:any)
+  {
+ //alert(e.target.value + type)
+ const time={
+  time: e.target.value,
+  day:day+'_'+type,
+  type:type
+}
+     this.apiservice.saveWorkingTime(time).subscribe((data)=>
+     {
+
+     })
   }
 }

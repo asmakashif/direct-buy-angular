@@ -110,132 +110,49 @@
                   labelPosition="bottom"
               >
                   
-                  <mat-step [stepControl]="" label="Category">
+                  <mat-step [stepControl]="" label="">
                       <div style="padding-top: 3%">
-                          <form
-                             
-                          >
-                              <span> <b>Select Days</b></span>
-                              <br />
-                              <br />
-                              <ul>
-  <li> <input type="checkbox" [(ngModel)]="selectedAll" (change)="selectAll();"/>
-    <label><b>Select All</b></label>
-  </li>
-  <li *ngFor="let n of names"> 
-  <input type="checkbox" [(ngModel)]="n.selected" (change)="update($event,n.name)">
-  {{n.name}}
-  </li>
-</ul>
-                              <!-- <div class="wj-listbox">
-                                  <div class="inputChk">
-                                      <input
-                                          type="checkbox"
-                                          [value]=""
-                                          [(ngModel)]="selectedAll"
-                                          (change)="selectAll();"
-                                          style="margin-left: 4px"
-                                          matCheckbox
-                                      />&nbsp;
-                                      <label><b>Select All</b></label>
-                                  </div>
-                                  
+                          <form>
+                          <br />
+        <br />
+        <ul>
+<!-- <li> <input type="checkbox" [(ngModel)]="selectedAll" (change)="selectAll();"/>
+<label><b>Select All</b>  </label>
 
-                                 
-                              </div>
-                              
-                              <div class="wj-listbox" *ngFor="let n of names">
-                                <div class="inputChk">
-                                    <input
-                                        type="checkbox"
-                                        name="Monday"
-                                        [(ngModel)]="n.selected" (change)="checkIfAllSelected();"
-                                        [value]=""
-                                        
-                                        style="margin-left: 4px"
-                                        matCheckbox
-                                    />&nbsp;
-                                    <label>{{n.name}} </label>
-                                </div>
-                              </div> -->
-                              <!-- <div class="wj-listbox">
-                                <div class="inputChk">
-                                    <input
-                                        type="checkbox"
-                                        name="Tuesday"
-                                        [value]=""
-                                        (change)="update($event,'Tuesday')"
-                                        style="margin-left: 4px"
-                                        matCheckbox
-                                    />&nbsp;
-                                    <label>Tuesday</label>
-                                </div>
-                              </div>
-                              <div class="wj-listbox">
-                                <div class="inputChk">
-                                    <input
-                                        type="checkbox"
-                                        name="Wednesday"
-                                        [value]=""
-                                        (change)="update($event,'Wednesday')"
-                                        style="margin-left: 4px"
-                                        matCheckbox
-                                    />&nbsp;
-                                    <label>Wednesday</label>
-                                </div>
-                              </div>
-                              <div class="wj-listbox">
-                                <div class="inputChk">
-                                    <input
-                                        type="checkbox"
-                                        name="Thursday"
-                                        [value]=""
-                                        (change)="update($event,'Thursday')"
-                                        style="margin-left: 4px"
-                                        matCheckbox
-                                    />&nbsp;
-                                    <label>Thursday</label>
-                                </div>
-                              </div>
-                              <div class="wj-listbox">
-                                <div class="inputChk">
-                                    <input
-                                        type="checkbox"
-                                        name="Friday"
-                                        [value]=""
-                                        (change)="update($event,'Friday')"
-                                        style="margin-left: 4px"
-                                        matCheckbox
-                                    />&nbsp;
-                                    <label>Friday</label>
-                                </div>
-                              </div>
-                              <div class="wj-listbox">
-                                <div class="inputChk">
-                                    <input
-                                        type="checkbox"
-                                        name="Saturday"
-                                        [value]=""
-                                        (change)="update($event,'Saturday')"
-                                        style="margin-left: 4px"
-                                        matCheckbox
-                                    />&nbsp;
-                                    <label>Saturday</label>
-                                </div>
-                              </div>
-                              <div class="wj-listbox">
-                                <div class="inputChk">
-                                    <input
-                                        type="checkbox"
-                                        name="Sunday"
-                                        [value]=""
-                                        (change)="update($event,'Sunday')"
-                                        style="margin-left: 4px"
-                                        matCheckbox
-                                    />&nbsp;
-                                    <label>Sunday</label>
-                                </div>
-                              </div> -->
+</li> -->
+<li *ngFor="let n of names">
+    <table>
+        <td style="width: 40%;">
+<input type="checkbox" [(ngModel)]="n.selected" (change)="update($event,n.name)">
+{{n.name}}
+</td>
+<td style="width: 30%;">
+    <b>From: </b>
+<input
+    
+    
+formControlName="str_msg"
+name="str_msg"
+type="time"
+(change)="updatetime($event,n.name,'from')"
+id="str_msg"
+/>
+</td>
+<td style="width: 30%;">
+    <b>To </b>
+    <input
+    formControlName="str_msg"
+    name="str_msg"
+    type="time"
+    (change)="updatetime($event,n.name,'to')"
+    id="str_msg"
+    />
+</td>
+</table>
+    
+</li>
+</ul>
+                 
                               <br />
 
                              
@@ -248,9 +165,11 @@
                  
 
                                 </mat-horizontal-stepper>
+                                
           </div>
       </div>
   </div>
+  
 </div>
 
 <!-- <ul>

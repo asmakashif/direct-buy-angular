@@ -23,4 +23,16 @@ export class HomeDeliverySettingService {
            {params:params1}
         );
     }
+    saveWorkingTime(time:any): Observable<ApiResponse> {
+        return this.http.post<ApiResponse>(
+            'api/customers/saveWorkingTime.php',
+            time
+        );
+    }
+    uncheckWorkingDays(days:any): Observable<ApiResponse> {
+        return this.http.post<ApiResponse>(
+            'api/customers/uncheckWorkingDays.php',
+            days
+        );
+    }
 }
