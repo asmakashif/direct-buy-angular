@@ -39,7 +39,7 @@ export class HomeDeliverySettingComponent implements OnInit {
         day: day,
         shop_id:this.shop_id
       }
-     
+     alert('hi');
       this.apiservice.saveWorkingDays(days).subscribe((data)=>
       {
         
