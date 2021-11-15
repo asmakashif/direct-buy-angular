@@ -189,6 +189,13 @@ export const appRoutes: Route[] = [
                     ).then((m) => m.ProductInfoModule),
             },
             {
+                path: 'ecommerce',
+                loadChildren: () =>
+                    import('app/modules/admin/ecommerce/ecommerce.module').then(
+                        (m) => m.ECommerceModule
+                    ),
+            },
+            {
                 path: 'store/store-summary/:shopId',
                 loadChildren: () =>
                     import(
