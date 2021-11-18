@@ -42,7 +42,7 @@ export class DashboardComponent {
     customerCount: [];
     payment: [];
     messageForm: any;
-
+    shop_id:any;
     message: [];
     profileData: any;
     changeDetectRef: [];
@@ -68,7 +68,7 @@ export class DashboardComponent {
         const user_id = localStorage.getItem('user_id');
         console.log(user_id);
         const routeParams = this.routes.snapshot.params;
-
+        this.shop_id=routeParams.shopId;
         if (!this.accessToken) {
             if (this.validateSignIn == '0') {
                 this._router.navigate(['sign-in']);
@@ -204,12 +204,14 @@ export class DashboardComponent {
             this._router.navigate(['/store/shop-details/' + data.shopId]);
         }
     }
-    minimum_order(stores): void {
+    minimum_order(): void {
+        const routeParams = this.routes.snapshot.params;
+        console.log(routeParams.shopId);
         if (!this.isMobile()) {
            
-            this._router.navigate(['/minOrderValue/' + stores.shopId]);
+            this._router.navigate(['/minOrderValue/' + routeParams.shopId]);
         } else {
-            this._router.navigate(['/minOrderValue/' + stores .shopId]);
+            this._router.navigate(['/minOrderValue/' + routeParams.shopId]);
         }
     }
     home_delivery(stores): void {

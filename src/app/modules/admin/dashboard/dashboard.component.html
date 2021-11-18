@@ -1456,20 +1456,8 @@
                 </mat-tab>
 
                 <!-- Configuration -->
+               
                 <mat-tab label="Configuration">
-                    <ng-template matTabContent>
-                        <div
-                            class="
-                                grid grid-cols-1
-                                sm:grid-cols-6
-                                gap-6
-                                w-full
-                                min-w-0
-                            "
-                        ></div>
-                    </ng-template>
-                </mat-tab>
-                <mat-tab label="General Settings">
                     <ng-template matTabContent>
                         <div
                             class="
@@ -1502,7 +1490,7 @@
                                             truncate
                                         "
                                     >
-                                        Manage minimum order value
+                                         Minimum order value
                                     </div>
                                     <div class="ml-2 -mt-2 -mr-3">
                                         <button
@@ -1518,11 +1506,10 @@
                                         </button>
                                         <mat-menu #summaryMenu="matMenu">
                                             <button
-                                                [routerLink]="[
-                                                    '/minOrderValue/i3s6wp'
-                                                ]"
+                                                routerLink="/minOrderConfig/{{shop_id}}"
                                                 mat-menu-item
                                             >
+                                            
                                                 Manage
                                             </button>
                                         </mat-menu>
@@ -1539,29 +1526,11 @@
                                             text-blue-500
                                         "
                                     >
-                                        1
+                                      
                                     </div>
-                                    <a
-                                        href="javascript:void(0);"
-                                        (click)="completedOrders(data)"
-                                        style="text-decoration: none"
-                                    >
-                                        <div
-                                            class="
-                                                text-lg
-                                                font-medium
-                                                text-blue-600
-                                                dark:text-blue-500
-                                            "
-                                        >
-                                            Minimum Order Value
-                                        </div>
-                                    </a>
-                                    <a
-                                        href="javascript:void(0);"
-                                        (click)="pendingOrders(data)"
-                                        style="text-decoration: none"
-                                    >
+                                   
+                                       
+                                    
                                         <div
                                             class="
                                                 flex
@@ -1587,7 +1556,7 @@
                                                 "
                                             ></div>
                                         </div>
-                                    </a>
+                                   
                                 </div>
                             </div>
 
@@ -1611,7 +1580,7 @@
                                             truncate
                                         "
                                     >
-                                        Manage Home Delivery
+                                         Home Delivery
                                     </div>
                                     <div class="ml-2 -mt-2 -mr-3">
                                         <button
@@ -1627,9 +1596,8 @@
                                         </button>
                                         <mat-menu #homeMenu="matMenu"  >
                                             <button  
-                                            [routerLink]="[
-                                                    '/HomeDeliverySetting/i3s6wp'
-                                                ]" 
+                                            routerLink='/homeDelConfig/{{this.shop_id}}'
+                                                 
                                                 mat-menu-item
                                             >
                                                 Manage
@@ -1648,29 +1616,12 @@
                                             text-blue-500
                                         "
                                     >
-                                        1
+                                        
                                     </div>
-                                    <a
-                                        href="javascript:void(0);"
-                                        (click)="completedOrders(data)"
-                                        style="text-decoration: none"
-                                    >
-                                        <div
-                                            class="
-                                                text-lg
-                                                font-medium
-                                                text-blue-600
-                                                dark:text-blue-500
-                                            "
-                                        >
-                                            Minimum Order Value
-                                        </div>
-                                    </a>
-                                    <a
-                                        href="javascript:void(0);"
-                                        (click)="pendingOrders(data)"
-                                        style="text-decoration: none"
-                                    >
+                                    
+                                        
+                                    
+                                   
                                         <div
                                             class="
                                                 flex
@@ -1696,7 +1647,7 @@
                                                 "
                                             ></div>
                                         </div>
-                                    </a>
+                                   
                                 </div>
                             </div>
                         </div>

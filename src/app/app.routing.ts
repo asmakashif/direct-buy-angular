@@ -377,6 +377,20 @@ export const appRoutes: Route[] = [
                         'app/modules/admin/home-delivery-setting/home-delivery-setting.module'
                     ).then((m) => m.HomeDeliverySettingModule),
             },
+            {
+                path: 'minOrderConfig/:shop_id',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/min-order-config/min-order-config.module'
+                    ).then((m) => m.MinOrderConfigModule),
+            },
+            {
+                path: 'homeDelConfig/:shop_id',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/home-del-config/home-del-config.module'
+                    ).then((m) => m.HomeDelConfigModule),
+            },
         ],
     },
 
