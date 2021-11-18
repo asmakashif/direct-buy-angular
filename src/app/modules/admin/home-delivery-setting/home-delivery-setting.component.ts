@@ -25,21 +25,38 @@ export class HomeDeliverySettingComponent implements OnInit {
   value:any;
   selectedAll:any;
   shop_id:any;
+  days:any;
+  time:any;
+  savedtime:any;
+  user_id:any;
   ngOnInit(): void {
     this.route.paramMap.subscribe(
       params => {
         this.shop_id=params.get('shop_id');
           console.log(this.shop_id);
       });
+      const user_id = localStorage.getItem('user_id');
+      const day = localStorage.getItem('day');
+      
+      this.apiservice.getWorkingDays(user_id).subscribe((data)=>
+      {
+          this.days=data;
+         
+      }
+      )
+    
+    
+    
   }
   update(e:any,day:any)
   {
+    const user_id = localStorage.getItem('user_id');
     if(e.target.checked){
       const days={
         day: day,
-        shop_id:this.shop_id
+        userId:user_id
       }
-  
+      
       this.apiservice.saveWorkingDays(days).subscribe((data)=>
       {
         
@@ -51,7 +68,7 @@ export class HomeDeliverySettingComponent implements OnInit {
      // alert('bye'+day);
      const days={
       day: day,
-      shop_id:this.shop_id
+      userId:user_id
     }
      this.apiservice.uncheckWorkingDays(days).subscribe((data)=>
      {
@@ -82,4 +99,58 @@ export class HomeDeliverySettingComponent implements OnInit {
 
      })
   }
+  daySelected(e:any)
+  {
+    const day=localStorage.setItem('day',e);
+    const days=localStorage.getItem('day');
+    const user_id = localStorage.getItem('user_id');
+    this.apiservice.getTimeSlots().subscribe((data)=>
+    {
+            this.time=data;
+           
+    })
+    const timing={
+      day:days,
+      userId:user_id
+    }
+      this.apiservice.getWorkingTime(timing).subscribe((data)=>
+      {
+       this.savedtime=data;
+          console.log(data);
+      }) 
+    
+  }
+  updateslot(e:any,from:any,to:any,id:any)
+  {
+    const user_id = localStorage.getItem('user_id');
+    const days=localStorage.getItem('day');
+    if(e.target.checked){
+     
+    const slots={
+      from:from,
+      to:to,
+      userId:user_id,
+      id:id,
+      day:days
+
+    }
+  
+    this.apiservice.saveTimeSlots(slots).subscribe((data)=>
+    {
+      const timing={
+        day:days,
+        userId:user_id
+      }
+        this.apiservice.getWorkingTime(timing).subscribe((data)=>
+        {
+         this.savedtime=data;
+            
+        })    
+    })    
+  }
+    else{
+
+    }
+  }
+  
 }

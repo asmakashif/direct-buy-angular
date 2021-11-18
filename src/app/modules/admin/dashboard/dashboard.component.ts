@@ -204,7 +204,22 @@ export class DashboardComponent {
             this._router.navigate(['/store/shop-details/' + data.shopId]);
         }
     }
-
+    minimum_order(stores): void {
+        if (!this.isMobile()) {
+           
+            this._router.navigate(['/minOrderValue/' + stores.shopId]);
+        } else {
+            this._router.navigate(['/minOrderValue/' + stores .shopId]);
+        }
+    }
+    home_delivery(stores): void {
+        if (!this.isMobile()) {
+           
+            this._router.navigate(['/HomeDeliverySetting/' + stores.shopId]);
+        } else {
+            this._router.navigate(['//HomeDeliverySetting/' + stores .shopId]);
+        }
+    }
     steps(data: Data): void {
         if (!this.isMobile()) {
             this._router.navigate(['/steps/' + data.shopId]);

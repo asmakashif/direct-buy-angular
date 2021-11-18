@@ -43,8 +43,14 @@ constructor(private router: Router, private route : ActivatedRoute,private fb: F
       }
       this.apiservice.saveMinimumOrderValue(data).subscribe((data) => {
        
+        alert("Successfully Updated")
+        this.apiservice.getMinimumOrderValue(this.shop_id).subscribe((data) => {
+       
+          this.min_order = data;
+          
+        });
      
       });
-      console.log(data);
+     
   }
 }

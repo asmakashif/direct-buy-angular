@@ -1,3 +1,4 @@
+
 <div class="flex flex-col flex-auto min-w-0">
     <!-- Header -->
     <div class="bg-card">
@@ -78,62 +79,111 @@
             </div>
         </div>
     </div>
-
+  
     <!-- Main -->
-    <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
-        <div class="w-full max-w-screen-xl mx-auto">
-            <form
-                class="
-                    flex flex-col
-                    m-8
-                    p-8
-                    bg-card
-                    rounded-2xl
-                    shadow
-                    overflow-hidden
-                "
-               [formGroup]="signinForm"
-               (ngSubmit)="onSubmit()"
-               autocomplete="on"
-            >
-                
-               
-                <div class="row" *ngFor="let dt of min_order">
-                    <div class="col-md-4">
-                        <div class="form-group"  >
-                            <label for="payment_option"
-                                ><b>Update Minimum Order Value</b></label
-                            >
-                            &nbsp;
-                            
-                            <input
-                                type="text"
-                                formControlName="minOrder"
-                                placeholder="{{dt.min_order_val}}"
-                                name="Minimum_Order"
-                                id="Minimum_Order"
-                                class="form-control"
-                               value="{{dt.min_order_val}}"
-                            />
+    <div class="flex flex-col flex-auto min-w-0">
+        <div class="flex-auto p-6 sm:p-10">
+            <div class="border-2 border-white-300 rounded-2xl">
+                <mat-horizontal-stepper
+                    [linear]=""
+                    #stepper
+                    labelPosition="bottom"
+                >
+                    
+                    <mat-step [stepControl]="" label="">
+                        <div style="padding-top: 3%">
+                            <form>
+                            <br />
+          <br />
+   
+      
+          <div *ngFor=" let dt of days ">
+             
+              <div *ngIf="dt.Monday==0">
+  <input type="checkbox"  (change)="update($event,'Monday')">
+  Monday
+  </div>
+  <div *ngIf="dt.Monday==1">
+      <input type="checkbox"  (change)="update($event,'Monday')" checked="true">
+      Monday
+      </div>
+  
+  
+  
+             
+              <div *ngIf="dt.Tuesday==0">
+  <input type="checkbox"  (change)="update($event,'Tuesday')">
+  Tuesday
+  </div>
+  <div *ngIf="dt.Tuesday==1">
+      <input type="checkbox"  (change)="update($event,'Tuesday')" checked="true">
+      Tuesday
+      </div>
+  
+             
+              <div *ngIf="dt.Wednesday==0">
+  <input type="checkbox"  (change)="update($event,'Wednesday')">
+  Wednesday
+  </div>
+  <div *ngIf="dt.Monday==1">
+      <input type="checkbox"  (change)="update($event,'Wednesday')" checked="true">
+      Wednesday
+      </div>
+  
+             
+              <div *ngIf="dt.Thursday==0">
+  <input type="checkbox"  (change)="update($event,'Thursday')">
+  Thursday
+  </div>
+  <div *ngIf="dt.Thursday==1">
+      <input type="checkbox"  (change)="update($event,'Thursday')" checked="true">
+      Thursday
+      </div>
+  
+             
+              <div *ngIf="dt.Friday==0">
+  <input type="checkbox"  (change)="update($event,'Friday')">
+  Friday
+  </div>
+  <div *ngIf="dt.Friday==1">
+      <input type="checkbox"  (change)="update($event,'Friday')" checked="true">
+      Friday
+      </div>
+  
+             
+              <div *ngIf="dt.Saturday==0">
+  <input type="checkbox"  (change)="update($event,'Saturday')">
+  Saturday
+  </div>
+  <div *ngIf="dt.Saturday==1">
+      <input type="checkbox"  (change)="update($event,'Saturday')" checked="true">
+      Saturday    </div>
+  
+              <div *ngIf="dt.Sunday==0">
+  <input type="checkbox"  (change)="update($event,'Sunday')">
+  Sunday
+  </div>
+  <div *ngIf="dt.Sunday==1">
+      <input type="checkbox"  (change)="update($event,'Sunday')" checked="true">
+      Sunday
+      </div>
+  </div>
+                   
+                                <br />
+  
+                               
+                            </form>
                         </div>
-                    </div>
-                    <div class="col-md-8" style="margin-top: 35px">
-                        <i class="bi bi-question-circle-fill"></i>&nbsp;
-                        <span><b>Minimum Order Value for Home Delivery  </b></span>
-                    </div>
-                </div>
-                
-               
-                <br />
-                <input
-                    type="submit"
-                    class="btn btn-success"
-                    value="Submit"
-                    id="checkBtn"
-                    name="submit"
-                    style="width: 100px"
-                />
-            </form>
+                        
+                    </mat-step>
+  
+                    >
+                   </mat-horizontal-stepper>
+                                  
+            </div>
         </div>
     </div>
-</div>
+    
+  </div>
+  
+  

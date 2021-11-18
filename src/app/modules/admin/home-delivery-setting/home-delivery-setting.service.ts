@@ -35,4 +35,40 @@ export class HomeDeliverySettingService {
             days
         );
     }
+    getWorkingDays(userId:any){
+        let params1 = new HttpParams().set('userId',userId);
+        return this.http.get<ApiResponse>(
+            'api/customers/getWorkingDays.php', {params:params1}
+           
+        );
+    }
+    getTimeSlots(){
+        
+        return this.http.get<ApiResponse>(
+            'api/customers/getTimeSlots.php'
+           
+        );
+    }
+    getWorkingTime(data:any): Observable<ApiResponse>{
+        // let params1 = new HttpParams().set('userId',userId);
+        // let params2 = new HttpParams().set('day',day);
+        return this.http.post<ApiResponse>(
+            'api/customers/getWorkingTime.php',data
+           
+        );
+    }
+    getTimeSlotsByUser(userId:any)
+    {
+        let params1 = new HttpParams().set('userId',userId);
+        return this.http.get<ApiResponse>(
+            'api/customers/getTimeSlotsByUser.php', {params:params1}
+           
+        );
+    }
+    saveTimeSlots(slots:any): Observable<ApiResponse> {
+        return this.http.post<ApiResponse>(
+            'api/customers/saveTimeSlots.php',
+            slots
+        );
+    }
 }
