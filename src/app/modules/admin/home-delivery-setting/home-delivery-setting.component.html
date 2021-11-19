@@ -193,10 +193,21 @@ required=""
 <br/>
 
 <p *ngIf="savedtime">Selected Slots</p>
-<div *ngFor="let dt of savedtime">
-<label>{{dt.from_time}} - {{dt.to_time}}</label>
+<div >
+<label></label>
 </div>
+<table class="table" *ngIf="savedtime">
+    <thead class="thead-dark">
+  
+    <th >Slot</th>
+    <th>Action</th>
+</thead>
+<tr *ngFor="let dt of savedtime">
+    <td>{{dt.from_time}} - {{dt.to_time}}</td>
+    <td><button (click)="delete(dt.id)">Delete</button></td>
+</tr>
 
+</table>
 
 </mat-step>
 

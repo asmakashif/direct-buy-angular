@@ -12,7 +12,7 @@ export class MinOrderValService {
 
     saveMinimumOrderValue(data:any): Observable<ApiResponse> {
         return this.http.post<ApiResponse>(
-            'api/customers/saveMinimumOrderValue.php',
+            'api/customers/saveMinimumOrderValueForUser.php',
             data
         );
     }

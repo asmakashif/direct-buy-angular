@@ -152,5 +152,22 @@ export class HomeDeliverySettingComponent implements OnInit {
 
     }
   }
-  
+  delete(id:any)
+  {
+    const user_id = localStorage.getItem('user_id');
+    const days=localStorage.getItem('day');
+    this.apiservice.deleteTimeSlots(id).subscribe((data)=>
+    {
+
+   const timing={
+      day:days,
+      userId:user_id
+    }
+      this.apiservice.getWorkingTime(timing).subscribe((data)=>
+      {
+       this.savedtime=data;
+          
+      }) 
+    })
+  }
 }

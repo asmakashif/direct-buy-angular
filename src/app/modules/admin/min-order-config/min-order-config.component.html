@@ -92,7 +92,8 @@
                     shadow
                     overflow-hidden
                 "
-               
+                [formGroup]="signinForm"
+               (ngSubmit)="onSubmit()"
                autocomplete="on"
             >
                 
@@ -109,8 +110,10 @@
                             type="text"
                               class="form-control"
                               required=""
+                              formControlName="minOrder"
                              >
-                             <option></option>
+                             <option>Select</option>
+                             <option *ngFor="let dt of days">{{dt.value}}</option>
                              </select>
                         
                         </div>
@@ -131,7 +134,10 @@
                     name="submit"
                     style="width: 100px"
                 />
+                <br/>
+                <p *ngFor="let dt of values">You have set minimum order value as <b>{{dt.min_order_val}}</b></p>
             </form>
+           
         </div>
     </div>
 </div>

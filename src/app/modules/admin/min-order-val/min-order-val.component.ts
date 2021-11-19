@@ -14,7 +14,8 @@ constructor(private router: Router, private route : ActivatedRoute,private fb: F
   signinForm: FormGroup;
   shop_id:any;
   params:any;
-  min_order:any
+  min_order:any;
+  user_id:any;
   ngOnInit(): void {
     this.signinForm = this.fb.group({
       minOrder: ['', Validators.required]
@@ -36,10 +37,11 @@ constructor(private router: Router, private route : ActivatedRoute,private fb: F
     if (this.signinForm.invalid) {
       return;
     }
- 
+  const userId=localStorage.getItem('user_id');
     const data={
       minOrder:this.signinForm.controls.minOrder.value,
-      id:this.shop_id
+      id:this.shop_id,
+      userId : userId
       }
       this.apiservice.saveMinimumOrderValue(data).subscribe((data) => {
        

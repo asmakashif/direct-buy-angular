@@ -50,8 +50,7 @@ export class HomeDeliverySettingService {
         );
     }
     getWorkingTime(data:any): Observable<ApiResponse>{
-        // let params1 = new HttpParams().set('userId',userId);
-        // let params2 = new HttpParams().set('day',day);
+      
         return this.http.post<ApiResponse>(
             'api/customers/getWorkingTime.php',data
            
@@ -69,6 +68,13 @@ export class HomeDeliverySettingService {
         return this.http.post<ApiResponse>(
             'api/customers/saveTimeSlots.php',
             slots
+        );
+    }
+    deleteTimeSlots(id:any){
+        let params1 = new HttpParams().set('id',id);
+        return this.http.get<ApiResponse>(
+            'api/customers/deleteTimeForUser.php',
+           {params:params1}
         );
     }
 }
