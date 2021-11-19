@@ -27,7 +27,12 @@ export class PaymentGatewayComponent implements OnInit {
         private _router: Router,
         private routes: ActivatedRoute
     ) {}
-    providerType = [{ provider_name: 'Razorpay' }, { provider_name: 'Paytm' }];
+    providerType = [
+        // { provider_name: 'Razorpay' },
+        { provider_name: 'GooglePay' },
+        { provider_name: 'Phonepe' },
+        { provider_name: 'Paytm' },
+    ];
 
     ngOnInit(): void {
         const user_id = localStorage.getItem('user_id');
@@ -37,6 +42,9 @@ export class PaymentGatewayComponent implements OnInit {
             payment_name: ['', Validators.required],
             payment_api_key: ['', Validators.required],
             payment_secret_key: ['', Validators.required],
+            transaction_note: [''],
+            merchant_code: [''],
+            salt_index: [''],
         });
     }
 
@@ -63,12 +71,20 @@ export class PaymentGatewayComponent implements OnInit {
 
     onChange(val) {
         console.log(val);
-        var razorelement = document.getElementById('razorpay');
-        if (val == 'Razorpay') razorelement.style.display = 'block';
-        else razorelement.style.display = 'none';
+        var googlepayelement = document.getElementById('googlepay');
+        if (val == 'GooglePay') googlepayelement.style.display = 'block';
+        else googlepayelement.style.display = 'none';
+
+        // var googlepayelement = document.getElementById('googlepay');
+        // if (val == 'Googlepay') googlepayelement.style.display = 'block';
+        // else googlepayelement.style.display = 'none';
 
         var paytmelement = document.getElementById('paytm');
         if (val == 'Paytm') paytmelement.style.display = 'block';
         else paytmelement.style.display = 'none';
+
+        var phonepeelement = document.getElementById('phonepe');
+        if (val == 'Phonepe') phonepeelement.style.display = 'block';
+        else phonepeelement.style.display = 'none';
     }
 }

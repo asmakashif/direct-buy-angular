@@ -48,6 +48,10 @@ export class AuthService {
         localStorage.setItem('validateSignIn', validateSignIn);
     }
 
+    set otpVerify(otpVerify: string) {
+        localStorage.setItem('otpVerify', otpVerify);
+    }
+
     get accessToken(): string {
         return localStorage.getItem('accessToken') ?? '';
     }
@@ -94,6 +98,7 @@ export class AuthService {
                 this.email = response.email;
                 this.domainname = response.domainname;
                 this.validateSignIn = response.validateSignIn;
+                this.otpVerify = response.otpVerify;
 
                 // Set the authenticated flag to true
                 this._authenticated = true;

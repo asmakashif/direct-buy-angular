@@ -12,13 +12,59 @@ import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DashboardService } from 'app/modules/admin/dashboard/dashboard.service';
 import { Data } from '../../../Model/data';
+import { InventoryProduct } from '../../../Model/inventory.types';
 import { FormBuilder, Validators } from '@angular/forms';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { InventoryService } from '../ecommerce/inventory/inventory.service';
 
 declare var $: any;
 
 @Component({
     selector: 'dashboard',
     templateUrl: './dashboard.component.html',
+    styles: [
+        /* language=SCSS */
+        `
+            .inventory-grid {
+                grid-template-columns: 48px auto 40px;
+
+                @screen sm {
+                    grid-template-columns: 48px auto 112px 72px;
+                }
+
+                @screen md {
+                    grid-template-columns: 48px 112px auto 112px 72px;
+                }
+
+                @screen lg {
+                    grid-template-columns: 48px 112px auto 112px 96px 96px 72px;
+                }
+            }
+        `,
+        `
+            .fixedheader {
+                overflow-y: auto;
+                height: 510px;
+            }
+        `,
+        `
+            .search-hero {
+                max-width: 500px;
+                padding-bottom: 50px;
+                margin: auto;
+            }
+        `,
+        `
+            .form-control {
+                box-shadow: 0 10px 40px 0 #b0c1d9;
+            }
+        `,
+        `
+            .form-control::placeholder {
+                font-family: FontAwesome;
+            }
+        `,
+    ],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -42,22 +88,43 @@ export class DashboardComponent {
     customerCount: [];
     payment: [];
     messageForm: any;
-    shop_id:any;
+    shop_id: any;
     message: [];
     profileData: any;
     changeDetectRef: [];
     paymentCount: [];
     domain: string;
     validateSignIn: string;
-    totalMinOrder:any;
-    totalHomeDelOrder:any;
-    usertotalHomeDel:any;
+    totalMinOrder: any;
+    totalHomeDelOrder: any;
+    usertotalHomeDel: any;
+    products: any;
+    selectedProduct: InventoryProduct;
+    selectedProductForm: any;
+    editCache: any;
+    flashMessage: string;
+    allOrderCount: any;
+
+    addProductForm: any;
+
+    isLoading: boolean = false;
+
+    addCache: any;
+    searchText;
+
+    startEdit(temp_str_config_id: string): void {
+        alert(temp_str_config_id);
+        this.editCache[temp_str_config_id].edit = true;
+    }
+
     constructor(
         @Inject(DOCUMENT)
         private _document: Document,
+        private _fuseConfirmationService: FuseConfirmationService,
         private flashMessagesService: FlashMessagesService,
         private formBuilder: FormBuilder,
         private _dashboardService: DashboardService,
+        private _inventoryService: InventoryService,
         private _router: Router,
         private routes: ActivatedRoute,
         private cd: ChangeDetectorRef,
@@ -70,12 +137,29 @@ export class DashboardComponent {
         const user_id = localStorage.getItem('user_id');
         console.log(user_id);
         const routeParams = this.routes.snapshot.params;
-        this.shop_id=routeParams.shopId;
+        this.shop_id = routeParams.shopId;
         if (!this.accessToken) {
             if (this.validateSignIn == '0') {
                 this._router.navigate(['sign-in']);
             }
         }
+
+        // Create the selected product form
+        this.selectedProductForm = this.formBuilder.group({
+            temp_str_config_id: [''],
+            category: [''],
+            sub_category: [''],
+            brand: [''],
+            product_name: [''],
+            product_type: [''],
+            product_sub_type: [''],
+            product_weight: [''],
+            product_weight_type: [''],
+            product_qty: [''],
+            product_price: [''],
+            offer_price: [''],
+            product_status: [''],
+        });
 
         this.messageForm = this.formBuilder.group({
             id: [user_id],
@@ -147,6 +231,14 @@ export class DashboardComponent {
             });
 
         this._dashboardService
+            .getAllOrderCount(routeParams.shopId)
+            .subscribe((allOrderCount) => {
+                this.allOrderCount = allOrderCount;
+                this.cd.detectChanges();
+                console.log(this.allOrderCount);
+            });
+
+        this._dashboardService
             .getNewRegisteredCustomers(routeParams.shopId)
             .subscribe((newCustomerCount) => {
                 this.newCustomerCount = newCustomerCount;
@@ -179,18 +271,27 @@ export class DashboardComponent {
                 this.cd.detectChanges();
                 //console.log(this.profileData);
             });
-        this._dashboardService.getTotalMinOrderVal(user_id).subscribe((data)=>
-        {
-            this.totalMinOrder=data
-        })
-        this._dashboardService.getTotalHomeDel(this.shop_id).subscribe((data)=>
-        {
-            this.totalHomeDelOrder=data;
-        })
-        this._dashboardService.getTotalHomeDelByUser(user_id).subscribe((data)=>
-        {
-            this.usertotalHomeDel=data
-        })
+        this._dashboardService
+            .getTotalMinOrderVal(user_id)
+            .subscribe((data) => {
+                this.totalMinOrder = data;
+            });
+        this._dashboardService
+            .getTotalHomeDel(this.shop_id)
+            .subscribe((data) => {
+                this.totalHomeDelOrder = data;
+            });
+        this._dashboardService
+            .getTotalHomeDelByUser(user_id)
+            .subscribe((data) => {
+                this.usertotalHomeDel = data;
+            });
+        //this.editMessage();
+
+        this._dashboardService.getProductsByStr().subscribe((products) => {
+            this.products = products;
+            console.log(this.products);
+        });
     }
 
     changeStore(stores): void {
@@ -221,7 +322,6 @@ export class DashboardComponent {
         const routeParams = this.routes.snapshot.params;
         console.log(routeParams.shopId);
         if (!this.isMobile()) {
-           
             this._router.navigate(['/minOrderValue/' + routeParams.shopId]);
         } else {
             this._router.navigate(['/minOrderValue/' + routeParams.shopId]);
@@ -229,10 +329,9 @@ export class DashboardComponent {
     }
     home_delivery(stores): void {
         if (!this.isMobile()) {
-           
             this._router.navigate(['/HomeDeliverySetting/' + stores.shopId]);
         } else {
-            this._router.navigate(['//HomeDeliverySetting/' + stores .shopId]);
+            this._router.navigate(['//HomeDeliverySetting/' + stores.shopId]);
         }
     }
     steps(data: Data): void {
@@ -326,5 +425,158 @@ export class DashboardComponent {
                 check = true;
         })(navigator.userAgent || navigator.vendor || (<any>window).opera);
         return check;
+    }
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Public methods
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Toggle product details
+     *
+     * @param productId
+     */
+    editDetails(productId: string): void {
+        // If the product is already selected...
+        // if ((this.editCache[productId] = true)) {
+
+        //     this.closeDetails();
+        //     return;
+        // }
+        this.editCache[productId] = true;
+
+        // Get the product by id
+        this._dashboardService
+            .getProductById(productId)
+            .subscribe((product) => {
+                // Set the selected product
+                this.selectedProduct = product;
+                // Fill the form
+                this.selectedProductForm.patchValue(product);
+
+                // Mark for check
+                this.cd.markForCheck();
+            });
+    }
+
+    cancelDetails(productId: string): void {
+        // If the product is already selected...
+        this.editCache[productId] = false;
+    }
+
+    /**
+     * Show flash message
+     */
+    showFlashMessage(type: 'success' | 'error'): void {
+        // Show the message
+        this.flashMessage = type;
+
+        // Mark for check
+        this.cd.markForCheck();
+
+        // Hide it after 3 seconds
+        setTimeout(() => {
+            this.flashMessage = null;
+
+            // Mark for check
+            this.cd.markForCheck();
+        }, 3000);
+    }
+
+    /**
+     * Create product
+     */
+    createProduct(): void {
+        // Create the product
+        const routeParams = this.routes.snapshot.params;
+        const user_id = localStorage.getItem('user_id');
+        // this.addCache = true;
+        this._dashboardService
+            .createProduct(routeParams.shopId, user_id)
+            .subscribe((product) => {
+                //this.addCache = true;
+                //this.editDetails[product.temp_str_config_id] = true;
+                this.ngOnInit();
+                // Set the selected product
+                this.selectedProduct = product;
+                // Fill the form
+                this.selectedProductForm.patchValue(product);
+
+                // Mark for check
+                this.cd.markForCheck();
+            });
+    }
+
+    // addDetails(): void {
+    //     // If the product is already selected...
+    //     this.addCache = true;
+    //     // Detect changes
+    //     this.ngOnInit();
+    //     this.cd.detectChanges();
+    // }
+
+    /**
+     * Update the selected product using the form data
+     */
+    updateSelectedProduct(): void {
+        // Get the product object
+        const product = this.selectedProductForm.getRawValue();
+
+        // Remove the currentImageIndex field
+        //delete product.currentImageIndex;
+
+        // Update the product on the server
+        this._dashboardService.updateProduct(product).subscribe(() => {
+            // Show a success message
+            this.showFlashMessage('success');
+        });
+    }
+
+    /**
+     * Delete the selected product using the form data
+     */
+    deleteSelectedProduct(): void {
+        // Open the confirmation dialog
+        // const data = this.selectedProductForm.value;
+        // alert(data.temp_str_config_id);
+        const confirmation = this._fuseConfirmationService.open({
+            title: 'Delete product',
+            message:
+                'Are you sure you want to remove this product? This action cannot be undone!',
+            actions: {
+                confirm: {
+                    label: 'Delete',
+                },
+            },
+        });
+
+        // Subscribe to the confirmation dialog closed action
+        confirmation.afterClosed().subscribe((result) => {
+            // If the confirm button pressed...
+            if (result === 'confirmed') {
+                // Get the product object
+                const product = this.selectedProductForm.getRawValue();
+
+                //alert(product.temp_str_config_id);
+                // Delete the product on the server
+                this._dashboardService
+                    .deleteProduct(product.temp_str_config_id)
+                    .subscribe(() => {
+                        // Close the details
+                        this.closeDetails(product.temp_str_config_id);
+                    });
+            }
+        });
+    }
+
+    /**
+     * Close the details
+     */
+    closeDetails(productId: string): void {
+        // If the product is already selected...
+        this.editCache[productId] = false;
+        // Detect changes
+        this.ngOnInit();
+        this.cd.detectChanges();
     }
 }

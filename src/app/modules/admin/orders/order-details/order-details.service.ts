@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable({
     providedIn: 'root',
 })
-export class PendingOrderDetailsService {
+export class OrderDetailsService {
     constructor(private _http: HttpClient) {}
 
     getPendingOrderById(order_code: string): Observable<ApiResponse> {

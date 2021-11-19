@@ -30,7 +30,7 @@
         <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
             <!-- Logo -->
             <div class="w-12">
-                <img src="assets/images/logo/logo.svg" />
+                <img src="assets/images/logo/logo_new.png" />
             </div>
 
             <!-- Title -->
@@ -130,6 +130,18 @@
                     <mat-error> Password is required </mat-error>
                 </mat-form-field>
 
+                <!-- OTP field -->
+                <mat-form-field class="w-full">
+                    <mat-label>OTP</mat-label>
+                    <input
+                        id="otp"
+                        matInput
+                        [formControlName]="'otp'"
+                        #otpField
+                    />
+                    <mat-error> OTP is required </mat-error>
+                </mat-form-field>
+
                 <!-- Actions -->
                 <div
                     class="inline-flex items-end justify-between w-full mt-1.5"
@@ -169,14 +181,18 @@
                 </button>
 
                 <!-- Separator -->
-                <div class="flex items-center mt-8">
+                <!-- <div class="flex items-center mt-8">
                     <div class="flex-auto mt-px border-t"></div>
                     <div class="mx-2 text-secondary">Or continue with</div>
                     <div class="flex-auto mt-px border-t"></div>
-                </div>
-
+                </div> -->
+                <!-- <h3>User Agent Details</h3>
+                <pre>{{ userAgentDetails }}</pre>
+                <hr />
+                <h3>Browser Details</h3>
+                <pre>{{ browserDetails }}</pre> -->
                 <!-- Single sign-on buttons -->
-                <div class="flex items-center mt-8 space-x-4">
+                <!-- <div class="flex items-center mt-8 space-x-4">
                     <button class="flex-auto" type="button" mat-stroked-button>
                         <mat-icon
                             class="icon-size-5"
@@ -195,7 +211,7 @@
                             [svgIcon]="'feather:github'"
                         ></mat-icon>
                     </button>
-                </div>
+                </div> -->
             </form>
         </div>
     </div>

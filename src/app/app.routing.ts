@@ -7,7 +7,7 @@ import { InitialDataResolver } from 'app/app.resolvers';
 // @formatter:off
 // tslint:disable:max-line-length
 export const appRoutes: Route[] = [
-    { path: '', pathMatch: 'full', redirectTo: 'home' },
+    { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
 
     {
         path: 'signed-in-redirect',
@@ -168,6 +168,13 @@ export const appRoutes: Route[] = [
                     ).then((m) => m.CreateModule),
             },
             {
+                path: 'testing/table-edit/:shopId',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/testing/table-edit/table-edit.module'
+                    ).then((m) => m.TableEditModule),
+            },
+            {
                 path: 'store/create-shop',
                 loadChildren: () =>
                     import(
@@ -194,6 +201,13 @@ export const appRoutes: Route[] = [
                     import('app/modules/admin/ecommerce/ecommerce.module').then(
                         (m) => m.ECommerceModule
                     ),
+            },
+            {
+                path: 'product/inventory',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/product/inventory/inventory.module'
+                    ).then((m) => m.InventoryModule),
             },
             {
                 path: 'store/store-summary/:shopId',
@@ -238,11 +252,11 @@ export const appRoutes: Route[] = [
                     ).then((m) => m.PendingOrdersModule),
             },
             {
-                path: 'orders/pending-order-details/:order_code/:shopId',
+                path: 'orders/order-details/:order_code/:shopId',
                 loadChildren: () =>
                     import(
-                        'app/modules/admin/orders/pending-order-details/pending-order-details.module'
-                    ).then((m) => m.PendingOrderDetailsModule),
+                        'app/modules/admin/orders/order-details/order-details.module'
+                    ).then((m) => m.OrderDetailsModule),
             },
             {
                 path: 'orders/new-registration/:shopId',
@@ -363,19 +377,20 @@ export const appRoutes: Route[] = [
                         'app/modules/admin/testing/table-edit/table-edit.module'
                     ).then((m) => m.TableEditModule),
             },
-            {
-                path: 'minOrderValue',
-                loadChildren: () =>
-                    import(
-                        'app/modules/admin/min-order-val/min-order-val.module'
-                    ).then((m) => m.MinOrderValModule),
-            },
+
             {
                 path: 'HomeDeliverySetting',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/home-delivery-setting/home-delivery-setting.module'
                     ).then((m) => m.HomeDeliverySettingModule),
+            },
+            {
+                path: 'minOrderValue',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/min-order-val/min-order-val.module'
+                    ).then((m) => m.MinOrderValModule),
             },
             {
                 path: 'minOrderConfig/:shop_id',
