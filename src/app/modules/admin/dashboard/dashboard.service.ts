@@ -85,4 +85,19 @@ export class DashboardService {
             user
         );
     }
+    getTotalMinOrderVal(user_id): Observable<any> {
+        return this._httpClient.get(
+            '/api/customers/getTotalMinOrderVal.php?userId=' + user_id
+        );
+    }
+    getTotalHomeDel(shop_id): Observable<any> {
+        return this._httpClient.get(
+            '/api/customers/getTotalHomeDel.php?shop_id=' + shop_id
+        );
+    }
+    getTotalHomeDelByUser(user_id): Observable<any> {
+        return this._httpClient.get(
+            '/api/customers/getTotalHomeDelByUser.php?user_id=' + user_id
+        );
+    }
 }

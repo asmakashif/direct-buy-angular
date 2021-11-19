@@ -364,14 +364,14 @@ export const appRoutes: Route[] = [
                     ).then((m) => m.TableEditModule),
             },
             {
-                path: 'minOrderValue/:shop_id',
+                path: 'minOrderValue',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/min-order-val/min-order-val.module'
                     ).then((m) => m.MinOrderValModule),
             },
             {
-                path: 'HomeDeliverySetting/:shop_id',
+                path: 'HomeDeliverySetting',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/home-delivery-setting/home-delivery-setting.module'

@@ -16,10 +16,17 @@ export class MinOrderValService {
             data
         );
     }
-    getMinimumOrderValue(shop_id:any){
-        let params1 = new HttpParams().set('shop_id',shop_id);
+    getMinimumOrderValue(user_id:any){
+        let params1 = new HttpParams().set('user_id',user_id);
         return this.http.get<ApiResponse>(
-            'api/customers/getMinimumOrderValue.php',
+            'api/customers/getMinimumOrderValueForUser.php',
+           {params:params1}
+        );
+    }
+    deleteMinimumOrderValue(id:any){
+        let params1 = new HttpParams().set('id',id);
+        return this.http.get<ApiResponse>(
+            'api/customers/deleteMinimumOrderValue.php',
            {params:params1}
         );
     }

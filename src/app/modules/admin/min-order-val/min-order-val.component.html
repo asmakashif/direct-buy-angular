@@ -98,22 +98,22 @@
             >
                 
                
-                <div class="row" *ngFor="let dt of min_order">
+                <div class="row" >
                     <div class="col-md-4">
                         <div class="form-group"  >
                             <label for="payment_option"
                                 ><b>Update Minimum Order Value</b></label
                             >
                             &nbsp;
-                            
+                            <br />
                             <input
                                 type="text"
                                 formControlName="minOrder"
-                                placeholder="{{dt.min_order_val}}"
+                                placeholder=""
                                 name="Minimum_Order"
                                 id="Minimum_Order"
                                 class="form-control"
-                               value="{{dt.min_order_val}}"
+                               value=""
                             />
                         </div>
                     </div>
@@ -133,6 +133,20 @@
                     name="submit"
                     style="width: 100px"
                 />
+                <br />
+                
+               
+               <table class="table" *ngIf="min_order">
+                <thead class="thead-dark">
+                
+                <th >Value</th>
+                <th>Action</th>
+            </thead>
+            <tr *ngFor="let dt of min_order">
+               <td>{{dt.value}}</td> 
+               <td><a class="btn btn-warning" type="button" (click)="delete(dt.m_id)">Delete</a></td>
+            </tr>
+            </table>
             </form>
         </div>
     </div>

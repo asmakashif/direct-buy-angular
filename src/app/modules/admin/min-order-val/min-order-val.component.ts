@@ -21,15 +21,12 @@ constructor(private router: Router, private route : ActivatedRoute,private fb: F
       minOrder: ['', Validators.required]
      
     });
-    this.route.paramMap.subscribe(
-      params => {
-        this.shop_id=params.get('shop_id');
-          console.log(this.shop_id);
-      });
-      this.apiservice.getMinimumOrderValue(this.shop_id).subscribe((data) => {
+    
+      const user_id=localStorage.getItem('user_id');
+      this.apiservice.getMinimumOrderValue(user_id).subscribe((data) => {
        
         this.min_order = data;
-        console.log(data);
+       
       });
   }
   onSubmit()
@@ -40,19 +37,31 @@ constructor(private router: Router, private route : ActivatedRoute,private fb: F
   const userId=localStorage.getItem('user_id');
     const data={
       minOrder:this.signinForm.controls.minOrder.value,
-      id:this.shop_id,
+     
       userId : userId
       }
       this.apiservice.saveMinimumOrderValue(data).subscribe((data) => {
        
         alert("Successfully Updated")
-        this.apiservice.getMinimumOrderValue(this.shop_id).subscribe((data) => {
+        this.apiservice.getMinimumOrderValue(userId).subscribe((data) => {
        
           this.min_order = data;
-          
+         
         });
      
       });
      
+  }
+  delete(id:any)
+  {
+    const userId=localStorage.getItem('user_id');
+    this.apiservice.deleteMinimumOrderValue(id).subscribe((data)=>
+    {
+      this.apiservice.getMinimumOrderValue(userId).subscribe((data) => {
+       
+        this.min_order = data;
+       
+      });
+    })
   }
 }

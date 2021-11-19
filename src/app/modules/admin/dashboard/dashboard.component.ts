@@ -49,7 +49,9 @@ export class DashboardComponent {
     paymentCount: [];
     domain: string;
     validateSignIn: string;
-
+    totalMinOrder:any;
+    totalHomeDelOrder:any;
+    usertotalHomeDel:any;
     constructor(
         @Inject(DOCUMENT)
         private _document: Document,
@@ -177,7 +179,18 @@ export class DashboardComponent {
                 this.cd.detectChanges();
                 //console.log(this.profileData);
             });
-        //this.editMessage();
+        this._dashboardService.getTotalMinOrderVal(user_id).subscribe((data)=>
+        {
+            this.totalMinOrder=data
+        })
+        this._dashboardService.getTotalHomeDel(this.shop_id).subscribe((data)=>
+        {
+            this.totalHomeDelOrder=data;
+        })
+        this._dashboardService.getTotalHomeDelByUser(user_id).subscribe((data)=>
+        {
+            this.usertotalHomeDel=data
+        })
     }
 
     changeStore(stores): void {
