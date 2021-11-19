@@ -12,21 +12,21 @@ export class MinOrderValService {
 
     saveMinimumOrderValue(data:any): Observable<ApiResponse> {
         return this.http.post<ApiResponse>(
-            'api/customers/saveMinimumOrderValueForUser.php',
+            'api/store_setting/saveMinimumOrderValueForUser.php',
             data
         );
     }
     getMinimumOrderValue(user_id:any){
         let params1 = new HttpParams().set('user_id',user_id);
         return this.http.get<ApiResponse>(
-            'api/customers/getMinimumOrderValueForUser.php',
+            'api/store_setting/getMinimumOrderValueForUser.php',
            {params:params1}
         );
     }
     deleteMinimumOrderValue(id:any){
         let params1 = new HttpParams().set('id',id);
         return this.http.get<ApiResponse>(
-            'api/customers/deleteMinimumOrderValue.php',
+            'api/store_setting/deleteMinimumOrderValue.php',
            {params:params1}
         );
     }

@@ -63,13 +63,13 @@ export class DashboardService {
 
     getNewRegisteredCustomers(shopId: string): Observable<any> {
         return this._httpClient.get(
-            '/api/customers/getNewRegisteredCustomers.php?shopId=' + shopId
+            '/api/store_setting/getNewRegisteredCustomers.php?shopId=' + shopId
         );
     }
 
     getRegisteredCustomers(shopId: string): Observable<any> {
         return this._httpClient.get(
-            '/api/customers/getRegisteredCustomers.php?shopId=' + shopId
+            '/api/store_setting/getRegisteredCustomers.php?shopId=' + shopId
         );
     }
 
@@ -87,17 +87,17 @@ export class DashboardService {
     }
     getTotalMinOrderVal(user_id): Observable<any> {
         return this._httpClient.get(
-            '/api/customers/getTotalMinOrderVal.php?userId=' + user_id
+            '/api/store_setting/getTotalMinOrderVal.php?userId=' + user_id
         );
     }
     getTotalHomeDel(shop_id): Observable<any> {
         return this._httpClient.get(
-            '/api/customers/getTotalHomeDel.php?shop_id=' + shop_id
+            '/api/store_setting/getTotalHomeDel.php?shop_id=' + shop_id
         );
     }
     getTotalHomeDelByUser(user_id): Observable<any> {
         return this._httpClient.get(
-            '/api/customers/getTotalHomeDelByUser.php?user_id=' + user_id
+            '/api/store_setting/getTotalHomeDelByUser.php?user_id=' + user_id
         );
     }
 }

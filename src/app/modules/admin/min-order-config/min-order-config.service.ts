@@ -13,32 +13,32 @@ export class MinOrderConfigService {
     getMinimumOrderValue(shop_id:any){
         let params1 = new HttpParams().set('shop_id',shop_id);
         return this.http.get<ApiResponse>(
-            'api/customers/getMinimumOrderValue.php',
+            'api/store_setting/getMinimumOrderValue.php',
            {params:params1}
         );
     }
     getMinimumOrderValueForUser(user_id:any){
         let params1 = new HttpParams().set('user_id',user_id);
         return this.http.get<ApiResponse>(
-            'api/customers/getMinimumOrderValueForUser.php',
+            'api/store_setting/getMinimumOrderValueForUser.php',
            {params:params1}
         );
     }
     saveMinimumOrderValue(data:any): Observable<ApiResponse> {
         return this.http.post<ApiResponse>(
-            'api/customers/saveMinimumOrderValue.php',
+            'api/store_setting/saveMinimumOrderValue.php',
             data
         );
     }
     saveWorkingTime(time:any): Observable<ApiResponse> {
         return this.http.post<ApiResponse>(
-            'api/customers/saveWorkingTime.php',
+            'api/store_setting/saveWorkingTime.php',
             time
         );
     }
     uncheckWorkingDays(days:any): Observable<ApiResponse> {
         return this.http.post<ApiResponse>(
-            'api/customers/uncheckWorkingDays.php',
+            'api/store_setting/uncheckWorkingDays.php',
             days
         );
     }
