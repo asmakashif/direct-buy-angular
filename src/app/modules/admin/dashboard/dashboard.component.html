@@ -720,7 +720,7 @@
                                             truncate
                                         "
                                     >
-                                         Minimum order value
+                                        Minimum order value
                                     </div>
                                     <div class="ml-2 -mt-2 -mr-3">
                                         <button
@@ -757,7 +757,7 @@
                                             text-blue-500
                                         "
                                     >
-                                    {{totalMinOrder}}
+                                        {{ totalMinOrder }}
                                     </div>
                                     <a
                                         href="javascript:void(0);"
@@ -829,7 +829,7 @@
                                             truncate
                                         "
                                     >
-                                         Home Delivery
+                                        Home Delivery
                                     </div>
                                     <div class="ml-2 -mt-2 -mr-3">
                                         <button
@@ -843,11 +843,11 @@
                                                 "
                                             ></mat-icon>
                                         </button>
-                                        <mat-menu #homeMenu="matMenu"  >
-                                            <button  
-                                            [routerLink]="[
+                                        <mat-menu #homeMenu="matMenu">
+                                            <button
+                                                [routerLink]="[
                                                     '/HomeDeliverySetting/i3s6wp'
-                                                ]" 
+                                                ]"
                                                 mat-menu-item
                                             >
                                                 Manage
@@ -866,8 +866,7 @@
                                             text-blue-500
                                         "
                                     >
-          
-                                           {{usertotalHomeDel}}
+                                        {{ usertotalHomeDel }}
                                     </div>
                                     <a
                                         href="javascript:void(0);"
@@ -921,7 +920,6 @@
                         </div>
                     </ng-template>
                 </mat-tab>
-
             </mat-tab-group>
         </div>
     </div>
@@ -1442,6 +1440,7 @@
                 </mat-tab>
 
                 <!-- Product -->
+
                 <mat-tab label="Product">
                     <ng-template matTabContent>
                         <!-- Actions -->
@@ -1540,8 +1539,6 @@
                                     </div>
                                     <div class="hidden sm:block">Details</div>
                                 </div>
-                                <!-- Rows -->
-
                                 <ng-container
                                     *ngFor="
                                         let product of products
@@ -1800,24 +1797,6 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <!-- <div class="grid">
-                                        <ng-container
-                                            *ngIf="
-                                                selectedProduct?.temp_str_config_id ===
-                                                product.temp_str_config_id
-                                            "
-                                        >
-                                            <ng-container
-                                                *ngTemplateOutlet="
-                                                    rowDetailsTemplate;
-                                                    context: {
-                                                        $implicit: product
-                                                    }
-                                                "
-                                            ></ng-container>
-                                        </ng-container>
-                                    </div> -->
-
                                     <div class="grid">
                                         <!-- <ng-container
                                             *ngIf="addCache[product.temp_str_config_id] == true"
@@ -1857,23 +1836,8 @@
                                             <ng-container></ng-container>
                                         </ng-container>
                                     </div>
-                                    <!-- <ng-container *ngIf="!editCache[data.id].edit; else ageInputTpl">
-                                        {{ data.age }}
-                                      </ng-container>
-                                      <ng-template #ageInputTpl>
-                                        <input
-                                            type="text"
-                                            nz-input
-                                            [(ngModel)]="
-                                                editCache[
-                                                    product.temp_str_config_id
-                                                ].product.category
-                                            "
-                                        />
-                                    </ng-template> -->
                                 </ng-container>
                             </div>
-
                             <ng-template #rowDetailsTemplate let-product>
                                 <div class="shadow-lg overflow-hidden">
                                     <div class="flex border-b">
@@ -2404,7 +2368,7 @@
                 </mat-tab>
 
                 <!-- Configuration -->
-               
+
                 <mat-tab label="Configuration">
                     <ng-template matTabContent>
                         <div
@@ -2419,14 +2383,14 @@
                             "
                         >
                             <div
-                            class="
-                                flex flex-col flex-auto
-                                p-6
-                                bg-card
-                                shadow
-                                rounded-2xl
-                                overflow-hidden
-                            "
+                                class="
+                                    flex flex-col flex-auto
+                                    p-6
+                                    bg-card
+                                    shadow
+                                    rounded-2xl
+                                    overflow-hidden
+                                "
                             >
                                 <div class="flex items-start justify-between">
                                     <div
@@ -2438,7 +2402,7 @@
                                             truncate
                                         "
                                     >
-                                    Minimum Order Value
+                                        Minimum Order Value
                                     </div>
                                     <div class="ml-2 -mt-2 -mr-3">
                                         <button
@@ -2453,8 +2417,12 @@
                                             ></mat-icon>
                                         </button>
                                         <mat-menu #uniqueMenu="matMenu">
-                                        
-                                            <button mat-menu-item routerLink="/minOrderConfig/{{shop_id}}">
+                                            <button
+                                                mat-menu-item
+                                                routerLink="/minOrderConfig/{{
+                                                    shop_id
+                                                }}"
+                                            >
                                                 Manage
                                             </button>
                                         </mat-menu>
@@ -2471,7 +2439,7 @@
                                             text-red-500
                                         "
                                     >
-                                    1
+                                        1
                                     </div>
                                     <a
                                         href="javascript:void(0);"
@@ -2485,9 +2453,7 @@
                                                 text-red-600
                                                 dark:text-red-500
                                             "
-                                        >
-                                            
-                                        </div>
+                                        ></div>
                                     </a>
                                     <div
                                         class="
@@ -2501,9 +2467,7 @@
                                     >
                                         <div
                                             class="text-md font-medium truncate"
-                                        >
-                                            
-                                        </div>
+                                        ></div>
                                         <div
                                             class="ml-1.5 text-lg font-semibold"
                                         >
@@ -2532,7 +2496,7 @@
                                             truncate
                                         "
                                     >
-                                    Home Delivery
+                                        Home Delivery
                                     </div>
                                     <div class="ml-2 -mt-2 -mr-3">
                                         <button
@@ -2547,8 +2511,12 @@
                                             ></mat-icon>
                                         </button>
                                         <mat-menu #homeDelMenu="matMenu">
-                                        
-                                            <button mat-menu-item routerLink="/homeDelConfig/{{shop_id}}">
+                                            <button
+                                                mat-menu-item
+                                                routerLink="/homeDelConfig/{{
+                                                    shop_id
+                                                }}"
+                                            >
                                                 Manage
                                             </button>
                                         </mat-menu>
@@ -2565,7 +2533,7 @@
                                             text-red-500
                                         "
                                     >
-                                        {{totalHomeDelOrder}}
+                                        {{ totalHomeDelOrder }}
                                     </div>
                                     <a
                                         href="javascript:void(0);"
@@ -2579,9 +2547,7 @@
                                                 text-red-600
                                                 dark:text-red-500
                                             "
-                                        >
-                                            
-                                        </div>
+                                        ></div>
                                     </a>
                                     <div
                                         class="
@@ -2595,9 +2561,7 @@
                                     >
                                         <div
                                             class="text-md font-medium truncate"
-                                        >
-                                            
-                                        </div>
+                                        ></div>
                                         <div
                                             class="ml-1.5 text-lg font-semibold"
                                         >

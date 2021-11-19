@@ -101,7 +101,7 @@ export class DashboardComponent {
     products: any;
     selectedProduct: InventoryProduct;
     selectedProductForm: any;
-    editCache: any;
+    editCache: { [key: string]: any } = {};
     flashMessage: string;
     allOrderCount: any;
 
@@ -111,11 +111,6 @@ export class DashboardComponent {
 
     addCache: any;
     searchText;
-
-    startEdit(temp_str_config_id: string): void {
-        alert(temp_str_config_id);
-        this.editCache[temp_str_config_id].edit = true;
-    }
 
     constructor(
         @Inject(DOCUMENT)
@@ -436,6 +431,11 @@ export class DashboardComponent {
      *
      * @param productId
      */
+
+    // startEdit(temp_str_config_id: string): void {
+    //     alert(temp_str_config_id);
+    //     this.editCache[temp_str_config_id].edit = true;
+    // }
     editDetails(productId: string): void {
         // If the product is already selected...
         // if ((this.editCache[productId] = true)) {
@@ -578,5 +578,10 @@ export class DashboardComponent {
         // Detect changes
         this.ngOnInit();
         this.cd.detectChanges();
+    }
+
+    inventory() {
+        const routeParams = this.routes.snapshot.params;
+        this._router.navigate(['product/inventory/' + routeParams.shopId]);
     }
 }

@@ -203,7 +203,7 @@ export const appRoutes: Route[] = [
                     ),
             },
             {
-                path: 'product/inventory',
+                path: 'product/inventory/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/product/inventory/inventory.module'
