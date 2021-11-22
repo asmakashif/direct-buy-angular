@@ -113,6 +113,7 @@ export class DashboardComponent {
     addCache: { [key: string]: any } = {};
     searchText;
     thumbnail: any;
+    strPaymentCount: any;
 
     constructor(
         @Inject(DOCUMENT)
@@ -269,6 +270,12 @@ export class DashboardComponent {
                 this.cd.detectChanges();
                 //console.log(this.profileData);
             });
+
+        this._dashboardService
+            .getStrPaymentCount(routeParams.shopId)
+            .subscribe((strPaymentCount) => {
+                this.strPaymentCount = strPaymentCount;
+            });
         this._dashboardService
             .getTotalMinOrderVal(user_id)
             .subscribe((data) => {
@@ -313,6 +320,13 @@ export class DashboardComponent {
     //     this._document.defaultView.location.reload();
     // }
 
+    storePayment(): void {
+        const routeParams = this.routes.snapshot.params;
+        const configurations = 'configurations';
+        localStorage.setItem('redirect', configurations);
+        this._router.navigate(['/store/store-payment/' + routeParams.shopId]);
+    }
+
     shopDetails(data: Data): void {
         if (!this.isMobile()) {
             this._router.navigate(['/store/shop-details/' + data.shopId]);
@@ -320,6 +334,26 @@ export class DashboardComponent {
             this._router.navigate(['/store/shop-details/' + data.shopId]);
         }
     }
+    configurations(data: Data): void {
+        if (!this.isMobile()) {
+            this._router.navigate([
+                '/dashboard/' +
+                    data.shopId +
+                    '/' +
+                    data.shop_name +
+                    '/configurations/',
+            ]);
+        } else {
+            this._router.navigate([
+                '/dashboard/' +
+                    data.shopId +
+                    '/' +
+                    data.shop_name +
+                    '/configurations/',
+            ]);
+        }
+    }
+
     minimum_order(): void {
         const routeParams = this.routes.snapshot.params;
         console.log(routeParams.shopId);

@@ -47,30 +47,6 @@
                             >
                                 You have 2 new messages and 15 new tasks
                             </div>
-                            <br />
-                            <div
-                                class="flex items-center mr-4"
-                                *ngIf="flashMessage"
-                            >
-                                <ng-container
-                                    *ngIf="flashMessage === 'success'"
-                                >
-                                    <mat-icon
-                                        class="text-green-500"
-                                        [svgIcon]="'heroicons_outline:check'"
-                                    ></mat-icon>
-                                    <span class="ml-2">Submitted</span>
-                                </ng-container>
-                                <ng-container *ngIf="flashMessage === 'error'">
-                                    <mat-icon
-                                        class="text-red-500"
-                                        [svgIcon]="'heroicons_outline:x'"
-                                    ></mat-icon>
-                                    <span class="ml-2"
-                                        >An error occurred, try again!</span
-                                    >
-                                </ng-container>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -106,75 +82,59 @@
     <!-- Main -->
     <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
         <div class="w-full max-w-screen-xl mx-auto">
-            <div class="flex flex-col m-8 p-8 bg-card rounded-2xl">
+            <form
+                class="flex flex-col m-8 p-8 bg-card rounded-2xl"
+                [formGroup]="paymentForm"
+                (ngSubmit)="onSubmit()"
+                autocomplete="off"
+            >
                 <span><b>Store Payment Details</b></span>
                 <br />
                 <ul>
                     <div class="row">
                         <div class="col-md-4" *ngFor="let payment of payment">
-                            <li class="list-group-item mt-4">
-                                <div class="media-body">
-                                    {{ payment.payment_name }}
-                                    &nbsp;
-                                    <input
-                                        class="form-check-input"
-                                        type="checkbox"
-                                        *ngIf="
-                                            payment.payment_name ==
-                                            payment.pInfo_payment_name
-                                        "
-                                        [value]="payment.payment_name"
-                                        (change)="strPayment($event)"
-                                        checked="true"
-                                    />
-                                    <input
-                                        class="form-check-input"
-                                        type="checkbox"
-                                        *ngIf="
-                                            payment.payment_name !=
-                                            payment.pInfo_payment_name
-                                        "
-                                        [value]="payment.payment_name"
-                                        (change)="strPayment($event)"
-                                    />
-                                </div>
-                                <p
+                            <li class="list-group-item">
+                                <div
+                                    class="media-body"
                                     *ngIf="
                                         payment.payment_name ==
                                         payment.pInfo_payment_name
                                     "
                                 >
-                                    <span
-                                        style="font-size: 12px"
-                                        *ngIf="payment.default_payment == 0"
-                                        >Make Default
-                                        <input
-                                            type="checkbox"
-                                            [value]="payment.shop_pInfo_id"
-                                            name="shop_pInfo_id[]"
-                                            (change)="onDefaultSelect($event)"
-                                            matCheckbox
-                                        />
-                                    </span>
-                                    <span
-                                        style="font-size: 12px"
-                                        *ngIf="payment.default_payment == 1"
-                                        >Default Payment
-                                    </span>
-                                </p>
+                                    {{ payment.payment_name }} &nbsp;
+                                    <input
+                                        type="checkbox"
+                                        [value]="payment.payment_name"
+                                        name="payment_name[]"
+                                        (change)="onPaymentSelect($event)"
+                                        matCheckbox
+                                        [checked]="payment.payment_name"
+                                    />
+                                </div>
+                                <div
+                                    class="media-body"
+                                    *ngIf="
+                                        payment.payment_name !=
+                                        payment.pInfo_payment_name
+                                    "
+                                >
+                                    {{ payment.payment_name }} &nbsp;
+                                    <input
+                                        type="checkbox"
+                                        [value]="payment.payment_name"
+                                        name="payment_name[]"
+                                        (change)="onPaymentSelect($event)"
+                                        matCheckbox
+                                    />
+                                </div>
                             </li>
                         </div>
                     </div>
                 </ul>
-                <div class="flex items-center">
-                    <button (click)="done()" class="btn btn-info">
-                        Submit
-                    </button>
-                    <!-- <button class="btn btn-success" style="width: 100px">
+                <button class="btn btn-success" style="width: 100px">
                     Save
-                </button> -->
-                </div>
-            </div>
+                </button>
+            </form>
         </div>
     </div>
 </div>

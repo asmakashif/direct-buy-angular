@@ -231,6 +231,13 @@ export const appRoutes: Route[] = [
                     ).then((m) => m.ShopConfigurationModule),
             },
             {
+                path: 'dashboard/:shopId/:shop_name/configurations',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/dashboard/configurations/configurations.module'
+                    ).then((m) => m.ConfigurationsModule),
+            },
+            {
                 path: 'orders/completed-orders/:shopId',
                 loadChildren: () =>
                     import(

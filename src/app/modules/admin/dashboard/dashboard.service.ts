@@ -183,6 +183,13 @@ export class DashboardService {
             user
         );
     }
+
+    getStrPaymentCount(shopId: string): Observable<any> {
+        return this._httpClient.get(
+            '/api/store_setting/getStrPaymentCount.php?shopId=' + shopId
+        );
+    }
+
     getTotalMinOrderVal(user_id): Observable<any> {
         return this._httpClient.get(
             '/api/store_setting/getTotalMinOrderVal.php?user_id=' + user_id
