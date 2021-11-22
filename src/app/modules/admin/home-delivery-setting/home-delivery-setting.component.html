@@ -98,7 +98,7 @@ labelPosition="bottom"
 
 
 <div *ngFor=" let dt of days ">
-    <div class="form-check form-check-inline">
+<div class="form-check form-check-inline">
 <label class="form-check-label">
 <input class="form-check-input" type="checkbox" *ngIf="dt.Monday==0" (change)="update($event,'Monday')">
 <input class="form-check-input" type="checkbox"   *ngIf="dt.Monday==1" (change)="update($event,'Monday')" checked="true">
