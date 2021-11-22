@@ -1,3 +1,4 @@
+
 <div class="flex flex-col flex-auto min-w-0">
     <!-- Header -->
     <div class="bg-card">
@@ -18,7 +19,7 @@
                     <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
                         <img
                             class="w-full h-full object-cover"
-                            src="assets/images/avatars/avatar.png"
+                            src="assets/images/avatars/brian-hughes.jpg"
                         />
                     </div>
                     <div class="flex flex-col min-w-0 ml-4">
@@ -78,264 +79,111 @@
             </div>
         </div>
     </div>
-
+  
     <!-- Main -->
     <div class="flex flex-col flex-auto min-w-0">
         <div class="flex-auto p-6 sm:p-10">
-            <div
-                class="
-                    flex flex-col
-                    m-8
-                    p-8
-                    pb-4
-                    bg-card
-                    rounded-2xl
-                    shadow
-                    overflow-hidden
-                "
-            >
-                <label> Select Days</label>
-                <div style="padding-top: 3%">
-                    <form>
-                        <input
-                            class="form-check-input"
-                            (change)="update($event, 'Monday')"
-                            type="checkbox"
-                        />
-                        Monday
-                        <div *ngFor="let dt of days">
-                            <div class="form-check form-check-inline">
-                                <label class="form-check-label">
-                                    <input
-                                        class="form-check-input"
-                                        type="checkbox"
-                                        *ngIf="dt.Monday == 0"
-                                    />
-                                    <input
-                                        class="form-check-input"
-                                        type="checkbox"
-                                        *ngIf="dt.Monday == 1"
-                                        (change)="update($event, 'Monday')"
-                                        checked="true"
-                                    />
-                                    Monday
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <label class="form-check-label">
-                                    <input
-                                        class="form-check-input"
-                                        type="checkbox"
-                                        *ngIf="dt.Tuesday == 0"
-                                        (change)="update($event, 'Tuesday')"
-                                    />
-                                    <input
-                                        class="form-check-input"
-                                        type="checkbox"
-                                        *ngIf="dt.Tuesday == 1"
-                                        (change)="update($event, 'Tuesday')"
-                                        checked="true"
-                                    />
-                                    Tuesday
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <label class="form-check-label">
-                                    <input
-                                        type="checkbox"
-                                        class="form-check-input"
-                                        *ngIf="dt.Wednesday == 0"
-                                        (change)="update($event, 'Wednesday')"
-                                    />
-                                    <input
-                                        type="checkbox"
-                                        class="form-check-input"
-                                        *ngIf="dt.Monday == 1"
-                                        (change)="update($event, 'Wednesday')"
-                                        checked="true"
-                                    />
-                                    Wednesday
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <label class="form-check-label">
-                                    <input
-                                        type="checkbox"
-                                        class="form-check-input"
-                                        *ngIf="dt.Thursday == 0"
-                                        (change)="update($event, 'Thursday')"
-                                    />
-                                    <input
-                                        type="checkbox"
-                                        class="form-check-input"
-                                        *ngIf="dt.Thursday == 1"
-                                        (change)="update($event, 'Thursday')"
-                                        checked="true"
-                                    />
-                                    Thursday
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <label class="form-check-label">
-                                    <input
-                                        type="checkbox"
-                                        class="form-check-input"
-                                        *ngIf="dt.Friday == 0"
-                                        (change)="update($event, 'Friday')"
-                                    />
-                                    <input
-                                        type="checkbox"
-                                        class="form-check-input"
-                                        *ngIf="dt.Friday == 1"
-                                        (change)="update($event, 'Friday')"
-                                        checked="true"
-                                    />
-                                    Friday
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <label class="form-check-label">
-                                    <input
-                                        type="checkbox"
-                                        class="form-check-input"
-                                        *ngIf="dt.Saturday == 0"
-                                        (change)="update($event, 'Saturday')"
-                                    />
-                                    <input
-                                        type="checkbox"
-                                        class="form-check-input"
-                                        *ngIf="dt.Saturday == 1"
-                                        (change)="update($event, 'Saturday')"
-                                        checked="true"
-                                    />
-                                    Saturday
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <label class="form-check-label">
-                                    <input
-                                        type="checkbox"
-                                        class="form-check-input"
-                                        *ngIf="dt.Sunday == 0"
-                                        (change)="update($event, 'Sunday')"
-                                    />
-                                    <input
-                                        type="checkbox"
-                                        class="form-check-input"
-                                        *ngIf="dt.Sunday == 1"
-                                        (change)="update($event, 'Sunday')"
-                                        checked="true"
-                                    />
-                                    Sunday
-                                </label>
-                            </div>
+            <div class="border-2 border-white-300 rounded-2xl">
+                <mat-horizontal-stepper
+                    [linear]=""
+                    #stepper
+                    labelPosition="bottom"
+                >
+                    
+                    <mat-step [stepControl]="" label="">
+                        <div style="padding-top: 3%">
+                            <form>
+                            <br />
+          <br />
+   
+      
+          <div *ngFor=" let dt of days ">
+             
+              <div *ngIf="dt.Monday==0">
+  <input type="checkbox"  (change)="update($event,'Monday')">
+  Monday
+  </div>
+  <div *ngIf="dt.Monday==1">
+      <input type="checkbox"  (change)="update($event,'Monday')" checked="true">
+      Monday
+      </div>
+  
+  
+  
+             
+              <div *ngIf="dt.Tuesday==0">
+  <input type="checkbox"  (change)="update($event,'Tuesday')">
+  Tuesday
+  </div>
+  <div *ngIf="dt.Tuesday==1">
+      <input type="checkbox"  (change)="update($event,'Tuesday')" checked="true">
+      Tuesday
+      </div>
+  
+             
+              <div *ngIf="dt.Wednesday==0">
+  <input type="checkbox"  (change)="update($event,'Wednesday')">
+  Wednesday
+  </div>
+  <div *ngIf="dt.Monday==1">
+      <input type="checkbox"  (change)="update($event,'Wednesday')" checked="true">
+      Wednesday
+      </div>
+  
+             
+              <div *ngIf="dt.Thursday==0">
+  <input type="checkbox"  (change)="update($event,'Thursday')">
+  Thursday
+  </div>
+  <div *ngIf="dt.Thursday==1">
+      <input type="checkbox"  (change)="update($event,'Thursday')" checked="true">
+      Thursday
+      </div>
+  
+             
+              <div *ngIf="dt.Friday==0">
+  <input type="checkbox"  (change)="update($event,'Friday')">
+  Friday
+  </div>
+  <div *ngIf="dt.Friday==1">
+      <input type="checkbox"  (change)="update($event,'Friday')" checked="true">
+      Friday
+      </div>
+  
+             
+              <div *ngIf="dt.Saturday==0">
+  <input type="checkbox"  (change)="update($event,'Saturday')">
+  Saturday
+  </div>
+  <div *ngIf="dt.Saturday==1">
+      <input type="checkbox"  (change)="update($event,'Saturday')" checked="true">
+      Saturday    </div>
+  
+              <div *ngIf="dt.Sunday==0">
+  <input type="checkbox"  (change)="update($event,'Sunday')">
+  Sunday
+  </div>
+  <div *ngIf="dt.Sunday==1">
+      <input type="checkbox"  (change)="update($event,'Sunday')" checked="true">
+      Sunday
+      </div>
+  </div>
+                   
+                                <br />
+  
+                               
+                            </form>
                         </div>
-
-
-<mat-step [stepControl]="" label="">
-<label> Select Days</label>
-<div style="padding-top: 3%">
-<form>
-
-
-
-<div *ngFor=" let dt of days ">
-<div class="form-check form-check-inline">
-<label class="form-check-label">
-<input class="form-check-input" type="checkbox" *ngIf="dt.Monday==0" (change)="update($event,'Monday')">
-<input class="form-check-input" type="checkbox"   *ngIf="dt.Monday==1" (change)="update($event,'Monday')" checked="true">
-Monday
-</label>
-</div>
-<div class="form-check form-check-inline">
-<label class="form-check-label">
-<input class="form-check-input" type="checkbox" *ngIf="dt.Tuesday==0"  (change)="update($event,'Tuesday')">
-<input class="form-check-input" type="checkbox" *ngIf="dt.Tuesday==1"  (change)="update($event,'Tuesday')" checked="true">
-Tuesday
-</label>
-</div>
-<div class="form-check form-check-inline">
-<label class="form-check-label">
-<input type="checkbox" class="form-check-input"  *ngIf="dt.Wednesday==0" (change)="update($event,'Wednesday')">
-<input type="checkbox" class="form-check-input"  *ngIf="dt.Monday==1" (change)="update($event,'Wednesday')" checked="true">
-Wednesday
-</label>
-</div>
-<div class="form-check form-check-inline">
-<label class="form-check-label">
-<input type="checkbox" class="form-check-input" *ngIf="dt.Thursday==0" (change)="update($event,'Thursday')">
-<input type="checkbox" class="form-check-input" *ngIf="dt.Thursday==1"  (change)="update($event,'Thursday')" checked="true">
-Thursday
-</label>
-</div>
-<div class="form-check form-check-inline">
-<label class="form-check-label">
-<input type="checkbox" class="form-check-input" *ngIf="dt.Friday==0" (change)="update($event,'Friday')">
-<input type="checkbox" class="form-check-input" *ngIf="dt.Friday==1" (change)="update($event,'Friday')" checked="true">
-Friday
-</label>
-</div>
-<div class="form-check form-check-inline">
-<label class="form-check-label">
-<input type="checkbox" class="form-check-input"  *ngIf="dt.Saturday==0" (change)="update($event,'Saturday')">
-<input type="checkbox" class="form-check-input" *ngIf="dt.Saturday==1" (change)="update($event,'Saturday')" checked="true">
-Saturday
-</label>
-</div>
-<div class="form-check form-check-inline">
-<label class="form-check-label">
-<input type="checkbox" class="form-check-input" *ngIf="dt.Sunday==0" (change)="update($event,'Sunday')">
-<input type="checkbox" class="form-check-input" *ngIf="dt.Sunday==1" (change)="update($event,'Sunday')" checked="true">
-Sunday
-</label>
-</div>
-</div>
-
-                    <div class="col-md-6">
-                        <div>
-                            <div
-                                class="form-check form-check-inline"
-                                *ngFor="let dt of time"
-                            >
-                                <label class="form-check-label"
-                                    ><input
-                                        type="checkbox"
-                                        class="form-check-input"
-                                        (change)="
-                                            updateslot(
-                                                $event,
-                                                dt.from_time,
-                                                dt.to_time,
-                                                dt.id
-                                            )
-                                        "
-                                    />{{ dt.from_time }} -
-                                    {{ dt.to_time }}
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <br />
-
-                <p *ngIf="savedtime">Selected Slots</p>
-                <div>
-                    <label></label>
-                </div>
-                <table class="table" *ngIf="savedtime">
-                    <thead class="thead-dark">
-                        <th>Slot</th>
-                        <th>Action</th>
-                    </thead>
-                    <tr *ngFor="let dt of savedtime">
-                        <td>{{ dt.from_time }} - {{ dt.to_time }}</td>
-                        <td>
-                            <button (click)="delete(dt.id)">Delete</button>
-                        </td>
-                    </tr>
-                </table>
+                        
+                    </mat-step>
+  
+                    >
+                   </mat-horizontal-stepper>
+                                  
             </div>
         </div>
     </div>
-</div>
+    
+  </div>
+  
+  

@@ -185,7 +185,7 @@ export class DashboardService {
     }
     getTotalMinOrderVal(user_id): Observable<any> {
         return this._httpClient.get(
-            '/api/store_setting/getTotalMinOrderVal.php?userId=' + user_id
+            '/api/store_setting/getTotalMinOrderVal.php?user_id=' + user_id
         );
     }
     getTotalHomeDel(shop_id): Observable<any> {

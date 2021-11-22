@@ -273,6 +273,7 @@ export class DashboardComponent {
             .getTotalMinOrderVal(user_id)
             .subscribe((data) => {
                 this.totalMinOrder = data;
+                console.log('data');
             });
         this._dashboardService
             .getTotalHomeDel(this.shop_id)
