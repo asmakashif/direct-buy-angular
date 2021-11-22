@@ -99,38 +99,268 @@
 
                 <ul class="card-footer">
                     <div class="row">
-                        <div class="col-md-6">
-                            <li class="list-group-item">
-                                <div class="media align-items-center">
-                                    <div class="media-left">
-                                        <span class="btn btn-default btn-circle"
-                                            ><i class="material-icons"
-                                                >credit_card</i
-                                            ></span
-                                        >
-                                    </div>
+                        <ng-container *ngFor="let shops of this.shops">
+                            <div class="col-md-6">
+                                <li class="list-group-item">
+                                    <div class="media align-items-center">
+                                        <div class="row">
+                                            <div class="col-md-1">
+                                                <div class="media-left">
+                                                    <mat-icon
+                                                        class="icon-size-8"
+                                                        [svgIcon]="
+                                                            'heroicons_solid:credit-card'
+                                                        "
+                                                    ></mat-icon>
 
-                                    <div class="media-body">
-                                        <p class="mb-0">Shop Name</p>
-                                        <small>Activated on </small>
-                                        <br />
-                                        <small>Expired on </small>
-                                    </div>
-                                    <div class="media-right">
-                                        <a href="" class="btn btn-warning"
-                                            ><i
-                                                class="
-                                                    material-icons
-                                                    btn__icon--left
+                                                    <!-- <span
+                                                        class="
+                                                            btn
+                                                            btn-default
+                                                            btn-circle
+                                                        "
+                                                        ><i
+                                                            class="
+                                                                material-icons
+                                                            "
+                                                            >credit_card</i
+                                                        ></span
+                                                    > -->
+                                                </div>
+                                            </div>
+                                            <ng-container
+                                                *ngIf="
+                                                    shops.shop_payment_status ==
+                                                    1
                                                 "
-                                                >autorenew</i
                                             >
-                                            Renew
-                                        </a>
+                                                <ng-container
+                                                    *ngIf="
+                                                        (shops.shop_exp_date
+                                                            | date
+                                                                : 'yyyy-MM-dd') <
+                                                            (dateObj
+                                                                | date
+                                                                    : 'yyyy-MM-dd');
+                                                        else shopStatusChk
+                                                    "
+                                                >
+                                                    <div class="col-md-7">
+                                                        <div class="media-body">
+                                                            <p class="mb-0">
+                                                                {{
+                                                                    shops.shop_name
+                                                                }}
+                                                            </p>
+                                                            <small class="small"
+                                                                >Activated on
+                                                                {{
+                                                                    shops.shop_payment_date
+                                                                        | date
+                                                                            : "yyyy-MM-dd"
+                                                                }}
+                                                            </small>
+                                                            <br />
+                                                            <small class="small"
+                                                                >Expired on
+                                                                {{
+                                                                    shops.shop_exp_date
+                                                                        | date
+                                                                            : "yyyy-MM-dd"
+                                                                }}
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 mt-3">
+                                                        <div
+                                                            class="media-right"
+                                                        >
+                                                            <a
+                                                                href=""
+                                                                class="
+                                                                    btn
+                                                                    btn-warning
+                                                                "
+                                                                ><i
+                                                                    class="
+                                                                        material-icons
+                                                                        btn__icon--left
+                                                                    "
+                                                                    >autorenew</i
+                                                                >
+                                                                Renew
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+                                            </ng-container>
+                                            <ng-template #shopStatusChk>
+                                                <ng-container
+                                                    *ngIf="
+                                                        shops.shop_status == 2;
+                                                        else activateChk
+                                                    "
+                                                >
+                                                    <div class="col-md-7">
+                                                        <div class="media-body">
+                                                            <p class="mb-0">
+                                                                {{
+                                                                    shops.shop_name
+                                                                }}
+                                                            </p>
+                                                            <small class="small"
+                                                                >Activated on
+                                                                {{
+                                                                    shops.shop_payment_date
+                                                                        | date
+                                                                            : "yyyy-MM-dd"
+                                                                }}
+                                                            </small>
+                                                            <br />
+                                                            <small class="small"
+                                                                >Expires on
+                                                                {{
+                                                                    shops.shop_exp_date
+                                                                        | date
+                                                                            : "yyyy-MM-dd"
+                                                                }}
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 mt-3">
+                                                        <div
+                                                            class="media-right"
+                                                        >
+                                                            <a
+                                                                href=""
+                                                                class="
+                                                                    btn
+                                                                    btn-warning
+                                                                "
+                                                                ><i
+                                                                    class="
+                                                                        material-icons
+                                                                        btn__icon--left
+                                                                    "
+                                                                    >autorenew</i
+                                                                >
+                                                                Reactivate
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+                                            </ng-template>
+                                            <ng-template #activateChk>
+                                                <div class="col-md-7">
+                                                    <div class="media-body">
+                                                        <p class="mb-0">
+                                                            {{
+                                                                shops.shop_name
+                                                            }}
+                                                        </p>
+                                                        <small class="small"
+                                                            >Activated on
+                                                            {{
+                                                                shops.shop_payment_date
+                                                                    | date
+                                                                        : "yyyy-MM-dd"
+                                                            }}
+                                                        </small>
+                                                        <br />
+                                                        <small class="small"
+                                                            >Expires on
+                                                            {{
+                                                                shops.shop_exp_date
+                                                                    | date
+                                                                        : "yyyy-MM-dd"
+                                                            }}
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 mt-3">
+                                                    <div class="media-right">
+                                                        <button
+                                                            class="
+                                                                btn btn-success
+                                                            "
+                                                        >
+                                                            Activated
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                            <ng-container
+                                                *ngIf="
+                                                    shops.shop_payment_status ==
+                                                    0
+                                                "
+                                            >
+                                                <ng-container
+                                                    *ngIf="
+                                                        shops.trail_activate ==
+                                                            1;
+                                                        else trialChk
+                                                    "
+                                                >
+                                                    <div class="col-md-7">
+                                                        <div class="media-body">
+                                                            <p class="mb-0">
+                                                                {{
+                                                                    shops.shop_name
+                                                                }}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 mt-3">
+                                                        <div
+                                                            class="media-right"
+                                                        >
+                                                            <button
+                                                                class="
+                                                                    btn
+                                                                    btn-danger
+                                                                "
+                                                            >
+                                                                In-Active
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+                                                <ng-template #trialChk>
+                                                    <div class="col-md-7">
+                                                        <div class="media-body">
+                                                            <p class="mb-0">
+                                                                {{
+                                                                    shops.shop_name
+                                                                }}
+                                                            </p>
+                                                            <small class="small"
+                                                                >Activate Trial
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 mt-3">
+                                                        <div
+                                                            class="media-right"
+                                                        >
+                                                            <button
+                                                                class="
+                                                                    btn
+                                                                    btn-primary
+                                                                "
+                                                                onclick="return confirm('Are you sure to activate trail period of 3months?')?true:false;"
+                                                            >
+                                                                Activate Trial
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </ng-template>
+                                            </ng-container>
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                        </div>
+                                </li>
+                            </div>
+                        </ng-container>
                     </div>
                 </ul>
             </div>

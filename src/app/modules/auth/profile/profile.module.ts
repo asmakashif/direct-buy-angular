@@ -12,7 +12,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
-import { TranslocoModule } from '@ngneat/transloco';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { SharedModule } from 'app/shared/shared.module';
 import { ProfileComponent } from 'app/modules/auth/profile/profile.component';
 
@@ -39,8 +41,10 @@ const profileRoutes: Route[] = [
         MatSortModule,
         MatTableModule,
         MatTabsModule,
-        TranslocoModule,
+        MatCheckboxModule,
         SharedModule,
+        MatInputModule,
+        MatFormFieldModule,
     ],
 })
 export class ProfileModule {}

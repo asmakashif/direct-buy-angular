@@ -672,6 +672,55 @@
                                     />
                                 </div>
                                 <div class="col-md-3">
+                                    <div class="flex items-center">
+                                        <div
+                                            class="flex items-center mr-4"
+                                            *ngIf="flashMessage"
+                                        >
+                                            <ng-container
+                                                *ngIf="
+                                                    flashMessage === 'success'
+                                                "
+                                            >
+                                                <mat-icon
+                                                    class="text-green-500"
+                                                    [svgIcon]="
+                                                        'heroicons_outline:check'
+                                                    "
+                                                ></mat-icon>
+                                                <span class="ml-2"
+                                                    >Message Updated</span
+                                                >
+                                            </ng-container>
+                                            <ng-container
+                                                *ngIf="flashMessage === 'error'"
+                                            >
+                                                <mat-icon
+                                                    class="text-red-500"
+                                                    [svgIcon]="
+                                                        'heroicons_outline:x'
+                                                    "
+                                                ></mat-icon>
+                                                <span class="ml-2"
+                                                    >An error occurred, try
+                                                    again!</span
+                                                >
+                                            </ng-container>
+                                        </div>
+
+                                        <button
+                                            type=""
+                                            id="editMessage"
+                                            (click)="enableMessageField()"
+                                            disabled="true"
+                                            class="btn btn-info"
+                                            style="height: 40px"
+                                        >
+                                            Edit Message
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-md-3">
                                     <button
                                         type=""
                                         id="editMessage"
@@ -682,7 +731,7 @@
                                     >
                                         Edit Message
                                     </button>
-                                </div>
+                                </div> -->
                             </div>
                         </form>
                     </ng-template>
@@ -846,7 +895,7 @@
                                         <mat-menu #homeMenu="matMenu">
                                             <button
                                                 [routerLink]="[
-                                                    '/HomeDeliverySetting/i3s6wp'
+                                                    '/HomeDeliverySetting'
                                                 ]"
                                                 mat-menu-item
                                             >
@@ -1298,7 +1347,7 @@
                                             text-blue-500
                                         "
                                     >
-                                        {{ allOrderCount }}
+                                        <!-- {{ allOrderCount }} -->
                                         {{ this.prevMonthOrderCount }}
                                     </div>
                                     <a
@@ -1475,18 +1524,49 @@
                                 />
                             </mat-form-field>
                             <!-- Add product button -->
-                            <button
-                                class="ml-4"
-                                mat-flat-button
-                                [color]="'primary'"
-                                (click)="createProduct()"
-                            >
-                                <mat-icon
-                                    [svgIcon]="'heroicons_outline:plus'"
-                                ></mat-icon>
-                                <span class="ml-2 mr-1">Add</span>
-                            </button>
+
+                            <div class="flex items-center">
+                                <div
+                                    class="flex items-center mr-4"
+                                    *ngIf="flashMessage"
+                                >
+                                    <ng-container
+                                        *ngIf="flashMessage === 'success'"
+                                    >
+                                        <mat-icon
+                                            class="text-green-500"
+                                            [svgIcon]="
+                                                'heroicons_outline:check'
+                                            "
+                                        ></mat-icon>
+                                        <span class="ml-2">Product Added</span>
+                                    </ng-container>
+                                    <ng-container
+                                        *ngIf="flashMessage === 'error'"
+                                    >
+                                        <mat-icon
+                                            class="text-red-500"
+                                            [svgIcon]="'heroicons_outline:x'"
+                                        ></mat-icon>
+                                        <span class="ml-2"
+                                            >An error occurred, try again!</span
+                                        >
+                                    </ng-container>
+                                </div>
+                                <button
+                                    class="ml-4"
+                                    mat-flat-button
+                                    [color]="'primary'"
+                                    (click)="createProduct()"
+                                >
+                                    <mat-icon
+                                        [svgIcon]="'heroicons_outline:plus'"
+                                    ></mat-icon>
+                                    <span class="ml-2 mr-1">Add</span>
+                                </button>
+                            </div>
                         </div>
+                        <br />
                         <div class="fixedheader">
                             <div class="grid">
                                 <!-- Header -->
@@ -1574,12 +1654,14 @@
                                                     border
                                                 "
                                             >
-                                                <!-- <img
-                                                        class="w-8"
-                                                        *ngIf="product.thumbnail"
-                                                        [alt]="'Product thumbnail image'"
-                                                        [src]="product.thumbnail"
-                                                    /> -->
+                                                <img
+                                                    class="w-8"
+                                                    *ngIf="product.product_img"
+                                                    [alt]="
+                                                        'Product thumbnail image'
+                                                    "
+                                                    [src]="product.product_img"
+                                                />
                                                 <div
                                                     class="
                                                         flex
@@ -1593,6 +1675,7 @@
                                                         text-center
                                                         uppercase
                                                     "
+                                                    *ngIf="!product.product_img"
                                                 >
                                                     NO THUMB
                                                 </div>

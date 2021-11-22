@@ -16,6 +16,7 @@ import { InventoryProduct } from '../../../Model/inventory.types';
 import { FormBuilder, Validators } from '@angular/forms';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { InventoryService } from '../ecommerce/inventory/inventory.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 declare var $: any;
 
@@ -109,8 +110,9 @@ export class DashboardComponent {
 
     isLoading: boolean = false;
 
-    addCache: any;
+    addCache: { [key: string]: any } = {};
     searchText;
+    thumbnail: any;
 
     constructor(
         @Inject(DOCUMENT)
@@ -123,7 +125,8 @@ export class DashboardComponent {
         private _router: Router,
         private routes: ActivatedRoute,
         private cd: ChangeDetectorRef,
-        private Location: Location
+        private Location: Location,
+        private sanitizer: DomSanitizer
     ) {}
 
     ngOnInit(): void {
@@ -166,7 +169,7 @@ export class DashboardComponent {
                 this.cd.detectChanges();
             },
             (error) => {
-                alert(error.message);
+                //alert(error.message);
             }
         );
 
@@ -285,6 +288,9 @@ export class DashboardComponent {
 
         this._dashboardService.getProductsByStr().subscribe((products) => {
             this.products = products;
+            this.cd.detectChanges();
+            // let objectURL = 'data:image/jpg;base64,' + products.image;
+            // this.thumbnail = this.sanitizer.bypassSecurityTrustUrl(objectURL);
             console.log(this.products);
         });
     }
@@ -359,21 +365,18 @@ export class DashboardComponent {
         this._dashboardService
             .updateRetailerDetails(this.messageForm.value)
             .subscribe((data) => {
+                this.ngOnInit();
+                this.showFlashMessage('success');
                 this.cd.detectChanges();
 
-                this.flashMessagesService.show(
-                    // Array of messages each will be displayed in new line
-                    'Updated Successfully',
-                    {
-                        cssClass: 'alert-success', // Type of flash message, it defaults to info and success, warning, danger types can also be used
-                        timeout: 4000, // Time after which the flash disappears defaults to 4000ms
-                    }
-                );
-
-                this._router.navigate(['dashboard/']).then(() => {
-                    this.ngOnInit();
-                    // window.location.reload();
-                });
+                // this.flashMessagesService.show(
+                //     // Array of messages each will be displayed in new line
+                //     'Updated Successfully',
+                //     {
+                //         cssClass: 'alert-success', // Type of flash message, it defaults to info and success, warning, danger types can also be used
+                //         timeout: 4000, // Time after which the flash disappears defaults to 4000ms
+                //     }
+                // );
             });
     }
 
@@ -494,8 +497,9 @@ export class DashboardComponent {
         this._dashboardService
             .createProduct(routeParams.shopId, user_id)
             .subscribe((product) => {
-                //this.addCache = true;
+                //this.addCache[product.temp_str_config_id] = true;
                 //this.editDetails[product.temp_str_config_id] = true;
+                this.showFlashMessage('success');
                 this.ngOnInit();
                 // Set the selected product
                 this.selectedProduct = product;
@@ -503,7 +507,8 @@ export class DashboardComponent {
                 this.selectedProductForm.patchValue(product);
 
                 // Mark for check
-                this.cd.markForCheck();
+                // this.cd.markForCheck();
+                this.cd.detectChanges();
             });
     }
 

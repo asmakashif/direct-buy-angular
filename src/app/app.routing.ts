@@ -406,6 +406,16 @@ export const appRoutes: Route[] = [
                         'app/modules/admin/home-del-config/home-del-config.module'
                     ).then((m) => m.HomeDelConfigModule),
             },
+            // 404 & Catch all
+            {
+                path: '404-not-found',
+                pathMatch: 'full',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/error/error-404/error-404.module'
+                    ).then((m) => m.Error404Module),
+            },
+            { path: '**', redirectTo: '404-not-found' },
         ],
     },
 

@@ -78,15 +78,27 @@ export class DashboardService {
         );
     }
 
+    // getNewRegisteredCustomers(shopId: string): Observable<any> {
+    //     return this._httpClient.get(
+    //         '/api/store_setting/getNewRegisteredCustomers.php?shopId=' + shopId
+    //     );
+    // }
+
+    // getRegisteredCustomers(shopId: string): Observable<any> {
+    //     return this._httpClient.get(
+    //         '/api/store_setting/getRegisteredCustomers.php?shopId=' + shopId
+    //     );
+    // }
+
     getNewRegisteredCustomers(shopId: string): Observable<any> {
         return this._httpClient.get(
-            '/api/store_setting/getNewRegisteredCustomers.php?shopId=' + shopId
+            '/api/customers/getNewRegisteredCustomers.php?shopId=' + shopId
         );
     }
 
     getRegisteredCustomers(shopId: string): Observable<any> {
         return this._httpClient.get(
-            '/api/store_setting/getRegisteredCustomers.php?shopId=' + shopId
+            '/api/customers/getRegisteredCustomers.php?shopId=' + shopId
         );
     }
 

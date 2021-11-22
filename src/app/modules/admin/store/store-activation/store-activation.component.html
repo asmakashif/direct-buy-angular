@@ -107,13 +107,42 @@
                                 </strong>
                             </span>
                             <br />
-                            <a
-                                href="javascript:void(0);"
-                                (click)="activateTrial(this.data.shopId)"
-                                class="btn btn-primary"
-                                onclick="return confirm('Are you sure to activate trial period of 3months?')?true:false;"
-                                >Activate 3 months Trial</a
-                            >
+                            <div class="flex items-center">
+                                <div
+                                    class="flex items-center mr-4"
+                                    *ngIf="flashMessage"
+                                >
+                                    <ng-container
+                                        *ngIf="flashMessage === 'success'"
+                                    >
+                                        <mat-icon
+                                            class="text-green-500"
+                                            [svgIcon]="
+                                                'heroicons_outline:check'
+                                            "
+                                        ></mat-icon>
+                                        <span class="ml-2">Shop Activated</span>
+                                    </ng-container>
+                                    <ng-container
+                                        *ngIf="flashMessage === 'error'"
+                                    >
+                                        <mat-icon
+                                            class="text-red-500"
+                                            [svgIcon]="'heroicons_outline:x'"
+                                        ></mat-icon>
+                                        <span class="ml-2"
+                                            >An error occurred, try again!</span
+                                        >
+                                    </ng-container>
+                                </div>
+                                <a
+                                    href="javascript:void(0);"
+                                    (click)="activateTrial(this.data.shopId)"
+                                    class="btn btn-primary"
+                                    onclick="return confirm('Are you sure to activate trial period of 3months?')?true:false;"
+                                    >Activate 3 months Trial</a
+                                >
+                            </div>
                         </div>
                         <div
                             class="col-md-6"
@@ -125,15 +154,42 @@
                                 </strong>
                             </span>
                             <br />
-                            <button
-                                id="button1"
-                                type="button"
-                                class="btn btn-info"
-                                data-toggle="modal"
-                                data-target="#activate"
-                            >
-                                Activate
-                            </button>
+                            <div class="flex items-center">
+                                <div
+                                    class="flex items-center mr-4"
+                                    *ngIf="flashMessage"
+                                >
+                                    <ng-container
+                                        *ngIf="flashMessage === 'success'"
+                                    >
+                                        <mat-icon
+                                            class="text-green-500"
+                                            [svgIcon]="
+                                                'heroicons_outline:check'
+                                            "
+                                        ></mat-icon>
+                                        <span class="ml-2">Product Added</span>
+                                    </ng-container>
+                                    <ng-container
+                                        *ngIf="flashMessage === 'error'"
+                                    >
+                                        <mat-icon
+                                            class="text-red-500"
+                                            [svgIcon]="'heroicons_outline:x'"
+                                        ></mat-icon>
+                                        <span class="ml-2"
+                                            >An error occurred, try again!</span
+                                        >
+                                    </ng-container>
+                                </div>
+                                <button
+                                    class="ml-4"
+                                    mat-flat-button
+                                    [color]="'primary'"
+                                >
+                                    <span class="ml-2 mr-1">Activate</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
