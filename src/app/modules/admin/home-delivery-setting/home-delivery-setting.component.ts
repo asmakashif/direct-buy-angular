@@ -52,27 +52,37 @@ export class HomeDeliverySettingComponent implements OnInit {
   {
     const user_id = localStorage.getItem('user_id');
     if(e.target.checked){
-      const days={
+      const savedays={
         day: day,
         userId:user_id
       }
       
-      this.apiservice.saveWorkingDays(days).subscribe((data)=>
+      this.apiservice.saveWorkingDays(savedays).subscribe((data)=>
       {
-        
+        this.apiservice.getWorkingDays(user_id).subscribe((data)=>
+      {
+          this.days=data;
+         console.log(this.days);
+      }
+      )
       })
       //alert('hi'+day);
       
     }
     else{
      // alert('bye'+day);
-     const days={
+     const save_days={
       day: day,
       userId:user_id
     }
-     this.apiservice.uncheckWorkingDays(days).subscribe((data)=>
+     this.apiservice.uncheckWorkingDays(save_days).subscribe((data)=>
      {
-       
+      this.apiservice.getWorkingDays(user_id).subscribe((data)=>
+      {
+          this.days=data;
+         
+      }
+      )
      })
     }
   }
@@ -103,6 +113,7 @@ export class HomeDeliverySettingComponent implements OnInit {
   {
     const day=localStorage.setItem('day',e);
     const days=localStorage.getItem('day');
+    
     const user_id = localStorage.getItem('user_id');
     this.apiservice.getTimeSlots().subscribe((data)=>
     {
