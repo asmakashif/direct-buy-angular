@@ -92,15 +92,13 @@
                     shadow
                     overflow-hidden
                 "
-               [formGroup]="signinForm"
-               (ngSubmit)="onSubmit()"
-               autocomplete="on"
+                [formGroup]="signinForm"
+                (ngSubmit)="onSubmit()"
+                autocomplete="on"
             >
-                
-               
-                <div class="row" >
+                <div class="row">
                     <div class="col-md-4">
-                        <div class="form-group"  >
+                        <div class="form-group">
                             <label for="payment_option"
                                 ><b>Update Minimum Order Value</b></label
                             >
@@ -113,17 +111,18 @@
                                 name="Minimum_Order"
                                 id="Minimum_Order"
                                 class="form-control"
-                               value=""
+                                value=""
                             />
                         </div>
                     </div>
                     <div class="col-md-8" style="margin-top: 35px">
                         <i class="bi bi-question-circle-fill"></i>&nbsp;
-                        <span><b>Minimum Order Value for Home Delivery  </b></span>
+                        <span
+                            ><b>Minimum Order Value for Home Delivery </b></span
+                        >
                     </div>
                 </div>
-                
-               
+
                 <br />
                 <input
                     type="submit"
@@ -134,19 +133,24 @@
                     style="width: 100px"
                 />
                 <br />
-                
-               
-               <table class="table" *ngIf="min_order">
-                <thead class="thead-dark">
-                
-                <th >Value</th>
-                <th>Action</th>
-            </thead>
-            <tr *ngFor="let dt of min_order">
-               <td>{{dt.value}}</td> 
-               <td><a class="btn btn-warning" type="button" (click)="delete(dt.m_id)">Delete</a></td>
-            </tr>
-            </table>
+
+                <table class="table" *ngIf="min_order">
+                    <thead class="thead-dark">
+                        <th>Value</th>
+                        <th>Action</th>
+                    </thead>
+                    <tr *ngFor="let dt of min_order">
+                        <td>{{ dt.value }}</td>
+                        <td>
+                            <a
+                                class="btn btn-warning"
+                                type="button"
+                                (click)="delete(dt.m_id)"
+                                >Delete</a
+                            >
+                        </td>
+                    </tr>
+                </table>
             </form>
         </div>
     </div>

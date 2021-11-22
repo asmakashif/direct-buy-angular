@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { SharedModule } from 'app/shared/shared.module';
 import { MinOrderValComponent } from './min-order-val.component';
-import { FormsModule , ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 const MinOrderRoutes: Route[] = [
     {
         path: '',
@@ -20,7 +20,7 @@ const MinOrderRoutes: Route[] = [
         MatIconModule,
         SharedModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
     ],
 })
 export class MinOrderValModule {}

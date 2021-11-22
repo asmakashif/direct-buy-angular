@@ -36,14 +36,11 @@ export class PendingOrdersComponent implements OnInit {
             });
     }
 
-    pendingOrderByCode(order_code): void {
+    orderDetailsByCode(order_code): void {
         const routeParams = this.routes.snapshot.params;
         console.log(order_code);
         this._router.navigate([
-            '/orders/pending-order-details/' +
-                order_code +
-                '/' +
-                routeParams.shopId,
+            '/orders/order-details/' + order_code + '/' + routeParams.shopId,
         ]);
     }
 }

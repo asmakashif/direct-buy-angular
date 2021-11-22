@@ -13,10 +13,8 @@ import { AuthSignUpComponent } from 'app/modules/auth/sign-up/sign-up.component'
 import { authSignupRoutes } from 'app/modules/auth/sign-up/sign-up.routing';
 
 @NgModule({
-    declarations: [
-        AuthSignUpComponent
-    ],
-    imports     : [
+    declarations: [AuthSignUpComponent],
+    imports: [
         RouterModule.forChild(authSignupRoutes),
         MatButtonModule,
         MatCheckboxModule,
@@ -26,9 +24,7 @@ import { authSignupRoutes } from 'app/modules/auth/sign-up/sign-up.routing';
         MatProgressSpinnerModule,
         FuseCardModule,
         FuseAlertModule,
-        SharedModule
-    ]
+        SharedModule,
+    ],
 })
-export class AuthSignUpModule
-{
-}
+export class AuthSignUpModule {}

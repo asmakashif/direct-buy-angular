@@ -6,6 +6,8 @@ import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
 import { CreateShopService } from 'app/modules/admin/store/create-shop/create-shop.service';
 
+declare var $: any;
+
 @Component({
     selector: 'auth-sign-up',
     templateUrl: './sign-up.component.html',
@@ -52,12 +54,21 @@ export class AuthSignUpComponent implements OnInit {
             ],
             email: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required],
+            confirm_password: ['', Validators.required],
             company: [
                 '',
                 [Validators.required, Validators.pattern("^[a-zA-Z']+")],
             ],
             // title: ['', [Validators.pattern('^[A-Za-z0-9ñÑáéíóúÁÉÍÓÚ ]+$')],
             agreements: ['', Validators.requiredTrue],
+        });
+
+        $(' #confirm_password').on('keyup', function () {
+            if ($('#password').val() == $('#confirm_password').val()) {
+                $('#message').html('Matching').css('color', 'green');
+            } else $('#message').html('Not Matching').css('color', 'red');
+
+            $('#submit').removeAttr('disabled', 'disabled');
         });
     }
 

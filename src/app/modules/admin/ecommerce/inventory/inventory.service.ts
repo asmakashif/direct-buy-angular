@@ -212,6 +212,17 @@ export class InventoryService {
                     )
             )
         );
+        // return this._httpClient
+        //     .post<InventoryProduct>('api/apps/ecommerce/inventory/product', {})
+        //     .pipe(
+        //         map((newProduct) => {
+        //             // Update the products with the new product
+        //             this._products.next([newProduct]);
+
+        //             // Return the new product
+        //             return newProduct;
+        //         })
+        //     );
     }
 
     /**

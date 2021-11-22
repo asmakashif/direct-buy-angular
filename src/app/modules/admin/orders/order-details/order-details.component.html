@@ -18,7 +18,7 @@
                     <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
                         <img
                             class="w-full h-full object-cover"
-                            src="assets/images/avatars/brian-hughes.jpg"
+                            src="assets/images/avatars/avatar.png"
                         />
                     </div>
                     <div class="flex flex-col min-w-0 ml-4">
@@ -151,21 +151,24 @@
                         *matRowDef="let row; columns: displayedColumns"
                     ></tr>
                 </table>
-                <div class="row">
+                <!-- <div class="row hidden md:block block md:hidden">
                     <div class="col-md-9 pl-20" style="text-align: right">
                         <span><strong>Total :</strong></span>
                     </div>
                     <div class="col-md-3 pl-18">
                         {{ total }}
                     </div>
-                </div>
+                </div> -->
                 <div class="row">
+                    <span><strong>Total :</strong> {{ total }} </span>
+                </div>
+                <div class="row" *ngIf="order_status == 0">
                     <div class="example-button-row">
                         <button
                             class="btn btn-success"
                             (click)="orderComplete()"
                         >
-                            Order Complete
+                            Fulfil Order
                         </button>
                     </div>
                 </div>

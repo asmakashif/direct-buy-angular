@@ -30,7 +30,7 @@
         <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
             <!-- Logo -->
             <div class="w-12">
-                <img src="assets/images/logo/logo.svg" />
+                <img src="assets/images/logo/logo_new.png" />
             </div>
 
             <!-- Title -->
@@ -145,6 +145,42 @@
                             [svgIcon]="'heroicons_solid:eye-off'"
                         ></mat-icon>
                     </button>
+                    <mat-error> Password is required </mat-error>
+                </mat-form-field>
+
+                <!-- Confirm Password field -->
+                <mat-form-field class="w-full">
+                    <mat-label>Confirm Password</mat-label>
+                    <input
+                        id="confirm_password"
+                        matInput
+                        type="password"
+                        [formControlName]="'confirm_password'"
+                        #confirmPasswordField
+                    />
+
+                    <button
+                        mat-icon-button
+                        type="button"
+                        (click)="
+                            confirmPasswordField.type === 'password'
+                                ? (confirmPasswordField.type = 'text')
+                                : (confirmPasswordField.type = 'password')
+                        "
+                        matSuffix
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            *ngIf="confirmPasswordField.type === 'password'"
+                            [svgIcon]="'heroicons_solid:eye'"
+                        ></mat-icon>
+                        <mat-icon
+                            class="icon-size-5"
+                            *ngIf="confirmPasswordField.type === 'text'"
+                            [svgIcon]="'heroicons_solid:eye-off'"
+                        ></mat-icon>
+                    </button>
+                    <span id="message"></span>
                     <mat-error> Password is required </mat-error>
                 </mat-form-field>
 

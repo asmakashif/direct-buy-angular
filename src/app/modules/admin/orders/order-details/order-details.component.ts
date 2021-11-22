@@ -2,16 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { PendingOrderDetailsService } from 'app/modules/admin/orders/pending-order-details/pending-order-details.service';
+import { OrderDetailsService } from 'app/modules/admin/orders/order-details/order-details.service';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Data } from '../../../../Model/data';
 
 @Component({
     selector: 'app-pending-order-details',
-    templateUrl: './pending-order-details.component.html',
-    styleUrls: ['./pending-order-details.component.scss'],
+    templateUrl: './order-details.component.html',
+    styleUrls: ['./order-details.component.scss'],
 })
-export class PendingOrderDetailsComponent implements OnInit {
+export class OrderDetailsComponent implements OnInit {
+    isScreenSmall: boolean;
     displayedColumns: string[] = [
         'product_name',
         'product_price',
@@ -23,8 +24,9 @@ export class PendingOrderDetailsComponent implements OnInit {
     order_code: any;
     c_fname: any;
     total: any;
+    order_status: any;
     constructor(
-        private apiService: PendingOrderDetailsService,
+        private apiService: OrderDetailsService,
         private _router: Router,
         private routes: ActivatedRoute
     ) {}
@@ -39,6 +41,7 @@ export class PendingOrderDetailsComponent implements OnInit {
                 this.order_code = this.orderDetailsById.order_code;
                 this.c_fname = this.orderDetailsById.c_fname;
                 this.total = this.orderDetailsById.total;
+                this.order_status = this.orderDetailsById.order_status;
                 console.log(this.orderDetailsById);
             });
 

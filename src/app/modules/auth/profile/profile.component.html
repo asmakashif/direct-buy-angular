@@ -18,7 +18,7 @@
                     <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
                         <img
                             class="w-full h-full object-cover"
-                            src="assets/images/avatars/brian-hughes.jpg"
+                            src="assets/images/avatars/avatar.png"
                         />
                     </div>
                     <div class="flex flex-col min-w-0 ml-4">
@@ -133,7 +133,7 @@
                                     ><b>Last Name:</b></label
                                 >
                                 <input
-                                    readonly=""
+                                    readonly="true"
                                     (click)="editProfile()"
                                     formControlName="lastname"
                                     name="lastname"
@@ -151,7 +151,7 @@
                                     ><b>Domain Name:</b></label
                                 >
                                 <input
-                                    readonly=""
+                                    readonly="true"
                                     formControlName="domainname"
                                     name="domainname"
                                     type="text"
@@ -166,7 +166,7 @@
                                     ><b>Contact:</b></label
                                 >
                                 <input
-                                    readonly=""
+                                    readonly="true"
                                     type="text"
                                     formControlName="contact"
                                     id="conatct"
@@ -181,14 +181,13 @@
                             <div class="form-group">
                                 <label for="shop_name"><b>Email:</b></label>
                                 <input
-                                    readonly=""
+                                    readonly="true"
                                     type="text"
                                     formControlName="email"
                                     name="email"
                                     id="email"
                                     class="form-control"
                                 />
-                                <span id="message"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -197,7 +196,7 @@
                                     ><b>Password:</b></label
                                 >
                                 <input
-                                    readonly=""
+                                    readonly="true"
                                     type="text"
                                     formControlName="password"
                                     name="password"
@@ -211,7 +210,7 @@
                             <div class="form-group">
                                 <label for="shop_name"><b>Address:</b></label>
                                 <input
-                                    readonly=""
+                                    readonly="true"
                                     (click)="editProfile()"
                                     type="text"
                                     formControlName="address"
@@ -219,14 +218,13 @@
                                     id="address"
                                     class="form-control"
                                 />
-                                <span id="message"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="shop_address"><b>Logo:</b></label>
                                 <input
-                                    disabled=""
+                                    disabled="true"
                                     (click)="editProfile()"
                                     formControlName="logo"
                                     name="logo"
@@ -238,15 +236,39 @@
                         </div>
                     </div>
                     <br />
-                    <button
-                        class="btn btn-success"
-                        (click)="editProfile()"
-                        id="editProfileBtn"
-                        disabled="true"
-                        style="width: 100px"
-                    >
-                        Update
-                    </button>
+                    <div class="flex items-center">
+                        <div
+                            class="flex items-center mr-4"
+                            *ngIf="flashMessage"
+                        >
+                            <ng-container *ngIf="flashMessage === 'success'">
+                                <mat-icon
+                                    class="text-green-500"
+                                    [svgIcon]="'heroicons_outline:check'"
+                                ></mat-icon>
+                                <span class="ml-2">Profile updated</span>
+                            </ng-container>
+                            <ng-container *ngIf="flashMessage === 'error'">
+                                <mat-icon
+                                    class="text-red-500"
+                                    [svgIcon]="'heroicons_outline:x'"
+                                ></mat-icon>
+                                <span class="ml-2"
+                                    >An error occurred, try again!</span
+                                >
+                            </ng-container>
+                        </div>
+                        <button
+                            type=""
+                            id="editProfileBtn"
+                            (click)="editProfile()"
+                            class="btn btn-info"
+                            style="width: 100px"
+                        >
+                            Update
+                        </button>
+                    </div>
+                    <!-- <button (click)="edit(item)">Edit</button> -->
                     <!-- <button
                         type=""
                         (click)="editProfile()"

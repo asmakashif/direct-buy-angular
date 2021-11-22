@@ -23,6 +23,7 @@ export class StoreActivationComponent implements OnInit {
     params: any;
     data: any;
     shop_payment_status: any;
+    flashMessage: string;
 
     constructor(
         private flashMessagesService: FlashMessagesService,
@@ -113,22 +114,43 @@ export class StoreActivationComponent implements OnInit {
         this.apiService
             .updateTrialStatus(routeParams.shopId, user_id)
             .subscribe((data) => {
+                this.showFlashMessage('success');
+                this.ngOnInit();
                 this.cd.detectChanges();
 
-                this._router
-                    .navigate(['store/store-activation/' + routeParams.shopId])
-                    .then(() => {
-                        window.location.reload();
-                    });
-                this.flashMessagesService.show(
-                    // Array of messages each will be displayed in new line
-                    'Store activated successfully',
-                    {
-                        cssClass: 'alert-success', // Type of flash message, it defaults to info and success, warning, danger types can also be used
-                        timeout: 4000, // Time after which the flash disappears defaults to 4000ms
-                    }
-                );
+                // this._router
+                //     .navigate(['store/store-activation/' + routeParams.shopId])
+                //     .then(() => {
+                //         window.location.reload();
+                //     });
+                // this.flashMessagesService.show(
+                //     // Array of messages each will be displayed in new line
+                //     'Store activated successfully',
+                //     {
+                //         cssClass: 'alert-success', // Type of flash message, it defaults to info and success, warning, danger types can also be used
+                //         timeout: 4000, // Time after which the flash disappears defaults to 4000ms
+                //     }
+                // );
             });
+    }
+
+    /**
+     * Show flash message
+     */
+    showFlashMessage(type: 'success' | 'error'): void {
+        // Show the message
+        this.flashMessage = type;
+
+        // Mark for check
+        this.cd.markForCheck();
+
+        // Hide it after 3 seconds
+        setTimeout(() => {
+            this.flashMessage = null;
+
+            // Mark for check
+            this.cd.markForCheck();
+        }, 3000);
     }
 
     nextStep() {

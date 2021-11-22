@@ -22,20 +22,20 @@ import { SharedModule } from 'app/shared/shared.module';
 import { HotTableModule } from '@handsontable/angular';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
-import { PendingOrderDetailsComponent } from 'app/modules/admin/orders/pending-order-details/pending-order-details.component';
+import { OrderDetailsComponent } from 'app/modules/admin/orders/order-details/order-details.component';
 //import { projectRoutes } from 'app/modules/admin/dashboards/project/project.routing';
 
-const pendingOrderDetailsRoutes: Route[] = [
+const orderDetailsRoutes: Route[] = [
     {
         path: '',
-        component: PendingOrderDetailsComponent,
+        component: OrderDetailsComponent,
     },
 ];
 
 @NgModule({
-    declarations: [PendingOrderDetailsComponent],
+    declarations: [OrderDetailsComponent],
     imports: [
-        RouterModule.forChild(pendingOrderDetailsRoutes),
+        RouterModule.forChild(orderDetailsRoutes),
         MatButtonModule,
         MatButtonToggleModule,
         MatDividerModule,
@@ -61,4 +61,4 @@ const pendingOrderDetailsRoutes: Route[] = [
         MatPaginatorModule,
     ],
 })
-export class PendingOrderDetailsModule {}
+export class OrderDetailsModule {}

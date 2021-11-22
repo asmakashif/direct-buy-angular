@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProfileService } from 'app/modules/auth/profile/profile.service';
@@ -14,11 +14,13 @@ declare var $: any;
 export class ProfileComponent implements OnInit {
     profileForm: FormGroup;
     profileData: any;
+    flashMessage: string;
     constructor(
         private flashMessagesService: FlashMessagesService,
         private formBuilder: FormBuilder,
         private apiService: ProfileService,
-        private _router: Router
+        private _router: Router,
+        private cd: ChangeDetectorRef
     ) {}
 
     ngOnInit(): void {
@@ -57,21 +59,44 @@ export class ProfileComponent implements OnInit {
 
     onUpdate() {
         console.log(this.profileForm.value);
+        // if (this.profileForm.invalid) {
+        //     return;
+        // }
         this.apiService
             .updateRetailerDetails(this.profileForm.value)
             .subscribe((data) => {
-                this.flashMessagesService.show(
-                    // Array of messages each will be displayed in new line
-                    'Updated Successfully',
-                    {
-                        cssClass: 'alert-success', // Type of flash message, it defaults to info and success, warning, danger types can also be used
-                        timeout: 4000, // Time after which the flash disappears defaults to 4000ms
-                    }
-                );
+                this.showFlashMessage('success');
+                // this.flashMessagesService.show(
+                //     // Array of messages each will be displayed in new line
+                //     'Updated Successfully',
+                //     {
+                //         cssClass: 'alert-success', // Type of flash message, it defaults to info and success, warning, danger types can also be used
+                //         timeout: 4000, // Time after which the flash disappears defaults to 4000ms
+                //     }
+                // );
                 this.ngOnInit();
                 // this._router.navigate(['profile/']).then(() => {
                 //     this.ngOnInit();
                 // });
             });
+    }
+
+    /**
+     * Show flash message
+     */
+    showFlashMessage(type: 'success' | 'error'): void {
+        // Show the message
+        this.flashMessage = type;
+
+        // Mark for check
+        this.cd.markForCheck();
+
+        // Hide it after 3 seconds
+        setTimeout(() => {
+            this.flashMessage = null;
+
+            // Mark for check
+            this.cd.markForCheck();
+        }, 3000);
     }
 }

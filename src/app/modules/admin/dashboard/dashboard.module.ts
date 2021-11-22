@@ -15,6 +15,15 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { TranslocoModule } from '@ngneat/transloco';
 import { SharedModule } from 'app/shared/shared.module';
 import { DashboardComponent } from 'app/modules/admin/dashboard/dashboard.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 const dashboardRoutes: Route[] = [
     {
@@ -28,6 +37,7 @@ const dashboardRoutes: Route[] = [
     imports: [
         RouterModule.forChild(dashboardRoutes),
         FlashMessagesModule.forRoot(),
+        NgbModule,
         MatButtonModule,
         MatButtonToggleModule,
         MatDividerModule,
@@ -41,6 +51,14 @@ const dashboardRoutes: Route[] = [
         MatTabsModule,
         TranslocoModule,
         SharedModule,
+        MatCheckboxModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatPaginatorModule,
+        MatSelectModule,
+        MatSlideToggleModule,
+        MatTooltipModule,
+        Ng2SearchPipeModule,
     ],
 })
 export class DashboardModule {}

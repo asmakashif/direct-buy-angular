@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
+import * as Bowser from 'bowser';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
 import { SignInService } from 'app/modules/auth/sign-in/sign-in.service';
@@ -30,6 +31,11 @@ export class AuthSignInComponent implements OnInit {
     showAlert: boolean = false;
     arrString: string[];
     domain: string;
+    userAgent: Bowser.Parser.ParsedResult;
+    browser: Bowser.Parser.Parser;
+    userAgentDetails: string;
+    browserDetails: string;
+    otpVerify: string;
 
     /**
      * Constructor
@@ -51,6 +57,19 @@ export class AuthSignInComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
+        // const isIEOrEdge = /msie\s|trident\/|edge\//i.test(
+        //     window.navigator.userAgent
+        // );
+        // alert(isIEOrEdge);
+        this.otpVerify = localStorage.getItem('otpVerify');
+        this.userAgent = Bowser.parse(window.navigator.userAgent);
+        this.browser = Bowser.getParser(window.navigator.userAgent);
+        this.userAgentDetails = JSON.stringify(this.userAgent, null, 4);
+        this.browserDetails = JSON.stringify(
+            this.browser.getBrowser(),
+            null,
+            4
+        );
         var URL = window.location.href;
         var arr = URL.split('/');
         var array = arr[2];
@@ -62,6 +81,7 @@ export class AuthSignInComponent implements OnInit {
             // domainname: [this.arrString[0]],
             email: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required],
+            otp: [''],
             rememberMe: [''],
         });
     }

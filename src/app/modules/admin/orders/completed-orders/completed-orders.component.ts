@@ -38,14 +38,11 @@ export class CompletedOrdersComponent implements OnInit {
             });
     }
 
-    completedOrderByCode(order_code): void {
+    orderDetailsByCode(order_code): void {
         const routeParams = this.routes.snapshot.params;
         console.log(order_code);
         this._router.navigate([
-            '/orders/completed-order-details/' +
-                order_code +
-                '/' +
-                routeParams.shopId,
+            '/orders/order-details/' + order_code + '/' + routeParams.shopId,
         ]);
     }
 }
