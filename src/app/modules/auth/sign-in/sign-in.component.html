@@ -83,7 +83,19 @@
                 <!-- Email field -->
                 <mat-form-field class="w-full">
                     <mat-label>Email address</mat-label>
-                    <input id="email" matInput [formControlName]="'email'" />
+                    <input
+                        id="email"
+                        (keyup)="keyup($event.target.value)"
+                        matInput
+                        [formControlName]="'email'"
+                    />
+                    <input
+                        id="deviceId"
+                        matInput
+                        hidden="true"
+                        [formControlName]="'deviceId'"
+                    />
+
                     <mat-error
                         *ngIf="signInForm.get('email').hasError('required')"
                     >
@@ -95,7 +107,7 @@
                         Please enter a valid email address
                     </mat-error>
                 </mat-form-field>
-
+                <!-- {{ uuid }} -->
                 <!-- Password field -->
                 <mat-form-field class="w-full">
                     <mat-label>Password</mat-label>
@@ -131,8 +143,9 @@
                 </mat-form-field>
 
                 <!-- OTP field -->
-                <mat-form-field class="w-full">
+                <mat-form-field class="w-full" *ngIf="otp == 0">
                     <mat-label>OTP</mat-label>
+                    <!-- <input id="otp" *ngIf="otp == 0" hidden matInput #otpField /> -->
                     <input
                         id="otp"
                         matInput
@@ -181,16 +194,16 @@
                 </button>
 
                 <!-- Separator -->
-                <!-- <div class="flex items-center mt-8">
+                <div class="flex items-center mt-8">
                     <div class="flex-auto mt-px border-t"></div>
                     <div class="mx-2 text-secondary">Or continue with</div>
                     <div class="flex-auto mt-px border-t"></div>
-                </div> -->
-                <!-- <h3>User Agent Details</h3>
+                </div>
+                <h3>User Agent Details</h3>
                 <pre>{{ userAgentDetails }}</pre>
                 <hr />
                 <h3>Browser Details</h3>
-                <pre>{{ browserDetails }}</pre> -->
+                <pre>{{ browserDetails }}</pre>
                 <!-- Single sign-on buttons -->
                 <!-- <div class="flex items-center mt-8 space-x-4">
                     <button class="flex-auto" type="button" mat-stroked-button>

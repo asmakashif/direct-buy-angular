@@ -21,6 +21,8 @@ export class StorePaymentComponent implements OnInit {
     selection = [];
     isChecked: any;
     flashMessage: string;
+    imagePath: string = '/assets/icons/';
+    image: any;
     constructor(
         private formBuilder: FormBuilder,
         private apiService: StorePaymentService,
@@ -37,7 +39,8 @@ export class StorePaymentComponent implements OnInit {
             .getPaymentData(shopId, user_id)
             .subscribe((payment: any) => {
                 this.payment = payment;
-                console.log(this.payment);
+                this.image = this.payment.provider_img;
+                console.log(this.image);
             });
 
         // this.apiService

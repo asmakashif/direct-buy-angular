@@ -48,7 +48,7 @@
                                 You have 2 new messages and 15 new tasks
                             </div>
                         </div>
-                        <flash-messages></flash-messages>
+                        <!-- <flash-messages></flash-messages> -->
                     </div>
                 </div>
                 <!-- Actions -->
@@ -550,10 +550,7 @@
                                                 ></mat-icon>
                                             </button>
                                             <mat-menu #summaryMenu="matMenu">
-                                                <button
-                                                    (click)="shopDetails(data)"
-                                                    mat-menu-item
-                                                >
+                                                <button mat-menu-item>
                                                     Manage Payment
                                                 </button>
                                             </mat-menu>
@@ -572,7 +569,7 @@
                                                 text-blue-500
                                             "
                                         >
-                                            1
+                                            {{ payment.attachToStr }}
                                         </div>
                                         <a
                                             href="javascript:void(0);"
@@ -587,10 +584,10 @@
                                                     dark:text-blue-500
                                                 "
                                             >
-                                                Completed Orders
+                                                Attach To store
                                             </div>
                                         </a>
-                                        <a
+                                        <!-- <a
                                             href="javascript:void(0);"
                                             (click)="pendingOrders(data)"
                                             style="text-decoration: none"
@@ -624,7 +621,7 @@
                                                     0
                                                 </div>
                                             </div>
-                                        </a>
+                                        </a> -->
                                     </div>
                                 </div>
                             </ng-container>
@@ -681,41 +678,6 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="flex items-center">
-                                        <div
-                                            class="flex items-center mr-4"
-                                            *ngIf="flashMessage"
-                                        >
-                                            <ng-container
-                                                *ngIf="
-                                                    flashMessage === 'success'
-                                                "
-                                            >
-                                                <mat-icon
-                                                    class="text-green-500"
-                                                    [svgIcon]="
-                                                        'heroicons_outline:check'
-                                                    "
-                                                ></mat-icon>
-                                                <span class="ml-2"
-                                                    >Message Updated</span
-                                                >
-                                            </ng-container>
-                                            <ng-container
-                                                *ngIf="flashMessage === 'error'"
-                                            >
-                                                <mat-icon
-                                                    class="text-red-500"
-                                                    [svgIcon]="
-                                                        'heroicons_outline:x'
-                                                    "
-                                                ></mat-icon>
-                                                <span class="ml-2"
-                                                    >An error occurred, try
-                                                    again!</span
-                                                >
-                                            </ng-container>
-                                        </div>
-
                                         <button
                                             type=""
                                             id="editMessage"
@@ -938,7 +900,7 @@
                                                 dark:text-blue-500
                                             "
                                         >
-                                           Home Delivery Slots
+                                            Home Delivery Slots
                                         </div>
                                     </a>
                                     <a
@@ -1668,7 +1630,10 @@
                                                     [alt]="
                                                         'Product thumbnail image'
                                                     "
-                                                    [src]="product.product_img"
+                                                    [src]="
+                                                        imagePath +
+                                                        product.product_img
+                                                    "
                                                 />
                                                 <div
                                                     class="
@@ -1969,11 +1934,9 @@
                                                                 overflow-hidden
                                                             "
                                                         >
-                                                            <!-- <ng-container
+                                                            <ng-container
                                                                 *ngIf="
-                                                                    selectedProductForm.get(
-                                                                        'images'
-                                                                    ).value.length;
+                                                                    product.product_img;
                                                                     else noImage
                                                                 "
                                                             >
@@ -1984,30 +1947,81 @@
                                                                         object-cover
                                                                     "
                                                                     [src]="
-                                                                        selectedProductForm.get(
-                                                                            'images'
-                                                                        ).value[
-                                                                            selectedProductForm.get(
-                                                                                'currentImageIndex'
-                                                                            ).value
-                                                                        ]
+                                                                        imagePath +
+                                                                        product.product_img
+                                                                    "
+                                                                    style="
+                                                                        object-fit: contain;
                                                                     "
                                                                 />
-                                                            </ng-container> -->
+                                                                <!-- <div
+                                                                    class="
+                                                                        image-upload
+                                                                    "
+                                                                >
+                                                                    <label
+                                                                        for="file-input"
+                                                                    >
+                                                                        <img
+                                                                            class="
+                                                                                w-full
+                                                                                h-full
+                                                                                object-cover
+                                                                            "
+                                                                            [src]="
+                                                                                imagePath +
+                                                                                product.product_img
+                                                                            "
+                                                                            style="
+                                                                                object-fit: contain;
+                                                                            "
+                                                                        />
+                                                                    </label>
+                                                                    <input
+                                                                        type="file"
+                                                                        id="file-input"
+                                                                        accept=".png, .jpg, .jpeg"
+                                                                        name="product_image"
+                                                                        #fileInput
+                                                                        (change)="
+                                                                            onFileUpload(
+                                                                                $event
+                                                                            )
+                                                                        "
+                                                                    />
+                                                                </div> -->
+                                                            </ng-container>
                                                             <ng-template
                                                                 #noImage
                                                             >
-                                                                <span
+                                                                <div
                                                                     class="
-                                                                        flex
-                                                                        items-center
-                                                                        min-h-20
-                                                                        text-lg
-                                                                        font-semibold
+                                                                        image-upload
                                                                     "
-                                                                    >NO
-                                                                    IMAGE</span
                                                                 >
+                                                                    <label
+                                                                        for="file-input"
+                                                                    >
+                                                                        <img
+                                                                            src="assets/images/avatars/upload.png"
+                                                                            style="
+                                                                                margin-top: 30px; ;
+                                                                            "
+                                                                        />
+                                                                    </label>
+                                                                    <input
+                                                                        type="file"
+                                                                        id="file-input"
+                                                                        accept=".png, .jpg, .jpeg"
+                                                                        name="product_image"
+                                                                        #fileInput
+                                                                        (change)="
+                                                                            onFileUpload(
+                                                                                $event
+                                                                            )
+                                                                        "
+                                                                    />
+                                                                </div>
                                                             </ng-template>
                                                         </div>
                                                         <!-- <div
@@ -2067,31 +2081,6 @@
                                                         "
                                                         *ngIf="
                                                             product.product_status ==
-                                                            1
-                                                        "
-                                                    >
-                                                        <span
-                                                            class="
-                                                                font-semibold
-                                                                mb-2
-                                                            "
-                                                            >Product
-                                                            status</span
-                                                        >
-                                                        <mat-slide-toggle
-                                                            [color]="'primary'"
-                                                            checked
-                                                        >
-                                                            {{ "Active" }}
-                                                        </mat-slide-toggle>
-                                                    </div>
-                                                    <div
-                                                        class="
-                                                            flex flex-col
-                                                            mt-8
-                                                        "
-                                                        *ngIf="
-                                                            product.product_status ==
                                                             0
                                                         "
                                                     >
@@ -2103,13 +2092,70 @@
                                                             >Product
                                                             status</span
                                                         >
-                                                        <mat-slide-toggle
-                                                            color="primary"
-                                                            formControlName="product_status"
-                                                            >{{
-                                                                "Disabled"
-                                                            }}</mat-slide-toggle
+                                                        <label class="switch">
+                                                            <input
+                                                                type="checkbox"
+                                                                [value]="1"
+                                                                [name]="
+                                                                    'product_status'
+                                                                "
+                                                                (change)="
+                                                                    productStatus(
+                                                                        $event
+                                                                    )
+                                                                "
+                                                                matCheckbox
+                                                            />{{ "Disabled" }}
+                                                            <span
+                                                                class="
+                                                                    slider
+                                                                    round
+                                                                "
+                                                            >
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div
+                                                        class="
+                                                            flex flex-col
+                                                            mt-8
+                                                        "
+                                                        *ngIf="
+                                                            product.product_status ==
+                                                            1
+                                                        "
+                                                    >
+                                                        <span
+                                                            class="
+                                                                font-semibold
+                                                                mb-2
+                                                            "
+                                                            >Product
+                                                            status</span
                                                         >
+                                                        <label class="switch">
+                                                            <input
+                                                                type="checkbox"
+                                                                [value]="1"
+                                                                [name]="
+                                                                    'product_status'
+                                                                "
+                                                                checked="true"
+                                                                (change)="
+                                                                    productStatus(
+                                                                        $event
+                                                                    )
+                                                                "
+                                                                matCheckbox
+                                                            />
+                                                            <span
+                                                                class="
+                                                                    slider
+                                                                    round
+                                                                "
+                                                            ></span>
+                                                            {{ "Active" }}
+                                                        </label>
                                                     </div>
                                                 </div>
 
@@ -2759,6 +2805,286 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </mat-tab>
+
+                <!-- Settings -->
+                <mat-tab label="Settings">
+                    <ng-template matTabContent>
+                        <div class="grid grid-cols-1 gap-6 w-full min-w-0">
+                            <!-- Payment Options -->
+                            <div
+                                class="
+                                    flex flex-col flex-auto
+                                    p-6
+                                    bg-card
+                                    shadow
+                                    rounded-2xl
+                                    overflow-hidden
+                                "
+                            >
+                                <p><b>Edit Shop Details</b></p>
+                                <form
+                                    [formGroup]="editShopForm"
+                                    (ngSubmit)="onShopDetailsUpdate()"
+                                    autocomplete="off"
+                                >
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="shop_name"
+                                                    ><b>Shop Name:</b></label
+                                                >
+                                                <input
+                                                    type="text"
+                                                    formControlName="shop_name"
+                                                    name="shop_name"
+                                                    id="shop_name"
+                                                    class="form-control"
+                                                />
+                                                <input
+                                                    type="text"
+                                                    formControlName="shopId"
+                                                    name="shopId"
+                                                    id="shopId"
+                                                    hidden="true"
+                                                    class="form-control"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="shop_address"
+                                                    ><b>Shop Address:</b></label
+                                                >
+                                                <input
+                                                    type="text"
+                                                    formControlName="shop_address"
+                                                    name="shop_address"
+                                                    id="shop_address"
+                                                    class="form-control"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="shop_gst"
+                                                    ><b>Shop GST:</b></label
+                                                >
+                                                <input
+                                                    type="text"
+                                                    formControlName="shop_gst"
+                                                    name="shop_gst"
+                                                    id="shop_gst"
+                                                    class="form-control"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <div class="flex items-center">
+                                                <div
+                                                    class="
+                                                        flex
+                                                        items-center
+                                                        mr-4
+                                                    "
+                                                    *ngIf="flashMessage"
+                                                >
+                                                    <ng-container
+                                                        *ngIf="
+                                                            flashMessage ===
+                                                            'success'
+                                                        "
+                                                    >
+                                                        <mat-icon
+                                                            class="
+                                                                text-green-500
+                                                            "
+                                                            [svgIcon]="
+                                                                'heroicons_outline:check'
+                                                            "
+                                                        ></mat-icon>
+                                                        <span class="ml-2"
+                                                            >Success</span
+                                                        >
+                                                    </ng-container>
+                                                    <ng-container
+                                                        *ngIf="
+                                                            flashMessage ===
+                                                            'error'
+                                                        "
+                                                    >
+                                                        <mat-icon
+                                                            class="text-red-500"
+                                                            [svgIcon]="
+                                                                'heroicons_outline:x'
+                                                            "
+                                                        ></mat-icon>
+                                                        <span class="ml-2"
+                                                            >An error occurred,
+                                                            try again!</span
+                                                        >
+                                                    </ng-container>
+                                                </div>
+                                                <button class="btn btn-success">
+                                                    Submit
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="col-md-3"
+                                            style="float: right"
+                                        >
+                                            <button
+                                                (click)="deleteShop()"
+                                                class="btn btn-danger"
+                                            >
+                                                Delete
+                                            </button>
+                                            &nbsp;
+                                            <button
+                                                (click)="reactivateShop()"
+                                                class="btn btn-default"
+                                                *ngIf="
+                                                    shop_status == 2;
+                                                    else deactivate
+                                                "
+                                            >
+                                                Deactivated
+                                            </button>
+                                            <ng-template #deactivate>
+                                                <button
+                                                    (click)="deactivateShop()"
+                                                    class="btn btn-warning"
+                                                >
+                                                    Deactivate
+                                                </button>
+                                            </ng-template>
+                                        </div>
+                                    </div>
+                                </form>
+                                <br />
+                                <!-- Separator -->
+                                <div class="flex items-center mt-8">
+                                    <div class="flex-auto mt-px border-t"></div>
+
+                                    <div class="flex-auto mt-px border-t"></div>
+                                </div>
+                                <br />
+                                <form
+                                    class="example-form"
+                                    [formGroup]="vacationForm"
+                                    (ngSubmit)="
+                                        onVacationSubmit(vacationForm.value)
+                                    "
+                                    ngNativeValidate
+                                >
+                                    <div class="row">
+                                        <div
+                                            class="col-md-3"
+                                            *ngIf="shopData.vacation_mode == 0"
+                                        >
+                                            <span>
+                                                <strong
+                                                    >Vacation Mode-<span
+                                                        style="color: red"
+                                                        >Off</span
+                                                    ></strong
+                                                >
+                                            </span>
+                                        </div>
+                                        <div
+                                            class="col-md-3"
+                                            *ngIf="shopData.vacation_mode == 1"
+                                        >
+                                            <span>
+                                                <strong
+                                                    >Vacation Mode-<span
+                                                        style="color: green"
+                                                        >On</span
+                                                    ></strong
+                                                >
+                                            </span>
+                                        </div>
+                                        <div
+                                            class="col-md-3"
+                                            *ngIf="shopData.vacation_mode == 1"
+                                        >
+                                            <mat-slide-toggle
+                                                color="accent"
+                                                checked
+                                            ></mat-slide-toggle>
+                                        </div>
+                                        <div
+                                            class="col-md-3"
+                                            *ngIf="shopData.vacation_mode == 0"
+                                        >
+                                            <mat-slide-toggle
+                                                color="primary"
+                                                formControlName="vacation_mode"
+                                            ></mat-slide-toggle>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="flex items-center">
+                                                <div
+                                                    class="
+                                                        flex
+                                                        items-center
+                                                        mr-4
+                                                    "
+                                                    *ngIf="flashMessage"
+                                                >
+                                                    <ng-container
+                                                        *ngIf="
+                                                            flashMessage ===
+                                                            'success'
+                                                        "
+                                                    >
+                                                        <mat-icon
+                                                            class="
+                                                                text-green-500
+                                                            "
+                                                            [svgIcon]="
+                                                                'heroicons_outline:check'
+                                                            "
+                                                        ></mat-icon>
+                                                        <span class="ml-2"
+                                                            >Success</span
+                                                        >
+                                                    </ng-container>
+                                                    <ng-container
+                                                        *ngIf="
+                                                            flashMessage ===
+                                                            'error'
+                                                        "
+                                                    >
+                                                        <mat-icon
+                                                            class="text-red-500"
+                                                            [svgIcon]="
+                                                                'heroicons_outline:x'
+                                                            "
+                                                        ></mat-icon>
+                                                        <span class="ml-2"
+                                                            >An error occurred,
+                                                            try again!</span
+                                                        >
+                                                    </ng-container>
+                                                </div>
+                                                <button class="btn btn-success">
+                                                    Save
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </ng-template>

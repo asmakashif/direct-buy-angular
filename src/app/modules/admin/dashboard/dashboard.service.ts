@@ -15,15 +15,31 @@ export class DashboardService {
 
     constructor(private _httpClient: HttpClient) {}
 
-    /**
-     * Getter for products
-     */
-    get products$(): Observable<InventoryProduct[]> {
-        return this._products.asObservable();
-    }
-
     getShops(user_id: string): Observable<any> {
         return this._httpClient.get('/api/getShops.php?user_id=' + user_id);
+    }
+
+    getShopDetailsById(
+        shopId: string,
+        user_id: string
+    ): Observable<ApiResponse> {
+        return this._httpClient.get<ApiResponse>(
+            '/api/getShopDetailsById.php?shopId=' +
+                shopId +
+                '&user_id=' +
+                user_id
+        );
+    }
+
+    updateShopDetails(user: Data): Observable<ApiResponse> {
+        return this._httpClient.post<ApiResponse>('/api/updateShop.php', user);
+    }
+
+    updateAdditionalSetting(user: Data): Observable<ApiResponse> {
+        return this._httpClient.post<ApiResponse>(
+            '/api/updateAdditionalSetting.php',
+            user
+        );
     }
 
     getPaymentGateway(user_id: string): Observable<any> {
@@ -108,8 +124,10 @@ export class DashboardService {
         );
     }
 
-    getProductsByStr(): Observable<any> {
-        return this._httpClient.get('/api/products/getStoreProducts.php');
+    getProductsByStr(shopId): Observable<any> {
+        return this._httpClient.get(
+            '/api/products/getStoreProducts.php?shopId=' + shopId
+        );
     }
 
     getProductById(temp_str_config_id: string): Observable<InventoryProduct> {
@@ -130,39 +148,10 @@ export class DashboardService {
                 user_id
         );
     }
-    // createProduct(): Observable<InventoryProduct> {
-    //     return this.products$.pipe(
-    //         take(1),
-    //         switchMap((products) =>
-    //             this._httpClient
-    //                 .post<InventoryProduct>(
-    //                     'api/apps/ecommerce/inventory/product',
-    //                     {}
-    //                 )
-    //                 .pipe(
-    //                     map((newProduct) => {
-    //                         // Update the products with the new product
-    //                         this._products.next([newProduct, ...products]);
 
-    //                         // Return the new product
-    //                         return newProduct;
-    //                     })
-    //                 )
-    //         )
-    //     );
-    //     // return this._httpClient
-    //     //     .post<InventoryProduct>('api/apps/ecommerce/inventory/product', {})
-    //     //     .pipe(
-    //     //         map((newProduct) => {
-    //     //             // Update the products with the new product
-    //     //             this._products.next([newProduct]);
-
-    //     //             // Return the new product
-    //     //             return newProduct;
-    //     //         })
-    //     //     );
-    // }
-
+    /**
+     * Update product
+     */
     updateProduct(product: InventoryProduct): Observable<ApiResponse> {
         return this._httpClient.post<ApiResponse>(
             '/api/products/updateProduct.php',
@@ -170,6 +159,9 @@ export class DashboardService {
         );
     }
 
+    /**
+     * Delete product
+     */
     deleteProduct(temp_str_config_id: string): Observable<InventoryProduct> {
         return this._httpClient.get<InventoryProduct>(
             '/api/products/deleteProduct.php?temp_str_config_id=' +
@@ -177,6 +169,9 @@ export class DashboardService {
         );
     }
 
+    /**
+     * Update RetailerDetails
+     */
     updateRetailerDetails(user: Data): Observable<ApiResponse> {
         return this._httpClient.post<ApiResponse>(
             '/api/updateRetailerDetails.php',
@@ -203,6 +198,18 @@ export class DashboardService {
     getTotalHomeDelByUser(user_id): Observable<any> {
         return this._httpClient.get(
             '/api/store_setting/getTotalHomeDelByUser.php?user_id=' + user_id
+        );
+    }
+
+    deleteShop(shopId): Observable<InventoryProduct> {
+        return this._httpClient.get<InventoryProduct>(
+            '/api/store_setting/deleteShop.php?shopId=' + shopId
+        );
+    }
+
+    deactivateShop(shopId): Observable<InventoryProduct> {
+        return this._httpClient.get<InventoryProduct>(
+            '/api/store_setting/deactivateShop.php?shopId=' + shopId
         );
     }
 }

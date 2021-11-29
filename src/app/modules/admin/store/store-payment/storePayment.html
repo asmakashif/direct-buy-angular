@@ -1,0 +1,288 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div class="bg-card">
+        <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
+            <div
+                class="
+                    flex flex-col
+                    sm:flex-row
+                    flex-auto
+                    sm:items-center
+                    min-w-0
+                    my-8
+                    sm:my-12
+                "
+            >
+                <!-- Avatar and name -->
+                <div class="flex flex-auto items-center min-w-0">
+                    <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
+                        <img
+                            class="w-full h-full object-cover"
+                            src="assets/images/avatars/avatar.png"
+                        />
+                    </div>
+                    <div class="flex flex-col min-w-0 ml-4">
+                        <ng-container *transloco="let t">
+                            <div
+                                class="
+                                    text-2xl
+                                    md:text-5xl
+                                    font-semibold
+                                    tracking-tight
+                                    leading-7
+                                    md:leading-snug
+                                    truncate
+                                "
+                            >
+                                {{ t("welcome-back") }}, Brian!
+                            </div>
+                        </ng-container>
+                        <div class="flex items-center">
+                            <mat-icon
+                                class="icon-size-5"
+                                [svgIcon]="'heroicons_solid:bell'"
+                            ></mat-icon>
+                            <div
+                                class="ml-1.5 leading-6 truncate text-secondary"
+                            >
+                                Store Payments
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Actions -->
+                <div class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3">
+                    <button
+                        class="fuse-mat-button-rounded bg-accent-700"
+                        mat-flat-button
+                        [color]="'accent'"
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:mail'"
+                        ></mat-icon>
+                        <span class="ml-2">Messages</span>
+                    </button>
+                    <button
+                        class="fuse-mat-button-rounded"
+                        mat-flat-button
+                        [color]="'primary'"
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:cog'"
+                        ></mat-icon>
+                        <span class="ml-2">Settings</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <div
+                class="
+                    flex flex-col
+                    m-8
+                    p-8
+                    pb-4
+                    bg-card
+                    rounded-2xl
+                    shadow
+                    overflow-hidden
+                "
+            >
+                <h4 class="card-title">Choose Payment Options</h4>
+
+                <ul class="card-footer">
+                    <div class="row">
+                        <ng-container *ngFor="let payment of payment">
+                            <div class="col-md-4 mt-4">
+                                <li class="list-group-item">
+                                    <div class="media align-items-center">
+                                        <div class="row">
+                                            <div class="col-md-1">
+                                                <div
+                                                    class="media-left"
+                                                    style="margin-left: -4"
+                                                >
+                                                    <div
+                                                        class="
+                                                            flex-0
+                                                            w-8
+                                                            h-8
+                                                            rounded-full
+                                                            overflow-hidden
+                                                        "
+                                                    >
+                                                        <img
+                                                            *ngIf="
+                                                                payment.provider_img
+                                                            "
+                                                            class="
+                                                                w-full
+                                                                h-full
+                                                                object-cover
+                                                            "
+                                                            [src]="
+                                                                payment.provider_img
+                                                            "
+                                                        />
+                                                    </div>
+                                                    <!-- <div
+                                                        class="
+                                                            relative
+                                                            flex flex-0
+                                                            items-center
+                                                            justify-center
+                                                            w-12
+                                                            h-12
+                                                            mr-6
+                                                            rounded
+                                                            overflow-hidden
+                                                            border
+                                                        "
+                                                    >
+                                                        <img
+                                                            class="w-8"
+                                                            *ngIf="
+                                                                payment.provider_img
+                                                            "
+                                                            [alt]="
+                                                                'Product thumbnail image'
+                                                            "
+                                                            [src]="
+                                                                payment.provider_img
+                                                            "
+                                                        />
+                                                        <div
+                                                            class="
+                                                                flex
+                                                                items-center
+                                                                justify-center
+                                                                w-full
+                                                                h-full
+                                                                text-xs
+                                                                font-semibold
+                                                                leading-none
+                                                                text-center
+                                                                uppercase
+                                                            "
+                                                            *ngIf="
+                                                                !payment.provider_img
+                                                            "
+                                                        >
+                                                            NO THUMB
+                                                        </div>
+                                                    </div> -->
+                                                    <!-- <mat-icon
+                                                        class="icon-size-8"
+                                                        [svgIcon]="
+                                                            'heroicons_solid:credit-card'
+                                                        "
+                                                    ></mat-icon> -->
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-7">
+                                                <div class="media-body">
+                                                    <p class="mb-0 ml-3">
+                                                        {{ payment.payment_name
+                                                        }}
+                                                    </p>
+                                                    <small
+                                                        class="small"
+                                                        *ngIf="
+                                                            payment.payment_name ==
+                                                            payment.pInfo_payment_name
+                                                        "
+                                                    >
+                                                        <span
+                                                            style="
+                                                                font-size: 12px;
+                                                            "
+                                                            *ngIf="
+                                                                payment.default_payment ==
+                                                                0
+                                                            "
+                                                            class="ml-3"
+                                                            >Make Default
+                                                            <input
+                                                                type="checkbox"
+                                                                [value]="
+                                                                    payment.shop_pInfo_id
+                                                                "
+                                                                name="shop_pInfo_id[]"
+                                                                (change)="
+                                                                    onDefaultSelect(
+                                                                        $event
+                                                                    )
+                                                                "
+                                                                matCheckbox
+                                                            />
+                                                        </span>
+                                                        <span
+                                                            style="
+                                                                font-size: 12px;
+                                                            "
+                                                            *ngIf="
+                                                                payment.default_payment ==
+                                                                1
+                                                            "
+                                                            class="ml-3"
+                                                            >Default Payment
+                                                        </span>
+                                                    </small>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 ml-2">
+                                                <div class="media-right">
+                                                    <input
+                                                        class="form-check-input"
+                                                        type="checkbox"
+                                                        *ngIf="
+                                                            payment.payment_name ==
+                                                            payment.pInfo_payment_name
+                                                        "
+                                                        [value]="
+                                                            payment.payment_name
+                                                        "
+                                                        (change)="
+                                                            strPayment($event)
+                                                        "
+                                                        checked="true"
+                                                    />
+                                                    <input
+                                                        class="form-check-input"
+                                                        type="checkbox"
+                                                        *ngIf="
+                                                            payment.payment_name !=
+                                                            payment.pInfo_payment_name
+                                                        "
+                                                        [value]="
+                                                            payment.payment_name
+                                                        "
+                                                        (change)="
+                                                            strPayment($event)
+                                                        "
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </div>
+                        </ng-container>
+                    </div>
+                </ul>
+                <div class="flex items-center" style="float: right">
+                    <button (click)="done()" class="btn btn-info">
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

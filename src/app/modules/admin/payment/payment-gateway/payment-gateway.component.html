@@ -82,80 +82,109 @@
     <!-- Main -->
     <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
         <div class="w-full max-w-screen-xl mx-auto">
-            <form
+            <div
                 class="
                     flex flex-col
                     m-8
                     p-8
+                    pb-4
                     bg-card
                     rounded-2xl
                     shadow
                     overflow-hidden
                 "
-                [formGroup]="paymentGatewayForm"
-                (ngSubmit)="onSubmit()"
-                autocomplete="on"
             >
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="payment_option"
-                                ><b>Provider Type</b></label
-                            >
-                            <br />
-                            <select
-                                type="text"
-                                class="form-control"
-                                formControlName="provider_type"
-                                name="provider_type"
-                                (change)="onChange($event.target.value)"
-                                required=""
-                            >
-                                <option value="">Select Provider Type</option>
-                                <option
-                                    *ngFor="let provider of providerType"
-                                    [value]="provider.provider_name"
+                <form
+                    [formGroup]="paymentGatewayForm"
+                    #shopForm="ngForm"
+                    (ngSubmit)="onSubmit()"
+                    autocomplete="on"
+                >
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="payment_option"
+                                    ><b>Provider Type</b></label
                                 >
-                                    {{ provider.provider_name }}
-                                </option>
-                            </select>
+                                <br />
+                                <select
+                                    type="text"
+                                    class="form-control"
+                                    formControlName="provider_type"
+                                    name="provider_type"
+                                    (change)="onChange($event.target.value)"
+                                    required=""
+                                >
+                                    <option value="">
+                                        Select Provider Type
+                                    </option>
+                                    <option
+                                        *ngFor="let provider of providerType"
+                                        [value]="provider.provider_name"
+                                    >
+                                        {{ provider.provider_name }}
+                                    </option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-8" style="margin-top: 35px">
-                        <i class="bi bi-question-circle-fill"></i>&nbsp;
-                        <span
-                            ><b
-                                >Select payment mode for customer to make the
-                                payment through</b
-                            ></span
-                        >
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="payment_option"
-                                ><b>Custom Payment Name</b></label
+                        <div class="col-md-8" style="margin-top: 35px">
+                            <i class="bi bi-question-circle-fill"></i>&nbsp;
+                            <span
+                                ><b
+                                    >Select payment mode for customer to make
+                                    the payment through</b
+                                ></span
                             >
-                            &nbsp;
-                            <input
-                                type="text"
-                                formControlName="payment_name"
-                                placeholder="Enter Custom Payment name"
-                                name="payment_name"
-                                id="payment_name"
-                                class="form-control"
-                            />
                         </div>
                     </div>
-                    <div class="col-md-8" style="margin-top: 35px">
-                        <i class="bi bi-question-circle-fill"></i>&nbsp;
-                        <span><b>Enter payment name </b></span>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="payment_option"
+                                    ><b>Custom Payment Name</b></label
+                                >
+                                &nbsp;
+                                <input
+                                    type="text"
+                                    formControlName="payment_name"
+                                    placeholder="Enter Custom Payment name"
+                                    name="payment_name"
+                                    id="payment_name"
+                                    class="form-control"
+                                />
+                            </div>
+                            <div
+                                class="flex items-center mr-4"
+                                *ngIf="flashMessage"
+                            >
+                                <ng-container
+                                    *ngIf="flashMessage === 'success'"
+                                >
+                                    <mat-icon
+                                        class="text-green-500"
+                                        [svgIcon]="'heroicons_outline:check'"
+                                    ></mat-icon>
+                                    <span class="ml-2">Success</span>
+                                </ng-container>
+                                <ng-container *ngIf="flashMessage === 'error'">
+                                    <mat-icon
+                                        class="text-red-500"
+                                        [svgIcon]="'heroicons_outline:x'"
+                                    ></mat-icon>
+                                    <span class="ml-2"
+                                        >Payment name already present</span
+                                    >
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="col-md-8" style="margin-top: 35px">
+                            <i class="bi bi-question-circle-fill"></i>&nbsp;
+                            <span><b>Enter payment name </b></span>
+                        </div>
                     </div>
-                </div>
-                <br />
-                <!-- <div id="razorpay" style="display: none">
+                    <br />
+                    <!-- <div id="razorpay" style="display: none">
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
@@ -230,26 +259,26 @@
                         </div>
                     </div>
                 </div> -->
-                <br />
-                <div id="googlepay" style="display: none">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="payment_option"
-                                    ><b>Payee VPA</b></label
-                                >
-                                &nbsp;
-                                <input
-                                    type="text"
-                                    formControlName="payment_api_key"
-                                    placeholder="Enter Payee VPA UPI Id"
-                                    name="payment_api_key"
-                                    id="payment_api_key"
-                                    class="form-control"
-                                />
-                            </div>
-                            <br />
-                            <!-- <span style="color: red">NOTE:</span>&nbsp;<span
+                    <br />
+                    <div id="googlepay" style="display: none">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="payment_option"
+                                        ><b>Payee VPA</b></label
+                                    >
+                                    &nbsp;
+                                    <input
+                                        type="text"
+                                        formControlName="payment_api_key"
+                                        placeholder="Enter Payee VPA UPI Id"
+                                        name="payment_api_key"
+                                        id="payment_api_key"
+                                        class="form-control"
+                                    />
+                                </div>
+                                <br />
+                                <!-- <span style="color: red">NOTE:</span>&nbsp;<span
                                 ><b>Know how to generate API key </b
                                 ><a
                                     href="assets/documents/Razorpay.pdf"
@@ -257,286 +286,290 @@
                                     >Click here</a
                                 ></span
                             > -->
+                            </div>
+                            <div class="col-md-1" style="margin-top: 35px">
+                                <i class="bi bi-question-circle-fill"></i>
+                            </div>
+                            <div class="col-md-6">
+                                <img
+                                    src="assets/images/uploads/Inkedrazor1_L1.jpg"
+                                    style="width: 600px; height: 300px"
+                                />
+                            </div>
                         </div>
-                        <div class="col-md-1" style="margin-top: 35px">
-                            <i class="bi bi-question-circle-fill"></i>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="payment_option"
+                                        ><b>Payee Name</b></label
+                                    >
+                                    &nbsp;
+                                    <input
+                                        type="text"
+                                        formControlName="payment_secret_key"
+                                        placeholder="Enter Payee Name(Merchant Name)"
+                                        name="payment_secret_key"
+                                        id="payment_secret_key"
+                                        class="form-control"
+                                    />
+                                </div>
+                                <br />
+                            </div>
+                            <div class="col-md-1" style="margin-top: 35px">
+                                <i class="bi bi-question-circle-fill"></i>
+                            </div>
+                            <div class="col-md-6">
+                                <img
+                                    src="assets/images/uploads/Inkedrazor1_L2.jpg"
+                                    style="width: 600px; height: 300px"
+                                />
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <img
-                                src="assets/images/uploads/Inkedrazor1_L1.jpg"
-                                style="width: 600px; height: 300px"
-                            />
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="payment_option"
+                                        ><b>Transaction Note</b></label
+                                    >
+                                    &nbsp;
+                                    <input
+                                        type="text"
+                                        formControlName="transaction_note"
+                                        placeholder="Enter Transaction Note"
+                                        name="transaction_note"
+                                        id="transaction_note"
+                                        class="form-control"
+                                    />
+                                </div>
+                                <br />
+                            </div>
+                            <div class="col-md-1" style="margin-top: 35px">
+                                <i class="bi bi-question-circle-fill"></i>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="payment_option"
+                                        ><b>Merchant Code</b></label
+                                    >
+                                    &nbsp;
+                                    <input
+                                        type="text"
+                                        formControlName="merchant_code"
+                                        placeholder="Enter Merchant Code"
+                                        name="merchant_code"
+                                        id="merchant_code"
+                                        class="form-control"
+                                    />
+                                </div>
+                                <br />
+                            </div>
+                            <div class="col-md-1" style="margin-top: 35px">
+                                <i class="bi bi-question-circle-fill"></i>
+                            </div>
                         </div>
                     </div>
                     <br />
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="payment_option"
-                                    ><b>Payee Name</b></label
+                    <div id="phonepe" style="display: none">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="payment_option"
+                                        ><b>Salt Key</b></label
+                                    >
+                                    &nbsp;
+                                    <input
+                                        type="text"
+                                        formControlName="payment_api_key"
+                                        placeholder="Enter Payment API Key"
+                                        name="payment_api_key"
+                                        id="payment_api_key"
+                                        class="form-control"
+                                    />
+                                </div>
+                                <br />
+                                <span style="color: red">NOTE:</span>&nbsp;<span
+                                    ><b>Know how to generate API key </b
+                                    ><a
+                                        href="assets/documents/Razorpay.pdf"
+                                        target="_blank"
+                                        >Click here</a
+                                    ></span
                                 >
-                                &nbsp;
-                                <input
-                                    type="text"
-                                    formControlName="payment_secret_key"
-                                    placeholder="Enter Payee Name(Merchant Name)"
-                                    name="payment_secret_key"
-                                    id="payment_secret_key"
-                                    class="form-control"
+                            </div>
+                            <div class="col-md-1" style="margin-top: 35px">
+                                <i class="bi bi-question-circle-fill"></i>
+                            </div>
+                            <div class="col-md-6">
+                                <img
+                                    src="assets/images/uploads/Inkedrazor1_L1.jpg"
+                                    style="width: 600px; height: 300px"
                                 />
                             </div>
-                            <br />
                         </div>
-                        <div class="col-md-1" style="margin-top: 35px">
-                            <i class="bi bi-question-circle-fill"></i>
-                        </div>
-                        <div class="col-md-6">
-                            <img
-                                src="assets/images/uploads/Inkedrazor1_L2.jpg"
-                                style="width: 600px; height: 300px"
-                            />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="payment_option"
-                                    ><b>Transaction Note</b></label
+                        <br />
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="payment_option"
+                                        ><b>Merchant Id</b></label
+                                    >
+                                    &nbsp;
+                                    <input
+                                        type="text"
+                                        formControlName="payment_secret_key"
+                                        placeholder="Enter Payment Secret Key"
+                                        name="payment_secret_key"
+                                        id="payment_secret_key"
+                                        class="form-control"
+                                    />
+                                </div>
+                                <br />
+                                <span style="color: red">NOTE:</span>&nbsp;<span
+                                    ><b>Know how to generate API Secret key </b
+                                    ><a
+                                        href="assets/documents/Razorpay.pdf"
+                                        target="_blank"
+                                        >Click here</a
+                                    ></span
                                 >
-                                &nbsp;
-                                <input
-                                    type="text"
-                                    formControlName="transaction_note"
-                                    placeholder="Enter Transaction Note"
-                                    name="transaction_note"
-                                    id="transaction_note"
-                                    class="form-control"
+                            </div>
+                            <div class="col-md-1" style="margin-top: 35px">
+                                <i class="bi bi-question-circle-fill"></i>
+                            </div>
+                            <div class="col-md-6">
+                                <img
+                                    src="assets/images/uploads/Inkedrazor1_L2.jpg"
+                                    style="width: 600px; height: 300px"
                                 />
                             </div>
-                            <br />
                         </div>
-                        <div class="col-md-1" style="margin-top: 35px">
-                            <i class="bi bi-question-circle-fill"></i>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="payment_option"
-                                    ><b>Merchant Code</b></label
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="payment_option"
+                                        ><b>Salt Index</b></label
+                                    >
+                                    &nbsp;
+                                    <input
+                                        type="text"
+                                        formControlName="salt_index"
+                                        placeholder="Enter Salt Index"
+                                        name="salt_index"
+                                        id="salt_index"
+                                        class="form-control"
+                                    />
+                                </div>
+                                <br />
+                                <span style="color: red">NOTE:</span>&nbsp;<span
+                                    ><b>Know how to generate API Secret key </b
+                                    ><a
+                                        href="assets/documents/Razorpay.pdf"
+                                        target="_blank"
+                                        >Click here</a
+                                    ></span
                                 >
-                                &nbsp;
-                                <input
-                                    type="text"
-                                    formControlName="merchant_code"
-                                    placeholder="Enter Merchant Code"
-                                    name="merchant_code"
-                                    id="merchant_code"
-                                    class="form-control"
+                            </div>
+                            <div class="col-md-1" style="margin-top: 35px">
+                                <i class="bi bi-question-circle-fill"></i>
+                            </div>
+                            <div class="col-md-6">
+                                <img
+                                    src="assets/images/uploads/Inkedrazor1_L2.jpg"
+                                    style="width: 600px; height: 300px"
                                 />
                             </div>
-                            <br />
-                        </div>
-                        <div class="col-md-1" style="margin-top: 35px">
-                            <i class="bi bi-question-circle-fill"></i>
-                        </div>
-                    </div>
-                </div>
-                <br />
-                <div id="phonepe" style="display: none">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="payment_option"
-                                    ><b>Salt Key</b></label
-                                >
-                                &nbsp;
-                                <input
-                                    type="text"
-                                    formControlName="payment_api_key"
-                                    placeholder="Enter Payment API Key"
-                                    name="payment_api_key"
-                                    id="payment_api_key"
-                                    class="form-control"
-                                />
-                            </div>
-                            <br />
-                            <span style="color: red">NOTE:</span>&nbsp;<span
-                                ><b>Know how to generate API key </b
-                                ><a
-                                    href="assets/documents/Razorpay.pdf"
-                                    target="_blank"
-                                    >Click here</a
-                                ></span
-                            >
-                        </div>
-                        <div class="col-md-1" style="margin-top: 35px">
-                            <i class="bi bi-question-circle-fill"></i>
-                        </div>
-                        <div class="col-md-6">
-                            <img
-                                src="assets/images/uploads/Inkedrazor1_L1.jpg"
-                                style="width: 600px; height: 300px"
-                            />
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="payment_option"
-                                    ><b>Merchant Id</b></label
-                                >
-                                &nbsp;
-                                <input
-                                    type="text"
-                                    formControlName="payment_secret_key"
-                                    placeholder="Enter Payment Secret Key"
-                                    name="payment_secret_key"
-                                    id="payment_secret_key"
-                                    class="form-control"
-                                />
-                            </div>
-                            <br />
-                            <span style="color: red">NOTE:</span>&nbsp;<span
-                                ><b>Know how to generate API Secret key </b
-                                ><a
-                                    href="assets/documents/Razorpay.pdf"
-                                    target="_blank"
-                                    >Click here</a
-                                ></span
-                            >
-                        </div>
-                        <div class="col-md-1" style="margin-top: 35px">
-                            <i class="bi bi-question-circle-fill"></i>
-                        </div>
-                        <div class="col-md-6">
-                            <img
-                                src="assets/images/uploads/Inkedrazor1_L2.jpg"
-                                style="width: 600px; height: 300px"
-                            />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="payment_option"
-                                    ><b>Salt Index</b></label
-                                >
-                                &nbsp;
-                                <input
-                                    type="text"
-                                    formControlName="salt_index"
-                                    placeholder="Enter Salt Index"
-                                    name="salt_index"
-                                    id="salt_index"
-                                    class="form-control"
-                                />
-                            </div>
-                            <br />
-                            <span style="color: red">NOTE:</span>&nbsp;<span
-                                ><b>Know how to generate API Secret key </b
-                                ><a
-                                    href="assets/documents/Razorpay.pdf"
-                                    target="_blank"
-                                    >Click here</a
-                                ></span
-                            >
-                        </div>
-                        <div class="col-md-1" style="margin-top: 35px">
-                            <i class="bi bi-question-circle-fill"></i>
-                        </div>
-                        <div class="col-md-6">
-                            <img
-                                src="assets/images/uploads/Inkedrazor1_L2.jpg"
-                                style="width: 600px; height: 300px"
-                            />
-                        </div>
-                    </div>
-                </div>
-                <br />
-                <div id="paytm" style="display: none">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="payment_option"
-                                    ><b>Merchant MID</b></label
-                                >
-                                &nbsp;
-                                <input
-                                    type="text"
-                                    formControlName="payment_api_key"
-                                    placeholder="Enter Merchant MID"
-                                    name="payment_api_key"
-                                    class="form-control"
-                                />
-                            </div>
-                            <br />
-                            <span style="color: red">NOTE:</span>&nbsp;<span
-                                ><b>Know how to generate Merchant MID </b
-                                ><a
-                                    href="assets/documents/Paytm.pdf"
-                                    target="_blank"
-                                    >Click here</a
-                                ></span
-                            >
-                        </div>
-                        <div class="col-md-1" style="margin-top: 35px">
-                            <i class="bi bi-question-circle-fill"></i>
-                        </div>
-                        <div class="col-md-6">
-                            <img
-                                src="assets/images/uploads/paytm_L1.jpg"
-                                style="width: 600px; height: 300px"
-                            />
                         </div>
                     </div>
                     <br />
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="payment_option"
-                                    ><b>Merchant Key</b></label
+                    <div id="paytm" style="display: none">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="payment_option"
+                                        ><b>Merchant MID</b></label
+                                    >
+                                    &nbsp;
+                                    <input
+                                        type="text"
+                                        formControlName="payment_api_key"
+                                        placeholder="Enter Merchant MID"
+                                        name="payment_api_key"
+                                        class="form-control"
+                                    />
+                                </div>
+                                <br />
+                                <span style="color: red">NOTE:</span>&nbsp;<span
+                                    ><b>Know how to generate Merchant MID </b
+                                    ><a
+                                        href="assets/documents/Paytm.pdf"
+                                        target="_blank"
+                                        >Click here</a
+                                    ></span
                                 >
-                                &nbsp;
-                                <input
-                                    type="text"
-                                    formControlName="payment_secret_key"
-                                    placeholder="Enter Merchant Key"
-                                    name="payment_secret_key"
-                                    class="form-control"
+                            </div>
+                            <div class="col-md-1" style="margin-top: 35px">
+                                <i class="bi bi-question-circle-fill"></i>
+                            </div>
+                            <div class="col-md-6">
+                                <img
+                                    src="assets/images/uploads/paytm_L1.jpg"
+                                    style="width: 600px; height: 300px"
                                 />
                             </div>
-                            <br />
-                            <span style="color: red">NOTE:</span>&nbsp;<span
-                                ><b>Know how to generate Merchant Key </b
-                                ><a
-                                    href="assets/documents/Paytm.pdf"
-                                    target="_blank"
-                                    >Click here</a
-                                ></span
-                            >
                         </div>
-                        <div class="col-md-1" style="margin-top: 35px">
-                            <i class="bi bi-question-circle-fill"></i>
-                        </div>
-                        <div class="col-md-6">
-                            <img
-                                src="assets/images/uploads/paytm_L2.jpg"
-                                style="width: 600px; height: 300px"
-                            />
+                        <br />
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="payment_option"
+                                        ><b>Merchant Key</b></label
+                                    >
+                                    &nbsp;
+                                    <input
+                                        type="text"
+                                        formControlName="payment_secret_key"
+                                        placeholder="Enter Merchant Key"
+                                        name="payment_secret_key"
+                                        class="form-control"
+                                    />
+                                </div>
+                                <br />
+                                <span style="color: red">NOTE:</span>&nbsp;<span
+                                    ><b>Know how to generate Merchant Key </b
+                                    ><a
+                                        href="assets/documents/Paytm.pdf"
+                                        target="_blank"
+                                        >Click here</a
+                                    ></span
+                                >
+                            </div>
+                            <div class="col-md-1" style="margin-top: 35px">
+                                <i class="bi bi-question-circle-fill"></i>
+                            </div>
+                            <div class="col-md-6">
+                                <img
+                                    src="assets/images/uploads/paytm_L2.jpg"
+                                    style="width: 600px; height: 300px"
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <input
+                    <div class="flex items-center">
+                        <button class="btn btn-success">Submit</button>
+                    </div>
+                    <!-- <input
                     type="submit"
                     class="btn btn-success"
                     value="Add"
                     id="checkBtn"
                     name="submit"
                     style="width: 100px"
-                />
-            </form>
+                /> -->
+                </form>
+            </div>
         </div>
     </div>
 </div>

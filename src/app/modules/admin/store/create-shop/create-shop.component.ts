@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import {
     FormGroup,
@@ -6,7 +6,9 @@ import {
     Validators,
     FormArray,
     FormControl,
+    NgForm,
 } from '@angular/forms';
+import { FuseAlertType } from '@fuse/components/alert';
 import { CreateShopService } from 'app/modules/admin/store/create-shop/create-shop.service';
 
 declare var $: any;
@@ -16,12 +18,20 @@ declare var $: any;
     //styleUrls: ['./create-shop.component.css'],
 })
 export class CreateShopComponent implements OnInit {
+    @ViewChild('shopForm') shopForm: NgForm;
+    alert: { type: FuseAlertType; message: string } = {
+        type: 'success',
+        message: '',
+    };
+    showAlert: boolean = false;
     shopType: any;
+    flashMessage: string;
 
     constructor(
         private formBuilder: FormBuilder,
         private apiService: CreateShopService,
-        private router: Router
+        private router: Router,
+        private cd: ChangeDetectorRef
     ) {}
     addForm: FormGroup;
 
@@ -54,7 +64,7 @@ export class CreateShopComponent implements OnInit {
             //shopType: this.formBuilder.array([], [Validators.required]),
         });
 
-        this.validateShop();
+        //this.validateShop();
     }
 
     validateShop() {
@@ -108,16 +118,52 @@ export class CreateShopComponent implements OnInit {
         }
         if (!this.isMobile()) {
             //alert('desktop');
-            this.apiService.createUser(this.addForm.value).subscribe((data) => {
-                // this.router.navigate(['/product-config/' + shopId]);
-                this.router.navigate(['/steps/' + shopId]);
-            });
+            this.apiService.createUser(this.addForm.value).subscribe(
+                () => {
+                    // this.router.navigate(['/product-config/' + shopId]);
+                    this.showFlashMessage('success');
+                    this.router.navigate(['/steps/' + shopId]);
+                },
+                (response) => {
+                    this.showFlashMessage('error');
+                    this.ngOnInit();
+                    // Reset the form
+                    //this.shopForm.resetForm();
+                }
+            );
         } else {
-            this.apiService.createUser(this.addForm.value).subscribe((data) => {
-                // this.router.navigate(['/product-config/' + shopId]);
-                this.router.navigate(['/mobile/steps/' + shopId]);
-            });
+            this.apiService.createUser(this.addForm.value).subscribe(
+                () => {
+                    // this.router.navigate(['/product-config/' + shopId]);
+                    this.router.navigate(['/mobile/steps/' + shopId]);
+                },
+                (response) => {
+                    this.showFlashMessage('error');
+                    this.ngOnInit();
+                    // Reset the form
+                    //this.shopForm.resetForm();
+                }
+            );
         }
+    }
+
+    /**
+     * Show flash message
+     */
+    showFlashMessage(type: 'success' | 'error'): void {
+        // Show the message
+        this.flashMessage = type;
+
+        // Mark for check
+        this.cd.markForCheck();
+
+        // Hide it after 3 seconds
+        setTimeout(() => {
+            this.flashMessage = null;
+
+            // Mark for check
+            this.cd.markForCheck();
+        }, 3000);
     }
 
     isMobile() {

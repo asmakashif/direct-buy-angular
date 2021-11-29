@@ -10,9 +10,9 @@ import { Observable } from 'rxjs';
 export class CreateShopService {
     constructor(private http: HttpClient) {}
 
-    getShopTypes(): Observable<any> {
-        return this.http.get('/api/getShopTypes.php');
-    }
+    // getShopTypes(): Observable<any> {
+    //     return this.http.get('/api/getShopTypes.php');
+    // }
 
     getStoreTypes(): Observable<any> {
         return this.http.get('/api/getStoreTypes.php');
