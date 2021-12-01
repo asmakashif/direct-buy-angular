@@ -8,6 +8,7 @@ import { UserService } from 'app/core/user/user.service';
 @Injectable()
 export class AuthService {
     private _authenticated: boolean = false;
+    otp: any;
 
     /**
      * Constructor
@@ -109,6 +110,13 @@ export class AuthService {
                 // Return a new observable with the response
                 return of(response);
             })
+        );
+    }
+
+    checkOtpVerification(credentials: { email: string }): Observable<any> {
+        return this._httpClient.post<any>(
+            '/api/checkOtpVerification.php',
+            credentials
         );
     }
 

@@ -13,6 +13,7 @@ import * as Bowser from 'bowser';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
 import { SignInService } from 'app/modules/auth/sign-in/sign-in.service';
+import { DeviceUUID } from 'device-uuid';
 
 @Component({
     selector: 'auth-sign-in',
@@ -36,6 +37,11 @@ export class AuthSignInComponent implements OnInit {
     userAgentDetails: string;
     browserDetails: string;
     otpVerify: string;
+    deviceId: string;
+    uuid: any;
+    fieldvalue = '';
+    verifyOtp: any;
+    otp: any;
 
     /**
      * Constructor
@@ -57,10 +63,9 @@ export class AuthSignInComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
-        // const isIEOrEdge = /msie\s|trident\/|edge\//i.test(
-        //     window.navigator.userAgent
-        // );
-        // alert(isIEOrEdge);
+        this.uuid = new DeviceUUID().get();
+        // console.log(this.uuid);
+
         this.otpVerify = localStorage.getItem('otpVerify');
         this.userAgent = Bowser.parse(window.navigator.userAgent);
         this.browser = Bowser.getParser(window.navigator.userAgent);
@@ -79,11 +84,24 @@ export class AuthSignInComponent implements OnInit {
         // Create the form
         this.signInForm = this._formBuilder.group({
             // domainname: [this.arrString[0]],
+            deviceId: [this.uuid],
             email: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required],
             otp: [''],
             rememberMe: [''],
         });
+    }
+
+    keyup(event) {
+        console.log(this.signInForm.value);
+        console.log(event);
+        this._authService
+            .checkOtpVerification(this.signInForm.value)
+            .subscribe((data) => {
+                this.verifyOtp = data;
+                this.otp = this.verifyOtp.otp;
+                console.log(this.verifyOtp.otp);
+            });
     }
 
     // -----------------------------------------------------------------------------------------------------

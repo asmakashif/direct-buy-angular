@@ -52,6 +52,7 @@
     "bootstrap-icons": "^1.5.0",
     "bowser": "^2.11.0",
     "crypto-js": "3.3.0",
+    "device-uuid": "^1.0.4",
     "gpu.js": "^1.4.9",
     "handsontable": "^9.0.2",
     "highlight.js": "11.2.0",

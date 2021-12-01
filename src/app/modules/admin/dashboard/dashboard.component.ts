@@ -13,10 +13,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DashboardService } from 'app/modules/admin/dashboard/dashboard.service';
 import { Data } from '../../../Model/data';
 import { InventoryProduct } from '../../../Model/inventory.types';
-import { FormBuilder, Validators } from '@angular/forms';
+import {
+    FormArray,
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    Validators,
+} from '@angular/forms';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { InventoryService } from '../ecommerce/inventory/inventory.service';
-import { DomSanitizer } from '@angular/platform-browser';
+
+import { HttpClient } from '@angular/common/http';
+import { DeviceUUID } from 'device-uuid';
+import { formatDate } from '@angular/common';
 
 declare var $: any;
 
@@ -59,10 +67,73 @@ declare var $: any;
             .form-control {
                 box-shadow: 0 10px 40px 0 #b0c1d9;
             }
-        `,
-        `
             .form-control::placeholder {
                 font-family: FontAwesome;
+            }
+
+            .image-upload > input {
+                display: none;
+            }
+        `,
+        `
+            .switch {
+                position: relative;
+                display: inline-block;
+                width: 50px;
+                height: 24px;
+            }
+
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+            .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #ccc;
+                -webkit-transition: 0.4s;
+                transition: 0.4s;
+            }
+
+            .slider:before {
+                position: absolute;
+                content: '';
+                height: 16px;
+                width: 16px;
+                left: 4px;
+                bottom: 4px;
+                background-color: white;
+                -webkit-transition: 0.4s;
+                transition: 0.4s;
+            }
+
+            input:checked + .slider {
+                background-color: #2196f3;
+            }
+
+            input:focus + .slider {
+                box-shadow: 0 0 1px #2196f3;
+            }
+
+            input:checked + .slider:before {
+                -webkit-transform: translateX(26px);
+                -ms-transform: translateX(26px);
+                transform: translateX(26px);
+            }
+
+            /* Rounded sliders */
+            .slider.round {
+                border-radius: 34px;
+            }
+
+            .slider.round:before {
+                border-radius: 50%;
             }
         `,
     ],
@@ -71,13 +142,13 @@ declare var $: any;
 })
 export class DashboardComponent {
     selectedProject: string = 'Dashbaord';
+    imagePath: string = '/api/products/uploads/';
     dateObj: number = Date.now();
     data: [];
     count: [];
     countOrders: [];
     queryParam: any;
     queryParamName: string;
-    accessToken: string;
     user_id: string;
     firstname: string;
     prevMonthOrderCount: [];
@@ -114,6 +185,12 @@ export class DashboardComponent {
     searchText;
     thumbnail: any;
     strPaymentCount: any;
+    selectedFile: File;
+    editShopForm: any;
+    shopData: any;
+    vacationForm: FormGroup;
+    deviceId: any;
+    shop_status: any;
 
     constructor(
         @Inject(DOCUMENT)
@@ -122,26 +199,28 @@ export class DashboardComponent {
         private flashMessagesService: FlashMessagesService,
         private formBuilder: FormBuilder,
         private _dashboardService: DashboardService,
-        private _inventoryService: InventoryService,
         private _router: Router,
         private routes: ActivatedRoute,
         private cd: ChangeDetectorRef,
-        private Location: Location,
-        private sanitizer: DomSanitizer
+        private _httpClient: HttpClient
     ) {}
 
     ngOnInit(): void {
-        this.accessToken = localStorage.getItem('accessToken');
-        this.validateSignIn = localStorage.getItem('validateSignIn');
+        const accessToken = localStorage.getItem('accessToken');
+        //const deviceId = localStorage.getItem('deviceId');
+        const uuid = new DeviceUUID().get();
         const user_id = localStorage.getItem('user_id');
-        console.log(user_id);
         const routeParams = this.routes.snapshot.params;
         this.shop_id = routeParams.shopId;
-        if (!this.accessToken) {
-            if (this.validateSignIn == '0') {
-                this._router.navigate(['sign-in']);
-            }
-        }
+        // if (!deviceId) {
+        //     this._router.navigate(['sign-in']);
+        // } else {
+        //     if (uuid != deviceId) {
+        //         this._router.navigate(['sign-in']);
+        //     } else {
+        //         this._router.navigate(['dashboard']);
+        //     }
+        // }
 
         // Create the selected product form
         this.selectedProductForm = this.formBuilder.group({
@@ -157,13 +236,27 @@ export class DashboardComponent {
             product_qty: [''],
             product_price: [''],
             offer_price: [''],
-            product_status: [''],
+            product_image: [''],
+            product_status: this.formBuilder.array([], [Validators.required]),
+        });
+
+        this.editShopForm = this.formBuilder.group({
+            shopId: [''],
+            shop_name: [''],
+            shop_address: [''],
+            shop_gst: [''],
         });
 
         this.messageForm = this.formBuilder.group({
             id: [user_id],
             str_msg: ['', Validators.required],
         });
+
+        this.vacationForm = this.formBuilder.group({
+            shopId: [routeParams.shopId],
+            vacation_mode: [false, Validators.requiredTrue],
+        });
+
         this._dashboardService.getShops(user_id).subscribe(
             (data: any) => {
                 this.data = data;
@@ -173,6 +266,14 @@ export class DashboardComponent {
                 //alert(error.message);
             }
         );
+
+        this._dashboardService
+            .getShopDetailsById(routeParams.shopId, user_id)
+            .subscribe((data: any) => {
+                this.editShopForm.patchValue(data);
+                this.shopData = data;
+                this.shop_status = this.shopData.shop_status;
+            });
 
         this._dashboardService.getNoOfShops(user_id).subscribe((count) => {
             this.count = count;
@@ -267,7 +368,15 @@ export class DashboardComponent {
                 this.messageForm.patchValue(data);
                 this.profileData = data;
                 this.firstname = this.profileData.firstname;
+                this.deviceId = this.profileData.deviceId;
                 this.cd.detectChanges();
+                if (!this.deviceId) {
+                    this._router.navigate(['sign-in']);
+                } else {
+                    if (uuid != this.deviceId) {
+                        this._router.navigate(['sign-in']);
+                    }
+                }
                 //console.log(this.profileData);
             });
 
@@ -294,22 +403,31 @@ export class DashboardComponent {
             });
         //this.editMessage();
 
-        this._dashboardService.getProductsByStr().subscribe((products) => {
-            this.products = products;
-            this.cd.detectChanges();
-            // let objectURL = 'data:image/jpg;base64,' + products.image;
-            // this.thumbnail = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-            console.log(this.products);
-        });
+        this._dashboardService
+            .getProductsByStr(routeParams.shopId)
+            .subscribe((products) => {
+                this.products = products;
+                this.cd.detectChanges();
+                // let objectURL = 'data:image/jpg;base64,' + products.image;
+                // this.thumbnail = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+                console.log(this.products);
+            });
     }
 
     changeStore(stores): void {
-        this._router
-            .navigate(['dashboard/' + stores.shopId + '/' + stores.shop_name])
-            .then(() => {
-                this.ngOnInit();
-                // window.location.reload();
-            });
+        //alert(stores.remove_shop);
+        if (stores.remove_shop == 0) {
+            this._router
+                .navigate([
+                    'dashboard/' + stores.shopId + '/' + stores.shop_name,
+                ])
+                .then(() => {
+                    this.ngOnInit();
+                    // window.location.reload();
+                });
+        } else {
+            this.dashbaord();
+        }
     }
 
     dashbaord(): void {
@@ -395,6 +513,29 @@ export class DashboardComponent {
         });
     }
 
+    onShopDetailsUpdate() {
+        console.log(this.editShopForm.value);
+        this._dashboardService
+            .updateShopDetails(this.editShopForm.value)
+            .subscribe((data) => {
+                this.ngOnInit();
+                this.showFlashMessage('success');
+                this.cd.detectChanges();
+            });
+    }
+
+    onVacationSubmit(formValue: any) {
+        //alert(JSON.stringify(formValue, null, 2));
+        console.log(formValue);
+        this._dashboardService
+            .updateAdditionalSetting(formValue)
+            .subscribe((data) => {
+                this.ngOnInit();
+                this.showFlashMessage('success');
+                this.cd.detectChanges();
+            });
+    }
+
     onMessageUpdate() {
         console.log(this.messageForm.value);
         this._dashboardService
@@ -413,6 +554,10 @@ export class DashboardComponent {
                 //     }
                 // );
             });
+    }
+
+    checked(event) {
+        alert(event);
     }
 
     uniqueOrdersCurMonth(): void {
@@ -555,20 +700,89 @@ export class DashboardComponent {
     //     this.cd.detectChanges();
     // }
 
+    onFileUpload(event) {
+        // this.selectedFile = event.target.files[0];
+        const file = event.target.files[0];
+        console.log(file);
+        this.selectedProductForm.get('product_image').setValue(file);
+        const formData = new FormData();
+        formData.append(
+            'temp_str_config_id',
+            this.selectedProductForm.get('temp_str_config_id').value
+        );
+        formData.append(
+            'myFile',
+            this.selectedProductForm.get('product_image').value
+        );
+        this._httpClient
+            .post<any>('/api/products/upload.php', formData)
+            .subscribe(() => {
+                this.ngOnInit();
+            });
+    }
+
+    productStatus(e) {
+        //alert(e.target.value);
+        const product_status: FormArray = this.selectedProductForm.get(
+            'product_status'
+        ) as FormArray;
+
+        if (e.target.checked) {
+            product_status.push(new FormControl(e.target.value));
+            // this.ngOnInit();
+        } else {
+            const index = product_status.controls.findIndex(
+                (x) => x.value === e.target.value
+            );
+            product_status.removeAt(index);
+        }
+    }
+
+    // productStatus(e) {
+    //     const formData = new FormData();
+    //     formData.append(
+    //         'temp_str_config_id',
+    //         this.selectedProductForm.get('temp_str_config_id').value
+    //     );
+    //     const product_status = e.target.value;
+    //     alert(product_status);
+    //     const data = {
+    //         product_status: product_status,
+    //         temp_str_config_id: formData,
+    //     };
+    //     if (e.target.checked) {
+    //         this._httpClient
+    //             .post<any>('/api/products/updateProductStatus.php', data)
+    //             .subscribe(() => {
+    //                 this.ngOnInit();
+    //             });
+    //     } else {
+    //         alert(data);
+    //     }
+    // }
+
     /**
      * Update the selected product using the form data
      */
     updateSelectedProduct(): void {
         // Get the product object
         const product = this.selectedProductForm.getRawValue();
-
+        console.log(product);
         // Remove the currentImageIndex field
         //delete product.currentImageIndex;
 
         // Update the product on the server
+        // this._httpClient
+        //     .post<any>('/api/products/updateProduct.php', product)
+        //     .subscribe(() => {
+        //         this.showFlashMessage('success');
+        //         this.ngOnInit();
+        //     });
         this._dashboardService.updateProduct(product).subscribe(() => {
             // Show a success message
             this.showFlashMessage('success');
+            // this.ngOnInit();
+            this.cd.markForCheck();
         });
     }
 
@@ -623,5 +837,175 @@ export class DashboardComponent {
     inventory() {
         const routeParams = this.routes.snapshot.params;
         this._router.navigate(['product/inventory/' + routeParams.shopId]);
+    }
+
+    deleteShop(): void {
+        // Open the confirmation dialog
+        const confirmation = this._fuseConfirmationService.open({
+            title: 'Delete Shop',
+            message:
+                'Are you sure you want to remove this Shop? This action cannot be undone!',
+            actions: {
+                confirm: {
+                    label: 'Delete',
+                },
+            },
+        });
+
+        // Subscribe to the confirmation dialog closed action
+        confirmation.afterClosed().subscribe((result) => {
+            // If the confirm button pressed...
+            if (result === 'confirmed') {
+                // Get the shop Id
+                const routeParams = this.routes.snapshot.params;
+
+                //alert(product.temp_str_config_id);
+                // Delete the product on the server
+                this._dashboardService
+                    .deleteShop(routeParams.shopId)
+                    .subscribe(() => {
+                        // Close the details
+                        this.dashbaord();
+                    });
+            }
+        });
+    }
+
+    deactivateShop() {
+        const routeParams = this.routes.snapshot.params;
+        const user_id = localStorage.getItem('user_id');
+        const curDate = formatDate(new Date(), 'Y-MM-d', 'en');
+        this._dashboardService
+            .getShopDetailsById(routeParams.shopId, user_id)
+            .subscribe((data: any) => {
+                this.shopData = data;
+                const exp_date = formatDate(
+                    this.shopData.shop_exp_date,
+                    'Y-MM-d',
+                    'en'
+                );
+
+                if (this.shopData.trial_activate == 0) {
+                    if (exp_date < curDate) {
+                        // Open the confirmation dialog
+                        const confirmation = this._fuseConfirmationService.open(
+                            {
+                                title: 'Deactivate Shop',
+                                message:
+                                    'Note: Subscription is expired for this store!You can always reactivate the store and continue to use it.Are you sure to deactivate this store?',
+                                actions: {
+                                    confirm: {
+                                        label: 'Deactivate',
+                                    },
+                                },
+                            }
+                        );
+
+                        // Subscribe to the confirmation dialog closed action
+                        confirmation.afterClosed().subscribe((result) => {
+                            // If the confirm button pressed...
+                            if (result === 'confirmed') {
+                                // Deactivate the shop on the server
+                                this._dashboardService
+                                    .deactivateShop(routeParams.shopId)
+                                    .subscribe(() => {
+                                        // Close the details
+                                        this.ngOnInit();
+                                    });
+                            }
+                        });
+                    } else {
+                        // Open the confirmation dialog
+                        const confirmation = this._fuseConfirmationService.open(
+                            {
+                                title: 'Deactivate Shop',
+                                message:
+                                    'Note: Subscription is active for this store! Deactivating this store will not extend the expiry date of current subscription you can always reactivate the store within the subscription period and continue to use it.Do you confirm to deactivate the store?',
+                                actions: {
+                                    confirm: {
+                                        label: 'Deactivate',
+                                    },
+                                },
+                            }
+                        );
+
+                        // Subscribe to the confirmation dialog closed action
+                        confirmation.afterClosed().subscribe((result) => {
+                            // If the confirm button pressed...
+                            if (result === 'confirmed') {
+                                // Deactivate the shop on the server
+                                this._dashboardService
+                                    .deactivateShop(routeParams.shopId)
+                                    .subscribe(() => {
+                                        // Close the details
+                                        this.ngOnInit();
+                                    });
+                            }
+                        });
+                    }
+                } else {
+                    if (exp_date < curDate) {
+                        // Open the confirmation dialog
+                        const confirmation = this._fuseConfirmationService.open(
+                            {
+                                title: 'Deactivate Shop',
+                                message:
+                                    'Note: Subscription is expired for this store!You can always reactivate the store and continue to use it.Are you sure to deactivate this store?',
+                                actions: {
+                                    confirm: {
+                                        label: 'Deactivate',
+                                    },
+                                },
+                            }
+                        );
+
+                        // Subscribe to the confirmation dialog closed action
+                        confirmation.afterClosed().subscribe((result) => {
+                            // If the confirm button pressed...
+                            if (result === 'confirmed') {
+                                // Deactivate the shop on the server
+                                this._dashboardService
+                                    .deactivateShop(routeParams.shopId)
+                                    .subscribe(() => {
+                                        // Close the details
+                                        this.ngOnInit();
+                                    });
+                            }
+                        });
+                    } else {
+                        // Open the confirmation dialog
+                        const confirmation = this._fuseConfirmationService.open(
+                            {
+                                title: 'Deactivate Shop',
+                                message:
+                                    'Note: Trial Period is active for this store! Deactivating this store within the trial period ends the trial period and to reactivate the store you will have to activate the subscription. Do you wish to continue to deactivate the store?',
+                                actions: {
+                                    confirm: {
+                                        label: 'Deactivate',
+                                    },
+                                },
+                            }
+                        );
+
+                        // Subscribe to the confirmation dialog closed action
+                        confirmation.afterClosed().subscribe((result) => {
+                            // If the confirm button pressed...
+                            if (result === 'confirmed') {
+                                // Deactivate the shop on the server
+                                this._dashboardService
+                                    .deactivateShop(routeParams.shopId)
+                                    .subscribe(() => {
+                                        // Close the details
+                                        this.ngOnInit();
+                                    });
+                            }
+                        });
+                    }
+                }
+            });
+    }
+
+    reactivateShop() {
+        alert('reactivate');
     }
 }

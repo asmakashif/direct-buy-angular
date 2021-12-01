@@ -175,6 +175,13 @@ export const appRoutes: Route[] = [
                     ).then((m) => m.TableEditModule),
             },
             {
+                path: 'store',
+                loadChildren: () =>
+                    import('app/modules/admin/store/store.module').then(
+                        (m) => m.StoreModule
+                    ),
+            },
+            {
                 path: 'store/create-shop',
                 loadChildren: () =>
                     import(
@@ -203,6 +210,13 @@ export const appRoutes: Route[] = [
                     ),
             },
             {
+                path: 'academy',
+                loadChildren: () =>
+                    import('app/modules/admin/academy/academy.module').then(
+                        (m) => m.AcademyModule
+                    ),
+            },
+            {
                 path: 'product/inventory/:shopId',
                 loadChildren: () =>
                     import(
@@ -222,13 +236,6 @@ export const appRoutes: Route[] = [
                     import(
                         'app/modules/admin/store/shop-details/shop-details.module'
                     ).then((m) => m.ShopDetailsModule),
-            },
-            {
-                path: 'store/shop-configuration/:shopId',
-                loadChildren: () =>
-                    import(
-                        'app/modules/admin/store/shop-configuration/shop-configuration.module'
-                    ).then((m) => m.ShopConfigurationModule),
             },
             {
                 path: 'dashboard/:shopId/:shop_name/configurations',
@@ -305,6 +312,13 @@ export const appRoutes: Route[] = [
                 loadChildren: () =>
                     import('app/modules/admin/steps/steps.module').then(
                         (m) => m.StepsModule
+                    ),
+            },
+            {
+                path: 'payment',
+                loadChildren: () =>
+                    import('app/modules/admin/payment/payment.module').then(
+                        (m) => m.PaymentModule
                     ),
             },
             {

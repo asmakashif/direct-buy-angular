@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import {
     FormBuilder,
     FormControl,
     FormGroup,
+    NgForm,
     Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,12 +21,15 @@ interface Animal {
 })
 export class PaymentGatewayComponent implements OnInit {
     paymentGatewayForm: FormGroup;
+    flashMessage: string;
+    @ViewChild('shopForm') shopForm: NgForm;
 
     constructor(
         private formBuilder: FormBuilder,
         private apiService: PaymentGatewayService,
         private _router: Router,
-        private routes: ActivatedRoute
+        private routes: ActivatedRoute,
+        private cd: ChangeDetectorRef
     ) {}
     providerType = [
         // { provider_name: 'Razorpay' },
@@ -57,16 +61,51 @@ export class PaymentGatewayComponent implements OnInit {
         if (routeParams.shopId) {
             this.apiService
                 .savePaymentIntegration(this.paymentGatewayForm.value)
-                .subscribe((data) => {
-                    this._router.navigate(['/steps/' + routeParams.shopId]);
-                });
+                .subscribe(
+                    (data) => {
+                        this._router.navigate(['/steps/' + routeParams.shopId]);
+                    },
+                    (response) => {
+                        this.showFlashMessage('error');
+                        this.ngOnInit();
+                        // Reset the form
+                        //this.shopForm.resetForm();
+                    }
+                );
         } else {
             this.apiService
                 .savePaymentIntegration(this.paymentGatewayForm.value)
-                .subscribe((data) => {
-                    this._router.navigate(['/dashboard/']);
-                });
+                .subscribe(
+                    (data) => {
+                        this._router.navigate(['/dashboard/']);
+                    },
+                    (response) => {
+                        this.showFlashMessage('error');
+                        this.ngOnInit();
+                        // Reset the form
+                        //this.shopForm.resetForm();
+                    }
+                );
         }
+    }
+
+    /**
+     * Show flash message
+     */
+    showFlashMessage(type: 'success' | 'error'): void {
+        // Show the message
+        this.flashMessage = type;
+
+        // Mark for check
+        this.cd.markForCheck();
+
+        // Hide it after 3 seconds
+        setTimeout(() => {
+            this.flashMessage = null;
+
+            // Mark for check
+            this.cd.markForCheck();
+        }, 3000);
     }
 
     onChange(val) {

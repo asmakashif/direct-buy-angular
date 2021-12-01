@@ -1,4 +1,7 @@
-<div class="flex flex-col flex-auto min-w-0">
+<div
+    class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto"
+    cdkScrollable
+>
     <!-- Header -->
     <div class="bg-card">
         <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
@@ -45,31 +48,7 @@
                             <div
                                 class="ml-1.5 leading-6 truncate text-secondary"
                             >
-                                You have 2 new messages and 15 new tasks
-                            </div>
-                            <br />
-                            <div
-                                class="flex items-center mr-4"
-                                *ngIf="flashMessage"
-                            >
-                                <ng-container
-                                    *ngIf="flashMessage === 'success'"
-                                >
-                                    <mat-icon
-                                        class="text-green-500"
-                                        [svgIcon]="'heroicons_outline:check'"
-                                    ></mat-icon>
-                                    <span class="ml-2">Submitted</span>
-                                </ng-container>
-                                <ng-container *ngIf="flashMessage === 'error'">
-                                    <mat-icon
-                                        class="text-red-500"
-                                        [svgIcon]="'heroicons_outline:x'"
-                                    ></mat-icon>
-                                    <span class="ml-2"
-                                        >An error occurred, try again!</span
-                                    >
-                                </ng-container>
+                                Store Payments
                             </div>
                         </div>
                     </div>
@@ -104,77 +83,189 @@
     </div>
 
     <!-- Main -->
-    <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
-        <div class="w-full max-w-screen-xl mx-auto">
-            <div class="flex flex-col m-8 p-8 bg-card rounded-2xl">
-                <span><b>Store Payment Details</b></span>
-                <br />
-                <ul>
-                    <div class="row">
-                        <div class="col-md-4" *ngFor="let payment of payment">
-                            <li class="list-group-item mt-4">
-                                <div class="media-body">
-                                    {{ payment.payment_name }}
-                                    &nbsp;
-                                    <input
-                                        class="form-check-input"
-                                        type="checkbox"
-                                        *ngIf="
-                                            payment.payment_name ==
-                                            payment.pInfo_payment_name
-                                        "
-                                        [value]="payment.payment_name"
-                                        (change)="strPayment($event)"
-                                        checked="true"
-                                    />
-                                    <input
-                                        class="form-check-input"
-                                        type="checkbox"
-                                        *ngIf="
-                                            payment.payment_name !=
-                                            payment.pInfo_payment_name
-                                        "
-                                        [value]="payment.payment_name"
-                                        (change)="strPayment($event)"
-                                    />
+    <div class="flex flex-auto p-6 sm:p-10">
+        <div
+            class="flex flex-col flex-auto w-full max-w-xs sm:max-w-5xl mx-auto"
+        >
+            <h4 class="card-title">Choose Payment Options</h4>
+            <!-- Payments -->
+            <ng-container *ngIf="this.payment.length; else noCourses">
+                <div
+                    class="
+                        grid grid-cols-1
+                        sm:grid-cols-2
+                        lg:grid-cols-3
+                        gap-8
+                        mt-8
+                        sm:mt-10
+                    "
+                >
+                    <ng-container *ngFor="let payment of payment">
+                        <!-- Payment -->
+                        <div
+                            class="
+                                flex flex-col
+                                h-36
+                                shadow
+                                rounded-2xl
+                                overflow-hidden
+                                bg-card
+                            "
+                        >
+                            <div class="flex flex-col p-6">
+                                <div class="flex items-center justify-between">
+                                    <!-- Payment Options -->
+                                    <ng-container>
+                                        <!-- Image -->
+                                        <div class="flex items-center">
+                                            <div
+                                                class="
+                                                    relative
+                                                    flex flex-0
+                                                    items-center
+                                                    justify-center
+                                                    w-12
+                                                    h-12
+                                                    rounded
+                                                    overflow-hidden
+                                                "
+                                            >
+                                                <img
+                                                    class="w-8"
+                                                    *ngIf="payment.provider_img"
+                                                    [src]="payment.provider_img"
+                                                />
+                                                <div
+                                                    class="
+                                                        flex
+                                                        items-center
+                                                        justify-center
+                                                        w-full
+                                                        h-full
+                                                        text-xs
+                                                        font-semibold
+                                                        leading-none
+                                                        text-center
+                                                        uppercase
+                                                    "
+                                                    *ngIf="
+                                                        !payment.provider_img
+                                                    "
+                                                >
+                                                    NO THUMB
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div
+                                            class="
+                                                py-0.5
+                                                px-3
+                                                rounded-full
+                                                text-sm
+                                                font-semibold
+                                            "
+                                        >
+                                            {{ payment.payment_name }}
+                                        </div>
+                                    </ng-container>
+                                    <!-- Completed at least once -->
+                                    <div class="flex items-center">
+                                        <ng-container
+                                            *ngIf="
+                                                payment.payment_name ==
+                                                payment.pInfo_payment_name
+                                            "
+                                        >
+                                            <input
+                                                class="form-check-input"
+                                                type="checkbox"
+                                                [value]="payment.payment_name"
+                                                (change)="strPayment($event)"
+                                                checked="true"
+                                            />
+                                        </ng-container>
+                                        <ng-container
+                                            *ngIf="
+                                                payment.payment_name !=
+                                                payment.pInfo_payment_name
+                                            "
+                                        >
+                                            <input
+                                                class="form-check-input"
+                                                type="checkbox"
+                                                [value]="payment.payment_name"
+                                                (change)="strPayment($event)"
+                                            />
+                                        </ng-container>
+                                    </div>
                                 </div>
-                                <p
-                                    *ngIf="
-                                        payment.payment_name ==
-                                        payment.pInfo_payment_name
+
+                                <br />
+                                <!-- Default Payment -->
+                                <div
+                                    class="
+                                        flex
+                                        items-center
+                                        leading-5
+                                        text-md text-secondary
                                     "
+                                    *ngIf="payment.default_payment == 0"
                                 >
-                                    <span
-                                        style="font-size: 12px"
-                                        *ngIf="payment.default_payment == 0"
-                                        >Make Default
-                                        <input
-                                            type="checkbox"
-                                            [value]="payment.shop_pInfo_id"
-                                            name="shop_pInfo_id[]"
-                                            (change)="onDefaultSelect($event)"
-                                            matCheckbox
-                                        />
-                                    </span>
-                                    <span
-                                        style="font-size: 12px"
-                                        *ngIf="payment.default_payment == 1"
-                                        >Default Payment
-                                    </span>
-                                </p>
-                            </li>
+                                    <input
+                                        type="checkbox"
+                                        [value]="payment.shop_pInfo_id"
+                                        name="shop_pInfo_id[]"
+                                        (change)="onDefaultSelect($event)"
+                                        matCheckbox
+                                    />
+                                    <div class="ml-1.5">Make Default</div>
+                                </div>
+                                <div
+                                    class="
+                                        flex
+                                        items-center
+                                        leading-5
+                                        text-md text-secondary
+                                    "
+                                    *ngIf="payment.default_payment == 1"
+                                >
+                                    <div class="ml-1.5">Default Payment</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </ul>
-                <div class="flex items-center">
-                    <button (click)="done()" class="btn btn-info">
-                        Submit
-                    </button>
-                    <!-- <button class="btn btn-success" style="width: 100px">
-                    Save
-                </button> -->
+                    </ng-container>
                 </div>
-            </div>
+            </ng-container>
+
+            <!-- No courses -->
+            <ng-template #noCourses>
+                <div
+                    class="
+                        flex flex-auto flex-col
+                        items-center
+                        justify-center
+                        bg-gray-100
+                        dark:bg-transparent
+                    "
+                >
+                    <mat-icon
+                        class="icon-size-20"
+                        [svgIcon]="'iconsmind:file_search'"
+                    ></mat-icon>
+                    <div
+                        class="
+                            mt-6
+                            text-2xl
+                            font-semibold
+                            tracking-tight
+                            text-secondary
+                        "
+                    >
+                        No courses found!
+                    </div>
+                </div>
+            </ng-template>
         </div>
     </div>
 </div>
