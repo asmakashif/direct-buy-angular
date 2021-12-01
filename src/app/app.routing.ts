@@ -413,6 +413,13 @@ export const appRoutes: Route[] = [
                         'app/modules/admin/home-del-config/home-del-config.module'
                     ).then((m) => m.HomeDelConfigModule),
             },
+            {
+                path: 'reports',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/reports/reports.module'
+                    ).then((m) => m.ReportsComponentModule),
+            },
             // 404 & Catch all
             {
                 path: '404-not-found',

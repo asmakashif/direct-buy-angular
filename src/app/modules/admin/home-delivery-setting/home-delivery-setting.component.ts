@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+
+import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
 import { Router, RouterStateSnapshot, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -10,21 +11,16 @@ import { HomeDeliverySettingService } from './home-delivery-setting.service';
 })
 export class HomeDeliverySettingComponent implements OnInit {
     names: any;
+    slotForm: FormGroup;
+    flashMessage: string;
     constructor(
         private router: Router,
+        private cd: ChangeDetectorRef,
         private route: ActivatedRoute,
         private fb: FormBuilder,
         private apiservice: HomeDeliverySettingService
     ) {
-        this.names = [
-            { name: 'Monday', selected: false },
-            { name: 'Tuesday', selected: false },
-            { name: 'Wednesday', selected: false },
-            { name: 'Thursday', selected: false },
-            { name: 'Friday', selected: false },
-            { name: 'Saturday', selected: false },
-            { name: 'Sunday', selected: false },
-        ];
+        
     }
     value: any;
     selectedAll: any;
@@ -34,6 +30,13 @@ export class HomeDeliverySettingComponent implements OnInit {
     savedtime: any;
     user_id: any;
     ngOnInit(): void {
+        this.slotForm = this.fb.group({
+           
+            slot: ['', Validators.required],
+            from_time :['', Validators.required],
+            to_time: ['', Validators.required],
+           
+          });
         this.route.paramMap.subscribe((params) => {
             this.shop_id = params.get('shop_id');
             console.log(this.shop_id);
@@ -137,6 +140,7 @@ export class HomeDeliverySettingComponent implements OnInit {
         const user_id = localStorage.getItem('user_id');
         const days = localStorage.getItem('day');
         this.apiservice.deleteTimeSlots(id).subscribe((data) => {
+            this.showFlashMessage('success');
             const timing = {
                 day: days,
                 userId: user_id,
@@ -146,4 +150,55 @@ export class HomeDeliverySettingComponent implements OnInit {
             });
         });
     }
+    onSubmit()
+    {
+        const user_id = localStorage.getItem('user_id');
+        if (this.slotForm.invalid) {
+            return;
+          }
+          const slots={
+            day:this.slotForm.controls.slot.value,
+            from:this.slotForm.controls.from_time.value,
+            to: this.slotForm.controls.to_time.value,
+            userId: user_id,
+         
+          }
+          this.apiservice.saveTimeSlots(slots).subscribe((data) => {
+            this.showFlashMessage('success'); 
+            const days = localStorage.getItem('day');
+    
+            const user_id = localStorage.getItem('user_id');
+            this.apiservice.getTimeSlots().subscribe((data) => {
+                this.time = data;
+            });
+            const timing = {
+                day: days,
+                userId: user_id,
+            };
+            this.apiservice.getWorkingTime(timing).subscribe((data) => {
+                this.savedtime = data;
+                console.log(data);
+            });
+          });
+    }
+    showFlashMessage(type: 'success' | 'error'): void {
+        // Show the message
+
+        this.flashMessage = type;
+
+        // Mark for check
+
+        this.cd.markForCheck();
+
+        // Hide it after 3 seconds
+
+        setTimeout(() => {
+            this.flashMessage = null;
+
+            // Mark for check
+
+            this.cd.markForCheck();
+        }, 3000);
+    } // add separately after ngOnInit();
+
 }

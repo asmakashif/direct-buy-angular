@@ -209,8 +209,8 @@
       </div>
   
              
-              <div *ngIf="dt.Friday==0" class="form-check form-check-inline">
-                <label class="form-check-label">
+ <div *ngIf="dt.Friday==0" class="form-check form-check-inline">
+    <label class="form-check-label">
   <input type="checkbox"  (change)="update($event,'Friday')">
   Friday
   </label>
@@ -223,8 +223,8 @@
       </div>
   
              
-              <div *ngIf="dt.Saturday==0" class="form-check form-check-inline">
-                <label class="form-check-label">
+     <div *ngIf="dt.Saturday==0" class="form-check form-check-inline">
+        <label class="form-check-label">
   <input type="checkbox"  (change)="update($event,'Saturday')">
   Saturday
   </label>
@@ -251,9 +251,10 @@
   </div>
                    
                                 <br />
-                               
+                               <form [formGroup]="slotForm"
+                               (ngSubmit)="onSubmit()">
                                <div class="row">
-                                <div class="col-md-6" >
+                                 <div class="col-md-4" >
                                     <b>Select Day and Slot</b>
                                     <br />
                                     <div *ngFor="let dt of days">
@@ -281,12 +282,12 @@
                                     </div>
                                 </div>
                                  <div class="col-md-6">
-                                     <br/>
+                                     
                                     <div
                                     class="form-check form-check-inline"
-                                    *ngFor="let dt of time"
+                                    
                                 >
-                                    <label class="form-check-label"
+                                    <!-- <label class="form-check-label"
                                         ><input
                                             type="checkbox"
                                             class="form-check-input"
@@ -295,16 +296,48 @@
                                                     $event,
                                                     dt.from_time,
                                                     dt.to_time,
-                                                    dt.id
-                                                )
-                                            "
+                                                    dt.id)"
                                         />{{ dt.from_time }} -
                                         {{ dt.to_time }}
-                                    </label>
+                                    </label> -->
+                                    <div class="row">
+                                      <div class="col-md-5">
+                                    
+                                     <label><b>From :</b> </label>
+                                    <input type="time" formControlName="from_time" class="form-control" value="">
+                                </div>
+                                <div class="col-md-5">
+                                    <label><b>To :</b> </label>
+                                    <input type="time" formControlName="to_time" class="form-control" value="">
+                                </div>
+                                <div class="col-md-2">
+                                    <br/>
+                                     <input type="submit" value="Submit" class="btn btn-success">
+                                </div>
+                                </div>
+                                <div class="flex items-center mr-4" *ngIf="flashMessage">
+                                    <ng-container *ngIf="flashMessage === 'success'">
+                                        <mat-icon
+                                            class="text-green-500"
+                                            [svgIcon]="'heroicons_outline:check'"
+                                        ></mat-icon>
+                                        <span class="ml-2"> Updated Successfully</span>
+                                    </ng-container>
+                                    <ng-container *ngIf="flashMessage === 'error'">
+                                        <mat-icon
+                                            class="text-red-500"
+                                            [svgIcon]="'heroicons_outline:x'"
+                                        ></mat-icon>
+                                        <span class="ml-2"
+                                            >An error occurred, try again!</span
+                                        >
+                                    </ng-container>
+                                </div>
                                 </div>
                                  </div>
                                  
                                </div>
+                            </form>
                                <table class="table" *ngIf="savedtime">
                                 <thead class="thead-dark">
                                     <th>Slot</th>
