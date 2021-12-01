@@ -34,7 +34,7 @@
                                     truncate
                                 "
                             >
-                                {{ t("welcome-back") }}, Brian!
+                                {{ t("welcome-back") }}, {{ firstname }}!
                             </div>
                         </ng-container>
                         <div class="flex items-center">
@@ -45,9 +45,10 @@
                             <div
                                 class="ml-1.5 leading-6 truncate text-secondary"
                             >
-                                Pending Orders
+                                You have 2 new messages and 15 new tasks
                             </div>
                         </div>
+                        <!-- <flash-messages></flash-messages> -->
                     </div>
                 </div>
                 <!-- Actions -->
@@ -76,67 +77,575 @@
                     </button>
                 </div>
             </div>
+            <!-- Project selector -->
+            <div
+                class="
+                    relative
+                    flex
+                    self-start
+                    pt-2
+                    pb-1
+                    pl-5
+                    pr-4
+                    cursor-pointer
+                    overflow-hidden
+                    rounded-t-xl
+                    border border-b-0
+                    bg-default
+                "
+                matRipple
+                [matMenuTriggerFor]="projectsMenu"
+            >
+                <div class="flex items-center">
+                    <div class="overflow-hidden">
+                        <div
+                            class="font-medium leading-6 truncate"
+                            *ngIf="queryParam == null"
+                        >
+                            {{ selectedProject | titlecase }}
+                        </div>
+                        <div
+                            class="font-medium leading-6 truncate"
+                            *ngIf="queryParam != null"
+                        >
+                            {{ shop_name | titlecase }}
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center pl-2">
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:chevron-down'"
+                        ></mat-icon>
+                    </div>
+                </div>
+                <mat-menu #projectsMenu="matMenu" [xPosition]="'before'">
+                    <button mat-menu-item (click)="dashbaord()">
+                        Dashboard
+                    </button>
+                    <button
+                        mat-menu-item
+                        (click)="changeStore(stores)"
+                        *ngFor="let stores of data"
+                    >
+                        {{ stores.shop_name }}
+                    </button>
+                </mat-menu>
+            </div>
         </div>
     </div>
 
     <!-- Main -->
-    <div class="flex-auto border-t -mt-px">
-        <div class="w-full max-w-screen-xl mx-auto p-4">
-            <div class="mat-elevation-z8">
-                <table
-                    mat-table
-                    [dataSource]="dataSource"
-                    class="mat-elevation-z8"
-                >
-                    <ng-container matColumnDef="order_code">
-                        <th mat-header-cell *matHeaderCellDef>Order Code</th>
-                        <td mat-cell *matCellDef="let element">
-                            <a
-                                href="javascript:void(0);"
-                                (click)="orderDetailsByCode(element.order_code)"
-                                >{{ element.order_code }}</a
+    <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <!-- Tabs -->
+            <mat-tab-group class="sm:px-2" [animationDuration]="'0'">
+                <!-- All Orders -->
+                <mat-tab label="All">
+                    <ng-template matTabContent>
+                        <div class="fixedheader">
+                            <ng-container
+                                *ngIf="allOrders.length > 0; else noOrders"
                             >
-                        </td>
-                    </ng-container>
+                                <div class="grid">
+                                    <!-- Header -->
+                                    <div
+                                        class="
+                                            inventory-grid
+                                            z-10
+                                            sticky
+                                            top-0
+                                            grid
+                                            gap-4
+                                            py-4
+                                            px-6
+                                            md:px-8
+                                            shadow
+                                            text-md
+                                            font-semibold
+                                            text-secondary
+                                            bg-gray-50
+                                            dark:bg-black dark:bg-opacity-5
+                                        "
+                                        matSort
+                                        matSortDisableClear
+                                    >
+                                        <div></div>
+                                        <div
+                                            class="hidden md:block"
+                                            [mat-sort-header]="'sku'"
+                                        >
+                                            Order Code
+                                        </div>
+                                        <div [mat-sort-header]="'name'">
+                                            Customer Name
+                                        </div>
+                                        <div
+                                            class="hidden sm:block"
+                                            [mat-sort-header]="'price'"
+                                        >
+                                            Order value
+                                        </div>
 
-                    <!-- Name Column -->
-                    <ng-container matColumnDef="c_fname">
-                        <th mat-header-cell *matHeaderCellDef>Customer Name</th>
-                        <td mat-cell *matCellDef="let element">
-                            {{ element.c_fname }}
-                        </td>
-                    </ng-container>
+                                        <div
+                                            class="hidden lg:block"
+                                            [mat-sort-header]="'active'"
+                                        >
+                                            Status
+                                        </div>
+                                        <div class="hidden sm:block">
+                                            Order Date
+                                        </div>
+                                    </div>
+                                    <ng-container
+                                        *ngFor="let order of allOrders"
+                                    >
+                                        <div
+                                            class="
+                                                inventory-grid
+                                                grid
+                                                items-center
+                                                gap-4
+                                                py-3
+                                                px-6
+                                                md:px-8
+                                                border-b
+                                                bg-card
+                                            "
+                                        >
+                                            <div
+                                                class="flex items-center"
+                                            ></div>
+                                            <!-- Order Code -->
 
-                    <!-- Weight Column -->
-                    <ng-container matColumnDef="total">
-                        <th mat-header-cell *matHeaderCellDef>Order Value</th>
-                        <td mat-cell *matCellDef="let element">
-                            {{ element.total }}
-                        </td>
-                    </ng-container>
+                                            <div class="truncate">
+                                                <a
+                                                    href="javascript:void(0);"
+                                                    (click)="
+                                                        orderDetailsByCode(
+                                                            order.order_code
+                                                        )
+                                                    "
+                                                    >{{ order.order_code }}</a
+                                                >
+                                            </div>
 
-                    <!-- Symbol Column -->
-                    <ng-container matColumnDef="order_placed_date">
-                        <th mat-header-cell *matHeaderCellDef>Order Date</th>
-                        <td mat-cell *matCellDef="let element">
-                            {{ element.order_placed_date }}
-                        </td>
-                    </ng-container>
+                                            <!-- Name -->
+                                            <div class="truncate">
+                                                {{ order.c_fname }}
+                                            </div>
 
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr
-                        mat-row
-                        *matRowDef="let row; columns: displayedColumns"
-                    ></tr>
-                </table>
+                                            <!-- Price -->
+                                            <div class="hidden sm:block">
+                                                {{
+                                                    order.total
+                                                        | currency
+                                                            : "INR"
+                                                            : "symbol"
+                                                            : "1.2-2"
+                                                }}
+                                            </div>
 
-                <mat-paginator
-                    [pageSizeOptions]="[5, 10, 20]"
-                    showFirstLastButtons
-                    aria-label="Select page of periodic elements"
-                >
-                </mat-paginator>
-            </div>
+                                            <!-- Active -->
+                                            <div class="hidden lg:block">
+                                                <ng-container
+                                                    *ngIf="
+                                                        order.order_status == 1
+                                                    "
+                                                >
+                                                    <mat-icon
+                                                        class="
+                                                            text-green-400
+                                                            icon-size-5
+                                                        "
+                                                        [svgIcon]="
+                                                            'heroicons_solid:check'
+                                                        "
+                                                    ></mat-icon>
+                                                </ng-container>
+                                                <ng-container
+                                                    *ngIf="
+                                                        order.order_status == 0
+                                                    "
+                                                >
+                                                    <mat-icon
+                                                        class="
+                                                            text-gray-400
+                                                            icon-size-5
+                                                        "
+                                                        [svgIcon]="
+                                                            'heroicons_solid:x'
+                                                        "
+                                                    ></mat-icon>
+                                                </ng-container>
+                                            </div>
+
+                                            <!-- Place date -->
+                                            <div class="hidden sm:block">
+                                                {{ order.order_placed_date }}
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+                            <ng-template #noOrders>
+                                <div
+                                    class="
+                                        p-8
+                                        sm:p-16
+                                        border-t
+                                        text-4xl
+                                        font-semibold
+                                        tracking-tight
+                                        text-center
+                                    "
+                                >
+                                    There are no Orders!
+                                </div>
+                            </ng-template>
+                        </div>
+                    </ng-template>
+                </mat-tab>
+
+                <!-- Pending Orders -->
+                <mat-tab label="Pending Orders">
+                    <ng-template matTabContent>
+                        <div class="fixedheader">
+                            <ng-container
+                                *ngIf="
+                                    pendingOrders.length > 0;
+                                    else noPendingOrders
+                                "
+                            >
+                                <div class="grid">
+                                    <!-- Header -->
+                                    <div
+                                        class="
+                                            inventory-grid
+                                            z-10
+                                            sticky
+                                            top-0
+                                            grid
+                                            gap-4
+                                            py-4
+                                            px-6
+                                            md:px-8
+                                            shadow
+                                            text-md
+                                            font-semibold
+                                            text-secondary
+                                            bg-gray-50
+                                            dark:bg-black dark:bg-opacity-5
+                                        "
+                                        matSort
+                                        matSortDisableClear
+                                    >
+                                        <div></div>
+                                        <div
+                                            class="hidden md:block"
+                                            [mat-sort-header]="'sku'"
+                                        >
+                                            Order Code
+                                        </div>
+                                        <div [mat-sort-header]="'name'">
+                                            Customer Name
+                                        </div>
+                                        <div
+                                            class="hidden sm:block"
+                                            [mat-sort-header]="'price'"
+                                        >
+                                            Order value
+                                        </div>
+
+                                        <div
+                                            class="hidden lg:block"
+                                            [mat-sort-header]="'active'"
+                                        >
+                                            Status
+                                        </div>
+                                        <div class="hidden sm:block">
+                                            Order Date
+                                        </div>
+                                    </div>
+                                    <ng-container
+                                        *ngFor="let order of pendingOrders"
+                                    >
+                                        <div
+                                            class="
+                                                inventory-grid
+                                                grid
+                                                items-center
+                                                gap-4
+                                                py-3
+                                                px-6
+                                                md:px-8
+                                                border-b
+                                                bg-card
+                                            "
+                                        >
+                                            <div
+                                                class="flex items-center"
+                                            ></div>
+                                            <!-- Order Code -->
+
+                                            <div class="truncate">
+                                                <a
+                                                    href="javascript:void(0);"
+                                                    (click)="
+                                                        orderDetailsByCode(
+                                                            order.order_code
+                                                        )
+                                                    "
+                                                    >{{ order.order_code }}</a
+                                                >
+                                            </div>
+
+                                            <!-- Name -->
+                                            <div class="truncate">
+                                                {{ order.c_fname }}
+                                            </div>
+
+                                            <!-- Price -->
+                                            <div class="hidden sm:block">
+                                                {{
+                                                    order.total
+                                                        | currency
+                                                            : "INR"
+                                                            : "symbol"
+                                                            : "1.2-2"
+                                                }}
+                                            </div>
+
+                                            <!-- Active -->
+                                            <div class="hidden lg:block">
+                                                <ng-container
+                                                    *ngIf="
+                                                        order.order_status == 1
+                                                    "
+                                                >
+                                                    <mat-icon
+                                                        class="
+                                                            text-green-400
+                                                            icon-size-5
+                                                        "
+                                                        [svgIcon]="
+                                                            'heroicons_solid:check'
+                                                        "
+                                                    ></mat-icon>
+                                                </ng-container>
+                                                <ng-container
+                                                    *ngIf="
+                                                        order.order_status == 0
+                                                    "
+                                                >
+                                                    <mat-icon
+                                                        class="
+                                                            text-gray-400
+                                                            icon-size-5
+                                                        "
+                                                        [svgIcon]="
+                                                            'heroicons_solid:x'
+                                                        "
+                                                    ></mat-icon>
+                                                </ng-container>
+                                            </div>
+
+                                            <!-- Place date -->
+                                            <div class="hidden sm:block">
+                                                {{ order.order_placed_date }}
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+                            <ng-template #noPendingOrders>
+                                <div
+                                    class="
+                                        p-8
+                                        sm:p-16
+                                        border-t
+                                        text-4xl
+                                        font-semibold
+                                        tracking-tight
+                                        text-center
+                                    "
+                                >
+                                    There are no Pending Orders!
+                                </div>
+                            </ng-template>
+                        </div>
+                    </ng-template>
+                </mat-tab>
+
+                <!-- Completed Orders -->
+                <mat-tab label="Completed Orders">
+                    <ng-template matTabContent>
+                        <div class="fixedheader">
+                            <ng-container
+                                *ngIf="
+                                    completedOrders.length > 0;
+                                    else noCompletedOrders
+                                "
+                            >
+                                <div class="grid">
+                                    <!-- Header -->
+                                    <div
+                                        class="
+                                            inventory-grid
+                                            z-10
+                                            sticky
+                                            top-0
+                                            grid
+                                            gap-4
+                                            py-4
+                                            px-6
+                                            md:px-8
+                                            shadow
+                                            text-md
+                                            font-semibold
+                                            text-secondary
+                                            bg-gray-50
+                                            dark:bg-black dark:bg-opacity-5
+                                        "
+                                        matSort
+                                        matSortDisableClear
+                                    >
+                                        <div></div>
+                                        <div
+                                            class="hidden md:block"
+                                            [mat-sort-header]="'sku'"
+                                        >
+                                            Order Code
+                                        </div>
+                                        <div [mat-sort-header]="'name'">
+                                            Customer Name
+                                        </div>
+                                        <div
+                                            class="hidden sm:block"
+                                            [mat-sort-header]="'price'"
+                                        >
+                                            Order value
+                                        </div>
+
+                                        <div
+                                            class="hidden lg:block"
+                                            [mat-sort-header]="'active'"
+                                        >
+                                            Status
+                                        </div>
+                                        <div class="hidden sm:block">
+                                            Order Date
+                                        </div>
+                                    </div>
+                                    <ng-container
+                                        *ngFor="let order of completedOrders"
+                                    >
+                                        <div
+                                            class="
+                                                inventory-grid
+                                                grid
+                                                items-center
+                                                gap-4
+                                                py-3
+                                                px-6
+                                                md:px-8
+                                                border-b
+                                                bg-card
+                                            "
+                                        >
+                                            <div
+                                                class="flex items-center"
+                                            ></div>
+                                            <!-- Order Code -->
+
+                                            <div class="truncate">
+                                                <a
+                                                    href="javascript:void(0);"
+                                                    (click)="
+                                                        orderDetailsByCode(
+                                                            order.order_code
+                                                        )
+                                                    "
+                                                    >{{ order.order_code }}</a
+                                                >
+                                            </div>
+
+                                            <!-- Name -->
+                                            <div class="truncate">
+                                                {{ order.c_fname }}
+                                            </div>
+
+                                            <!-- Price -->
+                                            <div class="hidden sm:block">
+                                                {{
+                                                    order.total
+                                                        | currency
+                                                            : "INR"
+                                                            : "symbol"
+                                                            : "1.2-2"
+                                                }}
+                                            </div>
+
+                                            <!-- Active -->
+                                            <div class="hidden lg:block">
+                                                <ng-container
+                                                    *ngIf="
+                                                        order.order_status == 1
+                                                    "
+                                                >
+                                                    <mat-icon
+                                                        class="
+                                                            text-green-400
+                                                            icon-size-5
+                                                        "
+                                                        [svgIcon]="
+                                                            'heroicons_solid:check'
+                                                        "
+                                                    ></mat-icon>
+                                                </ng-container>
+                                                <ng-container
+                                                    *ngIf="
+                                                        order.order_status == 0
+                                                    "
+                                                >
+                                                    <mat-icon
+                                                        class="
+                                                            text-gray-400
+                                                            icon-size-5
+                                                        "
+                                                        [svgIcon]="
+                                                            'heroicons_solid:x'
+                                                        "
+                                                    ></mat-icon>
+                                                </ng-container>
+                                            </div>
+
+                                            <!-- Place date -->
+                                            <div class="hidden sm:block">
+                                                {{ order.order_placed_date }}
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+                            <ng-template #noCompletedOrders>
+                                <div
+                                    class="
+                                        p-8
+                                        sm:p-16
+                                        border-t
+                                        text-4xl
+                                        font-semibold
+                                        tracking-tight
+                                        text-center
+                                    "
+                                >
+                                    There are no Completed Orders!
+                                </div>
+                            </ng-template>
+                        </div>
+                    </ng-template>
+                </mat-tab>
+            </mat-tab-group>
         </div>
     </div>
 </div>

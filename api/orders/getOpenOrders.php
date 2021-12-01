@@ -12,15 +12,24 @@
     $DB=mysqli_select_db($CN,"formal_store");
 
     $shopId = $_GET['shopId'];
+    $openorders=[];
     
-    
-    $sql = "SELECT COUNT(*) From (Select * From order_items WHERE `shopId` = '{$shopId}' AND order_status = 0 GROUP BY order_items.order_code) As Z";
+    $sql = "SELECT * From order_items WHERE `shopId` = '{$shopId}' AND order_status = 0 GROUP BY order_items.order_code";
     
     if($result = mysqli_query($CN,$sql))
     {
-        $row = mysqli_fetch_array($result);
-        $total = $row[0];
-        echo json_encode($total);
+        $cr = 0;
+        while($row = mysqli_fetch_assoc($result))
+        {
+            $openorders[$cr]['order_code'] = $row['order_code'];
+            $openorders[$cr]['c_fname'] = $row['c_fname'];
+            $openorders[$cr]['total'] = $row['total'];
+            $openorders[$cr]['order_placed_date'] = $row['order_placed_date'];
+            $cr++;
+            
+        }
+        
+        echo json_encode($openorders);
     }
     else
     {

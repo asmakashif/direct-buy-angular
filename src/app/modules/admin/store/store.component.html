@@ -34,7 +34,7 @@
                                     truncate
                                 "
                             >
-                                {{ t("welcome-back") }}
+                                {{ t("welcome-back") }}, {{ firstname }}!
                             </div>
                         </ng-container>
                         <div class="flex items-center">
@@ -45,9 +45,10 @@
                             <div
                                 class="ml-1.5 leading-6 truncate text-secondary"
                             >
-                                Shops
+                                You have 2 new messages and 15 new tasks
                             </div>
                         </div>
+                        <!-- <flash-messages></flash-messages> -->
                     </div>
                 </div>
                 <!-- Actions -->
@@ -82,14 +83,23 @@
     <!-- Main -->
     <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
         <div class="w-full max-w-screen-xl mx-auto">
-            <div class="grid grid-cols-1 gap-6 w-full min-w-0">
-                <ng-container *ngFor="let shops of this.shops">
+            <div
+                class="
+                    sm:px-4
+                    grid grid-cols-1
+                    sm:grid-cols-2
+                    md:grid-cols-3
+                    lg:grid-cols-4
+                    gap-6
+                    w-full
+                    min-w-0
+                "
+            >
+                <ng-container *ngFor="let data of this.shops">
                     <div
                         class="
                             flex flex-col flex-auto
                             p-6
-                            ml-6
-                            mr-6
                             bg-card
                             shadow
                             rounded-2xl
@@ -106,16 +116,16 @@
                                     truncate
                                 "
                             >
-                                {{ shops.shop_name }}
+                                {{ data.shop_name }}
                                 <br />
-                                <p style="font-weight: normal">
-                                    {{ shops.shop_address }}
+                                <p>
+                                    {{ data.shop_address }}
                                 </p>
                             </div>
 
                             <div
                                 class="ml-2 -mt-2 -mr-3"
-                                *ngIf="shops.shop_payment_status == 1"
+                                *ngIf="data.shop_payment_status == 1"
                             >
                                 <button
                                     mat-icon-button
@@ -130,7 +140,7 @@
                                 </button>
                                 <mat-menu #summaryMenu="matMenu">
                                     <button
-                                        (click)="shopDetails(shops)"
+                                        (click)="shopDetails(data)"
                                         mat-menu-item
                                     >
                                         Manage Shop
@@ -139,7 +149,7 @@
                             </div>
                             <div
                                 class="ml-2 -mt-2 -mr-3"
-                                *ngIf="shops.shop_payment_status == 0"
+                                *ngIf="data.shop_payment_status == 0"
                             >
                                 <button
                                     mat-icon-button
@@ -153,7 +163,9 @@
                                     ></mat-icon>
                                 </button>
                                 <mat-menu #summaryMenu="matMenu">
-                                    <button mat-menu-item>Manage Shop</button>
+                                    <button (click)="steps(data)" mat-menu-item>
+                                        Manage Shop
+                                    </button>
                                 </mat-menu>
                             </div>
                         </div>
@@ -168,11 +180,11 @@
                                     text-blue-500
                                 "
                             >
-                                {{ shops.completed_orders }}
+                                {{ data.pending_orders }}
                             </div>
                             <a
                                 href="javascript:void(0);"
-                                (click)="completedOrders(shops)"
+                                (click)="completedOrders(data)"
                                 style="text-decoration: none"
                             >
                                 <div
@@ -183,12 +195,12 @@
                                         dark:text-blue-500
                                     "
                                 >
-                                    Completed Orders
+                                    Pending Orders
                                 </div>
                             </a>
                             <a
                                 href="javascript:void(0);"
-                                (click)="pendingOrders(shops)"
+                                (click)="pendingOrders(data)"
                                 style="text-decoration: none"
                             >
                                 <div
@@ -202,16 +214,105 @@
                                     "
                                 >
                                     <div class="text-md font-medium truncate">
-                                        Pending Orders:
+                                        <button
+                                            (click)="shopDetails(data)"
+                                            mat-menu-item
+                                        >
+                                            Enter
+                                        </button>
                                     </div>
-                                    <div class="ml-1.5 text-lg font-semibold">
-                                        {{ shops.pending_orders }}
-                                    </div>
+                                    <!-- <div class="ml-1.5 text-lg font-semibold">
+                                        {{ data.pending_orders }}
+                                    </div> -->
                                 </div>
                             </a>
                         </div>
                     </div>
                 </ng-container>
+                <div
+                    class="
+                        flex flex-col flex-auto
+                        p-6
+                        bg-card
+                        shadow
+                        rounded-2xl
+                        overflow-hidden
+                    "
+                >
+                    <div class="flex items-start justify-between">
+                        <div
+                            class="
+                                text-lg
+                                font-medium
+                                tracking-tight
+                                leading-6
+                                truncate
+                            "
+                        >
+                            Create Shop
+                        </div>
+                        <div class="ml-2 -mt-2 -mr-3">
+                            <button
+                                mat-icon-button
+                                [matMenuTriggerFor]="summaryMenu"
+                            >
+                                <mat-icon
+                                    class="icon-size-5"
+                                    [svgIcon]="'heroicons_solid:dots-vertical'"
+                                ></mat-icon>
+                            </button>
+                            <mat-menu #summaryMenu="matMenu">
+                                <button (click)="createShop()" mat-menu-item>
+                                    Create Shop
+                                </button>
+                            </mat-menu>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-center mt-2">
+                        <!-- <div
+                            class="
+                                text-7xl
+                                sm:text-8xl
+                                font-bold
+                                tracking-tight
+                                leading-none
+                                text-blue-500
+                            "
+                        >
+                            1
+                        </div> -->
+                        <div
+                            class="
+                                text-lg
+                                font-medium
+                                text-blue-600
+                                dark:text-blue-500
+                            "
+                        >
+                            <button
+                                class="ml-4 mt-20"
+                                mat-flat-button
+                                [color]="'primary'"
+                                (click)="createShop()"
+                            >
+                                <mat-icon
+                                    [svgIcon]="'heroicons_outline:plus'"
+                                ></mat-icon>
+                                <span class="ml-2 mr-1">Create Shop</span>
+                            </button>
+                        </div>
+                        <div
+                            class="
+                                flex
+                                items-baseline
+                                justify-center
+                                w-full
+                                mt-5
+                                text-secondary
+                            "
+                        ></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

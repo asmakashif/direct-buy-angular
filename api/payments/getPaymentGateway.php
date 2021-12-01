@@ -20,7 +20,10 @@
         while($row1 = mysqli_fetch_assoc($result))
         {
             $users[$cr]['user_id'] = $row1['user_id'];
+            $users[$cr]['payment_id'] = $row1['payment_id'];
             $users[$cr]['payment_name'] = $row1['payment_name'];
+            $users[$cr]['provider_type'] = $row1['provider_type'];
+            $users[$cr]['attachToStr'] = $row1['attachToStr'];
             
             $cr++;
         }

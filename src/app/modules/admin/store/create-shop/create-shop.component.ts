@@ -30,7 +30,7 @@ export class CreateShopComponent implements OnInit {
     constructor(
         private formBuilder: FormBuilder,
         private apiService: CreateShopService,
-        private router: Router,
+        private _router: Router,
         private cd: ChangeDetectorRef
     ) {}
     addForm: FormGroup;
@@ -122,7 +122,7 @@ export class CreateShopComponent implements OnInit {
                 () => {
                     // this.router.navigate(['/product-config/' + shopId]);
                     this.showFlashMessage('success');
-                    this.router.navigate(['/steps/' + shopId]);
+                    this._router.navigate(['/steps/' + shopId]);
                 },
                 (response) => {
                     this.showFlashMessage('error');
@@ -135,7 +135,7 @@ export class CreateShopComponent implements OnInit {
             this.apiService.createUser(this.addForm.value).subscribe(
                 () => {
                     // this.router.navigate(['/product-config/' + shopId]);
-                    this.router.navigate(['/mobile/steps/' + shopId]);
+                    this._router.navigate(['/mobile/steps/' + shopId]);
                 },
                 (response) => {
                     this.showFlashMessage('error');
@@ -164,6 +164,17 @@ export class CreateShopComponent implements OnInit {
             // Mark for check
             this.cd.markForCheck();
         }, 3000);
+    }
+
+    cancel() {
+        const redirectto = localStorage.getItem('store');
+        if (redirectto == 'store') {
+            this._router.navigate(['/store']).then(() => {
+                localStorage.removeItem('store');
+            });
+        } else {
+            this._router.navigate(['/dashboard']);
+        }
     }
 
     isMobile() {

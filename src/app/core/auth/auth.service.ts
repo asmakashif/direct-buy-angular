@@ -79,6 +79,19 @@ export class AuthService {
         return this._httpClient.post('api/auth/reset-password', password);
     }
 
+    verifyEmail(credentials: {
+        email: string;
+        password: string;
+    }): Observable<any> {
+        return this._httpClient.post<any>('/api/verifyEmail.php', credentials);
+    }
+
+    getRetailerDetailsById(user_id): Observable<any> {
+        return this._httpClient.get<any>(
+            '/api/getRetailerDetailsById.php?user_id=' + user_id
+        );
+    }
+
     /**
      * Sign in
      *

@@ -46,6 +46,12 @@ export class StoreComponent implements OnInit {
         this._router.navigate(['/orders/pending-orders/' + shops.shopId]);
     }
 
+    createShop(): void {
+        const store = 'store';
+        localStorage.setItem('store', store);
+        this._router.navigate(['/store/create-shop/']);
+    }
+
     isMobile() {
         let check = false;
         (function (a) {

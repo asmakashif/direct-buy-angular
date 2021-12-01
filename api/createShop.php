@@ -10,16 +10,16 @@
     $CN= mysqli_connect("localhost","root","");
     $DB=mysqli_select_db($CN,"formal_store");
 
+    
+
     $EncodedData=file_get_contents('php://input');
     if(isset($EncodedData) && !empty($EncodedData))
     {
         $DecodedData=json_decode($EncodedData,true);
 
-        //print_r($DecodedData);
-        //die();
+        
         $user_id=$DecodedData['user_id'];
         $shopId=$DecodedData['shopId'];
-        
         $shop_name=$DecodedData['shop_name'];
         $shop_address=$DecodedData['shop_address'];
         // $checkbox1=$DecodedData['shopType']; 
@@ -29,31 +29,29 @@
         // { 
         //     $chk .= $chk1.",";  
         // }  
-        
-        $sql="INSERT INTO `shop_details`(user_id,shopId,shop_name,shop_address) values('$user_id','$shopId','$shop_name','$shop_address')";
-        
-        $R=mysqli_query($CN,$sql) or die("database error:". mysqli_error($CN));
-        
-        if($R)
+        $shops=[];
+        $qry = "SELECT * FROM `shop_details`as sd WHERE `user_id` = '$user_id' AND `shop_name` = '$shop_name' ";
+        $res=mysqli_query($CN,$qry) or die("database error:". mysqli_error($CN));
+            
+
+        if(mysqli_num_rows($res) > 0)
         {
-            http_response_code(201);
-            // $sql1="insert into shop_detail_type(shop_type_id,shop_id) values ('$chk','$R')";
-            // $R1=mysqli_query($CN,$sql1);
-            // if($R1)
-            // {
-        	   // http_response_code(201);
-            //     // $Message = "Student has been registered successfully";
-            // }
-            // else{
-            //     http_response_code(422);
-            //     // $Message = "Server error please try later";
-            // }
+            echo 0;
+            http_response_code(422);
         }
-        else{
-        	http_response_code(422);
-            // $Message = "Server error please try later";
+        else
+        {
+            $sql="INSERT INTO `shop_details`(user_id,shopId,shop_name,shop_address) values('$user_id','$shopId','$shop_name','$shop_address')";
+        
+            $R=mysqli_query($CN,$sql) or die("database error:". mysqli_error($CN));
+            
+            if($R)
+            {
+                http_response_code(201);
+            }
+            else{
+                http_response_code(422);
+            }
         }
-        // $response[] = array("Message"=>$Message);
-        // echo json_encode($response);
     }
 ?>

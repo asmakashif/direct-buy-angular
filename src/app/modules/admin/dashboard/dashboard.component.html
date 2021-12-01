@@ -297,19 +297,11 @@
                                             </button>
                                             <mat-menu #summaryMenu="matMenu">
                                                 <button
-                                                    (click)="
-                                                        configurations(data)
-                                                    "
-                                                    mat-menu-item
-                                                >
-                                                    Manage Shop
-                                                </button>
-                                                <!-- <button
                                                     (click)="shopDetails(data)"
                                                     mat-menu-item
                                                 >
                                                     Manage Shop
-                                                </button> -->
+                                                </button>
                                             </mat-menu>
                                         </div>
                                         <div
@@ -550,7 +542,12 @@
                                                 ></mat-icon>
                                             </button>
                                             <mat-menu #summaryMenu="matMenu">
-                                                <button mat-menu-item>
+                                                <button
+                                                    (click)="
+                                                        managePayment(payment)
+                                                    "
+                                                    mat-menu-item
+                                                >
                                                     Manage Payment
                                                 </button>
                                             </mat-menu>
@@ -650,58 +647,90 @@
                 <mat-tab label="Communication">
                     <ng-template matTabContent>
                         <form
+                            class="flex flex-col w-full"
                             [formGroup]="messageForm"
-                            (ngSubmit)="onMessageUpdate()"
                             autocomplete="off"
                         >
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <span
-                                        >Enter Message for Store
-                                        <br />
-                                        <small style="color: red"
-                                            >Click on text field to edit
-                                            message</small
-                                        ></span
+                            <div class="flex flex-col sm:flex-row">
+                                <div class="flex flex-auto flex-wrap">
+                                    <!-- <div
+                                        class="
+                                            flex flex-col
+                                            w-full
+                                            lg:w-1/4
+                                            sm:pl-8
+                                        "
                                     >
-                                </div>
-                                <div class="col-md-6">
-                                    <input
-                                        readonly=""
-                                        (click)="enableMessageField()"
-                                        formControlName="str_msg"
-                                        name="str_msg"
-                                        type="text"
-                                        class="form-control"
-                                        id="str_msg"
-                                    />
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="flex items-center">
-                                        <button
-                                            type=""
-                                            id="editMessage"
-                                            (click)="enableMessageField()"
-                                            disabled="true"
-                                            class="btn btn-info"
-                                            style="height: 40px"
+                                        <span>Enter Message for Store </span>
+                                    </div> -->
+                                    <!-- Name,  -->
+                                    <div
+                                        class="
+                                            flex flex-col
+                                            w-full
+                                            lg:w-2/4
+                                            sm:pl-8
+                                        "
+                                    >
+                                        <!-- Name -->
+                                        <mat-form-field class="w-full">
+                                            <mat-label
+                                                >Enter Message for
+                                                Store</mat-label
+                                            >
+                                            <input
+                                                matInput
+                                                [formControlName]="'str_msg'"
+                                            />
+                                        </mat-form-field>
+                                    </div>
+                                    <!-- Button -->
+                                    <div class="flex flex-col lg:w-1/4 sm:pl-8">
+                                        <div
+                                            class="flex items-center mr-4"
+                                            *ngIf="flashMessage"
                                         >
-                                            Edit Message
+                                            <ng-container
+                                                *ngIf="
+                                                    flashMessage === 'success'
+                                                "
+                                            >
+                                                <mat-icon
+                                                    class="text-green-500"
+                                                    [svgIcon]="
+                                                        'heroicons_outline:check'
+                                                    "
+                                                ></mat-icon>
+                                                <span class="ml-2"
+                                                    >Product updated</span
+                                                >
+                                            </ng-container>
+                                            <ng-container
+                                                *ngIf="flashMessage === 'error'"
+                                            >
+                                                <mat-icon
+                                                    class="text-red-500"
+                                                    [svgIcon]="
+                                                        'heroicons_outline:x'
+                                                    "
+                                                ></mat-icon>
+                                                <span class="ml-2"
+                                                    >An error occurred, try
+                                                    again!</span
+                                                >
+                                            </ng-container>
+                                        </div>
+
+                                        <button
+                                            class="lg:mt-6"
+                                            mat-flat-button
+                                            [color]="'primary'"
+                                            (click)="onMessageUpdate()"
+                                        >
+                                            Update
                                         </button>
                                     </div>
                                 </div>
-                                <!-- <div class="col-md-3">
-                                    <button
-                                        type=""
-                                        id="editMessage"
-                                        (click)="enableMessageField()"
-                                        disabled="true"
-                                        class="btn btn-info"
-                                        style="height: 40px"
-                                    >
-                                        Edit Message
-                                    </button>
-                                </div> -->
                             </div>
                         </form>
                     </ng-template>
@@ -2828,67 +2857,229 @@
                                 <p><b>Edit Shop Details</b></p>
                                 <form
                                     [formGroup]="editShopForm"
-                                    (ngSubmit)="onShopDetailsUpdate()"
                                     autocomplete="off"
                                 >
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="shop_name"
-                                                    ><b>Shop Name:</b></label
-                                                >
-                                                <input
-                                                    type="text"
-                                                    formControlName="shop_name"
-                                                    name="shop_name"
-                                                    id="shop_name"
-                                                    class="form-control"
-                                                />
-                                                <input
-                                                    type="text"
-                                                    formControlName="shopId"
-                                                    name="shopId"
-                                                    id="shopId"
-                                                    hidden="true"
-                                                    class="form-control"
-                                                />
+                                    <div class="flex flex-col sm:flex-row p-4">
+                                        <div class="flex flex-auto flex-wrap">
+                                            <!-- Name -->
+                                            <div
+                                                class="
+                                                    flex flex-col
+                                                    w-full
+                                                    lg:w-1/4
+                                                    sm:pl-8
+                                                "
+                                            >
+                                                <!-- Name -->
+                                                <mat-form-field class="w-full">
+                                                    <mat-label>Name</mat-label>
+                                                    <input
+                                                        matInput
+                                                        formControlName="shop_name"
+                                                    />
+                                                </mat-form-field>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="shop_address"
-                                                    ><b>Shop Address:</b></label
-                                                >
-                                                <input
-                                                    type="text"
-                                                    formControlName="shop_address"
-                                                    name="shop_address"
-                                                    id="shop_address"
-                                                    class="form-control"
-                                                />
+
+                                            <!-- Address -->
+                                            <div
+                                                class="
+                                                    flex flex-col
+                                                    w-full
+                                                    lg:w-2/4
+                                                    sm:pl-8
+                                                "
+                                            >
+                                                <mat-form-field class="w-full">
+                                                    <mat-label
+                                                        >Address</mat-label
+                                                    >
+                                                    <input
+                                                        matInput
+                                                        formControlName="shop_address"
+                                                    />
+                                                </mat-form-field>
+                                            </div>
+
+                                            <!-- GST -->
+                                            <div
+                                                class="
+                                                    flex flex-col
+                                                    w-full
+                                                    lg:w-1/4
+                                                    sm:pl-8
+                                                "
+                                            >
+                                                <mat-form-field class="w-full">
+                                                    <mat-label>GST</mat-label>
+                                                    <input
+                                                        matInput
+                                                        formControlName="shop_gst"
+                                                    />
+                                                </mat-form-field>
                                             </div>
                                         </div>
                                     </div>
-                                    <br />
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="shop_gst"
-                                                    ><b>Shop GST:</b></label
+
+                                    <div
+                                        class="
+                                            flex
+                                            items-center
+                                            justify-between
+                                            w-full
+                                            px-8
+                                            py-4
+                                        "
+                                    >
+                                        <button
+                                            class="-ml-4"
+                                            mat-button
+                                            [color]="'warn'"
+                                            (click)="deleteShop()"
+                                        >
+                                            Delete
+                                        </button>
+                                        <button
+                                            (click)="reactivateShop()"
+                                            mat-button
+                                            [color]="'warn'"
+                                            *ngIf="
+                                                shop_status == 2;
+                                                else deactivate
+                                            "
+                                        >
+                                            Deactivated
+                                        </button>
+                                        <ng-template #deactivate>
+                                            <button
+                                                (click)="deactivateShop()"
+                                                mat-button
+                                                [color]="'warn'"
+                                            >
+                                                Deactivate
+                                            </button>
+                                        </ng-template>
+                                        <div class="flex items-center">
+                                            <div
+                                                class="flex items-center mr-4"
+                                                *ngIf="flashMessage"
+                                            >
+                                                <ng-container
+                                                    *ngIf="
+                                                        flashMessage ===
+                                                        'success'
+                                                    "
                                                 >
-                                                <input
-                                                    type="text"
-                                                    formControlName="shop_gst"
-                                                    name="shop_gst"
-                                                    id="shop_gst"
-                                                    class="form-control"
-                                                />
+                                                    <mat-icon
+                                                        class="text-green-500"
+                                                        [svgIcon]="
+                                                            'heroicons_outline:check'
+                                                        "
+                                                    ></mat-icon>
+                                                    <span class="ml-2"
+                                                        >Product updated</span
+                                                    >
+                                                </ng-container>
+                                                <ng-container
+                                                    *ngIf="
+                                                        flashMessage === 'error'
+                                                    "
+                                                >
+                                                    <mat-icon
+                                                        class="text-red-500"
+                                                        [svgIcon]="
+                                                            'heroicons_outline:x'
+                                                        "
+                                                    ></mat-icon>
+                                                    <span class="ml-2"
+                                                        >An error occurred, try
+                                                        again!</span
+                                                    >
+                                                </ng-container>
                                             </div>
+                                            <button
+                                                mat-flat-button
+                                                [color]="'primary'"
+                                                (click)="updateShopDetails()"
+                                            >
+                                                Update
+                                            </button>
                                         </div>
                                     </div>
-                                    <br />
-                                    <div class="row">
-                                        <div class="col-md-9">
+                                </form>
+                                <br />
+                                <!-- Separator -->
+                                <div class="flex items-center mt-4">
+                                    <div class="flex-auto mt-px border-t"></div>
+                                </div>
+                                <br />
+                                <p><b>Vacation Mode</b></p>
+                                <form
+                                    class="example-form"
+                                    [formGroup]="vacationForm"
+                                    ngNativeValidate
+                                >
+                                    <div
+                                        class="
+                                            relative
+                                            flex flex-col
+                                            sm:flex-row
+                                            flex-0
+                                            sm:items-center sm:justify-between
+                                            border-b
+                                        "
+                                    >
+                                        <!-- Actions -->
+                                        <div
+                                            class="
+                                                flex flex-shrink-0
+                                                items-center
+                                                mt-6
+                                                sm:mt-0 sm:ml-4
+                                            "
+                                        >
+                                            <!-- Vacation mode off -->
+                                            <div
+                                                class="
+                                                    flex flex-col
+                                                    w-full
+                                                    lg:w-2/4
+                                                    sm:pl-8
+                                                "
+                                                *ngIf="
+                                                    shopData.vacation_mode == 0
+                                                "
+                                            >
+                                                <mat-slide-toggle
+                                                    color="primary"
+                                                    formControlName="vacation_mode"
+                                                    >{{
+                                                        "OFF"
+                                                    }}</mat-slide-toggle
+                                                >
+                                            </div>
+                                            &nbsp; &nbsp;
+                                            <!-- Vacation mode on -->
+                                            <div
+                                                class="
+                                                    flex flex-col
+                                                    w-full
+                                                    lg:w-3/4
+                                                    sm:pl-8
+                                                "
+                                                *ngIf="
+                                                    shopData.vacation_mode == 1
+                                                "
+                                            >
+                                                <mat-slide-toggle
+                                                    color="accent"
+                                                    checked
+                                                    >{{
+                                                        " ON"
+                                                    }}</mat-slide-toggle
+                                                >
+                                            </div>
+                                            &nbsp; &nbsp;
+                                            <!-- Add product button -->
                                             <div class="flex items-center">
                                                 <div
                                                     class="
@@ -2913,7 +3104,7 @@
                                                             "
                                                         ></mat-icon>
                                                         <span class="ml-2"
-                                                            >Success</span
+                                                            >Updated</span
                                                         >
                                                     </ng-container>
                                                     <ng-container
@@ -2934,52 +3125,22 @@
                                                         >
                                                     </ng-container>
                                                 </div>
-                                                <button class="btn btn-success">
-                                                    Submit
+                                                <button
+                                                    mat-flat-button
+                                                    [color]="'primary'"
+                                                    (click)="
+                                                        onVacationSubmit(
+                                                            vacationForm.value
+                                                        )
+                                                    "
+                                                >
+                                                    Update
                                                 </button>
                                             </div>
                                         </div>
-                                        <div
-                                            class="col-md-3"
-                                            style="float: right"
-                                        >
-                                            <button
-                                                (click)="deleteShop()"
-                                                class="btn btn-danger"
-                                            >
-                                                Delete
-                                            </button>
-                                            &nbsp;
-                                            <button
-                                                (click)="reactivateShop()"
-                                                class="btn btn-default"
-                                                *ngIf="
-                                                    shop_status == 2;
-                                                    else deactivate
-                                                "
-                                            >
-                                                Deactivated
-                                            </button>
-                                            <ng-template #deactivate>
-                                                <button
-                                                    (click)="deactivateShop()"
-                                                    class="btn btn-warning"
-                                                >
-                                                    Deactivate
-                                                </button>
-                                            </ng-template>
-                                        </div>
                                     </div>
                                 </form>
-                                <br />
-                                <!-- Separator -->
-                                <div class="flex items-center mt-8">
-                                    <div class="flex-auto mt-px border-t"></div>
-
-                                    <div class="flex-auto mt-px border-t"></div>
-                                </div>
-                                <br />
-                                <form
+                                <!-- <form
                                     class="example-form"
                                     [formGroup]="vacationForm"
                                     (ngSubmit)="
@@ -3084,7 +3245,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </form>
+                                </form> -->
                             </div>
                         </div>
                     </ng-template>

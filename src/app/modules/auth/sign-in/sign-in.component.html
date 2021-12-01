@@ -89,12 +89,12 @@
                         matInput
                         [formControlName]="'email'"
                     />
-                    <input
+                    <!-- <input
                         id="deviceId"
-                        matInput
                         hidden="true"
+                        matInput
                         [formControlName]="'deviceId'"
-                    />
+                    /> -->
 
                     <mat-error
                         *ngIf="signInForm.get('email').hasError('required')"
@@ -142,19 +142,6 @@
                     <mat-error> Password is required </mat-error>
                 </mat-form-field>
 
-                <!-- OTP field -->
-                <mat-form-field class="w-full" *ngIf="otp == 0">
-                    <mat-label>OTP</mat-label>
-                    <!-- <input id="otp" *ngIf="otp == 0" hidden matInput #otpField /> -->
-                    <input
-                        id="otp"
-                        matInput
-                        [formControlName]="'otp'"
-                        #otpField
-                    />
-                    <mat-error> OTP is required </mat-error>
-                </mat-form-field>
-
                 <!-- Actions -->
                 <div
                     class="inline-flex items-end justify-between w-full mt-1.5"
@@ -183,7 +170,8 @@
                     mat-flat-button
                     [color]="'primary'"
                     [disabled]="signInForm.disabled"
-                    (click)="signIn()"
+                    (click)="verifyEmail()"
+                    *ngIf="otpVerify == 0; else otpVerified"
                 >
                     <span *ngIf="!signInForm.disabled"> Sign in </span>
                     <mat-progress-spinner
@@ -192,18 +180,34 @@
                         [mode]="'indeterminate'"
                     ></mat-progress-spinner>
                 </button>
+                <ng-template #otpVerified>
+                    <button
+                        class="fuse-mat-button-large w-full mt-6"
+                        mat-flat-button
+                        [color]="'primary'"
+                        [disabled]="signInForm.disabled"
+                        (click)="signIn()"
+                    >
+                        <span *ngIf="!signInForm.disabled"> Sign in </span>
+                        <mat-progress-spinner
+                            *ngIf="signInForm.disabled"
+                            [diameter]="24"
+                            [mode]="'indeterminate'"
+                        ></mat-progress-spinner>
+                    </button>
+                </ng-template>
 
                 <!-- Separator -->
-                <div class="flex items-center mt-8">
+                <!-- <div class="flex items-center mt-8">
                     <div class="flex-auto mt-px border-t"></div>
                     <div class="mx-2 text-secondary">Or continue with</div>
                     <div class="flex-auto mt-px border-t"></div>
-                </div>
-                <h3>User Agent Details</h3>
+                </div> -->
+                <!-- <h3>User Agent Details</h3>
                 <pre>{{ userAgentDetails }}</pre>
                 <hr />
                 <h3>Browser Details</h3>
-                <pre>{{ browserDetails }}</pre>
+                <pre>{{ browserDetails }}</pre> -->
                 <!-- Single sign-on buttons -->
                 <!-- <div class="flex items-center mt-8 space-x-4">
                     <button class="flex-auto" type="button" mat-stroked-button>

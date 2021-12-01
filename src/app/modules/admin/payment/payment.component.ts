@@ -55,9 +55,20 @@ export class PaymentComponent implements OnInit {
     }
 
     managePayment(payment): void {
-        // this._router.navigate([
-        //     '/dashboard/' + payment.shopId + '/' + payment.shop_name,
-        // ]);
+        const paymentRedirect = 'payment';
+        localStorage.setItem('payment', paymentRedirect);
+        this._router.navigate([
+            '/payment/manage-payment-gateway/' +
+                payment.payment_id +
+                '/' +
+                payment.payment_name,
+        ]);
+    }
+
+    addPayment(): void {
+        const payment = 'payment';
+        localStorage.setItem('payment', payment);
+        this._router.navigate(['/payment/payment-gateway/']);
     }
 
     isMobile() {

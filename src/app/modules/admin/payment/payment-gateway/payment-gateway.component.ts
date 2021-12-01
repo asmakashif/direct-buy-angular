@@ -23,6 +23,7 @@ export class PaymentGatewayComponent implements OnInit {
     paymentGatewayForm: FormGroup;
     flashMessage: string;
     @ViewChild('shopForm') shopForm: NgForm;
+    provider_type: string;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -54,7 +55,7 @@ export class PaymentGatewayComponent implements OnInit {
 
     onSubmit() {
         const routeParams = this.routes.snapshot.params;
-        //console.log(this.paymentGatewayForm.value);
+        console.log(this.paymentGatewayForm.value);
         if (this.paymentGatewayForm.invalid) {
             return;
         }
@@ -108,6 +109,10 @@ export class PaymentGatewayComponent implements OnInit {
         }, 3000);
     }
 
+    // onTypeSelection() {
+    //     console.log(this.provider_type);
+    // }
+
     onChange(val) {
         console.log(val);
         var googlepayelement = document.getElementById('googlepay');
@@ -125,5 +130,16 @@ export class PaymentGatewayComponent implements OnInit {
         var phonepeelement = document.getElementById('phonepe');
         if (val == 'Phonepe') phonepeelement.style.display = 'block';
         else phonepeelement.style.display = 'none';
+    }
+
+    cancel(): void {
+        const redirectto = localStorage.getItem('payment');
+        if (redirectto == 'payment') {
+            this._router.navigate(['/payment']).then(() => {
+                localStorage.removeItem('payment');
+            });
+        } else {
+            this._router.navigate(['/dashboard']);
+        }
     }
 }

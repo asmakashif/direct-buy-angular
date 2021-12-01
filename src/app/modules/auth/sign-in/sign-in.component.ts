@@ -36,12 +36,12 @@ export class AuthSignInComponent implements OnInit {
     browser: Bowser.Parser.Parser;
     userAgentDetails: string;
     browserDetails: string;
-    otpVerify: string;
+    otpVerify: any;
     deviceId: string;
     uuid: any;
     fieldvalue = '';
     verifyOtp: any;
-    otp: any;
+    retailerData: any;
 
     /**
      * Constructor
@@ -64,8 +64,8 @@ export class AuthSignInComponent implements OnInit {
      */
     ngOnInit(): void {
         this.uuid = new DeviceUUID().get();
-        // console.log(this.uuid);
-
+        console.log(this.uuid);
+        this.deviceId = new DeviceUUID().get();
         this.otpVerify = localStorage.getItem('otpVerify');
         this.userAgent = Bowser.parse(window.navigator.userAgent);
         this.browser = Bowser.getParser(window.navigator.userAgent);
@@ -83,8 +83,6 @@ export class AuthSignInComponent implements OnInit {
         console.log(this.arrString);
         // Create the form
         this.signInForm = this._formBuilder.group({
-            // domainname: [this.arrString[0]],
-            deviceId: [this.uuid],
             email: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required],
             otp: [''],
@@ -93,14 +91,11 @@ export class AuthSignInComponent implements OnInit {
     }
 
     keyup(event) {
-        console.log(this.signInForm.value);
-        console.log(event);
         this._authService
             .checkOtpVerification(this.signInForm.value)
             .subscribe((data) => {
                 this.verifyOtp = data;
-                this.otp = this.verifyOtp.otp;
-                console.log(this.verifyOtp.otp);
+                this.otpVerify = this.verifyOtp.otpVerify;
             });
     }
 
@@ -108,6 +103,43 @@ export class AuthSignInComponent implements OnInit {
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
+    verifyEmail(): void {
+        // Return if the form is invalid
+        if (this.signInForm.invalid) {
+            return;
+        }
+
+        // Disable the form
+        this.signInForm.disable();
+
+        // Hide the alert
+        this.showAlert = false;
+
+        // Sign in
+        this._authService.verifyEmail(this.signInForm.value).subscribe(
+            (data) => {
+                this.retailerData = data;
+                const user_id = this.retailerData.id;
+                this._router.navigate(['verify-email/' + user_id]);
+            },
+            (response) => {
+                // Re-enable the form
+                this.signInForm.enable();
+
+                // Reset the form
+                this.signInNgForm.resetForm();
+
+                // Set the alert
+                this.alert = {
+                    type: 'error',
+                    message: 'Wrong email or password',
+                };
+
+                // Show the alert
+                this.showAlert = true;
+            }
+        );
+    }
     /**
      * Sign in
      */

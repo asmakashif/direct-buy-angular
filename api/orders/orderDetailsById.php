@@ -24,6 +24,7 @@
             $orders['c_fname'] = $row['c_fname'];
             $orders['total'] = $row['total'];
             $orders['order_placed_date'] = $row['order_placed_date'];
+            $orders['order_status'] = $row['order_status'];
         }
 
         echo json_encode($orders);

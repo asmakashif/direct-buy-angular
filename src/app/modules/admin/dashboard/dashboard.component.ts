@@ -208,19 +208,13 @@ export class DashboardComponent {
     ngOnInit(): void {
         const accessToken = localStorage.getItem('accessToken');
         //const deviceId = localStorage.getItem('deviceId');
-        const uuid = new DeviceUUID().get();
+        //const uuid = new DeviceUUID().get();
         const user_id = localStorage.getItem('user_id');
         const routeParams = this.routes.snapshot.params;
         this.shop_id = routeParams.shopId;
-        // if (!deviceId) {
-        //     this._router.navigate(['sign-in']);
-        // } else {
-        //     if (uuid != deviceId) {
-        //         this._router.navigate(['sign-in']);
-        //     } else {
-        //         this._router.navigate(['dashboard']);
-        //     }
-        // }
+        if (!accessToken) {
+            this._router.navigate(['sign-in']);
+        }
 
         // Create the selected product form
         this.selectedProductForm = this.formBuilder.group({
@@ -368,15 +362,15 @@ export class DashboardComponent {
                 this.messageForm.patchValue(data);
                 this.profileData = data;
                 this.firstname = this.profileData.firstname;
-                this.deviceId = this.profileData.deviceId;
+                // this.deviceId = this.profileData.deviceId;
                 this.cd.detectChanges();
-                if (!this.deviceId) {
-                    this._router.navigate(['sign-in']);
-                } else {
-                    if (uuid != this.deviceId) {
-                        this._router.navigate(['sign-in']);
-                    }
-                }
+                // if (!this.deviceId) {
+                //     this._router.navigate(['sign-in']);
+                // } else {
+                //     if (uuid != this.deviceId) {
+                //         this._router.navigate(['sign-in']);
+                //     }
+                // }
                 //console.log(this.profileData);
             });
 
@@ -415,19 +409,13 @@ export class DashboardComponent {
     }
 
     changeStore(stores): void {
-        //alert(stores.remove_shop);
-        if (stores.remove_shop == 0) {
-            this._router
-                .navigate([
-                    'dashboard/' + stores.shopId + '/' + stores.shop_name,
-                ])
-                .then(() => {
-                    this.ngOnInit();
-                    // window.location.reload();
-                });
-        } else {
-            this.dashbaord();
-        }
+        //alert(stores.shop_name);
+        this._router
+            .navigate(['dashboard/' + stores.shopId + '/' + stores.shop_name])
+            .then(() => {
+                this.ngOnInit();
+                // window.location.reload();
+            });
     }
 
     dashbaord(): void {
@@ -446,30 +434,14 @@ export class DashboardComponent {
     }
 
     shopDetails(data: Data): void {
-        if (!this.isMobile()) {
-            this._router.navigate(['/store/shop-details/' + data.shopId]);
-        } else {
-            this._router.navigate(['/store/shop-details/' + data.shopId]);
-        }
-    }
-    configurations(data: Data): void {
-        if (!this.isMobile()) {
-            this._router.navigate([
-                '/dashboard/' +
-                    data.shopId +
-                    '/' +
-                    data.shop_name +
-                    '/configurations/',
-            ]);
-        } else {
-            this._router.navigate([
-                '/dashboard/' +
-                    data.shopId +
-                    '/' +
-                    data.shop_name +
-                    '/configurations/',
-            ]);
-        }
+        this._router.navigate([
+            '/dashboard/' + data.shopId + '/' + data.shop_name,
+        ]);
+        // if (!this.isMobile()) {
+        //     this._router.navigate(['/store/shop-details/' + data.shopId]);
+        // } else {
+        //     this._router.navigate(['/store/shop-details/' + data.shopId]);
+        // }
     }
 
     minimum_order(): void {
@@ -513,15 +485,20 @@ export class DashboardComponent {
         });
     }
 
-    onShopDetailsUpdate() {
-        console.log(this.editShopForm.value);
-        this._dashboardService
-            .updateShopDetails(this.editShopForm.value)
-            .subscribe((data) => {
-                this.ngOnInit();
-                this.showFlashMessage('success');
-                this.cd.detectChanges();
-            });
+    /**
+     * Update shop details
+     */
+    updateShopDetails(): void {
+        // Get the product object
+        const shop = this.editShopForm.getRawValue();
+        console.log(shop);
+
+        this._dashboardService.updateShopDetails(shop).subscribe(() => {
+            // Show a success message
+            this.showFlashMessage('success');
+            // this.ngOnInit();
+            this.cd.markForCheck();
+        });
     }
 
     onVacationSubmit(formValue: any) {
@@ -530,9 +507,9 @@ export class DashboardComponent {
         this._dashboardService
             .updateAdditionalSetting(formValue)
             .subscribe((data) => {
-                this.ngOnInit();
+                window.location.reload();
                 this.showFlashMessage('success');
-                this.cd.detectChanges();
+                this.cd.markForCheck();
             });
     }
 
@@ -586,6 +563,15 @@ export class DashboardComponent {
         const routeParams = this.routes.snapshot.params;
         this._router.navigate([
             '/orders/new-registration/' + routeParams.shopId,
+        ]);
+    }
+
+    managePayment(payment): void {
+        this._router.navigate([
+            '/payment/manage-payment-gateway/' +
+                payment.payment_id +
+                '/' +
+                payment.payment_name,
         ]);
     }
 

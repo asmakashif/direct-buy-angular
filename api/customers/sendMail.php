@@ -1,19 +1,21 @@
 <?php
-// $to_email = "chaithraramachandraa@gmail.com";
-// $subject = "Simple Email Test via PHP";
-// $body = "Hi, This is test email send by PHP Script";
-// $headers = "From: haniarsc8@gmail.com";
+header("Access-Control-Allow-Origin: http://localhost:4200");
+header("Access-Control-Allow-Origin: *");
+header('Access-Control-Allow-Credentials: true');
+header("Access-Control-Allow-Methods: PUT, GET, POST, DELETE");
+header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 
-// if (mail($to_email, $subject, $body, $headers)) {
-//     echo "Email successfully sent to $to_email...";
-// } else {
-//     echo "Email sending failed...";
-// }
+
 $to = $email;
+$last_id;
 include('smtp/PHPMailerAutoload.php');
-$html='Testing by AsmaKashif';
-smtp_mailer($to,'subject',$html);
-function smtp_mailer($to,$subject, $msg){
+//$html='Testing';
+$rndno = rand(100000, 999999);
+$html = 'The One Time Password for your account is ' .$rndno. '. - Regards, Direct-Buy';
+smtp_mailer($to,'subject',$html,$last_id,$rndno);
+function smtp_mailer($to,$subject, $msg,$last_id,$rndno)
+{
+	$id = $last_id;
 	$mail = new PHPMailer(); 
 	$mail->SMTPDebug  = 3;
 	$mail->IsSMTP(); 
@@ -39,7 +41,22 @@ function smtp_mailer($to,$subject, $msg){
 		http_response_code(422);
 	}else
 	{
-		http_response_code(201);
+		$CN= mysqli_connect("localhost","root","");
+		$DB=mysqli_select_db($CN,"formal_store"); 
+		$id;
+		$rndno;
+
+		$sql="UPDATE `tbl_user` SET `otp`='$rndno' WHERE `id`='{$id}' LIMIT 1  ";
+
+        $R=mysqli_query($CN,$sql)or die("database error:". mysqli_error($CN));
+        if($R)
+        {
+        	echo 'success';
+        	http_response_code(204);
+        }
+        else{
+        	http_response_code(422);
+        }
 	}
 }
 ?>

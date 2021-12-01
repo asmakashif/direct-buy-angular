@@ -57,7 +57,7 @@ export class ProfileComponent implements OnInit {
         });
     }
 
-    onUpdate() {
+    onProfileUpdate() {
         console.log(this.profileForm.value);
         // if (this.profileForm.invalid) {
         //     return;

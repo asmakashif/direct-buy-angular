@@ -1,1 +1,317 @@
-<p>manage-payment-gateway works!</p>
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div class="bg-card">
+        <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
+            <div
+                class="
+                    flex flex-col
+                    sm:flex-row
+                    flex-auto
+                    sm:items-center
+                    min-w-0
+                    my-8
+                    sm:my-12
+                "
+            >
+                <!-- Avatar and name -->
+                <div class="flex flex-auto items-center min-w-0">
+                    <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
+                        <img
+                            class="w-full h-full object-cover"
+                            src="assets/images/avatars/avatar.png"
+                        />
+                    </div>
+                    <div class="flex flex-col min-w-0 ml-4">
+                        <ng-container *transloco="let t">
+                            <div
+                                class="
+                                    text-2xl
+                                    md:text-5xl
+                                    font-semibold
+                                    tracking-tight
+                                    leading-7
+                                    md:leading-snug
+                                    truncate
+                                "
+                            >
+                                {{ t("welcome-back") }}, Brian!
+                            </div>
+                        </ng-container>
+                        <div class="flex items-center">
+                            <mat-icon
+                                class="icon-size-5"
+                                [svgIcon]="'heroicons_solid:bell'"
+                            ></mat-icon>
+                            <div
+                                class="ml-1.5 leading-6 truncate text-secondary"
+                            >
+                                You have 2 new messages and 15 new tasks
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Actions -->
+                <div class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3">
+                    <button
+                        class="fuse-mat-button-rounded bg-accent-700"
+                        mat-flat-button
+                        [color]="'accent'"
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:mail'"
+                        ></mat-icon>
+                        <span class="ml-2">Messages</span>
+                    </button>
+                    <button
+                        class="fuse-mat-button-rounded"
+                        mat-flat-button
+                        [color]="'primary'"
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:cog'"
+                        ></mat-icon>
+                        <span class="ml-2">Settings</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <div
+                class="
+                    flex flex-col
+                    m-8
+                    p-8
+                    pb-4
+                    bg-card
+                    rounded-2xl
+                    shadow
+                    overflow-hidden
+                "
+            >
+                <p><b>Edit Payment Details</b></p>
+                <form
+                    class="flex flex-col w-full"
+                    [formGroup]="selectedPaymentForm"
+                >
+                    <div class="flex flex-col sm:flex-row p-8">
+                        <div class="flex flex-auto flex-wrap">
+                            <!-- Name, SKU & etc. -->
+                            <div class="flex flex-col w-full lg:w-2/4 sm:pl-8">
+                                <!-- Provider Type -->
+                                <mat-form-field class="w-full">
+                                    <mat-label>Provider Type</mat-label>
+                                    <input
+                                        matInput
+                                        readonly="true"
+                                        [formControlName]="'provider_type'"
+                                    />
+                                </mat-form-field>
+
+                                <!-- Merchant MID -->
+                                <div class="flex">
+                                    <mat-form-field class="w-full">
+                                        <mat-label>Payment Name</mat-label>
+
+                                        <input
+                                            matInput
+                                            [formControlName]="'payment_name'"
+                                        />
+                                    </mat-form-field>
+                                </div>
+
+                                <!-- Category, Brand & SubCategory -->
+                                <div class="flex">
+                                    <ng-container
+                                        *ngIf="provider_type == 'GooglePay'"
+                                    >
+                                        <mat-form-field class="w-full">
+                                            <mat-label
+                                                >Transaction Note</mat-label
+                                            >
+                                            <input
+                                                matInput
+                                                [formControlName]="
+                                                    'transaction_note'
+                                                "
+                                            />
+                                        </mat-form-field>
+                                    </ng-container>
+                                </div>
+                            </div>
+
+                            <!-- Payment Name, Merchant Key-->
+                            <div class="flex flex-col w-full lg:w-2/4 sm:pl-8">
+                                <ng-container *ngIf="provider_type == 'Paytm'">
+                                    <mat-form-field class="w-full">
+                                        <mat-label>Merchant MID </mat-label>
+                                        <input
+                                            matInput
+                                            [formControlName]="
+                                                'payment_api_key'
+                                            "
+                                        />
+                                    </mat-form-field>
+
+                                    <mat-form-field class="w-full">
+                                        <mat-label>Merchant Key</mat-label>
+                                        <input
+                                            matInput
+                                            [formControlName]="
+                                                'payment_secret_key'
+                                            "
+                                        />
+                                    </mat-form-field>
+                                </ng-container>
+                                <ng-container
+                                    *ngIf="provider_type == 'Razorpay'"
+                                >
+                                    <mat-form-field class="w-full">
+                                        <mat-label>API Key</mat-label>
+                                        <input
+                                            matInput
+                                            [formControlName]="
+                                                'payment_api_key'
+                                            "
+                                        />
+                                    </mat-form-field>
+
+                                    <mat-form-field class="w-full">
+                                        <mat-label>Secret Key</mat-label>
+                                        <input
+                                            matInput
+                                            [formControlName]="
+                                                'payment_secret_key'
+                                            "
+                                        />
+                                    </mat-form-field>
+                                </ng-container>
+                                <ng-container
+                                    *ngIf="provider_type == 'GooglePay'"
+                                >
+                                    <mat-form-field class="w-full">
+                                        <mat-label>VPA UPI ID</mat-label>
+                                        <input
+                                            matInput
+                                            [formControlName]="
+                                                'payment_api_key'
+                                            "
+                                        />
+                                    </mat-form-field>
+
+                                    <mat-form-field class="w-full">
+                                        <mat-label>Merchant Name</mat-label>
+                                        <input
+                                            matInput
+                                            [formControlName]="
+                                                'payment_secret_key'
+                                            "
+                                        />
+                                    </mat-form-field>
+
+                                    <mat-form-field class="w-full">
+                                        <mat-label>Merchant Code</mat-label>
+                                        <input
+                                            matInput
+                                            [formControlName]="'merchant_code'"
+                                        />
+                                    </mat-form-field>
+                                </ng-container>
+
+                                <ng-container
+                                    *ngIf="provider_type == 'Phonepe'"
+                                >
+                                    <mat-form-field class="w-full">
+                                        <mat-label>Salt Key</mat-label>
+                                        <input
+                                            matInput
+                                            [formControlName]="
+                                                'payment_api_key'
+                                            "
+                                        />
+                                    </mat-form-field>
+
+                                    <mat-form-field class="w-full">
+                                        <mat-label>Merchant Id</mat-label>
+                                        <input
+                                            matInput
+                                            [formControlName]="
+                                                'payment_secret_key'
+                                            "
+                                        />
+                                    </mat-form-field>
+
+                                    <mat-form-field class="w-full">
+                                        <mat-label>Salt Index</mat-label>
+                                        <input
+                                            matInput
+                                            [formControlName]="'salt_index'"
+                                        />
+                                    </mat-form-field>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="
+                            flex
+                            items-center
+                            justify-between
+                            w-full
+                            border-t
+                            px-8
+                            py-4
+                        "
+                    >
+                        <button
+                            class="-ml-4"
+                            mat-button
+                            [color]="'warn'"
+                            (click)="deleteSelectedPayment()"
+                        >
+                            Delete
+                        </button>
+                        <div class="flex items-center">
+                            <div
+                                class="flex items-center mr-4"
+                                *ngIf="flashMessage"
+                            >
+                                <ng-container
+                                    *ngIf="flashMessage === 'success'"
+                                >
+                                    <mat-icon
+                                        class="text-green-500"
+                                        [svgIcon]="'heroicons_outline:check'"
+                                    ></mat-icon>
+                                    <span class="ml-2">Payment updated</span>
+                                </ng-container>
+                                <ng-container *ngIf="flashMessage === 'error'">
+                                    <mat-icon
+                                        class="text-red-500"
+                                        [svgIcon]="'heroicons_outline:x'"
+                                    ></mat-icon>
+                                    <span class="ml-2"
+                                        >An error occurred, try again!</span
+                                    >
+                                </ng-container>
+                            </div>
+                            <button
+                                mat-flat-button
+                                [color]="'primary'"
+                                (click)="updateSelectedPayment()"
+                            >
+                                Update
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

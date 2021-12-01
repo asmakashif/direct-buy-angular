@@ -41,28 +41,27 @@
         
      
         $shopId=$DecodedData['shopId']; 
-        $shop_pInfo_id=$DecodedData['shop_pInfo_id']; 
+        $shop_pInfo_id=$DecodedData['shop_pInfo_id'];
         // $shopId='zaSBHA'; 
         // $shop_pInfo_id=27; 
 
 
         $update = "UPDATE `shop_payment_info` SET `default_payment` = 0 WHERE `pInfo_shopId`='{$shopId}' ";
-        if(mysqli_query($CN,$update))
+        if(mysqli_query($CN,$update) or die("database error:". mysqli_error($CN)))
         {
-            foreach($shop_pInfo_id as $key)  
-            {
-                $sql="UPDATE `shop_payment_info` SET `default_payment` = 1 WHERE `shop_pInfo_id`='{$key}' ";
+            
+            $sql="UPDATE `shop_payment_info` SET `default_payment` = 1 WHERE `shop_pInfo_id`='{$shop_pInfo_id}' ";
 
-                $R=mysqli_query($CN,$sql);
-                if($R)
-                {
-                    echo 1;
-                    http_response_code(204);
-                }
-                else{
-                    http_response_code(422);
-                }
+            $R=mysqli_query($CN,$sql) or die("database error:". mysqli_error($CN));
+            if($R)
+            {
+                echo 1;
+                http_response_code(204);
             }
+            else{
+                http_response_code(422);
+            }
+            
         }
         else
         {

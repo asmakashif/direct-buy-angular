@@ -61,6 +61,13 @@ export const appRoutes: Route[] = [
                     ),
             },
             {
+                path: 'verify-email/:user_id',
+                loadChildren: () =>
+                    import(
+                        'app/modules/auth/verify-email/verify-email.module'
+                    ).then((m) => m.VerifyEmailModule),
+            },
+            {
                 path: 'sign-up',
                 loadChildren: () =>
                     import('app/modules/auth/sign-up/sign-up.module').then(
@@ -336,7 +343,7 @@ export const appRoutes: Route[] = [
                     ).then((m) => m.PaymentGatewayModule),
             },
             {
-                path: 'payment/manage-payment-gateway',
+                path: 'payment/manage-payment-gateway/:payment_id/:payment_name',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/payment/manage-payment-gateway/manage-payment-gateway.module'
@@ -430,9 +437,9 @@ export const appRoutes: Route[] = [
             {
                 path: 'reports',
                 loadChildren: () =>
-                    import(
-                        'app/modules/admin/reports/reports.module'
-                    ).then((m) => m.ReportsComponentModule),
+                    import('app/modules/admin/reports/reports.module').then(
+                        (m) => m.ReportsComponentModule
+                    ),
             },
             // 404 & Catch all
             {

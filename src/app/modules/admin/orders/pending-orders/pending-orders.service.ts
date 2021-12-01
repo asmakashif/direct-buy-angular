@@ -7,11 +7,39 @@ import { ApiResponse } from 'app/Model/api-response';
     providedIn: 'root',
 })
 export class PendingOrdersService {
-    constructor(private _http: HttpClient) {}
+    constructor(private _httpClient: HttpClient) {}
+
+    getShops(user_id: string): Observable<any> {
+        return this._httpClient.get('/api/getShops.php?user_id=' + user_id);
+    }
+
+    getShopDetailsById(
+        shopId: string,
+        user_id: string
+    ): Observable<ApiResponse> {
+        return this._httpClient.get<ApiResponse>(
+            '/api/getShopDetailsById.php?shopId=' +
+                shopId +
+                '&user_id=' +
+                user_id
+        );
+    }
+
+    getAllOrdersByStore(shopId: string): Observable<ApiResponse> {
+        return this._httpClient.get<ApiResponse>(
+            '/api/orders/getAllOrdersByStore.php?shopId=' + shopId
+        );
+    }
 
     getPendingOrdersByStore(shopId: string): Observable<ApiResponse> {
-        return this._http.get<ApiResponse>(
+        return this._httpClient.get<ApiResponse>(
             '/api/orders/pendingOrdersByStr.php?shopId=' + shopId
+        );
+    }
+
+    getCompletedOrdersByStore(shopId: string): Observable<ApiResponse> {
+        return this._httpClient.get<ApiResponse>(
+            '/api/orders/completedOrdersByStr.php?shopId=' + shopId
         );
     }
 }

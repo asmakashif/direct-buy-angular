@@ -24,6 +24,7 @@
             $orders[$cr]['c_fname'] = $row['c_fname'];
             $orders[$cr]['total'] = $row['total'];
             $orders[$cr]['order_placed_date'] = $row['order_placed_date'];
+            $orders[$cr]['order_status'] = $row['order_status'];
             $cr++;
         }
 

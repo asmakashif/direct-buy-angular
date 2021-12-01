@@ -24,10 +24,15 @@
             $retailer['domainname'] = $row['domainname'];
             $retailer['contact'] = $row['contact'];
             $retailer['email'] = $row['email'];
-            $retailer['password'] = $row['password'];
+            //$retailer['password'] = $row['password'];
+
+            $decryptedPassword = base64_decode($row['password']);
+            $retailer['password'] = json_decode($decryptedPassword);
+
             $retailer['address'] = $row['address'];
             $retailer['logo'] = $row['logo'];
             $retailer['str_msg'] = $row['str_msg'];
+            $retailer['deviceId'] = $row['deviceId'];
         }
 
         echo json_encode($retailer);

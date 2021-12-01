@@ -14,9 +14,9 @@
     $shopId = $_GET['shopId'];
     $payment = [];
 
-    $qry="SELECT * from ((SELECT pi.payment_id,pi.user_id,pi.payment_name,pi.provider_type,spi.pInfo_payment_name,spi.pInfo_shopId FROM payment_integration as pi LEFT JOIN shop_payment_info as spi ON spi.pInfo_payment_name=pi.payment_name WHERE pi.user_id = '$user_id' AND spi.pInfo_shopId = '$shopId') UNION (SELECT pi.payment_id,pi.user_id,pi.payment_name,pi.provider_type,pi.payment_api_key,pi.payment_secret_key FROM payment_integration as pi WHERE pi.user_id='$user_id')) as payment group by payment.payment_name";
+    $qry="SELECT * from ((SELECT pi.payment_id,pi.user_id,pi.payment_name,pi.provider_type,pi.provider_img,spi.shop_pInfo_id,spi.pInfo_payment_name,spi.pInfo_shopId,spi.default_payment FROM payment_integration as pi LEFT JOIN shop_payment_info as spi ON spi.pInfo_payment_name=pi.payment_name WHERE pi.user_id = '$user_id' AND spi.pInfo_shopId = '$shopId' ORDER BY spi.shop_pInfo_id DESC) UNION (SELECT pi.payment_id,pi.user_id,pi.payment_name,pi.provider_type,pi.payment_api_key,pi.payment_secret_key,pi.payment_status,pi.payment_added_date,pi.provider_img FROM payment_integration as pi WHERE pi.user_id='$user_id')) as payment group by payment.payment_name";
 
-    if($result = mysqli_query($CN,$qry))
+    if($result = mysqli_query($CN,$qry) or die("database error:". mysqli_error($CN)))
     {
         $cr = 0;
         while($row = mysqli_fetch_assoc($result))
@@ -24,9 +24,12 @@
              
             $payment[$cr]['payment_id'] = $row['payment_id'];
             $payment[$cr]['provider_type'] = $row['provider_type'];
+            $payment[$cr]['provider_img'] = $row['provider_img'];
             $payment[$cr]['payment_name'] = $row['payment_name'];
             $payment[$cr]['pInfo_payment_name'] = $row['pInfo_payment_name'];
+            $payment[$cr]['shop_pInfo_id'] = $row['shop_pInfo_id'];
             $payment[$cr]['pInfo_shopId'] = $row['pInfo_shopId'];
+            $payment[$cr]['default_payment'] = $row['default_payment'];
             
             $cr++;
         }

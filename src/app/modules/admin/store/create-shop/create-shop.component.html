@@ -94,13 +94,77 @@
                     overflow-hidden
                 "
             >
+                <p><b>Create Shop</b></p>
                 <form
                     [formGroup]="addForm"
                     (ngSubmit)="onSubmit()"
                     #shopForm="ngForm"
                     autocomplete="off"
                 >
-                    <div class="form-group">
+                    <div class="flex flex-col sm:flex-row p-4">
+                        <div class="flex flex-auto flex-wrap">
+                            <!-- Name -->
+                            <div class="flex flex-col w-full lg:w-2/4 sm:pl-8">
+                                <!-- Name -->
+                                <mat-form-field class="w-full">
+                                    <mat-label>Shop Name</mat-label>
+                                    <input
+                                        matInput
+                                        [formControlName]="'shop_name'"
+                                    />
+                                </mat-form-field>
+                                <div
+                                    class="flex items-center mr-4"
+                                    *ngIf="flashMessage"
+                                >
+                                    <ng-container
+                                        *ngIf="flashMessage === 'success'"
+                                    >
+                                        <mat-icon
+                                            class="text-green-500"
+                                            [svgIcon]="
+                                                'heroicons_outline:check'
+                                            "
+                                        ></mat-icon>
+                                        <span class="ml-2">Success</span>
+                                    </ng-container>
+                                    <ng-container
+                                        *ngIf="flashMessage === 'error'"
+                                    >
+                                        <mat-icon
+                                            class="text-red-500"
+                                            [svgIcon]="'heroicons_outline:x'"
+                                        ></mat-icon>
+                                        <span class="ml-2"
+                                            >Shop already present</span
+                                        >
+                                    </ng-container>
+                                </div>
+                            </div>
+
+                            <!-- Address -->
+                            <div class="flex flex-col w-full lg:w-2/4 sm:pl-8">
+                                <mat-form-field class="w-full">
+                                    <mat-label>Shop Address</mat-label>
+                                    <input
+                                        matInput
+                                        [formControlName]="'shop_address'"
+                                    />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between w-full">
+                        <button class="btn btn-warning" (click)="cancel()">
+                            Cancel
+                        </button>
+                        <div class="flex items-center">
+                            <button class="btn btn-success">Submit</button>
+                        </div>
+                    </div>
+
+                    <!-- <div class="form-group">
                         <label for="shop_name"><b>Shop Name:</b></label>
                         <input
                             type="text"
@@ -110,7 +174,7 @@
                             id="shop_name"
                             class="form-control"
                         />
-                        <!-- <span id="message"></span> -->
+                        
                         <div
                             class="flex items-center mr-4"
                             *ngIf="flashMessage"
@@ -142,33 +206,29 @@
                             class="form-control"
                         />
                     </div>
-                    &nbsp;
+                    &nbsp; -->
                     <!-- <div class="form-group">
-                    <label for="shopType[]"><b>ShopType:</b></label>
-                    <div *ngFor="let shopType of shopType">
-                        <label>
-                            <input
-                                type="checkbox"
-                                [value]="shopType.shop_type_id"
-                                name="shopType[]"
-                                (change)="onCheckboxChange($event)"
-                            />
-                            {{ shopType.shop_type_name }}
-                        </label>
-                    </div>
-                </div> -->
-                    <br />
+                        <label for="shopType[]"><b>ShopType:</b></label>
+                        <div *ngFor="let shopType of shopType">
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    [value]="shopType.shop_type_id"
+                                    name="shopType[]"
+                                    (change)="onCheckboxChange($event)"
+                                />
+                                {{ shopType.shop_type_name }}
+                            </label>
+                        </div>
+                    </div> -->
+                    <!-- <br />
                     <div class="flex items-center">
-                        <button class="btn btn-success">Create Shop</button>
-                    </div>
-                    <!-- <input
-                    type="submit"
-                    class="btn btn-success"
-                    value="Create"
-                    id="checkBtn"
-                    name="submit"
-                    style="width: 100px"
-                /> -->
+                        <button class="btn btn-success">Submit</button>
+                        &nbsp; &nbsp;
+                        <button class="btn btn-warning" (click)="cancel()">
+                            Cancel
+                        </button>
+                    </div> -->
                 </form>
             </div>
         </div>

@@ -48,7 +48,6 @@
                                 You have 2 new messages and 15 new tasks
                             </div>
                         </div>
-                        <flash-messages></flash-messages>
                     </div>
                 </div>
                 <!-- Actions -->
@@ -95,189 +94,124 @@
                     overflow-hidden
                 "
             >
-                <span
-                    ><strong>
-                        Edit Your Details
-                        <small style="color: red"
-                            >Click on text field to edit details</small
-                        ></strong
-                    >
-                </span>
-                <br />
-                <form
-                    [formGroup]="profileForm"
-                    (ngSubmit)="onUpdate()"
-                    autocomplete="off"
-                >
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="shop_name"
-                                    ><b>First Name:</b></label
-                                >
+                <p><b>Edit Profile</b></p>
+                <form [formGroup]="profileForm" autocomplete="off">
+                    <div class="flex flex-col sm:flex-row p-8">
+                        <div class="flex flex-auto flex-wrap">
+                            <!-- Name, SKU & etc. -->
+                            <div class="flex flex-col w-full lg:w-2/4 sm:pl-8">
+                                <!-- Name -->
+                                <mat-form-field class="w-full">
+                                    <mat-label>Name</mat-label>
+                                    <input
+                                        matInput
+                                        [formControlName]="'firstname'"
+                                    />
+                                </mat-form-field>
 
-                                <input
-                                    readonly="true"
-                                    (click)="editProfile()"
-                                    formControlName="firstname"
-                                    name="firstname"
-                                    type="text"
-                                    class="form-control"
-                                    id="firstname"
-                                />
+                                <!-- Domain Name -->
+                                <div class="flex">
+                                    <mat-form-field class="w-full">
+                                        <mat-label>Contact</mat-label>
+
+                                        <input
+                                            matInput
+                                            [formControlName]="'contact'"
+                                        />
+                                    </mat-form-field>
+                                </div>
+
+                                <!-- Category, Brand & SubCategory -->
+                                <div class="flex">
+                                    <mat-form-field class="w-full">
+                                        <mat-label>Email</mat-label>
+                                        <input
+                                            matInput
+                                            readonly="true"
+                                            type="email"
+                                            [formControlName]="'email'"
+                                        />
+                                    </mat-form-field>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="shop_address"
-                                    ><b>Last Name:</b></label
-                                >
-                                <input
-                                    readonly="true"
-                                    (click)="editProfile()"
-                                    formControlName="lastname"
-                                    name="lastname"
-                                    type="text"
-                                    class="form-control"
-                                    id="lastname"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="shop_name"
-                                    ><b>Domain Name:</b></label
-                                >
-                                <input
-                                    readonly="true"
-                                    formControlName="domainname"
-                                    name="domainname"
-                                    type="text"
-                                    class="form-control"
-                                    id="domainname"
-                                />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="shop_address"
-                                    ><b>Contact:</b></label
-                                >
-                                <input
-                                    readonly="true"
-                                    type="text"
-                                    formControlName="contact"
-                                    id="conatct"
-                                    name="contact"
-                                    class="form-control"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="shop_name"><b>Email:</b></label>
-                                <input
-                                    readonly="true"
-                                    type="text"
-                                    formControlName="email"
-                                    name="email"
-                                    id="email"
-                                    class="form-control"
-                                />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="shop_address"
-                                    ><b>Password:</b></label
-                                >
-                                <input
-                                    readonly="true"
-                                    type="text"
-                                    formControlName="password"
-                                    name="password"
-                                    class="form-control"
-                                />
+
+                            <!-- Payment Name, Merchant Key-->
+                            <div class="flex flex-col w-full lg:w-2/4 sm:pl-8">
+                                <ng-container>
+                                    <mat-form-field class="w-full">
+                                        <mat-label>Domain Name</mat-label>
+
+                                        <input
+                                            matInput
+                                            [formControlName]="'domainname'"
+                                        />
+                                    </mat-form-field>
+
+                                    <mat-form-field class="w-full">
+                                        <mat-label>Address</mat-label>
+                                        <input
+                                            matInput
+                                            [formControlName]="'address'"
+                                        />
+                                    </mat-form-field>
+
+                                    <mat-form-field class="w-full">
+                                        <mat-label>Password</mat-label>
+                                        <input
+                                            matInput
+                                            readonly="true"
+                                            type="password"
+                                            [formControlName]="'password'"
+                                        />
+                                    </mat-form-field>
+                                </ng-container>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="shop_name"><b>Address:</b></label>
-                                <input
-                                    readonly="true"
-                                    (click)="editProfile()"
-                                    type="text"
-                                    formControlName="address"
-                                    name="address"
-                                    id="address"
-                                    class="form-control"
-                                />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="shop_address"><b>Logo:</b></label>
-                                <input
-                                    disabled="true"
-                                    (click)="editProfile()"
-                                    formControlName="logo"
-                                    name="logo"
-                                    type="file"
-                                    id="logo"
-                                    class="form-control"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <br />
-                    <div class="flex items-center">
-                        <div
-                            class="flex items-center mr-4"
-                            *ngIf="flashMessage"
-                        >
-                            <ng-container *ngIf="flashMessage === 'success'">
-                                <mat-icon
-                                    class="text-green-500"
-                                    [svgIcon]="'heroicons_outline:check'"
-                                ></mat-icon>
-                                <span class="ml-2">Profile updated</span>
-                            </ng-container>
-                            <ng-container *ngIf="flashMessage === 'error'">
-                                <mat-icon
-                                    class="text-red-500"
-                                    [svgIcon]="'heroicons_outline:x'"
-                                ></mat-icon>
-                                <span class="ml-2"
-                                    >An error occurred, try again!</span
-                                >
-                            </ng-container>
-                        </div>
-                        <button
-                            type=""
-                            id="editProfileBtn"
-                            (click)="editProfile()"
-                            class="btn btn-info"
-                            style="width: 100px"
-                        >
-                            Update
-                        </button>
-                    </div>
-                    <!-- <button (click)="edit(item)">Edit</button> -->
-                    <!-- <button
-                        type=""
-                        (click)="editProfile()"
-                        id="editProfile"
-                        class="btn btn-info"
-                        style="width: 100px"
+
+                    <div
+                        class="
+                            flex
+                            items-center
+                            justify-between
+                            w-full
+                            px-8
+                            py-4
+                        "
                     >
-                        Edit
-                    </button> -->
+                        <div class="flex items-center">
+                            <div
+                                class="flex items-center mr-4"
+                                *ngIf="flashMessage"
+                            >
+                                <ng-container
+                                    *ngIf="flashMessage === 'success'"
+                                >
+                                    <mat-icon
+                                        class="text-green-500"
+                                        [svgIcon]="'heroicons_outline:check'"
+                                    ></mat-icon>
+                                    <span class="ml-2">Profile updated</span>
+                                </ng-container>
+                                <ng-container *ngIf="flashMessage === 'error'">
+                                    <mat-icon
+                                        class="text-red-500"
+                                        [svgIcon]="'heroicons_outline:x'"
+                                    ></mat-icon>
+                                    <span class="ml-2"
+                                        >An error occurred, try again!</span
+                                    >
+                                </ng-container>
+                            </div>
+                            <button
+                                mat-flat-button
+                                [color]="'primary'"
+                                (click)="onProfileUpdate()"
+                            >
+                                Update
+                            </button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
