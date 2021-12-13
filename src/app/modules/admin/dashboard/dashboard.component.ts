@@ -31,6 +31,7 @@ declare var $: any;
 @Component({
     selector: 'dashboard',
     templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.scss'],
     styles: [
         /* language=SCSS */
         `
@@ -42,98 +43,12 @@ declare var $: any;
                 }
 
                 @screen md {
-                    grid-template-columns: 48px 112px auto 112px 72px;
+                    grid-template-columns: 48px auto 112px 72px;
                 }
 
                 @screen lg {
-                    grid-template-columns: 48px 112px auto 112px 96px 96px 72px;
+                    grid-template-columns: 48px auto 112px 96px 96px 72px;
                 }
-            }
-        `,
-        `
-            .fixedheader {
-                overflow-y: auto;
-                height: 510px;
-            }
-        `,
-        `
-            .search-hero {
-                max-width: 500px;
-                padding-bottom: 50px;
-                margin: auto;
-            }
-        `,
-        `
-            .form-control {
-                box-shadow: 0 10px 40px 0 #b0c1d9;
-            }
-            .form-control::placeholder {
-                font-family: FontAwesome;
-            }
-
-            .image-upload > input {
-                display: none;
-            }
-        `,
-        `
-            .switch {
-                position: relative;
-                display: inline-block;
-                width: 50px;
-                height: 24px;
-            }
-
-            .switch input {
-                opacity: 0;
-                width: 0;
-                height: 0;
-            }
-
-            .slider {
-                position: absolute;
-                cursor: pointer;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background-color: #ccc;
-                -webkit-transition: 0.4s;
-                transition: 0.4s;
-            }
-
-            .slider:before {
-                position: absolute;
-                content: '';
-                height: 16px;
-                width: 16px;
-                left: 4px;
-                bottom: 4px;
-                background-color: white;
-                -webkit-transition: 0.4s;
-                transition: 0.4s;
-            }
-
-            input:checked + .slider {
-                background-color: #2196f3;
-            }
-
-            input:focus + .slider {
-                box-shadow: 0 0 1px #2196f3;
-            }
-
-            input:checked + .slider:before {
-                -webkit-transform: translateX(26px);
-                -ms-transform: translateX(26px);
-                transform: translateX(26px);
-            }
-
-            /* Rounded sliders */
-            .slider.round {
-                border-radius: 34px;
-            }
-
-            .slider.round:before {
-                border-radius: 50%;
             }
         `,
     ],
@@ -178,7 +93,6 @@ export class DashboardComponent {
     allOrderCount: any;
 
     addProductForm: any;
-
     isLoading: boolean = false;
 
     addCache: { [key: string]: any } = {};
@@ -191,6 +105,7 @@ export class DashboardComponent {
     vacationForm: FormGroup;
     deviceId: any;
     shop_status: any;
+    hideproductQtyForm: FormGroup;
 
     constructor(
         @Inject(DOCUMENT)
@@ -249,6 +164,11 @@ export class DashboardComponent {
         this.vacationForm = this.formBuilder.group({
             shopId: [routeParams.shopId],
             vacation_mode: [false, Validators.requiredTrue],
+        });
+
+        this.hideproductQtyForm = this.formBuilder.group({
+            shopId: [routeParams.shopId],
+            hide_0productQty: [false, Validators.requiredTrue],
         });
 
         this._dashboardService.getShops(user_id).subscribe(
@@ -402,20 +322,26 @@ export class DashboardComponent {
             .subscribe((products) => {
                 this.products = products;
                 this.cd.detectChanges();
-                // let objectURL = 'data:image/jpg;base64,' + products.image;
-                // this.thumbnail = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-                console.log(this.products);
             });
     }
 
+    clearSearchField() {
+        this.searchText = '';
+    }
+
     changeStore(stores): void {
-        //alert(stores.shop_name);
-        this._router
-            .navigate(['dashboard/' + stores.shopId + '/' + stores.shop_name])
-            .then(() => {
-                this.ngOnInit();
-                // window.location.reload();
-            });
+        if (stores.shop_payment_status == 1) {
+            this._router
+                .navigate([
+                    'dashboard/' + stores.shopId + '/' + stores.shop_name,
+                ])
+                .then(() => {
+                    this.ngOnInit();
+                    // window.location.reload();
+                });
+        } else {
+            this._router.navigate(['/steps/' + stores.shopId]);
+        }
     }
 
     dashbaord(): void {
@@ -430,7 +356,7 @@ export class DashboardComponent {
         const routeParams = this.routes.snapshot.params;
         const configurations = 'configurations';
         localStorage.setItem('redirect', configurations);
-        this._router.navigate(['/store/store-payment/' + routeParams.shopId]);
+        this._router.navigate(['/store-payment/' + routeParams.shopId]);
     }
 
     shopDetails(data: Data): void {
@@ -438,42 +364,36 @@ export class DashboardComponent {
             '/dashboard/' + data.shopId + '/' + data.shop_name,
         ]);
         // if (!this.isMobile()) {
-        //     this._router.navigate(['/store/shop-details/' + data.shopId]);
+        //     this._router.navigate(['/shop-details/' + data.shopId]);
         // } else {
-        //     this._router.navigate(['/store/shop-details/' + data.shopId]);
+        //     this._router.navigate(['/shop-details/' + data.shopId]);
         // }
     }
 
     minimum_order(): void {
         const routeParams = this.routes.snapshot.params;
-        console.log(routeParams.shopId);
-        if (!this.isMobile()) {
-            this._router.navigate(['/minOrderValue/' + routeParams.shopId]);
-        } else {
-            this._router.navigate(['/minOrderValue/' + routeParams.shopId]);
-        }
+        this._router.navigate(['/minOrderValue/' + routeParams.shopId]);
     }
+
     home_delivery(stores): void {
-        if (!this.isMobile()) {
-            this._router.navigate(['/HomeDeliverySetting/' + stores.shopId]);
-        } else {
-            this._router.navigate(['//HomeDeliverySetting/' + stores.shopId]);
-        }
+        this._router.navigate(['/HomeDeliverySetting/' + stores.shopId]);
     }
+
     steps(data: Data): void {
-        if (!this.isMobile()) {
-            this._router.navigate(['/steps/' + data.shopId]);
-        } else {
-            this._router.navigate(['/mobile/steps/' + data.shopId]);
-        }
+        this._router.navigate(['/steps/' + data.shopId]);
+        // if (!this.isMobile()) {
+        //     this._router.navigate(['/steps/' + data.shopId]);
+        // } else {
+        //     this._router.navigate(['/mobile/steps/' + data.shopId]);
+        // }
     }
 
     completedOrders(data: Data): void {
-        this._router.navigate(['/orders/completed-orders/' + data.shopId]);
+        this._router.navigate(['/completed-orders/' + data.shopId]);
     }
 
     pendingOrders(data: Data): void {
-        this._router.navigate(['/orders/pending-orders/' + data.shopId]);
+        this._router.navigate(['/pending-orders/' + data.shopId]);
     }
 
     enableMessageField() {
@@ -513,6 +433,18 @@ export class DashboardComponent {
             });
     }
 
+    hideproductQtyFormSubmit(formValue: any) {
+        //alert(JSON.stringify(formValue, null, 2));
+        console.log(formValue);
+        this._dashboardService
+            .updateAdditionalSetting(formValue)
+            .subscribe((data) => {
+                window.location.reload();
+                this.showFlashMessage('success');
+                this.cd.markForCheck();
+            });
+    }
+
     onMessageUpdate() {
         console.log(this.messageForm.value);
         this._dashboardService
@@ -539,36 +471,32 @@ export class DashboardComponent {
 
     uniqueOrdersCurMonth(): void {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate(['/orders/unique-orders/' + routeParams.shopId]);
+        this._router.navigate(['/unique-orders/' + routeParams.shopId]);
     }
 
     ordersFulFilledPrevMonth() {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate([
-            '/orders/orders-fulfilled/' + routeParams.shopId,
-        ]);
+        this._router.navigate(['/orders-fulfilled/' + routeParams.shopId]);
     }
 
     openOrdersAllMonth() {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate(['/orders/open-orders/' + routeParams.shopId]);
+        this._router.navigate(['/open-orders/' + routeParams.shopId]);
     }
 
     allSales() {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate(['/orders/sales/' + routeParams.shopId]);
+        this._router.navigate(['/sales/' + routeParams.shopId]);
     }
 
     newRegistration() {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate([
-            '/orders/new-registration/' + routeParams.shopId,
-        ]);
+        this._router.navigate(['/new-registration/' + routeParams.shopId]);
     }
 
     managePayment(payment): void {
         this._router.navigate([
-            '/payment/manage-payment-gateway/' +
+            '/manage-payment-gateway/' +
                 payment.payment_id +
                 '/' +
                 payment.payment_name,
@@ -658,24 +586,25 @@ export class DashboardComponent {
     createProduct(): void {
         // Create the product
         const routeParams = this.routes.snapshot.params;
-        const user_id = localStorage.getItem('user_id');
-        // this.addCache = true;
-        this._dashboardService
-            .createProduct(routeParams.shopId, user_id)
-            .subscribe((product) => {
-                //this.addCache[product.temp_str_config_id] = true;
-                //this.editDetails[product.temp_str_config_id] = true;
-                this.showFlashMessage('success');
-                this.ngOnInit();
-                // Set the selected product
-                this.selectedProduct = product;
-                // Fill the form
-                this.selectedProductForm.patchValue(product);
+        this._router.navigate([
+            '/add-product/' + routeParams.shopId + '/' + routeParams.shop_name,
+        ]);
+        // const user_id = localStorage.getItem('user_id');
+        // // this.addCache = true;
+        // this._dashboardService
+        //     .createProduct(routeParams.shopId, user_id)
+        //     .subscribe((product) => {
+        //         this.showFlashMessage('success');
+        //         this.ngOnInit();
+        //         // Set the selected product
+        //         this.selectedProduct = product;
+        //         // Fill the form
+        //         this.selectedProductForm.patchValue(product);
 
-                // Mark for check
-                // this.cd.markForCheck();
-                this.cd.detectChanges();
-            });
+        //         // Mark for check
+        //         // this.cd.markForCheck();
+        //         this.cd.detectChanges();
+        //     });
     }
 
     // addDetails(): void {
@@ -689,7 +618,8 @@ export class DashboardComponent {
     onFileUpload(event) {
         // this.selectedFile = event.target.files[0];
         const file = event.target.files[0];
-        console.log(file);
+        const productId =
+            this.selectedProductForm.get('temp_str_config_id').value;
         this.selectedProductForm.get('product_image').setValue(file);
         const formData = new FormData();
         formData.append(
@@ -704,6 +634,7 @@ export class DashboardComponent {
             .post<any>('/api/products/upload.php', formData)
             .subscribe(() => {
                 this.ngOnInit();
+                this.editDetails(productId);
             });
     }
 
@@ -768,6 +699,7 @@ export class DashboardComponent {
             // Show a success message
             this.showFlashMessage('success');
             // this.ngOnInit();
+            // this.editDetails(product.productId);
             this.cd.markForCheck();
         });
     }
@@ -822,7 +754,7 @@ export class DashboardComponent {
 
     inventory() {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate(['product/inventory/' + routeParams.shopId]);
+        this._router.navigate(['/inventory/' + routeParams.shopId]);
     }
 
     deleteShop(): void {

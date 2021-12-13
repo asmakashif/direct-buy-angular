@@ -22,43 +22,32 @@ export class PaymentComponent implements OnInit {
 
     ngOnInit(): void {
         const user_id = localStorage.getItem('user_id');
-        this._dashboardService.getShops(user_id).subscribe(
-            (shops: any) => {
-                this.shops = shops;
-                this.cd.detectChanges();
-            },
-            (error) => {
-                //alert(error.message);
-            }
-        );
 
         this._dashboardService
             .getPaymentGateway(user_id)
             .subscribe((payment: any) => {
                 this.payment = payment;
+                console.log(this.payment);
                 this.cd.detectChanges();
             });
     }
 
-    shopDetails(shops): void {
+    attachToStr(payment): void {
+        const paymentRedirect = 'payment';
+        localStorage.setItem('payment', paymentRedirect);
         this._router.navigate([
-            '/dashboard/' + shops.shopId + '/' + shops.shop_name,
+            '/attach-payment/' +
+                payment.payment_id +
+                '/' +
+                payment.payment_name,
         ]);
-    }
-
-    completedOrders(shops): void {
-        this._router.navigate(['/orders/completed-orders/' + shops.shopId]);
-    }
-
-    pendingOrders(shops): void {
-        this._router.navigate(['/orders/pending-orders/' + shops.shopId]);
     }
 
     managePayment(payment): void {
         const paymentRedirect = 'payment';
         localStorage.setItem('payment', paymentRedirect);
         this._router.navigate([
-            '/payment/manage-payment-gateway/' +
+            '/manage-payment-gateway/' +
                 payment.payment_id +
                 '/' +
                 payment.payment_name,
@@ -68,7 +57,7 @@ export class PaymentComponent implements OnInit {
     addPayment(): void {
         const payment = 'payment';
         localStorage.setItem('payment', payment);
-        this._router.navigate(['/payment/payment-gateway/']);
+        this._router.navigate(['/payment-gateway/']);
     }
 
     isMobile() {

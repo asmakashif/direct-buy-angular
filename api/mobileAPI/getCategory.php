@@ -11,7 +11,7 @@
     $DB=mysqli_select_db($CN,"formal_store");
 
     $category = [];
-    $sql="SELECT category FROM `base_products` GROUP BY category";
+    $sql="SELECT base_product_id,category FROM `base_products` GROUP BY category";
 
 
     if($result = mysqli_query($CN,$sql))
@@ -20,6 +20,7 @@
         $cr = 0;
         while($row1 = mysqli_fetch_assoc($result))
         {
+            $category[$cr]['base_product_id'] = $row1['base_product_id'];
             $category[$cr]['category'] = $row1['category'];
             $cr++;
         }

@@ -24,6 +24,18 @@ export class StorePaymentService {
         return this.http.post<ApiResponse>('/api/deleteStrPayments.php', data);
     }
 
+    getShopDetailsById(
+        shopId: string,
+        user_id: string
+    ): Observable<ApiResponse> {
+        return this.http.get<ApiResponse>(
+            '/api/getShopDetailsById.php?shopId=' +
+                shopId +
+                '&user_id=' +
+                user_id
+        );
+    }
+
     // getStrPaymentData(
     //     shopId: string,
     //     user_id: string

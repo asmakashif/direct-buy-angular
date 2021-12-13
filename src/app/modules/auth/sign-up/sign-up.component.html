@@ -101,7 +101,12 @@
                 <!-- Email field -->
                 <mat-form-field class="w-full">
                     <mat-label>Email address</mat-label>
-                    <input id="email" matInput [formControlName]="'email'" />
+                    <input
+                        id="email"
+                        (keyup)="keyup($event.target.value)"
+                        matInput
+                        [formControlName]="'email'"
+                    />
                     <mat-error
                         *ngIf="signUpForm.get('email').hasError('required')"
                     >
@@ -111,6 +116,9 @@
                         *ngIf="signUpForm.get('email').hasError('email')"
                     >
                         Please enter a valid email address
+                    </mat-error>
+                    <mat-error *ngIf="signUpForm.get('email')">
+                        Email address already present
                     </mat-error>
                 </mat-form-field>
 

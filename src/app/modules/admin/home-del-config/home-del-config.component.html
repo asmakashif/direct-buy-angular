@@ -56,12 +56,13 @@
                         class="fuse-mat-button-rounded bg-accent-700"
                         mat-flat-button
                         [color]="'accent'"
+                        [routerLink]="['/dashboard']"
                     >
                         <mat-icon
                             class="icon-size-5"
-                            [svgIcon]="'heroicons_solid:mail'"
+                            [svgIcon]="'heroicons_solid:home'"
                         ></mat-icon>
-                        <span class="ml-2">Messages</span>
+                        <span class="ml-2">Home</span>
                     </button>
                     <button
                         class="fuse-mat-button-rounded"
@@ -105,18 +106,21 @@
                             <br />
                             &nbsp;
                             <select
-
-                            type="text"
-                              class="form-control"
-                              required=""
-                              formControlName="slot"
-                             
-                             >
-                             <option><Select></Select></option>
-                             <option *ngFor="let dt of slots" value="{{dt.id}}">{{dt.day}} - {{dt.from_time}}-{{dt.to_time}}</option>
-                             </select>
-                        
-
+                                type="text"
+                                class="form-control"
+                                required=""
+                                formControlName="slot"
+                            >
+                                <option><Select></Select></option>
+                                <option
+                                    *ngFor="let dt of slots"
+                                    value="{{ dt.id }}"
+                                >
+                                    {{ dt.day }} - {{ dt.from_time }}-{{
+                                        dt.to_time
+                                    }}
+                                </option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-8" style="margin-top: 35px">
@@ -126,8 +130,6 @@
                 </div>
 
                 <div class="flex items-center">
-                   
-
                     <input
                         type="submit"
                         class="btn btn-success"
@@ -151,9 +153,7 @@
                             class="text-red-500"
                             [svgIcon]="'heroicons_outline:x'"
                         ></mat-icon>
-                        <span class="ml-2"
-                            >An error occurred, try again!</span
-                        >
+                        <span class="ml-2">An error occurred, try again!</span>
                     </ng-container>
                 </div>
                 <br />
@@ -184,4 +184,3 @@
         </div>
     </div>
 </div>
-

@@ -48,6 +48,29 @@
                                 You have 2 new messages and 15 new tasks
                             </div>
                         </div>
+                        <div
+                            class="flex items-center mr-4"
+                            *ngIf="flashMessage"
+                        >
+                            <ng-container *ngIf="flashMessage === 'success'">
+                                <mat-icon
+                                    class="text-green-500"
+                                    [svgIcon]="'heroicons_outline:check'"
+                                ></mat-icon>
+                                <span class="ml-2"
+                                    >Store setup creation is successful</span
+                                >
+                            </ng-container>
+                            <ng-container *ngIf="flashMessage === 'error'">
+                                <mat-icon
+                                    class="text-red-500"
+                                    [svgIcon]="'heroicons_outline:x'"
+                                ></mat-icon>
+                                <span class="ml-2"
+                                    >An error occurred, try again!</span
+                                >
+                            </ng-container>
+                        </div>
                     </div>
                 </div>
                 <!-- Actions -->
@@ -56,12 +79,13 @@
                         class="fuse-mat-button-rounded bg-accent-700"
                         mat-flat-button
                         [color]="'accent'"
+                        [routerLink]="['/dashboard']"
                     >
                         <mat-icon
                             class="icon-size-5"
-                            [svgIcon]="'heroicons_solid:mail'"
+                            [svgIcon]="'heroicons_solid:home'"
                         ></mat-icon>
-                        <span class="ml-2">Messages</span>
+                        <span class="ml-2">Home</span>
                     </button>
                     <button
                         class="fuse-mat-button-rounded"
@@ -82,28 +106,6 @@
     <!-- Main -->
     <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
         <div class="w-full max-w-screen-xl mx-auto">
-            <!-- Tabs -->
-
-            <!-- <nav mat-tab-nav-bar>
-                <a mat-tab-link label="StoreConfiguration">
-                    Store Configuration
-                </a>
-                <a mat-tab-link label="ProductConfiguration">
-                    Product Configuration
-                </a>
-                <a mat-tab-link label="ProductInformation">
-                    Product Information
-                </a>
-
-                <a
-                    mat-tab-link
-                    (click)="(activeLink)"
-                    [active]="activeLink"
-                    label="StoreSummmary"
-                >
-                    Store Summary
-                </a>
-            </nav> -->
             <div
                 class="
                     flex flex-col
@@ -116,16 +118,39 @@
                 "
             >
                 <div class="row">
+                    <div class="col-md-2">
+                        <button
+                            class="lg:mt-6"
+                            mat-flat-button
+                            [color]="'primary'"
+                            (click)="prevStep()"
+                        >
+                            Back
+                        </button>
+                    </div>
+                    <div class="col-md-2">
+                        <button
+                            class="lg:mt-6"
+                            mat-flat-button
+                            [color]="'primary'"
+                            (click)="nextStep()"
+                        >
+                            Next
+                        </button>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
                     <div class="col-md-3">
                         <span><strong>Store Name :</strong></span>
                     </div>
-                    <div class="col-md-9">{{ this.data.shop_name }}</div>
+                    <div class="col-md-9">{{ shop_name }}</div>
                 </div>
                 <div class="row">
                     <div class="col-md-3">
                         <span><strong>Store Address :</strong></span>
                     </div>
-                    <div class="col-md-9">{{ this.data.shop_address }}</div>
+                    <div class="col-md-9">{{ shop_address }}</div>
                 </div>
                 <!-- <div class="row">
                     <div class="col-md-3">
@@ -139,20 +164,30 @@
                     <div class="col-md-3">
                         <span><strong>Store Unique Code : </strong></span>
                     </div>
-                    <div class="col-md-9">{{ this.data.shopId }}</div>
+                    <div class="col-md-9">{{ shopId }}</div>
                 </div>
                 <div class="row">
                     <div class="col-md-3">
                         <span><strong>No of Products : </strong></span>
                     </div>
-                    <div class="col-md-9">{{ this.countProduct }}</div>
+                    <div class="col-md-9">{{ countProduct }}</div>
                 </div>
-                <div class="col-md-10">
+                <div class="flex items-center">
+                    <button
+                        class="lg:mt-6"
+                        mat-flat-button
+                        [color]="'primary'"
+                        (click)="createShopDB()"
+                    >
+                        Create Shop
+                    </button>
+                </div>
+                <!-- <div class="col-md-10">
                     <span
                         ><strong
-                            >Do you wish to get updates of products added to our
-                            central repository? You can add products from here
-                            to your store</strong
+                            >Do you wish to get new product updates from
+                            Direct-Buy's Central Product Repository. You may
+                            choose to add these products to your store.</strong
                         ></span
                     >
                 </div>
@@ -217,7 +252,7 @@
                     <button class="btn btn-success" style="width: 100px">
                         Save
                     </button>
-                </form>
+                </form> -->
             </div>
         </div>
     </div>

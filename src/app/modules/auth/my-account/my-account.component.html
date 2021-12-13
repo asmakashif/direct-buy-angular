@@ -89,7 +89,7 @@
         >
             <h4 class="card-title">Payment Info</h4>
             <!-- Payments -->
-            <ng-container *ngIf="shops.length > 0; else noShops">
+            <ng-container>
                 <div
                     class="
                         grid grid-cols-1
@@ -375,7 +375,7 @@
             </ng-container>
 
             <!-- No courses -->
-            <ng-template #noShops>
+            <!-- <ng-template #noShops>
                 <div
                     class="
                         p-8
@@ -389,7 +389,7 @@
                 >
                     There are no Shops!
                 </div>
-            </ng-template>
+            </ng-template> -->
         </div>
     </div>
 </div>

@@ -34,7 +34,7 @@
                                     truncate
                                 "
                             >
-                                {{ t("welcome-back") }}, Brian!
+                                {{ t("welcome-back") }}, {{ firstname }}!
                             </div>
                         </ng-container>
                         <div class="flex items-center">
@@ -48,6 +48,7 @@
                                 You have 2 new messages and 15 new tasks
                             </div>
                         </div>
+                        <!-- <flash-messages></flash-messages> -->
                     </div>
                 </div>
                 <!-- Actions -->
@@ -56,12 +57,13 @@
                         class="fuse-mat-button-rounded bg-accent-700"
                         mat-flat-button
                         [color]="'accent'"
+                        [routerLink]="['/dashboard']"
                     >
                         <mat-icon
                             class="icon-size-5"
-                            [svgIcon]="'heroicons_solid:mail'"
+                            [svgIcon]="'heroicons_solid:home'"
                         ></mat-icon>
-                        <span class="ml-2">Messages</span>
+                        <span class="ml-2">Home</span>
                     </button>
                     <button
                         class="fuse-mat-button-rounded"
@@ -79,95 +81,952 @@
         </div>
     </div>
 
-    <!-- Main -->
-    <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
-        <div class="w-full max-w-screen-xl mx-auto">
-            <div class="card m-8">
-                <br />
-                <a
-                    href="javascript:void(0);"
-                    class="btn btn-success ml-4"
-                    id="nextStep"
-                    (click)="nextStep()"
-                    style="width: 100px"
-                    >Next</a
-                >
-                <div class="card-body">
-                    <hot-table
-                        class="hot"
-                        [data]="dataset"
-                        [renderAllRows]="true"
-                        [settings]="hotSettings"
-                        height="450"
-                        [colWidths]="[
-                            99, 99, 140, 150, 150, 160, 192, 192, 192, 192, 192,
-                            192, 192
-                        ]"
-                        [colHeaders]="colHeaders"
-                        [rowHeaders]="true"
-                        [dropdownMenu]="true"
-                        [hiddenColumns]="hiddenColumns"
-                        [renderAllRows]="true"
-                        [contextMenu]="true"
-                        [multiColumnSorting]="true"
-                        [filters]="true"
-                        licenseKey="non-commercial-and-evaluation"
+    <!--Main-->
+    <div class="flex flex-col flex-auto w-full">
+        <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+            <!-- Visitors vs. Page Views -->
+            <div
+                class="
+                    flex flex-col flex-auto
+                    mt-8
+                    bg-card
+                    shadow
+                    rounded-2xl
+                    overflow-hidden
+                "
+            >
+                <div class="flex items-start justify-between m-6 mb-0">
+                    <div
+                        class="
+                            text-lg
+                            font-medium
+                            tracking-tight
+                            leading-6
+                            truncate
+                        "
                     >
-                        <!-- <hot-table
-                        class="hot"
-                        [settings]="settingsObj"
-                        settings="{colHeaders: colHeaders, contextMenu: ['row_above', 'row_below', 'remove_row'], afterChange: afterChange}"
-                        settings="{ afterChange: settingsObj}"
-                        [data]="dataset"
-                        height="450"
-                        [colWidths]="[
-                            99, 99, 140, 150, 150, 160, 192, 192, 192, 192, 192,
-                            192, 192
-                        ]"
-                        [nestedHeaders]="[
-                            [
-                                'Id',
-                                'Category',
-                                'Sub-Category',
-                                'Brand',
-                                'Product Name',
-                                'Product Type',
-                                'Product Sub-Type',
-                                'Product Weight',
-                                'Product Weight-Type',
-                                'Product Qty',
-                                'Product Price',
-                                'Offer Price'
-                            ]
-                        ]"
-                        [rowHeaders]="false"
-                        [afterChange]="ngOnChanges"
-                        [dropdownMenu]="true"
-                        [multiColumnSorting]="true"
-                        [filters]="true"
-                        licenseKey="non-commercial-and-evaluation"
-                        [hiddenColumns]="{
-                            columns: [0],
-                            indicators: false
-                        }"
-                    > -->
-                        <hot-column
-                            data="temp_str_config_id"
-                            type="numeric"
-                            className="htCenter"
-                        ></hot-column>
-                        <hot-column data="category"></hot-column>
-                        <hot-column data="sub_category"></hot-column>
-                        <hot-column data="brand"></hot-column>
-                        <hot-column data="product_name"></hot-column>
-                        <hot-column data="product_type"></hot-column>
-                        <hot-column data="product_sub_type"></hot-column>
-                        <hot-column data="product_weight"></hot-column>
-                        <hot-column data="product_weight_type"></hot-column>
-                        <hot-column data="product_qty"></hot-column>
-                        <hot-column data="product_price"></hot-column>
-                        <hot-column data="offer_price"></hot-column>
-                    </hot-table>
+                        <div
+                            class="
+                                flex flex-shrink-0
+                                items-center
+                                mt-6
+                                sm:mt-0 sm:ml-4
+                            "
+                        >
+                            <!-- Search -->
+                            <mat-form-field
+                                class="
+                                    fuse-mat-dense
+                                    fuse-mat-no-subscript
+                                    fuse-mat-rounded
+                                    min-w-64
+                                "
+                            >
+                                <mat-icon
+                                    class="icon-size-5"
+                                    matPrefix
+                                    [svgIcon]="'heroicons_solid:search'"
+                                ></mat-icon>
+                                <input
+                                    matInput
+                                    name="search"
+                                    [(ngModel)]="searchText"
+                                    [autocomplete]="'off'"
+                                    [placeholder]="'Search products'"
+                                />
+                            </mat-form-field>
+                        </div>
+                        <br />
+                        <div class="fixedheader">
+                            <div class="grid">
+                                <!-- Header -->
+                                <div
+                                    class="
+                                        inventory-grid
+                                        z-10
+                                        sticky
+                                        top-0
+                                        grid
+                                        gap-4
+                                        py-4
+                                        px-6
+                                        md:px-8
+                                        shadow
+                                        text-md
+                                        font-semibold
+                                        text-secondary
+                                        bg-gray-50
+                                        dark:bg-black dark:bg-opacity-5
+                                    "
+                                    matSort
+                                    matSortDisableClear
+                                >
+                                    <div></div>
+                                    <div
+                                        class="hidden md:block"
+                                        [mat-sort-header]="'sku'"
+                                    >
+                                        SKU
+                                    </div>
+                                    <div [mat-sort-header]="'name'">Name</div>
+                                    <div
+                                        class="hidden sm:block"
+                                        [mat-sort-header]="'price'"
+                                    >
+                                        Price
+                                    </div>
+                                    <div
+                                        class="hidden lg:block"
+                                        [mat-sort-header]="'stock'"
+                                    >
+                                        Stock
+                                    </div>
+                                    <div
+                                        class="hidden lg:block"
+                                        [mat-sort-header]="'active'"
+                                    >
+                                        Active
+                                    </div>
+                                    <div class="hidden sm:block">Details</div>
+                                </div>
+                                <ng-container
+                                    *ngFor="
+                                        let product of products
+                                            | filter: searchText
+                                    "
+                                >
+                                    <div
+                                        class="
+                                            inventory-grid
+                                            grid
+                                            items-center
+                                            gap-4
+                                            py-3
+                                            px-6
+                                            md:px-8
+                                            border-b
+                                            bg-card
+                                        "
+                                    >
+                                        <!-- Image -->
+                                        <div class="flex items-center">
+                                            <div
+                                                class="
+                                                    relative
+                                                    flex flex-0
+                                                    items-center
+                                                    justify-center
+                                                    w-12
+                                                    h-12
+                                                    mr-6
+                                                    rounded
+                                                    overflow-hidden
+                                                    border
+                                                "
+                                            >
+                                                <img
+                                                    class="w-8"
+                                                    *ngIf="product.product_img"
+                                                    [alt]="
+                                                        'Product thumbnail image'
+                                                    "
+                                                    [src]="
+                                                        imagePath +
+                                                        product.product_img
+                                                    "
+                                                />
+                                                <div
+                                                    class="
+                                                        flex
+                                                        items-center
+                                                        justify-center
+                                                        w-full
+                                                        h-full
+                                                        text-xs
+                                                        font-semibold
+                                                        leading-none
+                                                        text-center
+                                                        uppercase
+                                                    "
+                                                    *ngIf="!product.product_img"
+                                                >
+                                                    NO THUMB
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- SKU -->
+                                        <div class="hidden md:block truncate">
+                                            {{ product.category }}
+                                        </div>
+
+                                        <!-- Name -->
+                                        <div class="truncate">
+                                            {{ product.product_name }}
+                                        </div>
+
+                                        <!-- Price -->
+                                        <div class="hidden sm:block">
+                                            {{
+                                                product.product_price
+                                                    | currency
+                                                        : "INR"
+                                                        : "symbol"
+                                                        : "1.2-2"
+                                            }}
+                                        </div>
+
+                                        <!-- Stock -->
+                                        <div
+                                            class="hidden lg:flex items-center"
+                                        >
+                                            <div class="min-w-4">
+                                                {{ product.product_qty }}
+                                            </div>
+                                            <!-- Low stock -->
+                                            <div
+                                                class="
+                                                    flex
+                                                    items-end
+                                                    ml-2
+                                                    w-1
+                                                    h-4
+                                                    bg-red-200
+                                                    rounded
+                                                    overflow-hidden
+                                                "
+                                                *ngIf="product.product_qty < 20"
+                                            >
+                                                <div
+                                                    class="
+                                                        flex
+                                                        w-full
+                                                        h-1/3
+                                                        bg-red-600
+                                                    "
+                                                ></div>
+                                            </div>
+                                            <!-- Medium stock -->
+                                            <div
+                                                class="
+                                                    flex
+                                                    items-end
+                                                    ml-2
+                                                    w-1
+                                                    h-4
+                                                    bg-orange-200
+                                                    rounded
+                                                    overflow-hidden
+                                                "
+                                                *ngIf="
+                                                    product.product_qty >= 20 &&
+                                                    product.product_qty < 30
+                                                "
+                                            >
+                                                <div
+                                                    class="
+                                                        flex
+                                                        w-full
+                                                        h-2/4
+                                                        bg-orange-400
+                                                    "
+                                                ></div>
+                                            </div>
+                                            <!-- High stock -->
+                                            <div
+                                                class="
+                                                    flex
+                                                    items-end
+                                                    ml-2
+                                                    w-1
+                                                    h-4
+                                                    bg-green-100
+                                                    rounded
+                                                    overflow-hidden
+                                                "
+                                                *ngIf="
+                                                    product.product_qty >= 30
+                                                "
+                                            >
+                                                <div
+                                                    class="
+                                                        flex
+                                                        w-full
+                                                        h-full
+                                                        bg-green-400
+                                                    "
+                                                ></div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Active -->
+                                        <div class="hidden lg:block">
+                                            <ng-container
+                                                *ngIf="
+                                                    product.product_status == 1
+                                                "
+                                            >
+                                                <mat-icon
+                                                    class="
+                                                        text-green-400
+                                                        icon-size-5
+                                                    "
+                                                    [svgIcon]="
+                                                        'heroicons_solid:check'
+                                                    "
+                                                ></mat-icon>
+                                            </ng-container>
+                                            <ng-container
+                                                *ngIf="
+                                                    product.product_status == 0
+                                                "
+                                            >
+                                                <mat-icon
+                                                    class="
+                                                        text-gray-400
+                                                        icon-size-5
+                                                    "
+                                                    [svgIcon]="
+                                                        'heroicons_solid:x'
+                                                    "
+                                                ></mat-icon>
+                                            </ng-container>
+                                        </div>
+
+                                        <!-- Details button -->
+                                        <div
+                                            *ngIf="
+                                                !editCache[
+                                                    product.temp_str_config_id
+                                                ]
+                                            "
+                                        >
+                                            <button
+                                                class="
+                                                    min-w-10 min-h-7
+                                                    h-7
+                                                    px-2
+                                                    leading-6
+                                                "
+                                                mat-stroked-button
+                                                (click)="
+                                                    editDetails(
+                                                        product.temp_str_config_id
+                                                    )
+                                                "
+                                            >
+                                                <mat-icon
+                                                    class="icon-size-5"
+                                                    [svgIcon]="
+                                                        'heroicons_solid:chevron-down'
+                                                    "
+                                                ></mat-icon>
+                                            </button>
+                                        </div>
+                                        <div
+                                            *ngIf="
+                                                editCache[
+                                                    product.temp_str_config_id
+                                                ]
+                                            "
+                                        >
+                                            <button
+                                                class="
+                                                    min-w-10 min-h-7
+                                                    h-7
+                                                    px-2
+                                                    leading-6
+                                                "
+                                                mat-stroked-button
+                                                (click)="
+                                                    cancelDetails(
+                                                        product.temp_str_config_id
+                                                    )
+                                                "
+                                            >
+                                                <mat-icon
+                                                    class="icon-size-5"
+                                                    [svgIcon]="
+                                                        'heroicons_solid:chevron-up'
+                                                    "
+                                                ></mat-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="grid">
+                                        <ng-container
+                                            *ngIf="
+                                                editCache[
+                                                    product.temp_str_config_id
+                                                ] == true
+                                            "
+                                        >
+                                            <ng-container
+                                                *ngTemplateOutlet="
+                                                    rowDetailsTemplate;
+                                                    context: {
+                                                        $implicit: product
+                                                    }
+                                                "
+                                            ></ng-container>
+                                        </ng-container>
+                                        <ng-container
+                                            *ngIf="
+                                                editCache[
+                                                    product.temp_str_config_id
+                                                ] == false
+                                            "
+                                        >
+                                            <ng-container></ng-container>
+                                        </ng-container>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            <ng-template #rowDetailsTemplate let-product>
+                                <div class="shadow-lg overflow-hidden">
+                                    <div class="flex border-b">
+                                        <!-- Selected product form -->
+                                        <form
+                                            class="flex flex-col w-full"
+                                            [formGroup]="selectedProductForm"
+                                        >
+                                            <div
+                                                class="
+                                                    flex flex-col
+                                                    sm:flex-row
+                                                    p-8
+                                                "
+                                            >
+                                                <!-- Product images and status -->
+                                                <div
+                                                    class="
+                                                        flex flex-col
+                                                        items-center
+                                                        sm:items-start
+                                                        mb-8
+                                                        sm:mb-0
+                                                    "
+                                                >
+                                                    <div
+                                                        class="
+                                                            flex flex-col
+                                                            items-center
+                                                        "
+                                                    >
+                                                        <div
+                                                            class="
+                                                                w-32
+                                                                h-44
+                                                                border
+                                                                rounded
+                                                                overflow-hidden
+                                                            "
+                                                        >
+                                                            <ng-container
+                                                                *ngIf="
+                                                                    product.product_img;
+                                                                    else noImage
+                                                                "
+                                                            >
+                                                                <div
+                                                                    class="
+                                                                        image-upload
+                                                                    "
+                                                                >
+                                                                    <label
+                                                                        for="file-input"
+                                                                    >
+                                                                        <img
+                                                                            style="
+                                                                                width: auto;
+                                                                                height: auto;
+                                                                                object-fit: cover;
+                                                                            "
+                                                                            [src]="
+                                                                                imagePath +
+                                                                                product.product_img
+                                                                            "
+                                                                        />
+                                                                    </label>
+
+                                                                    <input
+                                                                        type="file"
+                                                                        style="
+                                                                            display: none;
+                                                                        "
+                                                                        id="file-input"
+                                                                        accept=".png, .jpg, .jpeg"
+                                                                        name="product_image"
+                                                                        #fileInput
+                                                                        (change)="
+                                                                            onFileUpload(
+                                                                                $event
+                                                                            )
+                                                                        "
+                                                                    />
+                                                                </div>
+                                                            </ng-container>
+                                                            <ng-template
+                                                                #noImage
+                                                            >
+                                                                <div
+                                                                    class="
+                                                                        image-upload
+                                                                    "
+                                                                >
+                                                                    <label
+                                                                        for="file-input"
+                                                                    >
+                                                                        <img
+                                                                            style="
+                                                                                margin-top: 30px;
+                                                                            "
+                                                                            src="assets/images/avatars/upload.png"
+                                                                        />
+                                                                    </label>
+                                                                    <input
+                                                                        type="file"
+                                                                        id="file-input"
+                                                                        accept=".png, .jpg, .jpeg"
+                                                                        name="product_image"
+                                                                        #fileInput
+                                                                        (change)="
+                                                                            onFileUpload(
+                                                                                $event
+                                                                            )
+                                                                        "
+                                                                    />
+                                                                </div>
+                                                            </ng-template>
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        class="
+                                                            flex flex-col
+                                                            mt-8
+                                                        "
+                                                        *ngIf="
+                                                            product.product_status ==
+                                                            0
+                                                        "
+                                                    >
+                                                        <span
+                                                            class="
+                                                                font-semibold
+                                                                mb-2
+                                                            "
+                                                            >Product
+                                                            status</span
+                                                        >
+                                                        <label class="switch">
+                                                            <input
+                                                                type="checkbox"
+                                                                [value]="1"
+                                                                [name]="
+                                                                    'product_status'
+                                                                "
+                                                                (change)="
+                                                                    productStatus(
+                                                                        $event
+                                                                    )
+                                                                "
+                                                                matCheckbox
+                                                            />
+                                                            <span
+                                                                class="
+                                                                    slider
+                                                                    round
+                                                                "
+                                                            >
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div
+                                                        class="
+                                                            flex flex-col
+                                                            mt-8
+                                                        "
+                                                        *ngIf="
+                                                            product.product_status ==
+                                                            1
+                                                        "
+                                                    >
+                                                        <span
+                                                            class="
+                                                                font-semibold
+                                                                mb-2
+                                                            "
+                                                            >Product
+                                                            status</span
+                                                        >
+                                                        <label class="switch">
+                                                            <input
+                                                                type="checkbox"
+                                                                [value]="1"
+                                                                [name]="
+                                                                    'product_status'
+                                                                "
+                                                                checked="true"
+                                                                (change)="
+                                                                    productStatus(
+                                                                        $event
+                                                                    )
+                                                                "
+                                                                matCheckbox
+                                                            />
+                                                            <span
+                                                                class="
+                                                                    slider
+                                                                    round
+                                                                "
+                                                            ></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div
+                                                    class="
+                                                        flex flex-auto flex-wrap
+                                                    "
+                                                >
+                                                    <!-- Name, SKU & etc. -->
+                                                    <div
+                                                        class="
+                                                            flex flex-col
+                                                            w-full
+                                                            lg:w-2/4
+                                                            sm:pl-8
+                                                        "
+                                                    >
+                                                        <!-- Name -->
+                                                        <mat-form-field
+                                                            class="w-full"
+                                                        >
+                                                            <mat-label
+                                                                >Name</mat-label
+                                                            >
+                                                            <input
+                                                                matInput
+                                                                [formControlName]="
+                                                                    'product_name'
+                                                                "
+                                                            />
+                                                        </mat-form-field>
+
+                                                        <!-- Type and Subtype -->
+                                                        <div class="flex">
+                                                            <mat-form-field
+                                                                class="
+                                                                    w-2/3
+                                                                    pl-2
+                                                                "
+                                                            >
+                                                                <mat-label
+                                                                    >Product
+                                                                    Type</mat-label
+                                                                >
+                                                                <input
+                                                                    matInput
+                                                                    [formControlName]="
+                                                                        'product_type'
+                                                                    "
+                                                                />
+                                                            </mat-form-field>
+                                                            <mat-form-field
+                                                                class="
+                                                                    w-1/3
+                                                                    pr-2
+                                                                "
+                                                            >
+                                                                <mat-label
+                                                                    >Product
+                                                                    SubType</mat-label
+                                                                >
+                                                                <input
+                                                                    matInput
+                                                                    [formControlName]="
+                                                                        'product_sub_type'
+                                                                    "
+                                                                />
+                                                            </mat-form-field>
+                                                        </div>
+
+                                                        <!-- Category, Brand & SubCategory -->
+                                                        <div class="flex">
+                                                            <mat-form-field
+                                                                class="
+                                                                    w-1/3
+                                                                    pr-2
+                                                                "
+                                                            >
+                                                                <mat-label
+                                                                    >Category</mat-label
+                                                                >
+                                                                <input
+                                                                    matInput
+                                                                    [formControlName]="
+                                                                        'category'
+                                                                    "
+                                                                />
+                                                            </mat-form-field>
+                                                            <mat-form-field
+                                                                class="
+                                                                    w-1/3
+                                                                    pr-2
+                                                                "
+                                                            >
+                                                                <mat-label
+                                                                    >SubCategory</mat-label
+                                                                >
+                                                                <input
+                                                                    matInput
+                                                                    [formControlName]="
+                                                                        'sub_category'
+                                                                    "
+                                                                />
+                                                            </mat-form-field>
+                                                            <mat-form-field
+                                                                class="
+                                                                    w-1/3
+                                                                    pr-2
+                                                                "
+                                                            >
+                                                                <mat-label
+                                                                    >Brand</mat-label
+                                                                >
+                                                                <input
+                                                                    matInput
+                                                                    [formControlName]="
+                                                                        'brand'
+                                                                    "
+                                                                />
+                                                            </mat-form-field>
+                                                        </div>
+
+                                                        <!-- Stock and Reserved -->
+                                                        <div class="flex">
+                                                            <mat-form-field
+                                                                class="
+                                                                    w-1/3
+                                                                    pr-2
+                                                                "
+                                                            >
+                                                                <mat-label
+                                                                    >Stock</mat-label
+                                                                >
+                                                                <input
+                                                                    type="number"
+                                                                    matInput
+                                                                    [formControlName]="
+                                                                        'product_qty'
+                                                                    "
+                                                                />
+                                                            </mat-form-field>
+                                                            <!-- <mat-form-field
+                                                            class="w-1/3 pl-2"
+                                                        >
+                                                            <mat-label
+                                                                >Reserved</mat-label
+                                                            >
+                                                            <input
+                                                                type="number"
+                                                                matInput
+                                                                [formControlName]="
+                                                                    'reserved'
+                                                                "
+                                                            />
+                                                        </mat-form-field> -->
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Cost, Base price, Tax & Price -->
+                                                    <div
+                                                        class="
+                                                            flex flex-col
+                                                            w-full
+                                                            lg:w-1/4
+                                                            sm:pl-8
+                                                        "
+                                                    >
+                                                        <mat-form-field
+                                                            class="w-full"
+                                                        >
+                                                            <mat-label
+                                                                >Weight</mat-label
+                                                            >
+                                                            <!-- <span matPrefix
+                                                            >$</span
+                                                        > -->
+                                                            <input
+                                                                matInput
+                                                                [formControlName]="
+                                                                    'product_weight'
+                                                                "
+                                                            />
+                                                        </mat-form-field>
+                                                        <mat-form-field
+                                                            class="w-full"
+                                                        >
+                                                            <mat-label
+                                                                >Base
+                                                                Price</mat-label
+                                                            >
+                                                            <span matPrefix
+                                                                >₹</span
+                                                            >
+                                                            <input
+                                                                matInput
+                                                                [formControlName]="
+                                                                    'offer_price'
+                                                                "
+                                                            />
+                                                        </mat-form-field>
+                                                        <!-- <mat-form-field class="w-full">
+                                                        <mat-label>Tax</mat-label>
+                                                        <span matSuffix>%</span>
+                                                        <input
+                                                            type="number"
+                                                            matInput
+                                                            [formControlName]="
+                                                                'taxPercent'
+                                                            "
+                                                        />
+                                                    </mat-form-field> -->
+                                                    </div>
+
+                                                    <!-- Weight & Tags -->
+                                                    <div
+                                                        class="
+                                                            flex flex-col
+                                                            w-full
+                                                            lg:w-1/4
+                                                            sm:pl-8
+                                                        "
+                                                    >
+                                                        <mat-form-field
+                                                            class="w-full"
+                                                        >
+                                                            <mat-label
+                                                                >Weight
+                                                                Type</mat-label
+                                                            >
+                                                            <!-- <span matSuffix
+                                                            >lbs.</span
+                                                        > -->
+                                                            <input
+                                                                matInput
+                                                                [formControlName]="
+                                                                    'product_weight_type'
+                                                                "
+                                                            />
+                                                        </mat-form-field>
+                                                        <mat-form-field
+                                                            class="w-full"
+                                                        >
+                                                            <mat-label
+                                                                >Price</mat-label
+                                                            >
+                                                            <span matSuffix
+                                                                >₹</span
+                                                            >
+                                                            <input
+                                                                matInput
+                                                                [formControlName]="
+                                                                    'product_price'
+                                                                "
+                                                            />
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div
+                                                class="
+                                                    flex
+                                                    items-center
+                                                    justify-between
+                                                    w-full
+                                                    border-t
+                                                    px-8
+                                                    py-4
+                                                "
+                                            >
+                                                <button
+                                                    class="-ml-4"
+                                                    mat-button
+                                                    [color]="'warn'"
+                                                    (click)="
+                                                        deleteSelectedProduct()
+                                                    "
+                                                >
+                                                    Delete
+                                                </button>
+                                                <div class="flex items-center">
+                                                    <div
+                                                        class="
+                                                            flex
+                                                            items-center
+                                                            mr-4
+                                                        "
+                                                        *ngIf="flashMessage"
+                                                    >
+                                                        <ng-container
+                                                            *ngIf="
+                                                                flashMessage ===
+                                                                'success'
+                                                            "
+                                                        >
+                                                            <mat-icon
+                                                                class="
+                                                                    text-green-500
+                                                                "
+                                                                [svgIcon]="
+                                                                    'heroicons_outline:check'
+                                                                "
+                                                            ></mat-icon>
+                                                            <span class="ml-2"
+                                                                >Product
+                                                                updated</span
+                                                            >
+                                                        </ng-container>
+                                                        <ng-container
+                                                            *ngIf="
+                                                                flashMessage ===
+                                                                'error'
+                                                            "
+                                                        >
+                                                            <mat-icon
+                                                                class="
+                                                                    text-red-500
+                                                                "
+                                                                [svgIcon]="
+                                                                    'heroicons_outline:x'
+                                                                "
+                                                            ></mat-icon>
+                                                            <span class="ml-2"
+                                                                >An error
+                                                                occurred, try
+                                                                again!</span
+                                                            >
+                                                        </ng-container>
+                                                    </div>
+                                                    <button
+                                                        mat-flat-button
+                                                        [color]="'primary'"
+                                                        (click)="
+                                                            updateSelectedProduct()
+                                                        "
+                                                    >
+                                                        Update
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

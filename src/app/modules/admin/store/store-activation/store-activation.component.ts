@@ -119,7 +119,7 @@ export class StoreActivationComponent implements OnInit {
                 this.cd.detectChanges();
 
                 // this._router
-                //     .navigate(['store/store-activation/' + routeParams.shopId])
+                //     .navigate(['/store-activation/' + routeParams.shopId])
                 //     .then(() => {
                 //         window.location.reload();
                 //     });
@@ -153,10 +153,62 @@ export class StoreActivationComponent implements OnInit {
         }, 3000);
     }
 
-    nextStep() {
+    complete() {
         const routeParams = this.routes.snapshot.params;
+        this._router.navigate(['/dashboard']);
+    }
 
+    prevStep(): void {
+        const routeParams = this.routes.snapshot.params;
         this._router.navigate(['/steps/' + routeParams.shopId]);
+    }
+
+    nextStep(): void {
+        const routeParams = this.routes.snapshot.params;
+        const user_id = localStorage.getItem('user_id');
+        this._router.navigate(['/steps/' + routeParams.shopId]);
+        // this.apiService
+        //     .getShopDetailsById(routeParams.shopId, user_id)
+        //     .subscribe((data: any) => {
+        //         this.shopdata = data;
+        //         if (this.shopdata.dbcreation_status == 1) {
+        //             const confirmation = this._fuseConfirmationService.open({
+        //                 title: 'Proceed Next',
+        //                 message:
+        //                     'You will be moved out of this page to proceed with next step',
+        //                 actions: {
+        //                     confirm: {
+        //                         label: 'Okay',
+        //                     },
+        //                 },
+        //             });
+        //             // Subscribe to the confirmation dialog closed action
+        //             confirmation.afterClosed().subscribe((result) => {
+        //                 // If the confirm button pressed...
+        //                 if (result === 'confirmed') {
+        //                     this._router.navigate([
+        //                         '/store-activation/' + routeParams.shopId,
+        //                     ]);
+        //                 }
+        //             });
+        //         } else {
+        //             const confirmation = this._fuseConfirmationService.open({
+        //                 title: 'Proceed Next',
+        //                 message: 'Setup the store to proceed with next step',
+        //                 actions: {
+        //                     confirm: {
+        //                         label: 'Okay',
+        //                     },
+        //                 },
+        //             });
+        //             // Subscribe to the confirmation dialog closed action
+        //             confirmation.afterClosed().subscribe((result) => {
+        //                 // If the confirm button pressed...
+        //                 if (result === 'confirmed') {
+        //                 }
+        //             });
+        //         }
+        //     });
     }
 
     // nextStep() {

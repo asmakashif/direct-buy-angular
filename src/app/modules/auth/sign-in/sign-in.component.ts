@@ -95,7 +95,9 @@ export class AuthSignInComponent implements OnInit {
             .checkOtpVerification(this.signInForm.value)
             .subscribe((data) => {
                 this.verifyOtp = data;
+
                 this.otpVerify = this.verifyOtp.otpVerify;
+                console.log(this.otpVerify);
             });
     }
 

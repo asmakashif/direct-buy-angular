@@ -29,7 +29,7 @@ export class ProductInfoComponent implements OnInit {
         // if (!this.isMobile()) {
         //     //alert('desktop');
         //     this._router.navigate([
-        //         '/product/product-info/' + routeParams.shopId,
+        //         '/product-info/' + routeParams.shopId,
         //     ]);
         // }
     }

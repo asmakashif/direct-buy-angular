@@ -37,6 +37,7 @@
                 $users[$cr]['product_price'] = $row['product_price'];
                 $users[$cr]['offer_price'] = $row['offer_price'];
                 $users[$cr]['product_img'] = $row['product_img'];
+                $users[$cr]['upload_format'] = $row['upload_format'];
                 $users[$cr]['product_status'] = $row['product_status'];
                 $cr++;
             }

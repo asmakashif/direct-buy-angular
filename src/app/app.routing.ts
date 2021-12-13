@@ -175,7 +175,7 @@ export const appRoutes: Route[] = [
                     ).then((m) => m.CreateModule),
             },
             {
-                path: 'testing/table-edit/:shopId',
+                path: 'table-edit/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/testing/table-edit/table-edit.module'
@@ -189,25 +189,32 @@ export const appRoutes: Route[] = [
                     ),
             },
             {
-                path: 'store/create-shop',
+                path: 'create-shop',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/store/create-shop/create-shop.module'
                     ).then((m) => m.CreateShopModule),
             },
             {
-                path: 'product/product-config/:shopId',
+                path: 'product-config/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/product/product-config/product-config.module'
                     ).then((m) => m.ProductConfigModule),
             },
             {
-                path: 'product/product-info/:shopId',
+                path: 'product-info/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/product/product-info/product-info.module'
                     ).then((m) => m.ProductInfoModule),
+            },
+            {
+                path: 'add-product/:shopId/:shop_name',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/product/add-product/add-product.module'
+                    ).then((m) => m.AddProductModule),
             },
             {
                 path: 'ecommerce',
@@ -224,21 +231,21 @@ export const appRoutes: Route[] = [
                     ),
             },
             {
-                path: 'product/inventory/:shopId',
+                path: 'inventory/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/product/inventory/inventory.module'
                     ).then((m) => m.InventoryModule),
             },
             {
-                path: 'store/store-summary/:shopId',
+                path: 'store-summary/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/store/store-summary/store-summary.module'
                     ).then((m) => m.StoreSummaryModule),
             },
             {
-                path: 'store/shop-details/:shopId',
+                path: 'shop-details/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/store/shop-details/shop-details.module'
@@ -252,63 +259,63 @@ export const appRoutes: Route[] = [
                     ).then((m) => m.ConfigurationsModule),
             },
             {
-                path: 'orders/completed-orders/:shopId',
+                path: 'completed-orders/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/orders/completed-orders/completed-orders.module'
                     ).then((m) => m.CompletedOrdersModule),
             },
             {
-                path: 'orders/completed-order-details/:order_code/:shopId',
+                path: 'completed-order-details/:order_code/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/orders/completed-order-details/completed-order-details.module'
                     ).then((m) => m.CompletedOrderDetailsModule),
             },
             {
-                path: 'orders/pending-orders/:shopId',
+                path: 'pending-orders/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/orders/pending-orders/pending-orders.module'
                     ).then((m) => m.PendingOrdersModule),
             },
             {
-                path: 'orders/order-details/:order_code/:shopId',
+                path: 'order-details/:order_code/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/orders/order-details/order-details.module'
                     ).then((m) => m.OrderDetailsModule),
             },
             {
-                path: 'orders/new-registration/:shopId',
+                path: 'new-registration/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/orders/new-registration/new-registration.module'
                     ).then((m) => m.NewRegistrationModule),
             },
             {
-                path: 'orders/open-orders/:shopId',
+                path: 'open-orders/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/orders/open-orders/open-orders.module'
                     ).then((m) => m.OpenOrdersModule),
             },
             {
-                path: 'orders/orders-fulfilled/:shopId',
+                path: 'orders-fulfilled/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/orders/orders-fulfilled/orders-fulfilled.module'
                     ).then((m) => m.OrdersFulfilledModule),
             },
             {
-                path: 'orders/sales/:shopId',
+                path: 'sales/:shopId',
                 loadChildren: () =>
                     import('app/modules/admin/orders/sales/sales.module').then(
                         (m) => m.SalesModule
                     ),
             },
             {
-                path: 'orders/unique-orders/:shopId',
+                path: 'unique-orders/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/orders/unique-orders/unique-orders.module'
@@ -329,35 +336,42 @@ export const appRoutes: Route[] = [
                     ),
             },
             {
-                path: 'payment/payment-gateway/:shopId',
+                path: 'payment-gateway/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/payment/payment-gateway/payment-gateway.module'
                     ).then((m) => m.PaymentGatewayModule),
             },
             {
-                path: 'payment/payment-gateway',
+                path: 'payment-gateway',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/payment/payment-gateway/payment-gateway.module'
                     ).then((m) => m.PaymentGatewayModule),
             },
             {
-                path: 'payment/manage-payment-gateway/:payment_id/:payment_name',
+                path: 'manage-payment-gateway/:payment_id/:payment_name',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/payment/manage-payment-gateway/manage-payment-gateway.module'
                     ).then((m) => m.ManagePaymentGatewayModule),
             },
             {
-                path: 'store/store-payment/:shopId',
+                path: 'attach-payment/:payment_id/:payment_name',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/payment/attach-payment/attach-payment.module'
+                    ).then((m) => m.AttachPaymentModule),
+            },
+            {
+                path: 'store-payment/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/store/store-payment/store-payment.module'
                     ).then((m) => m.StorePaymentModule),
             },
             {
-                path: 'store/store-activation/:shopId',
+                path: 'store-activation/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/store/store-activation/store-activation.module'
@@ -377,13 +391,13 @@ export const appRoutes: Route[] = [
                         'app/modules/admin/mobile/product-config/product-config.module'
                     ).then((m) => m.ProductConfigModule),
             },
-            {
-                path: 'mobile/product-info/:shopId',
-                loadChildren: () =>
-                    import(
-                        'app/modules/admin/mobile/product-info/product-info.module'
-                    ).then((m) => m.ProductInfoModule),
-            },
+            // {
+            //     path: 'product-info/:shopId',
+            //     loadChildren: () =>
+            //         import(
+            //             'app/modules/admin/mobile/product-info/product-info.module'
+            //         ).then((m) => m.ProductInfoModule),
+            // },
             {
                 path: 'profile',
                 loadChildren: () =>
@@ -399,7 +413,7 @@ export const appRoutes: Route[] = [
                     ).then((m) => m.MyAccountModule),
             },
             {
-                path: 'testing/table-edit/:shopId',
+                path: 'table-edit/:shopId',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/testing/table-edit/table-edit.module'
@@ -440,6 +454,13 @@ export const appRoutes: Route[] = [
                     import('app/modules/admin/reports/reports.module').then(
                         (m) => m.ReportsComponentModule
                     ),
+            },
+            {
+                path: 'analytics',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/dashboards/analytics/analytics.module'
+                    ).then((m) => m.AnalyticsModule),
             },
             // 404 & Catch all
             {

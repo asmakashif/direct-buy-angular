@@ -25,8 +25,8 @@
         $qry="UPDATE `tbl_user` SET `trail_activate`=1 WHERE `id`='{$user_id}' LIMIT 1  ";
         if(mysqli_query($CN,$qry))
         {
-            $shopId = $_GET['shopId'];
-            include "databaseCreation/create_database.php";
+            // $shopId = $_GET['shopId'];
+            // include "databaseCreation/create_database.php";
             http_response_code(204);
         }
         else{

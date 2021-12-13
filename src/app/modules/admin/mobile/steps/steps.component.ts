@@ -48,37 +48,33 @@ export class StepsComponent implements OnInit {
 
     setUpProducts(): void {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate(['/mobile/product-config/' + routeParams.shopId]);
+        this._router.navigate(['/product-config/' + routeParams.shopId]);
     }
 
     viewProducts() {
         const routeParams = this.routes.snapshot.params;
         this._router.navigate([]).then((result) => {
-            window.open('/mobile/product-info/' + routeParams.shopId);
+            window.open('/product-info/' + routeParams.shopId);
         });
     }
 
     setUpPaymentGateway(): void {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate([
-            '/payment/payment-gateway/' + routeParams.shopId,
-        ]);
+        this._router.navigate(['/payment-gateway/' + routeParams.shopId]);
     }
 
     setUpPayment(): void {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate(['/store/store-payment/' + routeParams.shopId]);
+        this._router.navigate(['/store-payment/' + routeParams.shopId]);
     }
 
     storeSummary(): void {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate(['/store/store-summary/' + routeParams.shopId]);
+        this._router.navigate(['/store-summary/' + routeParams.shopId]);
     }
     storeActivae(): void {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate([
-            '/store/store-activation/' + routeParams.shopId,
-        ]);
+        this._router.navigate(['/store-activation/' + routeParams.shopId]);
     }
 
     isMobile() {

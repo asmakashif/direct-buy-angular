@@ -18,7 +18,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SharedModule } from 'app/shared/shared.module';
-import { HotTableModule } from '@handsontable/angular';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { StepsComponent } from 'app/modules/admin/steps/steps.component';
 
 const stepsRoutes: Route[] = [
@@ -32,7 +32,7 @@ const stepsRoutes: Route[] = [
     declarations: [StepsComponent],
     imports: [
         RouterModule.forChild(stepsRoutes),
-        HotTableModule,
+        MatTooltipModule,
         MatButtonModule,
         MatButtonToggleModule,
         MatDividerModule,

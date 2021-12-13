@@ -10,13 +10,15 @@
     $DB=mysqli_select_db($CN,"formal_store");
 
     $target_dir="uploads/";
-    $target_file = $target_dir.basename($_FILES["myFile"]["name"]);
+    //$product_image = basename($_FILES["myFile"]["name"]);
+    $product_image = str_replace(' ', '', basename($_FILES["myFile"]["name"]));
+    $target_file = $target_dir.$product_image;
     move_uploaded_file($_FILES["myFile"]["tmp_name"], $target_file);
 
     $temp_str_config_id = $_POST['temp_str_config_id'];
-    $product_image = basename($_FILES["myFile"]["name"]);
+    // $product_image = basename($_FILES["myFile"]["name"]);
 
-    $sql="UPDATE `temp_str_config` SET `product_img`='$product_image' WHERE `temp_str_config_id`='{$temp_str_config_id}' LIMIT 1  ";
+    $sql="UPDATE `temp_str_config` SET `product_img`='$product_image',`upload_format`=1 WHERE `temp_str_config_id`='{$temp_str_config_id}' LIMIT 1  ";
 
     $R=mysqli_query($CN,$sql) or die("database error:". mysqli_error($CN));
     if($R)

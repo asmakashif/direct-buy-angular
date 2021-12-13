@@ -32,6 +32,7 @@
             $users['product_status'] = $row['product_status'];
             $users['payment_g_status'] = $row['payment_g_status'];
             $users['payment_status'] = $row['payment_status'];
+            $users['dbcreation_status'] = $row['dbcreation_status'];
             $users['productUpdate_status'] = $row['productUpdate_status'];
             $users['shop_payment_status'] = $row['shop_payment_status'];
             $users['trail_activate'] = $row['trail_activate'];
@@ -45,7 +46,7 @@
             $users['home_delivery'] = $row['home_delivery'];
             $users['min_order_val'] = $row['min_order_val'];
             $users['vacation_mode'] = $row['vacation_mode'];
-            
+            $users['hide_0productQty'] = $row['hide_0productQty'];
         }
 
         echo json_encode($users);

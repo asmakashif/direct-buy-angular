@@ -6,16 +6,17 @@ header("Access-Control-Allow-Methods: PUT, GET, POST, DELETE");
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 
 
-$to = $email;
-$last_id;
+// $to = $email;
+// $last_id;
+$to = 'chaithraramachandraa@gmail.com';
 include('smtp/PHPMailerAutoload.php');
 //$html='Testing';
 $rndno = rand(100000, 999999);
 $html = 'The One Time Password for your account is ' .$rndno. '. - Regards, Direct-Buy';
-smtp_mailer($to,'subject',$html,$last_id,$rndno);
-function smtp_mailer($to,$subject, $msg,$last_id,$rndno)
+smtp_mailer($to,'subject',$html,$rndno);
+function smtp_mailer($to,$subject, $msg,$rndno)
 {
-	$id = $last_id;
+	//$id = $last_id;
 	$mail = new PHPMailer(); 
 	$mail->SMTPDebug  = 3;
 	$mail->IsSMTP(); 
@@ -41,22 +42,22 @@ function smtp_mailer($to,$subject, $msg,$last_id,$rndno)
 		http_response_code(422);
 	}else
 	{
-		$CN= mysqli_connect("localhost","root","");
-		$DB=mysqli_select_db($CN,"formal_store"); 
-		$id;
-		$rndno;
+		// $CN= mysqli_connect("localhost","root","");
+		// $DB=mysqli_select_db($CN,"formal_store"); 
+		// $id;
+		// $rndno;
 
-		$sql="UPDATE `tbl_user` SET `otp`='$rndno' WHERE `id`='{$id}' LIMIT 1  ";
+		// $sql="UPDATE `tbl_user` SET `otp`='$rndno' WHERE `id`='{$id}' LIMIT 1  ";
 
-        $R=mysqli_query($CN,$sql)or die("database error:". mysqli_error($CN));
-        if($R)
-        {
-        	echo 'success';
-        	http_response_code(204);
-        }
-        else{
-        	http_response_code(422);
-        }
+  //       $R=mysqli_query($CN,$sql)or die("database error:". mysqli_error($CN));
+  //       if($R)
+  //       {
+  //       	echo 'success';
+  //       	http_response_code(204);
+  //       }
+  //       else{
+  //       	http_response_code(422);
+  //       }
 	}
 }
 ?>

@@ -57,12 +57,13 @@
                         class="fuse-mat-button-rounded bg-accent-700"
                         mat-flat-button
                         [color]="'accent'"
+                        [routerLink]="['/dashboard']"
                     >
                         <mat-icon
                             class="icon-size-5"
-                            [svgIcon]="'heroicons_solid:mail'"
+                            [svgIcon]="'heroicons_solid:home'"
                         ></mat-icon>
-                        <span class="ml-2">Messages</span>
+                        <span class="ml-2">Home</span>
                     </button>
                     <button
                         class="fuse-mat-button-rounded"
@@ -95,6 +96,29 @@
                     overflow-hidden
                 "
             >
+                <div class="row">
+                    <div class="col-md-2">
+                        <button
+                            class="lg:mt-6"
+                            mat-flat-button
+                            [color]="'primary'"
+                            (click)="prevStep()"
+                        >
+                            Back
+                        </button>
+                    </div>
+                    <div class="col-md-2">
+                        <button
+                            class="lg:mt-6"
+                            mat-flat-button
+                            [color]="'primary'"
+                            (click)="nextStep()"
+                        >
+                            Next
+                        </button>
+                    </div>
+                </div>
+                <br />
                 <div *ngIf="shop_payment_status == 0">
                     <div class="row">
                         <div
@@ -207,15 +231,15 @@
                             store.
                         </strong>
                     </span>
-                    <br />
+                    <!-- <br />
                     <a
                         href="javascript:void(0);"
                         class="btn btn-success ml-4"
                         id="nextStep"
-                        (click)="nextStep()"
+                        (click)="complete()"
                         style="width: 100px"
-                        >Next</a
-                    >
+                        >Completed</a
+                    > -->
                 </div>
                 <!-- <form [formGroup]="storeCheckoutForm" autocomplete="off">
                     <div class="form-group">

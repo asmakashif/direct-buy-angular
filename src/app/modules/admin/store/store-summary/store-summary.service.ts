@@ -28,4 +28,13 @@ export class StoreSummaryService {
     saveProductUpdate(user: Payment): Observable<ApiResponse> {
         return this.http.post<ApiResponse>('/api/saveProductUpdate.php', user);
     }
+
+    createDB(shopId: string, user_id): Observable<ApiResponse> {
+        return this.http.get<ApiResponse>(
+            '/api/databaseCreation/create_database.php?shopId=' +
+                shopId +
+                '&user_id=' +
+                user_id
+        );
+    }
 }

@@ -135,7 +135,7 @@ export class CreateShopComponent implements OnInit {
             this.apiService.createUser(this.addForm.value).subscribe(
                 () => {
                     // this.router.navigate(['/product-config/' + shopId]);
-                    this._router.navigate(['/mobile/steps/' + shopId]);
+                    this._router.navigate(['/steps/' + shopId]);
                 },
                 (response) => {
                     this.showFlashMessage('error');

@@ -115,7 +115,7 @@ export class ShopDetailsComponent implements OnInit {
         const routeParams = this.routes.snapshot.params;
         const shopdetails = 'shopdetails';
         localStorage.setItem('redirect', shopdetails);
-        this._router.navigate(['/store/store-payment/' + routeParams.shopId]);
+        this._router.navigate(['/store-payment/' + routeParams.shopId]);
     }
 
     onDefaultSelect(e) {
@@ -145,7 +145,7 @@ export class ShopDetailsComponent implements OnInit {
             .saveDefaultPayment(this.paymentForm.value)
             .subscribe((data) => {
                 // this._router.navigate([
-                //     '/store/shop-details/' + routeParams.shopId,
+                //     '/shop-details/' + routeParams.shopId,
                 // ]);
                 this.flashMessagesService.show(
                     // Array of messages each will be displayed in new line
@@ -160,7 +160,7 @@ export class ShopDetailsComponent implements OnInit {
     }
 
     shopConfiguration(shopId): void {
-        this._router.navigate(['/store/shop-configuration/' + shopId]);
+        this._router.navigate(['/shop-configuration/' + shopId]);
     }
 
     onUpdate() {

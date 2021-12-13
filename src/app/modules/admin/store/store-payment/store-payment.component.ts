@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { StorePaymentService } from 'app/modules/admin/store/store-payment/store-payment.service';
 import { Router, Params, ActivatedRoute } from '@angular/router';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
 
 @Component({
     selector: 'app-store-payment',
@@ -23,7 +24,9 @@ export class StorePaymentComponent implements OnInit {
     flashMessage: string;
     imagePath: string = '/assets/icons/';
     image: any;
+    shopdata: any;
     constructor(
+        private _fuseConfirmationService: FuseConfirmationService,
         private formBuilder: FormBuilder,
         private apiService: StorePaymentService,
         private _router: Router,
@@ -55,6 +58,13 @@ export class StorePaymentComponent implements OnInit {
         //     shopId: [shopId],
         //     payment_name: this.formBuilder.array([], [Validators.required]),
         // });
+    }
+
+    addPayment(): void {
+        const routeParams = this.routes.snapshot.params;
+        const strpayment = 'strpayment';
+        localStorage.setItem('strpayment', strpayment);
+        this._router.navigate(['/payment-gateway/' + routeParams.shopId]);
     }
 
     strPayment(e) {
@@ -128,7 +138,7 @@ export class StorePaymentComponent implements OnInit {
     //         alert(data);
     //         this.apiService.saveStrPayments(data).subscribe((data) => {
     //             this._router.navigate([
-    //                 '/store/store-payment/' + routeParams.shopId,
+    //                 '/store-payment/' + routeParams.shopId,
     //             ]);
     //         });
     //         payment_name.push(new FormControl(e.target.value));
@@ -142,7 +152,7 @@ export class StorePaymentComponent implements OnInit {
     //         alert(data);
     //         this.apiService.deleteStrPayments(data).subscribe((data) => {
     //             this._router.navigate([
-    //                 '/store/store-payment/' + routeParams.shopId,
+    //                 '/store-payment/' + routeParams.shopId,
     //             ]);
     //         });
     //         const index = payment_name.controls.findIndex(
@@ -154,7 +164,7 @@ export class StorePaymentComponent implements OnInit {
 
     done() {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate(['/store/store-payment/' + routeParams.shopId]);
+        this._router.navigate(['/store-payment/' + routeParams.shopId]);
         this.showFlashMessage('success');
     }
 
@@ -177,6 +187,61 @@ export class StorePaymentComponent implements OnInit {
         }, 3000);
     }
 
+    prevStep(): void {
+        const routeParams = this.routes.snapshot.params;
+        this._router.navigate(['/steps/' + routeParams.shopId]);
+    }
+
+    nextStep(): void {
+        const routeParams = this.routes.snapshot.params;
+        const user_id = localStorage.getItem('user_id');
+        this.apiService
+            .getShopDetailsById(routeParams.shopId, user_id)
+            .subscribe((data: any) => {
+                this.shopdata = data;
+                if (this.shopdata.payment_status == 1) {
+                    const confirmation = this._fuseConfirmationService.open({
+                        title: 'Proceed Next',
+                        message:
+                            'You will be moved out of this page to proceed with next step',
+                        actions: {
+                            confirm: {
+                                label: 'Okay',
+                            },
+                        },
+                    });
+
+                    // Subscribe to the confirmation dialog closed action
+                    confirmation.afterClosed().subscribe((result) => {
+                        // If the confirm button pressed...
+                        if (result === 'confirmed') {
+                            this._router.navigate([
+                                '/store-summary/' + routeParams.shopId,
+                            ]);
+                        }
+                    });
+                } else {
+                    const confirmation = this._fuseConfirmationService.open({
+                        title: 'Proceed Next',
+                        message:
+                            'Choose atleast one payment option to proceed next',
+                        actions: {
+                            confirm: {
+                                label: 'Okay',
+                            },
+                        },
+                    });
+
+                    // Subscribe to the confirmation dialog closed action
+                    confirmation.afterClosed().subscribe((result) => {
+                        // If the confirm button pressed...
+                        if (result === 'confirmed') {
+                        }
+                    });
+                }
+            });
+    }
+
     // onSubmit() {
     //     //more code
     //     console.log(this.paymentForm.value.payment_name);
@@ -189,7 +254,7 @@ export class StorePaymentComponent implements OnInit {
     //             .saveStrPayments(this.paymentForm.value)
     //             .subscribe((data) => {
     //                 this._router.navigate([
-    //                     '/store/shop-details/' + routeParams.shopId,
+    //                     '/shop-details/' + routeParams.shopId,
     //                 ]);
     //             });
     //     } else {

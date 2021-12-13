@@ -26,7 +26,8 @@ export class MyAccountComponent implements OnInit {
                 this.cd.detectChanges();
             },
             (error) => {
-                alert(error.message);
+                this.shops;
+                // alert(error.message);
             }
         );
     }

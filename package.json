@@ -45,6 +45,7 @@
     "@ng-select/ng-select": "^7.3.0",
     "@ngneat/transloco": "2.22.0",
     "angular-font-awesome": "^3.1.2",
+    "angular-ng-autocomplete": "^2.0.5",
     "angular-responsive-carousel": "^2.1.2",
     "angular2-flash-messages": "^3.0.1",
     "apexcharts": "3.27.3",

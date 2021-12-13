@@ -12,7 +12,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
-import { TranslocoModule } from '@ngneat/transloco';
 import { SharedModule } from 'app/shared/shared.module';
 import { DashboardComponent } from 'app/modules/admin/dashboard/dashboard.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -50,7 +49,6 @@ const configuraionRoutes: Route[] = [
         MatSortModule,
         MatTableModule,
         MatTabsModule,
-        TranslocoModule,
         SharedModule,
         MatCheckboxModule,
         MatFormFieldModule,

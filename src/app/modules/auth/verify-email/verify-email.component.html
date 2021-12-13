@@ -69,7 +69,7 @@
             <!-- Sign in form -->
             <form class="mt-8" [formGroup]="signInForm" #signInNgForm="ngForm">
                 <!-- Email field -->
-                <mat-form-field class="hidden w-full">
+                <mat-form-field class="w-full">
                     <input id="email" matInput [formControlName]="'email'" />
 
                     <mat-error
@@ -85,7 +85,7 @@
                 </mat-form-field>
                 <!-- {{ uuid }} -->
                 <!-- Password field -->
-                <mat-form-field class="hidden w-full">
+                <mat-form-field class="w-full">
                     <input
                         id="password"
                         matInput

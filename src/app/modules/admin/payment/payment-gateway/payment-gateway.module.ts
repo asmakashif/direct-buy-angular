@@ -17,7 +17,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
-import { TranslocoModule } from '@ngneat/transloco';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
@@ -51,7 +50,6 @@ const paymentGatewayRoutes: Route[] = [
         MatSortModule,
         MatTableModule,
         MatTabsModule,
-        TranslocoModule,
         MatCheckboxModule,
         MatInputModule,
         MatPaginatorModule,

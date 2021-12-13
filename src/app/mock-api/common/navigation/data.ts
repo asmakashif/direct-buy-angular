@@ -39,7 +39,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
     },
     {
         id: 'my-account',
-        title: 'My Account',
+        title: 'My Subscription',
         type: 'basic',
         icon: 'heroicons_outline:user-circle',
         link: '/my-account',
@@ -97,7 +97,7 @@ export const compactNavigation: FuseNavigationItem[] = [
     },
     {
         id: 'my-account',
-        title: 'My Account',
+        title: 'My Subscription',
         type: 'basic',
         icon: 'heroicons_outline:user-circle',
         link: '/my-account',
@@ -155,7 +155,7 @@ export const futuristicNavigation: FuseNavigationItem[] = [
     },
     {
         id: 'my-account',
-        title: 'My Account',
+        title: 'My Subscription',
         type: 'basic',
         icon: 'heroicons_outline:user-circle',
         link: '/my-account',
@@ -213,7 +213,7 @@ export const horizontalNavigation: FuseNavigationItem[] = [
     },
     {
         id: 'my-account',
-        title: 'My Account',
+        title: 'My Subscription',
         type: 'basic',
         icon: 'heroicons_outline:user-circle',
         link: '/my-account',

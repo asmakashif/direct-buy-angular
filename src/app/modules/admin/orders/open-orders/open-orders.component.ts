@@ -39,7 +39,7 @@ export class OpenOrdersComponent implements OnInit {
         const routeParams = this.routes.snapshot.params;
         console.log(order_code);
         this._router.navigate([
-            '/orders/order-details/' + order_code + '/' + routeParams.shopId,
+            '/order-details/' + order_code + '/' + routeParams.shopId,
         ]);
     }
 }

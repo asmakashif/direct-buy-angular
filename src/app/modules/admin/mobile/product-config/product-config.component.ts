@@ -118,11 +118,9 @@ export class ProductConfigComponent implements OnInit {
             base_product_id: this.fb.array([], [Validators.required]),
         });
 
-        if (this.isMobile()) {
+        if (!this.isMobile()) {
             //alert('mobile');
-            this._router.navigate([
-                '/mobile/product-config/' + routeParams.shopId,
-            ]);
+            this._router.navigate(['/product-config/' + routeParams.shopId]);
             // this._router.resetConfig(this.mobileRoutes);
         }
     }
@@ -357,7 +355,7 @@ export class ProductConfigComponent implements OnInit {
 
     done() {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate(['/mobile/product-info/' + routeParams.shopId]);
+        this._router.navigate(['/product-info/' + routeParams.shopId]);
     }
 
     isMobile() {

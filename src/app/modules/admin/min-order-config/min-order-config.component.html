@@ -56,12 +56,13 @@
                         class="fuse-mat-button-rounded bg-accent-700"
                         mat-flat-button
                         [color]="'accent'"
+                        [routerLink]="['/dashboard']"
                     >
                         <mat-icon
                             class="icon-size-5"
-                            [svgIcon]="'heroicons_solid:mail'"
+                            [svgIcon]="'heroicons_solid:home'"
                         ></mat-icon>
-                        <span class="ml-2">Messages</span>
+                        <span class="ml-2">Home</span>
                     </button>
                     <button
                         class="fuse-mat-button-rounded"
@@ -93,38 +94,38 @@
                     overflow-hidden
                 "
                 [formGroup]="signinForm"
-               (ngSubmit)="onSubmit()"
-               autocomplete="on"
+                (ngSubmit)="onSubmit()"
+                autocomplete="on"
             >
-                
-               
-                <div class="row" >
+                <div class="row">
                     <div class="col-md-4">
-                        <div class="form-group"  >
+                        <div class="form-group">
                             <label for="payment_option"
                                 ><b>Update Minimum Order Value</b></label
                             >
-                            <br/>
+                            <br />
                             &nbsp;
                             <select
-                            type="text"
-                              class="form-control"
-                              required=""
-                              formControlName="minOrder"
-                             >
-                             <option>Select</option>
-                             <option *ngFor="let dt of days">{{dt.value}}</option>
-                             </select>
-                        
+                                type="text"
+                                class="form-control"
+                                required=""
+                                formControlName="minOrder"
+                            >
+                                <option>Select</option>
+                                <option *ngFor="let dt of days">
+                                    {{ dt.value }}
+                                </option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-8" style="margin-top: 35px">
                         <i class="bi bi-question-circle-fill"></i>&nbsp;
-                        <span><b>Minimum Order Value for Home Delivery  </b></span>
+                        <span
+                            ><b>Minimum Order Value for Home Delivery </b></span
+                        >
                     </div>
                 </div>
-                
-               
+
                 <br />
                 <input
                     type="submit"
@@ -134,11 +135,12 @@
                     name="submit"
                     style="width: 100px"
                 />
-                <br/>
-                <p *ngFor="let dt of values">You have set minimum order value as <b>{{dt.min_order_val}}</b></p>
+                <br />
+                <p *ngFor="let dt of values">
+                    You have set minimum order value as
+                    <b>{{ dt.min_order_val }}</b>
+                </p>
             </form>
-           
         </div>
     </div>
 </div>
-

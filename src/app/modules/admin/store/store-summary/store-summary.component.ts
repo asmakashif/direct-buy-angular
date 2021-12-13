@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
     FormGroup,
     FormBuilder,
@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { StoreSummaryService } from 'app/modules/admin/store/store-summary/store-summary.service';
 import { Router, Params, ActivatedRoute } from '@angular/router';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
 
 @Component({
     selector: 'app-store-summary',
@@ -20,12 +21,20 @@ export class StoreSummaryComponent implements OnInit {
     countProduct: any;
     summaryForm: FormGroup;
     firstname: string;
+    flashMessage: string;
+    createDb: any;
+    shop_name: any;
+    shop_address: any;
+    shopId: any;
+    shopdata: any;
 
     constructor(
+        private _fuseConfirmationService: FuseConfirmationService,
         private formBuilder: FormBuilder,
         private apiService: StoreSummaryService,
         private _router: Router,
-        private routes: ActivatedRoute
+        private routes: ActivatedRoute,
+        private cd: ChangeDetectorRef
     ) {}
 
     ngOnInit(): void {
@@ -37,7 +46,12 @@ export class StoreSummaryComponent implements OnInit {
             .getShopDetailsById(routeParams.shopId, user_id)
             .subscribe((data: any) => {
                 this.data = data;
-                console.log(this.data.shopId);
+                this.shopId = this.data.shopId;
+                this.shop_name = this.data.shop_name;
+                this.shop_address = this.data.shop_address;
+                if (this.data.dbcreation_status == 1) {
+                    this.showFlashMessage('success');
+                }
             });
 
         this.apiService
@@ -82,5 +96,90 @@ export class StoreSummaryComponent implements OnInit {
             .subscribe((data) => {
                 this._router.navigate(['/steps/' + routeParams.shopId]);
             });
+    }
+
+    prevStep(): void {
+        const routeParams = this.routes.snapshot.params;
+        this._router.navigate(['/steps/' + routeParams.shopId]);
+    }
+
+    nextStep(): void {
+        const routeParams = this.routes.snapshot.params;
+        const user_id = localStorage.getItem('user_id');
+        // alert('next');
+        this.apiService
+            .getShopDetailsById(routeParams.shopId, user_id)
+            .subscribe((data: any) => {
+                this.shopdata = data;
+                if (this.shopdata.dbcreation_status == 1) {
+                    const confirmation = this._fuseConfirmationService.open({
+                        title: 'Proceed Next',
+                        message:
+                            'You will be moved out of this page to proceed with next step',
+                        actions: {
+                            confirm: {
+                                label: 'Okay',
+                            },
+                        },
+                    });
+                    // Subscribe to the confirmation dialog closed action
+                    confirmation.afterClosed().subscribe((result) => {
+                        // If the confirm button pressed...
+                        if (result === 'confirmed') {
+                            this._router.navigate([
+                                '/store-activation/' + routeParams.shopId,
+                            ]);
+                        }
+                    });
+                } else {
+                    const confirmation = this._fuseConfirmationService.open({
+                        title: 'Proceed Next',
+                        message: 'Setup the store to proceed with next step',
+                        actions: {
+                            confirm: {
+                                label: 'Okay',
+                            },
+                        },
+                    });
+                    // Subscribe to the confirmation dialog closed action
+                    confirmation.afterClosed().subscribe((result) => {
+                        // If the confirm button pressed...
+                        if (result === 'confirmed') {
+                        }
+                    });
+                }
+            });
+    }
+
+    createShopDB() {
+        const routeParams = this.routes.snapshot.params;
+        const user_id = localStorage.getItem('user_id');
+        this.apiService
+            .createDB(routeParams.shopId, user_id)
+            .subscribe((data) => {
+                // this.createDb = data;
+                // alert(this.createDb);
+                this.ngOnInit();
+                //this.showFlashMessage('success');
+            });
+    }
+
+    /**
+     * Show flash message
+     */
+    showFlashMessage(type: 'success' | 'error'): void {
+        // Show the message
+        this.flashMessage = type;
+
+        // Mark for check
+        this.cd.markForCheck();
+
+        // Hide it after 3 seconds
+        setTimeout(() => {
+            this.flashMessage = null;
+
+            // Mark for check
+            this.cd.markForCheck();
+        }, 3000);
     }
 }

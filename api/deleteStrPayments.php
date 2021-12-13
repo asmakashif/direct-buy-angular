@@ -20,7 +20,22 @@
         $del = "DELETE FROM `shop_payment_info` WHERE  `pInfo_payment_name` = '{$payment_name}' ";
         if(mysqli_query($CN,$del))
         {
-            http_response_code(201);  
+            $count = mysqli_query($CN, "SELECT attachToStr FROM payment_integration WHERE `payment_name` = '$payment_name'")  or die("database error:". mysqli_error($CN));
+            $total = 0;
+            while($row = mysqli_fetch_assoc($count)) {
+                $total += $row['attachToStr'];
+            }
+            $total;
+
+            $qry="UPDATE `payment_integration` SET `attachToStr` = '{$total}' - 1   WHERE `payment_name`='{$payment_name}' LIMIT 1  ";
+            if(mysqli_query($CN,$qry) or die("database error:". mysqli_error($CN)))
+            {
+                http_response_code(201);
+            }
+            else
+            {
+                http_response_code(422);
+            }
         }
         else
         {

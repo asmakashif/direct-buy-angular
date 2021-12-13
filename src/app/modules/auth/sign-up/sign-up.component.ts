@@ -23,6 +23,8 @@ export class AuthSignUpComponent implements OnInit {
     };
     signUpForm: FormGroup;
     showAlert: boolean = false;
+    checkEmail: any;
+    email: any;
 
     /**
      * Constructor
@@ -70,6 +72,21 @@ export class AuthSignUpComponent implements OnInit {
 
             $('#submit').removeAttr('disabled', 'disabled');
         });
+    }
+
+    keyup(event) {
+        this._authService
+            .checkOtpVerification(this.signUpForm.value)
+            .subscribe((data) => {
+                this.checkEmail = data;
+                this.email = this.checkEmail.email;
+                // if (this.email == '') {
+                //     alert('proceed');
+                // } else {
+                //     alert('present');
+                // }
+                console.log(this.email);
+            });
     }
 
     // -----------------------------------------------------------------------------------------------------

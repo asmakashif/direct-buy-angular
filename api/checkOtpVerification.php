@@ -22,9 +22,10 @@
         $user = [];
         $Sql_Query = "SELECT * from `tbl_user` WHERE `email` = '$email' ";
 
-        if($result = mysqli_query($CN,$Sql_Query) or die("database error:". mysqli_error($CN)))
+        $res = mysqli_query($CN,$Sql_Query) or die("database error:". mysqli_error($CN));
+        if($res)
         {
-            while($row = mysqli_fetch_assoc($result))
+            while($row = mysqli_fetch_assoc($res))
             {
                 $user['otpVerify'] = $row['otpVerify'];
             }

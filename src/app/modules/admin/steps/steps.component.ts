@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Routes } from '@angular/router';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { StepsService } from './steps.service';
 //import { MatStepper } from '@angular/material/stepper';
 
@@ -16,10 +17,12 @@ export class StepsComponent implements OnInit {
     productUpdate_status: any;
     shop_payment_status: any;
     firstname: string;
+    dbcreation_status: any;
     constructor(
         private _stepsService: StepsService,
         private _router: Router,
-        private routes: ActivatedRoute
+        private routes: ActivatedRoute,
+        private _fuseConfirmationService: FuseConfirmationService
     ) {}
 
     ngOnInit() {
@@ -33,56 +36,82 @@ export class StepsComponent implements OnInit {
                 this.product_status = this.data.product_status;
                 this.payment_g_status = this.data.payment_g_status;
                 this.payment_status = this.data.payment_status;
+                this.dbcreation_status = this.data.dbcreation_status;
                 this.productUpdate_status = this.data.productUpdate_status;
                 this.shop_payment_status = this.data.shop_payment_status;
                 console.log(this.data.product_status);
             });
 
-        if (this.isMobile()) {
-            //alert('mobile');
-            this._router.navigate(['/mobile/steps/' + routeParams.shopId]);
-            // this._router.resetConfig(this.mobileRoutes);
-        }
+        // if (this.isMobile()) {
+        //     //alert('mobile');
+        //     this._router.navigate(['/steps/' + routeParams.shopId]);
+        //     // this._router.resetConfig(this.mobileRoutes);
+        // }
     }
 
     setUpProducts(): void {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate([
-            '/product/product-config/' + routeParams.shopId,
-        ]);
+        // this._router.navigate(['/product-config/' + routeParams.shopId]);
+        if (this.isMobile()) {
+            //alert('mobile');
+            this._router.navigate([
+                '/mobile/product-config/' + routeParams.shopId,
+            ]);
+            // this._router.resetConfig(this.mobileRoutes);
+        } else {
+            this._router.navigate(['/product-config/' + routeParams.shopId]);
+        }
+    }
+
+    completePreviousStep(): void {
+        // Open the confirmation dialog
+        const confirmation = this._fuseConfirmationService.open({
+            title: 'Step Incomplete',
+            message: 'Complete the steps to proceed next',
+            actions: {
+                confirm: {
+                    label: 'Ok',
+                },
+            },
+        });
     }
 
     viewProducts() {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate([]).then((result) => {
-            window.open(
-                '/product/product-info/' + routeParams.shopId,
-                '_blank'
-            );
-        });
+        this._router.navigate(['/product-info/' + routeParams.shopId]);
     }
 
     setUpPaymentGateway(): void {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate([
-            '/payment/payment-gateway/' + routeParams.shopId,
-        ]);
+        this._router.navigate(['/payment-gateway/' + routeParams.shopId]);
     }
 
     setUpPayment(): void {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate(['/store/store-payment/' + routeParams.shopId]);
+        this._router.navigate(['/store-payment/' + routeParams.shopId]);
     }
 
     storeSummary(): void {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate(['/store/store-summary/' + routeParams.shopId]);
+        this._router.navigate(['/store-summary/' + routeParams.shopId]);
     }
     storeActivae(): void {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate([
-            '/store/store-activation/' + routeParams.shopId,
-        ]);
+        this._router.navigate(['/store-activation/' + routeParams.shopId]);
+    }
+
+    gotostore(): void {
+        const routeParams = this.routes.snapshot.params;
+        const user_id = localStorage.getItem('user_id');
+        this._stepsService
+            .getShopDetailsById(routeParams.shopId, user_id)
+            .subscribe((data: any) => {
+                this.data = data;
+                const shop_name = this.data.shop_name;
+                this._router.navigate([
+                    '/dashboard/' + routeParams.shopId + '/' + shop_name,
+                ]);
+            });
     }
 
     isMobile() {

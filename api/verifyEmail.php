@@ -9,8 +9,8 @@
     $CN= mysqli_connect("localhost","root","");
     $DB=mysqli_select_db($CN,"formal_store");
     
-    // $password='asma1234';
-    // $encryptedPassword = base64_encode(json_encode($password));
+    //$password='asma1234';
+    // $encryptedPassword = 'Imthc2hpZjEyMzQi';
     // $decryptedPassword = base64_decode($encryptedPassword);
     // echo json_decode($decryptedPassword);
 
@@ -32,6 +32,7 @@
         {
             while($row = mysqli_fetch_assoc($result))
             {
+                $user['id'] = $row['id'];
                 $user['email'] = $row['email'];
                 $decryptedPassword = base64_decode($row['password']);
                 $user['password'] = json_decode($decryptedPassword);

@@ -59,12 +59,13 @@
                         class="fuse-mat-button-rounded bg-accent-700"
                         mat-flat-button
                         [color]="'accent'"
+                        [routerLink]="['/dashboard']"
                     >
                         <mat-icon
                             class="icon-size-5"
-                            [svgIcon]="'heroicons_solid:mail'"
+                            [svgIcon]="'heroicons_solid:home'"
                         ></mat-icon>
-                        <span class="ml-2">Messages</span>
+                        <span class="ml-2">Home</span>
                     </button>
                     <button
                         class="fuse-mat-button-rounded"
@@ -87,9 +88,32 @@
         <div
             class="flex flex-col flex-auto w-full max-w-xs sm:max-w-5xl mx-auto"
         >
+            <div class="row">
+                <div class="col-md-2">
+                    <button
+                        class="lg:mt-6"
+                        mat-flat-button
+                        [color]="'primary'"
+                        (click)="prevStep()"
+                    >
+                        Back
+                    </button>
+                </div>
+                <div class="col-md-2">
+                    <button
+                        class="lg:mt-6"
+                        mat-flat-button
+                        [color]="'primary'"
+                        (click)="nextStep()"
+                    >
+                        Next
+                    </button>
+                </div>
+            </div>
+            <br />
             <h4 class="card-title">Choose Payment Options</h4>
             <!-- Payments -->
-            <ng-container *ngIf="this.payment.length; else noCourses">
+            <ng-container *ngIf="payment.length > 0; else noPayment">
                 <div
                     class="
                         grid grid-cols-1
@@ -239,7 +263,7 @@
             </ng-container>
 
             <!-- No courses -->
-            <ng-template #noCourses>
+            <ng-template #noPayment>
                 <div
                     class="
                         flex flex-auto flex-col
@@ -262,7 +286,17 @@
                             text-secondary
                         "
                     >
-                        No courses found!
+                        No payments found!
+                    </div>
+                    <div class="text-md font-medium truncate">
+                        <button
+                            class="lg:mt-6"
+                            mat-flat-button
+                            [color]="'primary'"
+                            (click)="addPayment()"
+                        >
+                            Add Payment
+                        </button>
                     </div>
                 </div>
             </ng-template>

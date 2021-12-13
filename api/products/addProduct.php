@@ -1,5 +1,5 @@
 <?php 
-	// require 'database.php';
+    // require 'database.php';
     header("Access-Control-Allow-Origin: http://localhost:4200");
     header("Access-Control-Allow-Origin: *");
     header('Access-Control-Allow-Credentials: true');
@@ -9,51 +9,53 @@
     $CN= mysqli_connect("localhost","root","");
     $DB=mysqli_select_db($CN,"formal_store");
 
-    $shopId = $_GET['shopId'];
-    $user_id = $_GET['user_id'];
-    $product_name = 'A New Product';    
 
-    $sql="INSERT INTO `temp_str_config`(user_id,temp_shopId,product_name) values('$user_id','$shopId','$product_name')";
-    
-    $R=mysqli_query($CN,$sql) or die("database error:". mysqli_error($CN));
-    
-    if($R)
+    $EncodedData=file_get_contents('php://input');
+    if(isset($EncodedData) && !empty($EncodedData))
     {
-        $last_id = $CN->insert_id;
-        $sql = "SELECT * FROM `temp_str_config` WHERE `temp_str_config_id` = '$last_id'";
+        $DecodedData=json_decode($EncodedData,true);
 
-        if($result = mysqli_query($CN,$sql))
+        //print_r($DecodedData);
+        $user_id = $DecodedData['user_id'];
+        $temp_shopId = $DecodedData['temp_shopId'];
+        $base_product_id=0;
+        $category = $DecodedData['category'];
+        $sub_category=$DecodedData['sub_category'];
+        $brand=$DecodedData['brand'];
+        $product_name=$DecodedData['product_name'];
+        $product_type=$DecodedData['product_type'];
+        $product_sub_type=$DecodedData['product_sub_type'];
+        $product_description=$DecodedData['product_description'];
+        $product_weight=$DecodedData['product_weight'];
+        $product_weight_type=$DecodedData['product_weight_type'];
+        $product_qty=$DecodedData['product_qty'];
+        $product_price=$DecodedData['product_price'];
+        $offer_price=$DecodedData['offer_price'];
+        $str=$DecodedData['product_image'];
+        $product_img= str_replace(' ', '', $str);
+        if(!empty($product_img))
         {
-            
-            while($row = mysqli_fetch_assoc($result))
-            {
-                $product['temp_str_config_id'] = $row['temp_str_config_id'];
-                //$product['id'] = $row['id'];
-                // $product['temp_shopId'] = $row['temp_shopId'];
-                $product['category'] = $row['category'];
-                $product['sub_category'] = $row['sub_category'];
-                $product['brand'] = $row['brand'];
-                $product['product_name'] = $row['product_name'];
-                $product['product_type'] = $row['product_type'];
-                $product['product_sub_type'] = $row['product_sub_type'];
-                $product['product_weight'] = $row['product_weight'];
-                $product['product_weight_type'] = $row['product_weight_type'];
-                $product['product_qty'] = $row['product_qty'];
-                $product['product_price'] = $row['product_price'];
-                $product['offer_price'] = $row['offer_price'];
-                $product['product_status'] = $row['product_status'];
-                
-            }
-
-            echo json_encode($product);
+            $upload_format=1;
         }
         else
         {
-            http_response_code(404);
+            $upload_format=0;
+        }
+        $product_status=$DecodedData['product_status'][0];
+        $store_SKU=$category.$sub_category.$brand.$product_name.$product_type.$product_weight;
+        $product_added_date=date('Y-m-d');
+        $product_updated_date=date('Y-m-d');
+
+
+        $sql="INSERT INTO `temp_str_config`(user_id,temp_shopId,base_product_id,category,sub_category,brand,product_name,product_type,product_sub_type,product_description,product_weight,product_weight_type,product_qty,product_price,offer_price,product_img,upload_format,product_status,store_SKU,product_added_date,product_updated_date) values('$user_id','$temp_shopId','$base_product_id','$category','$sub_category','$brand','$product_name','$product_type','$product_sub_type','$product_description','$product_weight','$product_weight_type','$product_qty','$product_price','$offer_price','$product_img','$upload_format','$product_status','$store_SKU','$product_added_date','$product_updated_date')";
+
+        $R=mysqli_query($CN,$sql) or die("database error:". mysqli_error($CN));
+        if($R)
+        {
+            http_response_code(204);
+        }
+        else{
+            http_response_code(422);
         }
     }
-    else{
-        http_response_code(422);
-    }
-    
 ?>

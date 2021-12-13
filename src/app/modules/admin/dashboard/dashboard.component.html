@@ -57,12 +57,13 @@
                         class="fuse-mat-button-rounded bg-accent-700"
                         mat-flat-button
                         [color]="'accent'"
+                        [routerLink]="['/dashboard']"
                     >
                         <mat-icon
                             class="icon-size-5"
-                            [svgIcon]="'heroicons_solid:mail'"
+                            [svgIcon]="'heroicons_solid:home'"
                         ></mat-icon>
-                        <span class="ml-2">Messages</span>
+                        <span class="ml-2">Home</span>
                     </button>
                     <button
                         class="fuse-mat-button-rounded"
@@ -192,9 +193,7 @@
                                         </button>
                                         <mat-menu #summaryMenu="matMenu">
                                             <button
-                                                [routerLink]="[
-                                                    '/store/create-shop'
-                                                ]"
+                                                [routerLink]="['/create-shop']"
                                                 mat-menu-item
                                             >
                                                 Create Shop
@@ -457,7 +456,7 @@
                                         <mat-menu #summaryMenu="matMenu">
                                             <button
                                                 [routerLink]="[
-                                                    '/payment/payment-gateway'
+                                                    '/payment-gateway'
                                                 ]"
                                                 mat-menu-item
                                             >
@@ -642,99 +641,7 @@
                         ></div>
                     </ng-template>
                 </mat-tab>
-
-                <!-- Communication -->
-                <mat-tab label="Communication">
-                    <ng-template matTabContent>
-                        <form
-                            class="flex flex-col w-full"
-                            [formGroup]="messageForm"
-                            autocomplete="off"
-                        >
-                            <div class="flex flex-col sm:flex-row">
-                                <div class="flex flex-auto flex-wrap">
-                                    <!-- <div
-                                        class="
-                                            flex flex-col
-                                            w-full
-                                            lg:w-1/4
-                                            sm:pl-8
-                                        "
-                                    >
-                                        <span>Enter Message for Store </span>
-                                    </div> -->
-                                    <!-- Name,  -->
-                                    <div
-                                        class="
-                                            flex flex-col
-                                            w-full
-                                            lg:w-2/4
-                                            sm:pl-8
-                                        "
-                                    >
-                                        <!-- Name -->
-                                        <mat-form-field class="w-full">
-                                            <mat-label
-                                                >Enter Message for
-                                                Store</mat-label
-                                            >
-                                            <input
-                                                matInput
-                                                [formControlName]="'str_msg'"
-                                            />
-                                        </mat-form-field>
-                                    </div>
-                                    <!-- Button -->
-                                    <div class="flex flex-col lg:w-1/4 sm:pl-8">
-                                        <div
-                                            class="flex items-center mr-4"
-                                            *ngIf="flashMessage"
-                                        >
-                                            <ng-container
-                                                *ngIf="
-                                                    flashMessage === 'success'
-                                                "
-                                            >
-                                                <mat-icon
-                                                    class="text-green-500"
-                                                    [svgIcon]="
-                                                        'heroicons_outline:check'
-                                                    "
-                                                ></mat-icon>
-                                                <span class="ml-2"
-                                                    >Product updated</span
-                                                >
-                                            </ng-container>
-                                            <ng-container
-                                                *ngIf="flashMessage === 'error'"
-                                            >
-                                                <mat-icon
-                                                    class="text-red-500"
-                                                    [svgIcon]="
-                                                        'heroicons_outline:x'
-                                                    "
-                                                ></mat-icon>
-                                                <span class="ml-2"
-                                                    >An error occurred, try
-                                                    again!</span
-                                                >
-                                            </ng-container>
-                                        </div>
-
-                                        <button
-                                            class="lg:mt-6"
-                                            mat-flat-button
-                                            [color]="'primary'"
-                                            (click)="onMessageUpdate()"
-                                        >
-                                            Update
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </ng-template>
-                </mat-tab>
+                <!--General Setting-->
                 <mat-tab label="General Settings">
                     <ng-template matTabContent>
                         <div
@@ -966,6 +873,86 @@
                                 </div>
                             </div>
                         </div>
+                    </ng-template>
+                </mat-tab>
+                <!-- Communication -->
+                <mat-tab label="Communication">
+                    <ng-template matTabContent>
+                        <!-- <form
+                            class="flex flex-col w-full"
+                            [formGroup]="messageForm"
+                            autocomplete="off"
+                        >
+                            <div class="flex flex-col sm:flex-row">
+                                <div class="flex flex-auto flex-wrap">
+                                   
+                                    <div
+                                        class="
+                                            flex flex-col
+                                            w-full
+                                            lg:w-2/4
+                                            sm:pl-8
+                                        "
+                                    >
+                                        <mat-form-field class="w-full">
+                                            <mat-label
+                                                >Enter Message for
+                                                Store</mat-label
+                                            >
+                                            <input
+                                                matInput
+                                                [formControlName]="'str_msg'"
+                                            />
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="flex flex-col lg:w-1/4 sm:pl-8">
+                                        <div
+                                            class="flex items-center mr-4"
+                                            *ngIf="flashMessage"
+                                        >
+                                            <ng-container
+                                                *ngIf="
+                                                    flashMessage === 'success'
+                                                "
+                                            >
+                                                <mat-icon
+                                                    class="text-green-500"
+                                                    [svgIcon]="
+                                                        'heroicons_outline:check'
+                                                    "
+                                                ></mat-icon>
+                                                <span class="ml-2"
+                                                    >Product updated</span
+                                                >
+                                            </ng-container>
+                                            <ng-container
+                                                *ngIf="flashMessage === 'error'"
+                                            >
+                                                <mat-icon
+                                                    class="text-red-500"
+                                                    [svgIcon]="
+                                                        'heroicons_outline:x'
+                                                    "
+                                                ></mat-icon>
+                                                <span class="ml-2"
+                                                    >An error occurred, try
+                                                    again!</span
+                                                >
+                                            </ng-container>
+                                        </div>
+
+                                        <button
+                                            class="lg:mt-6"
+                                            mat-flat-button
+                                            [color]="'primary'"
+                                            (click)="onMessageUpdate()"
+                                        >
+                                            Update
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form> -->
                     </ng-template>
                 </mat-tab>
             </mat-tab-group>
@@ -1521,6 +1508,19 @@
                                     [autocomplete]="'off'"
                                     [placeholder]="'Search products'"
                                 />
+                                <button
+                                    mat-button
+                                    mat-icon-button
+                                    matSuffix
+                                    (click)="clearSearchField()"
+                                    *ngIf="searchText"
+                                >
+                                    <mat-icon
+                                        svgIcon="close"
+                                        [inline]="true"
+                                        color="danger"
+                                    ></mat-icon>
+                                </button>
                             </mat-form-field>
                             <!-- Add product button -->
 
@@ -1591,12 +1591,12 @@
                                     matSortDisableClear
                                 >
                                     <div></div>
-                                    <div
+                                    <!-- <div
                                         class="hidden md:block"
                                         [mat-sort-header]="'sku'"
                                     >
-                                        SKU
-                                    </div>
+                                        Category
+                                    </div> -->
                                     <div [mat-sort-header]="'name'">Name</div>
                                     <div
                                         class="hidden sm:block"
@@ -1652,18 +1652,43 @@
                                                     overflow-hidden
                                                     border
                                                 "
+                                                *ngIf="product.product_img"
                                             >
                                                 <img
                                                     class="w-8"
-                                                    *ngIf="product.product_img"
-                                                    [alt]="
-                                                        'Product thumbnail image'
+                                                    *ngIf="
+                                                        product.upload_format ==
+                                                        1
                                                     "
                                                     [src]="
                                                         imagePath +
                                                         product.product_img
                                                     "
                                                 />
+                                                <img
+                                                    class="w-8"
+                                                    *ngIf="
+                                                        product.upload_format ==
+                                                        0
+                                                    "
+                                                    [src]="product.product_img"
+                                                />
+                                            </div>
+                                            <div
+                                                class="
+                                                    relative
+                                                    flex flex-0
+                                                    items-center
+                                                    justify-center
+                                                    w-12
+                                                    h-12
+                                                    mr-6
+                                                    rounded
+                                                    overflow-hidden
+                                                    border
+                                                "
+                                                *ngIf="!product.product_img"
+                                            >
                                                 <div
                                                     class="
                                                         flex
@@ -1677,7 +1702,6 @@
                                                         text-center
                                                         uppercase
                                                     "
-                                                    *ngIf="!product.product_img"
                                                 >
                                                     NO THUMB
                                                 </div>
@@ -1685,12 +1709,11 @@
                                         </div>
 
                                         <!-- SKU -->
-                                        <div class="hidden md:block truncate">
+                                        <!-- <div class="hidden md:block truncate">
                                             {{ product.category }}
-                                        </div>
-
+                                        </div> -->
                                         <!-- Name -->
-                                        <div class="truncate">
+                                        <div>
                                             {{ product.product_name }}
                                         </div>
 
@@ -1970,55 +1993,35 @@
                                                                 "
                                                             >
                                                                 <img
-                                                                    class="
-                                                                        w-full
-                                                                        h-full
-                                                                        object-cover
+                                                                    *ngIf="
+                                                                        product.upload_format ==
+                                                                        1
                                                                     "
                                                                     [src]="
                                                                         imagePath +
                                                                         product.product_img
                                                                     "
-                                                                    style="
-                                                                        object-fit: contain;
+                                                                />
+                                                                <img
+                                                                    *ngIf="
+                                                                        product.upload_format ==
+                                                                        0
+                                                                    "
+                                                                    [src]="
+                                                                        product.product_img
                                                                     "
                                                                 />
-                                                                <!-- <div
-                                                                    class="
-                                                                        image-upload
+                                                                &nbsp;
+                                                                <input
+                                                                    type="file"
+                                                                    accept=".png, .jpg, .jpeg"
+                                                                    name="product_image"
+                                                                    (change)="
+                                                                        onFileUpload(
+                                                                            $event
+                                                                        )
                                                                     "
-                                                                >
-                                                                    <label
-                                                                        for="file-input"
-                                                                    >
-                                                                        <img
-                                                                            class="
-                                                                                w-full
-                                                                                h-full
-                                                                                object-cover
-                                                                            "
-                                                                            [src]="
-                                                                                imagePath +
-                                                                                product.product_img
-                                                                            "
-                                                                            style="
-                                                                                object-fit: contain;
-                                                                            "
-                                                                        />
-                                                                    </label>
-                                                                    <input
-                                                                        type="file"
-                                                                        id="file-input"
-                                                                        accept=".png, .jpg, .jpeg"
-                                                                        name="product_image"
-                                                                        #fileInput
-                                                                        (change)="
-                                                                            onFileUpload(
-                                                                                $event
-                                                                            )
-                                                                        "
-                                                                    />
-                                                                </div> -->
+                                                                />
                                                             </ng-container>
                                                             <ng-template
                                                                 #noImage
@@ -2734,9 +2737,7 @@
                                         ></div>
                                         <div
                                             class="ml-1.5 text-lg font-semibold"
-                                        >
-                                            
-                                        </div>
+                                        ></div>
                                     </div>
                                 </div>
                             </div>
@@ -2829,9 +2830,7 @@
                                         ></div>
                                         <div
                                             class="ml-1.5 text-lg font-semibold"
-                                        >
-                                            
-                                        </div>
+                                        ></div>
                                     </div>
                                 </div>
                             </div>
@@ -3012,7 +3011,20 @@
                                     <div class="flex-auto mt-px border-t"></div>
                                 </div>
                                 <br />
-                                <p><b>Vacation Mode</b></p>
+                                <p *ngIf="shopData.vacation_mode == 0">
+                                    <b>Vacation Mode</b>
+                                    <br />
+                                    <span style="color: red">Note:</span>
+                                    Enabling this option will stop customers
+                                    from placing orders from your online store.
+                                </p>
+                                <p *ngIf="shopData.vacation_mode == 1">
+                                    <b>Vacation Mode</b>
+                                    <br />
+                                    <span style="color: red">Note:</span>
+                                    Disabling this option will make customers to
+                                    place orders from your online store.
+                                </p>
                                 <form
                                     class="example-form"
                                     [formGroup]="vacationForm"
@@ -3079,7 +3091,7 @@
                                                 >
                                             </div>
                                             &nbsp; &nbsp;
-                                            <!-- Add product button -->
+                                            <!-- Vacation button -->
                                             <div class="flex items-center">
                                                 <div
                                                     class="
@@ -3140,60 +3152,94 @@
                                         </div>
                                     </div>
                                 </form>
-                                <!-- <form
+                                <!-- <div class="flex items-center mt-4">
+                                    <div class="flex-auto mt-px border-t"></div>
+                                </div> -->
+                                <br />
+                                <br />
+                                <p *ngIf="shopData.hide_0productQty == 0">
+                                    <b>Product Stock Setting</b>
+                                    <br />
+                                    <span style="color: red">Note:</span>
+                                    Enabling this option will display the zero
+                                    stock products to customer
+                                </p>
+                                <p *ngIf="shopData.hide_0productQty == 1">
+                                    <b>Product Quantity Setting</b>
+                                    <br />
+                                    <span style="color: red">Note:</span>
+                                    Disabling this option will hide the zero
+                                    stock products from customer
+                                </p>
+                                <form
                                     class="example-form"
-                                    [formGroup]="vacationForm"
-                                    (ngSubmit)="
-                                        onVacationSubmit(vacationForm.value)
-                                    "
+                                    [formGroup]="hideproductQtyForm"
                                     ngNativeValidate
                                 >
-                                    <div class="row">
+                                    <div
+                                        class="
+                                            relative
+                                            flex flex-col
+                                            sm:flex-row
+                                            flex-0
+                                            sm:items-center sm:justify-between
+                                            border-b
+                                        "
+                                    >
+                                        <!-- Actions -->
                                         <div
-                                            class="col-md-3"
-                                            *ngIf="shopData.vacation_mode == 0"
+                                            class="
+                                                flex flex-shrink-0
+                                                items-center
+                                                mt-6
+                                                sm:mt-0 sm:ml-4
+                                            "
                                         >
-                                            <span>
-                                                <strong
-                                                    >Vacation Mode-<span
-                                                        style="color: red"
-                                                        >Off</span
-                                                    ></strong
+                                            <!-- Display Product -->
+                                            <div
+                                                class="
+                                                    flex flex-col
+                                                    w-full
+                                                    lg:w-2/4
+                                                    sm:pl-8
+                                                "
+                                                *ngIf="
+                                                    shopData.hide_0productQty ==
+                                                    0
+                                                "
+                                            >
+                                                <mat-slide-toggle
+                                                    color="primary"
+                                                    formControlName="hide_0productQty"
+                                                    >{{
+                                                        "OFF"
+                                                    }}</mat-slide-toggle
                                                 >
-                                            </span>
-                                        </div>
-                                        <div
-                                            class="col-md-3"
-                                            *ngIf="shopData.vacation_mode == 1"
-                                        >
-                                            <span>
-                                                <strong
-                                                    >Vacation Mode-<span
-                                                        style="color: green"
-                                                        >On</span
-                                                    ></strong
+                                            </div>
+                                            &nbsp; &nbsp;
+                                            <!-- Hide Product -->
+                                            <div
+                                                class="
+                                                    flex flex-col
+                                                    w-full
+                                                    lg:w-3/4
+                                                    sm:pl-8
+                                                "
+                                                *ngIf="
+                                                    shopData.hide_0productQty ==
+                                                    1
+                                                "
+                                            >
+                                                <mat-slide-toggle
+                                                    color="accent"
+                                                    checked
+                                                    >{{
+                                                        " ON"
+                                                    }}</mat-slide-toggle
                                                 >
-                                            </span>
-                                        </div>
-                                        <div
-                                            class="col-md-3"
-                                            *ngIf="shopData.vacation_mode == 1"
-                                        >
-                                            <mat-slide-toggle
-                                                color="accent"
-                                                checked
-                                            ></mat-slide-toggle>
-                                        </div>
-                                        <div
-                                            class="col-md-3"
-                                            *ngIf="shopData.vacation_mode == 0"
-                                        >
-                                            <mat-slide-toggle
-                                                color="primary"
-                                                formControlName="vacation_mode"
-                                            ></mat-slide-toggle>
-                                        </div>
-                                        <div class="col-md-3">
+                                            </div>
+                                            &nbsp; &nbsp;
+                                            <!-- Vacation button -->
                                             <div class="flex items-center">
                                                 <div
                                                     class="
@@ -3218,7 +3264,7 @@
                                                             "
                                                         ></mat-icon>
                                                         <span class="ml-2"
-                                                            >Success</span
+                                                            >Updated</span
                                                         >
                                                     </ng-container>
                                                     <ng-container
@@ -3239,13 +3285,21 @@
                                                         >
                                                     </ng-container>
                                                 </div>
-                                                <button class="btn btn-success">
-                                                    Save
+                                                <button
+                                                    mat-flat-button
+                                                    [color]="'primary'"
+                                                    (click)="
+                                                        hideproductQtyFormSubmit(
+                                                            hideproductQtyForm.value
+                                                        )
+                                                    "
+                                                >
+                                                    Update
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
-                                </form> -->
+                                </form>
                             </div>
                         </div>
                     </ng-template>

@@ -6,9 +6,17 @@ import { Observable } from 'rxjs';
     providedIn: 'root',
 })
 export class ProductInfoService {
-    constructor(private http: HttpClient) {}
+    constructor(private _httpClient: HttpClient) {}
 
     getTempStrProducts(shopId: string): Observable<any> {
-        return this.http.get('/api/getTempStrProducts.php?shopId=' + shopId);
+        return this._httpClient.get(
+            '/api/getTempStrProducts.php?shopId=' + shopId
+        );
+    }
+
+    getProductsByStr(shopId): Observable<any> {
+        return this._httpClient.get(
+            '/api/products/getStoreProducts.php?shopId=' + shopId
+        );
     }
 }

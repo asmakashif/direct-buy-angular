@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
     FormGroup,
@@ -11,6 +11,10 @@ import {
 // import * as Handsontable from 'handsontable';
 import { ProductConfigService } from 'app/modules/admin/product/product-config/product-config.service';
 import { MatStepper } from '@angular/material/stepper';
+import { InventoryProduct } from 'app/Model/inventory.types';
+import { DashboardService } from '../../dashboard/dashboard.service';
+import { HttpClient } from '@angular/common/http';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
 
 declare var $: any;
 
@@ -18,8 +22,29 @@ declare var $: any;
     selector: 'app-product-config',
     templateUrl: './product-config.component.html',
     styleUrls: ['./product-config.component.scss'],
+    styles: [
+        /* language=SCSS */
+        `
+            .inventory-grid {
+                grid-template-columns: 48px auto 40px;
+
+                @screen sm {
+                    grid-template-columns: 48px auto 112px 72px;
+                }
+
+                @screen md {
+                    grid-template-columns: 48px 112px auto 112px 72px;
+                }
+
+                @screen lg {
+                    grid-template-columns: 48px 112px auto 112px 96px 96px 72px;
+                }
+            }
+        `,
+    ],
 })
 export class ProductConfigComponent implements OnInit {
+    imagePath: string = '/api/products/uploads/';
     @ViewChild('stepper') stepper: MatStepper;
     shopType: any;
     isLinear = true;
@@ -28,6 +53,7 @@ export class ProductConfigComponent implements OnInit {
     subCategoryGroup: FormGroup;
     brandGroup: FormGroup;
     productGroup: FormGroup;
+    viewProductGroup: FormGroup;
     completeGroup: FormGroup;
 
     shopId: any;
@@ -42,25 +68,35 @@ export class ProductConfigComponent implements OnInit {
     category: any;
     subCategory: any;
     brands: any;
+    dataFilteredGroup: FormGroup;
+
+    products: any;
+    selectedProduct: InventoryProduct;
+    selectedProductForm: any;
+    editCache: { [key: string]: any } = {};
+    flashMessage: string;
+    isLoading: boolean = false;
+    searchText;
 
     constructor(
+        private _fuseConfirmationService: FuseConfirmationService,
         private apiService: ProductConfigService,
+        private _dashboardService: DashboardService,
         private _router: Router,
         private routes: ActivatedRoute,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private cd: ChangeDetectorRef,
+        private _httpClient: HttpClient
     ) {}
 
     ngOnInit(): void {
         const routeParams = this.routes.snapshot.params;
+        const user_id = localStorage.getItem('user_id');
         this.apiService.getStoreTypes().subscribe((shopType) => {
             // Store the data
             this.shopType = shopType;
             console.log(this.shopType);
         });
-
-        // this.apiService.getBaseProducts().subscribe((dataset) => {
-        //     this.dataset = dataset;
-        // });
 
         this.shopTypeGroup = this.fb.group({
             shopType: this.fb.array([], [Validators.required]),
@@ -78,8 +114,40 @@ export class ProductConfigComponent implements OnInit {
             brand: this.fb.array([], [Validators.required]),
         });
 
+        this.dataFilteredGroup = this.fb.group({
+            user_id: [user_id],
+            shopId: [routeParams.shopId],
+            base_product_id: this.fb.array([], [Validators.required]),
+        });
+
+        // Create the selected product form
+        this.selectedProductForm = this.fb.group({
+            temp_str_config_id: [''],
+            category: [''],
+            sub_category: [''],
+            brand: [''],
+            product_name: [''],
+            product_type: [''],
+            product_sub_type: [''],
+            product_weight: [''],
+            product_weight_type: [''],
+            product_qty: [''],
+            product_price: [''],
+            offer_price: [''],
+            product_image: [''],
+            product_status: this.fb.array([], [Validators.required]),
+        });
+
+        this._dashboardService
+            .getProductsByStr(routeParams.shopId)
+            .subscribe((products) => {
+                this.products = products;
+                this.cd.detectChanges();
+                console.log(this.products);
+            });
+
         if (this.isMobile()) {
-            alert('mobile');
+            //alert('mobile');
             this._router.navigate([
                 '/mobile/product-config/' + routeParams.shopId,
             ]);
@@ -259,7 +327,7 @@ export class ProductConfigComponent implements OnInit {
             .getProductsByBrand(this.brandGroup.value)
             .subscribe((products) => {
                 this.dataset = products;
-                console.log(this.dataset);
+                console.log(this.dataset.base_product_id);
                 this.shop_type = JSON.parse(localStorage.getItem('dshop_type'));
                 this.category = JSON.parse(localStorage.getItem('dcategory'));
                 this.subCategory = JSON.parse(
@@ -269,217 +337,202 @@ export class ProductConfigComponent implements OnInit {
             });
     }
 
-    onComplete() {
-        //more code
-        const routeParams = this.routes.snapshot.params;
+    onCheckboxChange(e) {
+        const base_product_id: FormArray = this.dataFilteredGroup.get(
+            'base_product_id'
+        ) as FormArray;
 
+        if (e.target.checked) {
+            base_product_id.push(new FormControl(e.target.value));
+        } else {
+            const index = base_product_id.controls.findIndex(
+                (x) => x.value === e.target.value
+            );
+            base_product_id.removeAt(index);
+        }
+    }
+
+    selectAllProducts(e) {
+        const checked = e.target.checked;
+        this.dataset.forEach((item) => (item.selected = checked));
+
+        const base_product_id: FormArray = this.dataFilteredGroup.get(
+            'base_product_id'
+        ) as FormArray;
+
+        if (e.target.checked) {
+            this.dataset.forEach((row) => {
+                //console.log(row.shop_type_name);
+                base_product_id.push(new FormControl(row.base_product_id));
+            });
+        }
+    }
+
+    onDataFilterSubmit() {
+        console.log(this.dataFilteredGroup.value);
+        //more code
         this.apiService
-            .updateProductStatus(routeParams.shopId)
-            .subscribe((data) => {
-                // this.router.navigate(['/product-config/' + shopId]);
-                this._router.navigate(['/steps/' + routeParams.shopId]);
+            .saveFilteredData(this.dataFilteredGroup.value)
+            .subscribe((data) => {});
+    }
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Public methods
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Toggle product details
+     *
+     * @param productId
+     */
+
+    editDetails(productId: string): void {
+        // If the product is already selected...
+        this.editCache[productId] = true;
+
+        // Get the product by id
+        this._dashboardService
+            .getProductById(productId)
+            .subscribe((product) => {
+                // Set the selected product
+                this.selectedProduct = product;
+                // Fill the form
+                this.selectedProductForm.patchValue(product);
+
+                // Mark for check
+                this.cd.markForCheck();
             });
     }
 
-    // viewProduct() {
-    //     alert('hi');
-    //     const routeParams = this.routes.snapshot.params;
-    //     this.apiService
-    //         .getTempStrProducts(routeParams.shopId)
-    //         .subscribe((productSet) => {
-    //             this.productSet = productSet;
-    //             console.log(this.productSet);
-    //         });
-    // }
+    cancelDetails(productId: string): void {
+        // If the product is already selected...
+        this.editCache[productId] = false;
+    }
 
-    // checkAll() {
-    //     var rows = this.countRows();
-    //     for(var i = 0; i < rows; i++){
-    //         this.setDataAtCell(i, 0, true);
-    //     }
-    // }
+    clearSearchField() {
+        this.searchText = '';
+    }
 
-    // cells = function (row, col) {
-    //     if (col === 0 && !this.getDataAtCell(row, col)) {
-    //         this.setCellMeta(row, col, 'className', 'bad');
-    //         console.log(row);
-    //     }
-    // };
+    /**
+     * Show flash message
+     */
+    showFlashMessage(type: 'success' | 'error'): void {
+        // Show the message
+        this.flashMessage = type;
 
-    hotSettings = {
-        afterChange: function (changes, src) {
-            if (changes) {
-                const user_id = localStorage.getItem('user_id');
-                var URL = window.location.href;
-                var arr = URL.split('/');
-                //console.log(arr);
-                var rowThatHasBeenChanged = changes[0][0];
-                var sourceRow = this.getSourceDataAtRow(rowThatHasBeenChanged),
-                    visualRow = this.getDataAtRow(rowThatHasBeenChanged);
+        // Mark for check
+        this.cd.markForCheck();
 
-                var row = this.getSelectedLast()[0];
-                console.log(row);
-                console.log(visualRow);
+        // Hide it after 3 seconds
+        setTimeout(() => {
+            this.flashMessage = null;
 
-                $(document).ready(function () {
-                    $('#save_value').click(function () {
-                        var select = visualRow[0];
-                        var storeId = arr[5];
-                        var base_product_id = visualRow[1];
-                        var shop_type = visualRow[2];
-                        var category = visualRow[3];
-                        var sub_category = visualRow[4];
-                        var brand = visualRow[5];
-                        var product_name = visualRow[6];
-                        var product_type = visualRow[7];
-                        var product_sub_type = visualRow[8];
-                        var product_description = visualRow[9];
-                        console.log(product_description);
-                        var product_weight = visualRow[10];
-                        var product_weight_type = visualRow[11];
-                        var product_qty = visualRow[12];
-                        var product_price = visualRow[13];
-                        var offer_price = visualRow[14];
-                        var product_img = visualRow[15];
-                        console.log(product_img);
+            // Mark for check
+            this.cd.markForCheck();
+        }, 3000);
+    }
 
-                        $.ajax({
-                            url:
-                                '/api/checkBaseProductInTemp.php/' +
-                                storeId +
-                                '',
-                            method: 'POST',
-                            data: { storeId: storeId },
-                            success: function (data) {
-                                $.ajax({
-                                    url: '/api/saveBaseProductsToTemp.php',
-                                    method: 'POST',
-                                    data: {
-                                        user_id: user_id,
-                                        storeId: storeId,
-                                        base_product_id: base_product_id,
-                                        shop_type: shop_type,
-                                        category: category,
-                                        sub_category: sub_category,
-                                        brand: brand,
-                                        product_name: product_name,
-                                        product_type: product_type,
-                                        product_sub_type: product_sub_type,
-                                        product_description:
-                                            product_description,
-                                        product_weight: product_weight,
-                                        product_weight_type:
-                                            product_weight_type,
-                                        product_qty: product_qty,
-                                        product_price: product_price,
-                                        offer_price: offer_price,
-                                        product_img: product_img,
-                                    },
-                                    success: function (data) {
-                                        console.log(data);
-                                    },
-                                });
-                            },
-                        });
+    onFileUpload(event) {
+        // this.selectedFile = event.target.files[0];
+        const productId =
+            this.selectedProductForm.get('temp_str_config_id').value;
+        //console.log(productId);
+        const file = event.target.files[0];
+        console.log(file);
+        this.selectedProductForm.get('product_image').setValue(file);
+        const formData = new FormData();
+        formData.append(
+            'temp_str_config_id',
+            this.selectedProductForm.get('temp_str_config_id').value
+        );
+        formData.append(
+            'myFile',
+            this.selectedProductForm.get('product_image').value
+        );
+        this._httpClient
+            .post<any>('/api/products/upload.php', formData)
+            .subscribe(() => {
+                this.ngOnInit();
+                this.editDetails(productId);
+                //this.cd.detectChanges();
+            });
+    }
+
+    productStatus(e) {
+        //alert(e.target.value);
+        const product_status: FormArray = this.selectedProductForm.get(
+            'product_status'
+        ) as FormArray;
+
+        if (e.target.checked) {
+            product_status.push(new FormControl(e.target.value));
+            // this.ngOnInit();
+        } else {
+            const index = product_status.controls.findIndex(
+                (x) => x.value === e.target.value
+            );
+            product_status.removeAt(index);
+        }
+    }
+    /**
+     * Update the selected product using the form data
+     */
+    updateSelectedProduct(): void {
+        // Get the product object
+        const product = this.selectedProductForm.getRawValue();
+        console.log(product);
+        this._dashboardService.updateProduct(product).subscribe(() => {
+            // Show a success message
+            this.showFlashMessage('success');
+            //this.ngOnInit();
+            //this.editDetails(product.productId);
+            this.cd.markForCheck();
+        });
+    }
+
+    /**
+     * Delete the selected product using the form data
+     */
+    deleteSelectedProduct(): void {
+        // Open the confirmation dialog
+        const confirmation = this._fuseConfirmationService.open({
+            title: 'Delete product',
+            message:
+                'Are you sure you want to remove this product? This action cannot be undone!',
+            actions: {
+                confirm: {
+                    label: 'Delete',
+                },
+            },
+        });
+
+        // Subscribe to the confirmation dialog closed action
+        confirmation.afterClosed().subscribe((result) => {
+            // If the confirm button pressed...
+            if (result === 'confirmed') {
+                // Get the product object
+                const product = this.selectedProductForm.getRawValue();
+                // Delete the product on the server
+                this._dashboardService
+                    .deleteProduct(product.temp_str_config_id)
+                    .subscribe(() => {
+                        // Close the details
+                        this.closeDetails(product.temp_str_config_id);
                     });
-                    // $('#save_value').click(function () {
-                    //     var id = visualRow[1];
-                    //     //alert(id);
-                    //     var storeId = arr[5];
-                    //     //alert(storeId);
-                    //     if (id != '') {
-                    //         $.ajax({
-                    //             url: '/api/fetchBaseProductsById.php',
-                    //             method: 'POST',
-                    //             data: { id: id },
-                    //             success: function (data) {
-                    //                 //console.log(data);
-                    //                 var obj = JSON.parse(data);
-                    //                 // console.log(obj);
-                    //                 var base_product_id = obj.base_product_id;
-                    //                 var shop_type = obj.shop_type;
-                    //                 var category = obj.category;
-                    //                 var sub_category = obj.sub_category;
-                    //                 var brand = obj.brand;
-                    //                 var product_name = obj.product_name;
-                    //                 var product_type = obj.product_type;
-                    //                 var product_sub_type = obj.product_sub_type;
-                    //                 // var product_description = obj.product_description;
-                    //                 // console.log(product_description);
-                    //                 var product_weight = obj.product_weight;
-                    //                 var product_weight_type = obj.product_weight_type;
-                    //                 var product_qty = obj.product_qty;
-                    //                 var product_price = obj.product_price;
-                    //                 var offer_price = obj.offer_price;
-                    //                 // var product_img = obj.product_img;
-                    //                 // console.log(product_img);
-
-                    //                 $.ajax({
-                    //                     url:
-                    //                         '/api/checkBaseProductInTemp.php/' +
-                    //                         storeId +
-                    //                         '',
-                    //                     method: 'POST',
-                    //                     data: { storeId: storeId },
-                    //                     success: function (data) {
-                    //                         $.ajax({
-                    //                             url: '/api/saveBaseProductsToTemp.php',
-                    //                             method: 'POST',
-                    //                             data: {
-                    //                                 user_id: user_id,
-                    //                                 storeId: storeId,
-                    //                                 base_product_id: base_product_id,
-                    //                                 shop_type: shop_type,
-                    //                                 category: category,
-                    //                                 sub_category: sub_category,
-                    //                                 brand: brand,
-                    //                                 product_name: product_name,
-                    //                                 product_type: product_type,
-                    //                                 product_sub_type: product_sub_type,
-                    //                                 // product_description:
-                    //                                 //     product_description,
-                    //                                 product_weight: product_weight,
-                    //                                 product_weight_type:
-                    //                                     product_weight_type,
-                    //                                 product_qty: product_qty,
-                    //                                 product_price: product_price,
-                    //                                 offer_price: offer_price,
-                    //                                 // product_img: product_img,
-                    //                             },
-                    //                             success: function (data) {
-                    //                                 console.log(data);
-
-                    //                                 // $.ajax({
-                    //                                 //     url: '/api/countInsertedRow.php',
-                    //                                 //     type: 'POST',
-                    //                                 //     data: { storeId: storeId },
-                    //                                 //     success: function (data) {
-                    //                                 //         var res = JSON.parse(data);
-
-                    //                                 //         console.log(res);
-                    //                                 //         if (res == row) {
-                    //                                 //             var su = 'success';
-                    //                                 //             console.log('su');
-                    //                                 //             if (su) {
-                    //                                 //                 window.location.href =
-                    //                                 //                     'http://localhost:4200/product-info/' +
-                    //                                 //                     storeId;
-                    //                                 //             }
-                    //                                 //         }
-                    //                                 //     },
-                    //                                 // });
-                    //                             },
-                    //                         });
-                    //                     },
-                    //                 });
-                    //             },
-                    //         });
-                    //     }
-                    // });
-                });
             }
-        },
-    };
+        });
+    }
+
+    /**
+     * Close the details
+     */
+    closeDetails(productId: string): void {
+        // If the product is already selected...
+        this.editCache[productId] = false;
+        // Detect changes
+        this.ngOnInit();
+        this.cd.detectChanges();
+    }
 
     move(index: number) {
         this.stepper.selectedIndex = index;
@@ -487,133 +540,26 @@ export class ProductConfigComponent implements OnInit {
 
     done() {
         const routeParams = this.routes.snapshot.params;
-        var storeId = routeParams.shopId;
-        console.log(storeId);
-        $(document).ready(function () {
-            $('#complete').click(function () {
-                var base_url = window.location.origin;
-                window.location.href = base_url + '/steps/' + storeId;
-            });
+        // Open the confirmation dialog
+        const confirmation = this._fuseConfirmationService.open({
+            title: 'Proceed Next Step',
+            message:
+                'By Clicking next you will be moved out of this page.Are you sure you want to move out of this step? This action cannot be undone!',
+            actions: {
+                confirm: {
+                    label: 'Okay',
+                },
+            },
+        });
+
+        // Subscribe to the confirmation dialog closed action
+        confirmation.afterClosed().subscribe((result) => {
+            // If the confirm button pressed...
+            if (result === 'confirmed') {
+                this._router.navigate(['/store-payment/' + routeParams.shopId]);
+            }
         });
     }
-
-    beforeChange = function (changes: any[]) {
-        var storeId = localStorage.getItem('shopId');
-        console.log(storeId);
-        var rowThatHasBeenChanged = changes[0][0];
-        var sourceRow = this.getSourceDataAtRow(rowThatHasBeenChanged),
-            visualRow = this.getDataAtRow(rowThatHasBeenChanged);
-        console.log(sourceRow);
-        console.log(visualRow);
-        var id = visualRow[0];
-        console.log(id);
-        var category = visualRow[1];
-        var sub_category = visualRow[2];
-        var brand = visualRow[3];
-        var product_name = visualRow[4];
-        var product_type = visualRow[5];
-        var product_sub_type = visualRow[6];
-        var product_weight = visualRow[7];
-        var product_weight_type = visualRow[8];
-        var product_qty = visualRow[9];
-        var product_price = visualRow[10];
-        var offer_price = visualRow[11];
-        $(document).ready(function () {
-            $.ajax({
-                url: '/api/updateTempStrProduct.php',
-                method: 'POST',
-                data: {
-                    id: id,
-                    category: category,
-                    sub_category: sub_category,
-                    brand: brand,
-                    product_name: product_name,
-                    product_type: product_type,
-                    product_sub_type: product_sub_type,
-                    product_weight: product_weight,
-                    product_weight_type: product_weight_type,
-                    product_qty: product_qty,
-                    product_price: product_price,
-                    offer_price: offer_price,
-                },
-                success: function (data) {
-                    console.log(data);
-                },
-            });
-        });
-    };
-
-    colHeaders = [
-        'Select',
-        'Id',
-        'Shop Type',
-        'Category',
-        'Sub-Category',
-        'Brand',
-        'Product Name',
-        'Product Type',
-        'Product Sub-Type',
-        'Product Description',
-        'Product Weight',
-        'Product Weight-Type',
-        'Product Qty',
-        'Product Price',
-        'Offer Price',
-        'Product Img',
-    ];
-    hiddenColumns = {
-        columns: [1, 2, 3, 4, 5, 8, 9, 11, 12, 13, 15],
-        indicators: false,
-    };
-    licenseKey = 'non-commercial-and-evaluation';
-
-    // configColumnHeaders = [
-    //     [
-    //         'Select',
-    //         'Id',
-    //         'Shop Type',
-    //         'Category',
-    //         'Sub-Category',
-    //         'Brand',
-    //         'Product Name',
-    //         'Product Type',
-    //         'Product Sub-Type',
-    //         'Product Weight',
-    //         'Product Weight-Type',
-    //         'Product Qty',
-    //         'Product Price',
-    //         'Offer Price',
-    //     ],
-    // ];
-    // columnHeaders = [
-    //     [
-    //         'Id',
-    //         'Category',
-    //         'Sub-Category',
-    //         'Brand',
-    //         'Product Name',
-    //         'Product Type',
-    //         'Product Sub-Type',
-    //         'Product Weight',
-    //         'Product Weight-Type',
-    //         'Product Qty',
-    //         'Product Price',
-    //         'Offer Price',
-    //     ],
-    // ];
-    // collapsibleColumnsConfig = [
-    //     {
-    //         row: -2,
-    //         col: 0,
-    //         collapsible: true,
-    //     },
-    //     {
-    //         row: -2,
-    //         col: 6,
-    //         collapsible: true,
-    //     },
-    // ];
-    // licenseKey = 'non-commercial-and-evaluation';
 
     isMobile() {
         let check = false;

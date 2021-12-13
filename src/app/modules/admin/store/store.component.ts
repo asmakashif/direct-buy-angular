@@ -39,17 +39,21 @@ export class StoreComponent implements OnInit {
     }
 
     completedOrders(shops): void {
-        this._router.navigate(['/orders/completed-orders/' + shops.shopId]);
+        this._router.navigate(['/completed-orders/' + shops.shopId]);
     }
 
     pendingOrders(shops): void {
-        this._router.navigate(['/orders/pending-orders/' + shops.shopId]);
+        this._router.navigate(['/pending-orders/' + shops.shopId]);
     }
 
     createShop(): void {
         const store = 'store';
         localStorage.setItem('store', store);
-        this._router.navigate(['/store/create-shop/']);
+        this._router.navigate(['/create-shop/']);
+    }
+
+    steps(data: Data): void {
+        this._router.navigate(['/steps/' + data.shopId]);
     }
 
     isMobile() {

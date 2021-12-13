@@ -55,39 +55,29 @@ export class PaymentGatewayComponent implements OnInit {
 
     onSubmit() {
         const routeParams = this.routes.snapshot.params;
-        console.log(this.paymentGatewayForm.value);
+        //console.log(routeParams.shopId);
+        const redirecttostrpayment = localStorage.getItem('strpayment');
         if (this.paymentGatewayForm.invalid) {
             return;
         }
-        if (routeParams.shopId) {
-            this.apiService
-                .savePaymentIntegration(this.paymentGatewayForm.value)
-                .subscribe(
-                    (data) => {
-                        this._router.navigate(['/steps/' + routeParams.shopId]);
-                    },
-                    (response) => {
-                        this.showFlashMessage('error');
-                        this.ngOnInit();
-                        // Reset the form
-                        //this.shopForm.resetForm();
-                    }
-                );
-        } else {
-            this.apiService
-                .savePaymentIntegration(this.paymentGatewayForm.value)
-                .subscribe(
-                    (data) => {
+
+        this.apiService
+            .savePaymentIntegration(this.paymentGatewayForm.value)
+            .subscribe(
+                (data) => {
+                    if (redirecttostrpayment) {
+                        this._router.navigate(['/payment/']);
+                    } else {
                         this._router.navigate(['/dashboard/']);
-                    },
-                    (response) => {
-                        this.showFlashMessage('error');
-                        this.ngOnInit();
-                        // Reset the form
-                        //this.shopForm.resetForm();
                     }
-                );
-        }
+                },
+                (response) => {
+                    this.showFlashMessage('error');
+                    this.ngOnInit();
+                    // Reset the form
+                    //this.shopForm.resetForm();
+                }
+            );
     }
 
     /**
@@ -133,13 +123,25 @@ export class PaymentGatewayComponent implements OnInit {
     }
 
     cancel(): void {
+        const routeParams = this.routes.snapshot.params;
         const redirectto = localStorage.getItem('payment');
-        if (redirectto == 'payment') {
-            this._router.navigate(['/payment']).then(() => {
-                localStorage.removeItem('payment');
-            });
+        const redirecttostrpayment = localStorage.getItem('strpayment');
+        if (routeParams.shopId) {
+            if (redirecttostrpayment == 'strpayment') {
+                this._router
+                    .navigate(['/store-payment/' + routeParams.shopId])
+                    .then(() => {
+                        localStorage.removeItem('strpayment');
+                    });
+            }
         } else {
-            this._router.navigate(['/dashboard']);
+            if (redirectto == 'payment') {
+                this._router.navigate(['/payment']).then(() => {
+                    localStorage.removeItem('payment');
+                });
+            } else {
+                this._router.navigate(['/dashboard']);
+            }
         }
     }
 }
