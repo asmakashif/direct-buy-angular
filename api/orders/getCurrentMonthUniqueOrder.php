@@ -16,7 +16,7 @@
     $uniqueorders = [];
     //$sql = "SELECT COUNT(*) From (Select * From order_items WHERE `shopId` = '{$shopId}' AND MONTH(order_placed_date) = MONTH(CURRENT_DATE) AND order_status = 0 GROUP BY order_items.order_code) As Z";
 
-    $qry = "SELECT * From order_items WHERE `shopId` = '{$shopId}' AND MONTH(order_placed_date) = MONTH(CURRENT_DATE) AND order_status = 0 GROUP BY order_items.order_code";
+    $qry = "SELECT * From order_items as oi JOIN `cust_payment_details` as cpd ON cpd.order_code=oi.order_code WHERE oi.shopId = '{$shopId}' AND MONTH(oi.order_placed_date) = MONTH(CURRENT_DATE) AND oi.order_status = 0 AND cpd.payment_status = 1 GROUP BY oi.order_code";
 
     if($result = mysqli_query($CN,$qry))
     {

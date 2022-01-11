@@ -11,7 +11,7 @@
     $DB=mysqli_select_db($CN,"formal_store");
 
     $brand = [];
-    $sql="SELECT brand FROM `base_products` GROUP BY brand";
+    $sql="SELECT brand FROM `brand` GROUP BY brand";
 
 
     if($result = mysqli_query($CN,$sql))

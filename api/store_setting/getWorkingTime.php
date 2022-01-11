@@ -10,22 +10,18 @@
     $DB=mysqli_select_db($CN,"formal_store");
  
     
-    $header = apache_request_headers();
-    $EncodedData=file_get_contents('php://input');
-    if(isset($EncodedData) && !empty($EncodedData))
-    {
-
-        $DecodedData=json_decode($EncodedData,true);
-        $userId = $DecodedData['userId'];
-        $day = $DecodedData['day'];
+    
+        $userId = $_GET['userId'];
+        
         
     $products = [];
-     
-       
-        $sql="SELECT * FROM user_time_slots WHERE userId='$userId' AND day='$day'";
+   
+    
+    $sql="SELECT * FROM user_time_slots WHERE userId='$userId'";
       
         if($result = mysqli_query($CN,$sql))
         {
+         
           $i = 0;
   
  
@@ -33,8 +29,8 @@
           {
             $products[$i]['id'] = $row['id'];
             $products[$i]['day'] = $row['day'];
-            $products[$i]['from_time']    = $row['from_time'];
-            $products[$i]['to_time']    = $row['to_time'];
+            $products[$i]['from_time'] = $row['from_time'];
+            $products[$i]['to_time'] = $row['to_time'];
             $products[$i]['userId'] = $row['userId'];
             
             $i++;
@@ -50,6 +46,6 @@
             http_response_code(404);
         }
        
-    }
+    
   
 ?>

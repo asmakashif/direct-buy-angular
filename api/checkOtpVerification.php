@@ -27,6 +27,7 @@
         {
             while($row = mysqli_fetch_assoc($res))
             {
+                $user['email'] = $row['email'];
                 $user['otpVerify'] = $row['otpVerify'];
             }
 

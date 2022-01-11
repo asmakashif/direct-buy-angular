@@ -40,26 +40,49 @@
     if(isset($EncodedData) && !empty($EncodedData))
     {
         $DecodedData=json_decode($EncodedData,true);
-
+        // print_r($DecodedData);
         $firstname = $DecodedData['name'];
+        
         $contact = $DecodedData['contact'];
         $domainname= $DecodedData['company'];
+        $fulldomain= $domainname.'.brokeronline.in';
         $email = $DecodedData['email'];
         $password = $DecodedData['password'];
         $encryptedPassword = base64_encode(json_encode($password));
-         
-        $sql="INSERT INTO `tbl_user`(firstname,domainname,contact,email,password) values('$firstname','$domainname','$contact','$email','$encryptedPassword')";
-        $R=mysqli_query($CN,$sql);
+        $verify_email=0;
+        $registered_date = date('Y-m-d');
+        $status=0;
+        $create_reminder=0;
+        $activate_reminder=0;
+        $trail_activate=0;
+        $payment_g_status=0;
+        $remove_user=0;
+        $otpVerify=0;
+        $city=$DecodedData['city'];
+        $state =$DecodedData['state'];
+
+    
+        $sql="INSERT INTO `tbl_user`(firstname,domainname,fulldomain,contact,email,password,verify_email,registered_date,status,create_reminder,activate_reminder,trail_activate,payment_g_status,remove_user,otpVerify,city,state) values('$firstname','$domainname','$fulldomain','$contact','$email','$encryptedPassword','$verify_email','$registered_date','$status','$create_reminder','$activate_reminder','$trail_activate','$payment_g_status','$remove_user','$otpVerify','$city','$state')";
+        $R=mysqli_query($CN,$sql)or die("database error:". mysqli_error($CN));
     
         if($R)
         {
-            $email = $DecodedData['email'];
-            $last_id = $CN->insert_id;
-            include "customers/sendMail.php";
+            // $subDomain = $domainname;
+            // $email = $DecodedData['email'];
+            // $last_id = $CN->insert_id;
+            // //include "databaseCreation/createSubDomain.php";
+            // include "customers/sendMail.php";
             http_response_code(201);
         }
         else{
             http_response_code(422);
+            // $nd=[
+            //     'NotificationContent'=>'Customer Placed an order',
+            //     'NotificationRedirect'=>'https://retailer.direct-buy.in/open-orders/'.$shopId.'/'.'shop_name',//path to be passed inside site_url()
+            //     'Iscomplete'=>0,
+            //     'NotificationStatus'=>0,
+            //     'CreatedDateTime'=>date('Y-m-d')
+            // ];
         }
     }
 ?>

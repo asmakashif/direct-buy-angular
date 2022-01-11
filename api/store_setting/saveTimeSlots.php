@@ -19,15 +19,20 @@
         $from = $DecodedData['from'];
         $to = $DecodedData['to'];
         $userId= $DecodedData['userId'];
-        $id=$DecodedData['id'];
+        
         $day=$DecodedData['day'];
 
-        $sql1="SELECT * FROM user_time_slots WHERE  day='$day' AND homeDelSlotsId='$id'";
-        $result1 = mysqli_query($CN,$sql1);
-        $row = mysqli_fetch_row($result1);
-        if(empty($row))
-        {
-       $sql="insert into  user_time_slots( from_time,to_time,userId,homeDelSlotsId,day) values('$from','$to','$userId','$id','$day')";
+        //$sql1="SELECT * FROM user_time_slots WHERE  day='$day' AND homeDelSlotsId='$id' AND userId='$userId'";
+       // $result1 = mysqli_query($CN,$sql1);
+       // $row = mysqli_fetch_row($result1);
+        
+          $sql="SELECT * FROM user_time_slots WHERE userId='$userId' AND day='$day'";
+          $result = mysqli_query($CN,$sql);
+          $row = mysqli_num_rows($result);
+          if($row<=4)
+          {
+        
+       $sql="insert into  user_time_slots( from_time,to_time,userId,day) values('$from','$to','$userId','$day')";
       
         if($result = mysqli_query($CN,$sql))
         {
@@ -51,6 +56,17 @@
             http_response_code(201);
         }
        
+      }
+      else{
+         
+        echo json_encode(
+          array(
+            "message"=>"You have already filled 5 slots"
+           
+          ));
+     
+          $Message='success';
+          http_response_code(201);
       }
     }
 ?>

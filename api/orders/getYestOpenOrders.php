@@ -16,18 +16,30 @@
     $shopId = $_GET['shopId'];
     $yest=date('Y-m-d',strtotime("-1 days"));
     //$shopId = 'i3s6wp';
-    
-    $sql = "SELECT COUNT(*) From (Select * From order_items WHERE `shopId` = '{$shopId}' AND `order_placed_date` = '{$yest}' AND order_status = 0 GROUP BY order_items.order_code) As Z";
-    
+
+    $sql = "SELECT * From order_items as oi JOIN `cust_payment_details` as cpd ON cpd.order_code=oi.order_code WHERE oi.shopId = '{$shopId}' AND oi.order_placed_date = '{$yest}' AND oi.order_status = 0 AND cpd.payment_status = 1 GROUP BY oi.order_code";
+
     if($result = mysqli_query($CN,$sql))
     {
-        $row = mysqli_fetch_array($result);
-        $total = $row[0];
-        echo json_encode($total);
+        $rowcount = mysqli_num_rows( $result );
+        echo json_encode($rowcount);
     }
     else
     {
         http_response_code(404);
     }
+    
+    // $sql = "SELECT COUNT(*) From (Select * From order_items as oi JOIN `cust_payment_details` as cpd ON cpd.order_code=oi.order_code WHERE oi.shopId = '{$shopId}' AND oi.order_placed_date = '{$yest}' AND oi.order_status = 0 GROUP BY oi.order_code) As Z";
+    
+    // if($result = mysqli_query($CN,$sql))
+    // {
+    //     $row = mysqli_fetch_array($result);
+    //     $total = $row[0];
+    //     echo json_encode($total);
+    // }
+    // else
+    // {
+    //     http_response_code(404);
+    // }
 
 ?>

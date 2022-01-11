@@ -35,105 +35,123 @@
         //die();
         $user_id = $DecodedData['user_id'];
         $provider_type=$DecodedData['provider_type'];
-        $str=$DecodedData['payment_name'];
-        $payment_name = addslashes($str);
+        $payment_name=$DecodedData['payment_name'];
         $payment_api_key=$DecodedData['payment_api_key'];
         $payment_secret_key=$DecodedData['payment_secret_key'];
+        $channel_id='WEB';
+        $industry_type='Retail';
+        $merchant_website='Default';
         $transaction_note=$DecodedData['transaction_note'];
         $merchant_code=$DecodedData['merchant_code'];
         $salt_index=$DecodedData['salt_index'];
+        $mode='PROD';
+        
+        $attachToStr=0;
+        $payment_added_date = date('Y-m-d');
+        $payment_status=0;
         $paytm="assets/icons/paytm.png";
         $gpay="assets/icons/gpay.png";
         $cod = "assets/icons/cod.png";
         $phonepe = "assets/icons/phonepe.png";
         
-        $qry = "SELECT * FROM `payment_integration`as pi WHERE `user_id` = '$user_id' AND `payment_name` = '$payment_name' ";
-        $res=mysqli_query($CN,$qry) or die("database error:". mysqli_error($CN));
-            
 
-        if(mysqli_num_rows($res) > 0)
+        if($provider_type=='GooglePay')
         {
-            echo 0;
-            http_response_code(422);
-        }
-        else
-        {
-            if($provider_type=='GooglePay')
+            $sql="INSERT INTO `payment_integration`(user_id,provider_type,provider_img,payment_name,payment_api_key,payment_secret_key,transaction_note,merchant_code,attachToStr,payment_added_date,payment_status) values('$user_id','$provider_type','$gpay','$payment_name','$payment_api_key','$payment_secret_key','$transaction_note','$merchant_code','$attachToStr','$payment_added_date','$payment_status')";
+        
+            $R=mysqli_query($CN,$sql) or die("database error:". mysqli_error($CN));
+            
+            if($R)
             {
-                $sql="INSERT INTO `payment_integration`(user_id,provider_type,provider_img,payment_name,payment_api_key,payment_secret_key,transaction_note,merchant_code) values('$user_id','$provider_type','$gpay','$payment_name','$payment_api_key','$payment_secret_key','$transaction_note','$merchant_code')";
-            
-                $R=mysqli_query($CN,$sql);
-                
-                if($R)
+                //http_response_code(201);
+                $qry="UPDATE `tbl_user` SET `payment_g_status`=1 WHERE `id`= 5 LIMIT 1  ";
+                if($result=mysqli_query($CN,$qry) or die("database error:". mysqli_error($CN)))
                 {
-                    //http_response_code(201);
-                    $qry="UPDATE `tbl_user` SET `payment_g_status`=1 WHERE `id`= 5 LIMIT 1  ";
-                    if($result=mysqli_query($CN,$qry))
-                    {
-                        http_response_code(201);
-                    }
-                    else
-                    {
-                        http_response_code(422);
-                    }
-                    
+                    http_response_code(201);
                 }
-                else{
+                else
+                {
                     http_response_code(422);
                 }
-            }
-            
-            elseif($provider_type=='Phonepe'){
-                $sql="INSERT INTO `payment_integration`(user_id,provider_type,provider_img,payment_name,payment_api_key,payment_secret_key,salt_index) values('$user_id','$provider_type','$phonepe','$payment_name','$payment_api_key','$payment_secret_key','$salt_index')";
-            
-                $R=mysqli_query($CN,$sql);
                 
-                if($R)
-                {
-                    //http_response_code(201);
-                    $qry="UPDATE `tbl_user` SET `payment_g_status`=1 WHERE `id`= 5 LIMIT 1  ";
-                    if($result=mysqli_query($CN,$qry))
-                    {
-                        http_response_code(201);
-                    }
-                    else
-                    {
-                        http_response_code(422);
-                    }
-                    
-                }
-                else{
-                    http_response_code(422);
-                }
             }
-            elseif($provider_type=='Paytm'){
-                $sql="INSERT INTO `payment_integration`(user_id,provider_type,provider_img,payment_name,payment_api_key,payment_secret_key) values('$user_id','$provider_type','$paytm','$payment_name','$payment_api_key','$payment_secret_key')";
-            
-                $R=mysqli_query($CN,$sql);
-                
-                if($R)
-                {
-                    //http_response_code(201);
-                    $qry="UPDATE `tbl_user` SET `payment_g_status`=1 WHERE `id`= 5 LIMIT 1  ";
-                    if($result=mysqli_query($CN,$qry))
-                    {
-                        http_response_code(201);
-                    }
-                    else
-                    {
-                        http_response_code(422);
-                    }
-                    
-                }
-                else{
-                    http_response_code(422);
-                }
-            }
-            else
-            {
+            else{
                 http_response_code(422);
             }
         }
         
+        elseif($provider_type=='Phonepe'){
+            $sql="INSERT INTO `payment_integration`(user_id,provider_type,provider_img,payment_name,payment_api_key,payment_secret_key,salt_index,payment_added_date,payment_status) values('$user_id','$provider_type','$phonepe','$payment_name','$payment_api_key','$payment_secret_key','$salt_index','$payment_added_date','$payment_status')";
+        
+            $R=mysqli_query($CN,$sql) or die("database error:". mysqli_error($CN));
+            
+            if($R)
+            {
+                //http_response_code(201);
+                $qry="UPDATE `tbl_user` SET `payment_g_status`=1 WHERE `id`= 5 LIMIT 1  ";
+                if($result=mysqli_query($CN,$qry) or die("database error:". mysqli_error($CN)))
+                {
+                    http_response_code(201);
+                }
+                else
+                {
+                    http_response_code(422);
+                }
+                
+            }
+            else{
+                http_response_code(422);
+            }
+        }
+        elseif($provider_type=='Paytm'){
+            $sql="INSERT INTO `payment_integration`(user_id,provider_type,provider_img,payment_name,payment_api_key,payment_secret_key,channel_id,industry_type,merchant_website,mode,payment_added_date,payment_status) values('$user_id','$provider_type','$paytm','$payment_name','$payment_api_key','$payment_secret_key','$channel_id','$industry_type','$merchant_website','$mode','$payment_added_date','$payment_status')";
+        
+            $R=mysqli_query($CN,$sql) or die("database error:". mysqli_error($CN));
+            
+            if($R)
+            {
+                //http_response_code(201);
+                $qry="UPDATE `tbl_user` SET `payment_g_status`=1 WHERE `id`= 5 LIMIT 1  ";
+                if($result=mysqli_query($CN,$qry) or die("database error:". mysqli_error($CN)))
+                {
+                    http_response_code(201);
+                }
+                else
+                {
+                    http_response_code(422);
+                }
+                
+            }
+            else{
+                http_response_code(422);
+            }
+        }
+        elseif($provider_type=='CashOnDelivery'){
+            $sql="INSERT INTO `payment_integration`(user_id,provider_type,provider_img,payment_name,payment_added_date,payment_status) values('$user_id','$provider_type','$cod','$payment_name','$payment_added_date','$payment_status')";
+        
+            $R=mysqli_query($CN,$sql) or die("database error:". mysqli_error($CN));
+            
+            if($R)
+            {
+                //http_response_code(201);
+                $qry="UPDATE `tbl_user` SET `payment_g_status`=1 WHERE `id`= 5 LIMIT 1  ";
+                if($result=mysqli_query($CN,$qry) or die("database error:". mysqli_error($CN)))
+                {
+                    http_response_code(201);
+                }
+                else
+                {
+                    http_response_code(422);
+                }
+                
+            }
+            else{
+                http_response_code(422);
+            }
+        }
+        else
+        {
+            http_response_code(422);
+        }
     }
 ?>

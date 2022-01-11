@@ -10,32 +10,19 @@
     $DB=mysqli_select_db($CN,"formal_store");
     
 
-    $EncodedData=file_get_contents('php://input');
-
-    if(isset($EncodedData) && !empty($EncodedData))
-    {
-        $DecodedData=json_decode($EncodedData,true);
-
-        $email=$DecodedData['email'];
+    $email = $_POST['email'];
+    
+    $qry = "SELECT * from `tbl_user` WHERE `email` = '$email'  ";
+    $res=mysqli_query($CN,$qry) or die("database error:". mysqli_error($CN));
         
 
-        $user = [];
-        $Sql_Query = "SELECT * from `tbl_user` WHERE `email` = '$email' ";
-
-        $res = mysqli_query($CN,$Sql_Query) or die("database error:". mysqli_error($CN));
-        if($res)
-        {
-            while($row = mysqli_fetch_assoc($res))
-            {
-                $user['email'] = $row['email'];
-                $user['otpVerify'] = $row['otpVerify'];
-            }
-
-            echo json_encode($user);
-        }
-        else
-        {
-            http_response_code(404);
-        }
+    if(mysqli_num_rows($res) > 0)
+    {
+        echo 1;
     }
+    else
+    {
+        echo 0;
+    }
+    
 ?>

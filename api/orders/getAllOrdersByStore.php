@@ -14,7 +14,7 @@
     $shopId = $_GET['shopId'];
     //$shopId = 'i3s6wp';
 
-    $sql = "SELECT * FROM `order_items` WHERE `shopId` = '$shopId' GROUP BY order_code ";
+    $sql = "SELECT * FROM `order_items` as oi JOIN `cust_payment_details` as cpd ON cpd.order_code=oi.order_code WHERE oi.shopId = '$shopId' AND cpd.payment_status = 1 GROUP BY oi.order_code ";
 
     if($result = mysqli_query($CN,$sql))
     {

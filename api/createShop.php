@@ -31,8 +31,7 @@
         // }  
         $shops=[];
         $qry = "SELECT * FROM `shop_details`as sd WHERE `user_id` = '$user_id' AND `shop_name` = '$shop_name' ";
-        $res=mysqli_query($CN,$qry) or die("database error:". mysqli_error($CN));
-            
+        $res=mysqli_query($CN,$qry) or die("database error:". mysqli_error($CN));     
 
         if(mysqli_num_rows($res) > 0)
         {

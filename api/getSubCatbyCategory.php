@@ -29,7 +29,7 @@
             $cr = 0;
             while($row = mysqli_fetch_assoc($result))
             {
-                $sub_category[$cr]['sub_category'] = $row['sub_category'];
+                $sub_category[$cr]['sub_category'] = htmlentities($row['sub_category']);
                 $cr++;
             }
 

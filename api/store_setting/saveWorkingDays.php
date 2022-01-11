@@ -18,6 +18,12 @@
         $DecodedData=json_decode($EncodedData,true);
         $day = $DecodedData['day'];
         $id = $DecodedData['userId'];
+      
+        $sql1="SELECT * FROM shop_working_days WHERE userId='$id'";
+        $result1 = mysqli_query($CN,$sql1);
+        $row = mysqli_fetch_row($result1);
+        if(!empty($row))
+        {
        $sql="UPDATE shop_working_days SET $day='1' WHERE userId='$id'";
       
         if($result = mysqli_query($CN,$sql))
@@ -31,17 +37,48 @@
         	http_response_code(201);
           }
           else{
-         
-          echo json_encode(
-            array(
-              "message"=>"Something went wrong try again"
-             
-            ));
-       
-            $Message='success';
-            http_response_code(201);
+            
+              echo json_encode(
+                array(
+                  "message"=>"Something Went wrong"
+                 
+                ));
+           
+                $Message='success';
+                http_response_code(201);
+            
+
+          
         }
        
       }
-  
+    
+    else{
+      $sql=" INSERT INTO shop_working_days (userId,$day) VALUES ('$id','1')";
+            if( $result = mysqli_query($CN,$sql)){
+              echo json_encode(
+                array(
+                  "message"=>"Success inserted"
+                 
+                ));
+           
+                $Message='success';
+                http_response_code(201);
+            }
+            else
+            {
+              echo json_encode(
+                array(
+                  "message"=>"wrong"
+                 
+                ));
+           
+                $Message='success';
+                http_response_code(201);
+            }
+            
+            
+
+    }
+    }
 ?>

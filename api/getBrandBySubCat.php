@@ -29,7 +29,7 @@
             $cr = 0;
             while($row = mysqli_fetch_assoc($result))
             {
-                $brand[$cr]['brand'] = $row['brand'];
+                $brand[$cr]['brand'] = htmlentities($row['brand']);
                 $cr++;
             }
 

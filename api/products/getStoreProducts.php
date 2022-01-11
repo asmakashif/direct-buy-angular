@@ -11,7 +11,8 @@
 
     
         $shopId = $_GET['shopId'];
-        //$shopId = 'zaSBHA';
+        //print_r($shopId);
+        //$shopId = 'GqcVjE';
         //print_r($shopId);
         $products=[];
 
@@ -22,27 +23,27 @@
             $cr = 0;
             while($row = mysqli_fetch_assoc($result))
             {
-                $users[$cr]['temp_str_config_id'] = $row['temp_str_config_id'];
-                //$users[$cr]['id'] = $row['id'];
-                // $users[$cr]['temp_shopId'] = $row['temp_shopId'];
-                $users[$cr]['category'] = $row['category'];
-                $users[$cr]['sub_category'] = $row['sub_category'];
-                $users[$cr]['brand'] = $row['brand'];
-                $users[$cr]['product_name'] = $row['product_name'];
-                $users[$cr]['product_type'] = $row['product_type'];
-                $users[$cr]['product_sub_type'] = $row['product_sub_type'];
-                $users[$cr]['product_weight'] = $row['product_weight'];
-                $users[$cr]['product_weight_type'] = $row['product_weight_type'];
-                $users[$cr]['product_qty'] = $row['product_qty'];
-                $users[$cr]['product_price'] = $row['product_price'];
-                $users[$cr]['offer_price'] = $row['offer_price'];
-                $users[$cr]['product_img'] = $row['product_img'];
-                $users[$cr]['upload_format'] = $row['upload_format'];
-                $users[$cr]['product_status'] = $row['product_status'];
+                $products[$cr]['temp_str_config_id'] = $row['temp_str_config_id'];
+                //$products[$cr]['id'] = $row['id'];
+                // $products[$cr]['temp_shopId'] = $row['temp_shopId'];
+                $products[$cr]['category'] = $row['category'];
+                $products[$cr]['sub_category'] = $row['sub_category'];
+                $products[$cr]['brand'] = $row['brand'];
+                $products[$cr]['product_name'] = $row['product_name'];
+                $products[$cr]['product_type'] = $row['product_type'];
+                $products[$cr]['product_sub_type'] = $row['product_sub_type'];
+                $products[$cr]['product_weight'] = $row['product_weight'];
+                $products[$cr]['product_weight_type'] = $row['product_weight_type'];
+                $products[$cr]['product_qty'] = $row['product_qty'];
+                $products[$cr]['product_price'] = $row['product_price'];
+                $products[$cr]['offer_price'] = $row['offer_price'];
+                $products[$cr]['product_img'] = $row['product_img'];
+                $products[$cr]['upload_format'] = $row['upload_format'];
+                $products[$cr]['product_status'] = $row['product_status'];
                 $cr++;
             }
 
-            echo json_encode($users);
+            echo json_encode($products);
         }
         else
         {

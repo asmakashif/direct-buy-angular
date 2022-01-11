@@ -13,7 +13,7 @@
     $order_code = $_GET['order_code'];
     //$order_code = 'A000000';
 
-    $sql = "SELECT * FROM `order_items` WHERE `order_code` = '$order_code' GROUP BY order_code";
+    $sql = "SELECT * FROM `order_items` as oi JOIN `cust_payment_details` as cpd ON cpd.order_code=oi.order_code WHERE oi.order_code = '$order_code' AND cpd.payment_status = 1 GROUP BY oi.order_code";
 
     if($result = mysqli_query($CN,$sql))
     {

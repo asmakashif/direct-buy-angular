@@ -32,7 +32,7 @@
             $retailer['address'] = $row['address'];
             $retailer['logo'] = $row['logo'];
             $retailer['str_msg'] = $row['str_msg'];
-            $retailer['deviceId'] = $row['deviceId'];
+            // $retailer['deviceId'] = $row['deviceId'];
         }
 
         echo json_encode($retailer);
