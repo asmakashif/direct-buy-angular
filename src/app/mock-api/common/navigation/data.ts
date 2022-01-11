@@ -38,11 +38,11 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link: '/communication',
     },
     {
-        id: 'my-account',
+        id: 'my-subscription',
         title: 'My Subscription',
         type: 'basic',
-        icon: 'heroicons_outline:user-circle',
-        link: '/my-account',
+        icon: 'heroicons_outline:credit-card',
+        link: '/my-subscription',
     },
     {
         id: 'sign-out',
@@ -96,11 +96,11 @@ export const compactNavigation: FuseNavigationItem[] = [
         link: '/communication',
     },
     {
-        id: 'my-account',
+        id: 'my-subscription',
         title: 'My Subscription',
         type: 'basic',
-        icon: 'heroicons_outline:user-circle',
-        link: '/my-account',
+        icon: 'heroicons_outline:credit-card',
+        link: '/my-subscription',
     },
     {
         id: 'sign-out',
@@ -154,11 +154,11 @@ export const futuristicNavigation: FuseNavigationItem[] = [
         link: '/communication',
     },
     {
-        id: 'my-account',
+        id: 'my-subscription',
         title: 'My Subscription',
         type: 'basic',
-        icon: 'heroicons_outline:user-circle',
-        link: '/my-account',
+        icon: 'heroicons_outline:credit-card',
+        link: '/my-subscription',
     },
     {
         id: 'sign-out',
@@ -212,11 +212,11 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         link: '/communication',
     },
     {
-        id: 'my-account',
+        id: 'my-subscription',
         title: 'My Subscription',
         type: 'basic',
-        icon: 'heroicons_outline:user-circle',
-        link: '/my-account',
+        icon: 'heroicons_outline:credit-card',
+        link: '/my-subscription',
     },
     {
         id: 'sign-out',

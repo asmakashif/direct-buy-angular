@@ -126,11 +126,8 @@ export class AuthService {
         );
     }
 
-    checkOtpVerification(credentials: { email: string }): Observable<any> {
-        return this._httpClient.post<any>(
-            '/api/checkOtpVerification.php',
-            credentials
-        );
+    checkOtpVerification(email): Observable<any> {
+        return this._httpClient.post<any>('/api/checkEmail.php', email);
     }
 
     /**
@@ -188,6 +185,8 @@ export class AuthService {
         email: string;
         password: string;
         company: string;
+        city: string;
+        state: string;
     }): Observable<any> {
         return this._httpClient.post('api/sign-up.php', user);
     }

@@ -1,0 +1,442 @@
+<div
+    class="absolute inset-0 flex flex-col min-w-0 overflow-y-auto"
+    cdkScrollable
+>
+    <!-- Header -->
+    <div class="bg-card">
+        <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
+            <div
+                class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-8 sm:my-12"
+            >
+                <!-- Avatar and name -->
+                <div class="flex flex-auto items-center min-w-0">
+                    <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
+                        <img
+                            class="w-full h-full object-cover"
+                            src="assets/images/avatars/avatar.png"
+                        />
+                    </div>
+                    <div class="flex flex-col min-w-0 ml-4">
+                        <ng-container *transloco="let t">
+                            <div
+                                class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate"
+                            >
+                                {{ t("welcome-back") }}, Brian!
+                            </div>
+                        </ng-container>
+                        <div class="flex items-center">
+                            <mat-icon
+                                class="icon-size-5"
+                                [svgIcon]="'heroicons_solid:bell'"
+                            ></mat-icon>
+                            <div
+                                class="ml-1.5 leading-6 truncate text-secondary"
+                            >
+                                You have 0 new messages
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Actions -->
+                <div class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3">
+                    <button
+                        class="fuse-mat-button-rounded bg-accent-700"
+                        mat-flat-button
+                        [color]="'accent'"
+                        [routerLink]="['/dashboard']"
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:home'"
+                        ></mat-icon>
+                        <span class="ml-2">Home</span>
+                    </button>
+                    <a
+                        target="_blank"
+                        class="fuse-mat-button-rounded"
+                        href="https://{{ domainname }}.direct-buy.in"
+                        mat-flat-button
+                        [color]="'primary'"
+                    >
+                        <fa-icon [icon]="faStore"></fa-icon>
+                        <span class="ml-2">Store</span>
+                    </a>
+                    <a
+                        target="_blank"
+                        class="fuse-mat-button-rounded"
+                        href="https://wa.me/?text=Dear Customer,We are delighted to inform you that our store is now online on https://{{
+                            domainname
+                        }}.direct-buy.in and orders can be placed online.
+                        Regards - {{ firstname }}"
+                        mat-flat-button
+                        [color]="'primary'"
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:chat'"
+                        ></mat-icon>
+                        <span class="ml-2">Whatsapp</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex flex-auto p-6 sm:p-10">
+        <div
+            class="flex flex-col flex-auto w-full max-w-xs sm:max-w-5xl mx-auto"
+        >
+            <div class="flex-1 min-w-0 pl-4">
+                <!-- Breadcrumbs -->
+                <div class="flex flex-wrap items-center font-medium">
+                    <div>
+                        <a
+                            href="javascript:void(0);"
+                            style="text-decoration: none"
+                            [routerLink]="['/dashboard']"
+                            class="whitespace-nowrap text-primary-500"
+                            >Home</a
+                        >
+                    </div>
+
+                    <div class="flex items-center ml-1 whitespace-nowrap">
+                        <mat-icon
+                            class="icon-size-5 text-secondary"
+                            [svgIcon]="'heroicons_solid:chevron-right'"
+                        ></mat-icon>
+                        <span class="ml-1 text-secondary"
+                            >My Subscriptions</span
+                        >
+                    </div>
+                </div>
+            </div>
+            &nbsp;
+            <h4 class="card-title">My Subscription</h4>
+            <!-- Payments -->
+            <ng-container *ngIf="shops.length > 0; else noShops">
+                <div
+                    class="
+                        grid grid-cols-1
+                        sm:grid-cols-2
+                        lg:grid-cols-3
+                        gap-8
+                        mt-8
+                        sm:mt-10
+                    "
+                >
+                    <ng-container *ngFor="let shops of shops">
+                        <!-- Payment -->
+                        <div
+                            class="
+                                flex flex-col
+                                h-36
+                                shadow
+                                rounded-2xl
+                                overflow-hidden
+                                bg-card
+                            "
+                        >
+                            <div class="flex flex-col p-6">
+                                <div class="flex items-center justify-between">
+                                    <!-- Payment Options -->
+                                    <ng-container>
+                                        <!-- Image -->
+                                        <div class="flex items-center">
+                                            <div
+                                                class="
+                                                    relative
+                                                    flex flex-0
+                                                    items-center
+                                                    justify-center
+                                                    w-12
+                                                    h-12
+                                                    rounded
+                                                    overflow-hidden
+                                                "
+                                            >
+                                                <img
+                                                    class="w-8"
+                                                    src="
+                                                assets/icons/credit-card.png
+                                                "
+                                                />
+                                                <!-- <div
+                                                class="
+                                                    flex
+                                                    items-center
+                                                    justify-center
+                                                    w-full
+                                                    h-full
+                                                    text-xs
+                                                    font-semibold
+                                                    leading-none
+                                                    text-center
+                                                    uppercase
+                                                "
+                                            >
+                                                NO THUMB
+                                            </div> -->
+                                            </div>
+                                        </div>
+
+                                        <div
+                                            class="
+                                                py-0.5
+                                                px-3
+                                                rounded-full
+                                                text-sm
+                                                font-semibold
+                                            "
+                                        >
+                                            {{ shops.shop_name }}
+                                        </div>
+                                    </ng-container>
+                                    <!-- Completed at least once -->
+                                    <div class="flex items-center">
+                                        <ng-container
+                                            *ngIf="
+                                                shops.shop_payment_status == 1
+                                            "
+                                        >
+                                            <ng-container
+                                                *ngIf="
+                                                    (shops.shop_exp_date
+                                                        | date: 'yyyy-MM-dd') <
+                                                        (dateObj
+                                                            | date
+                                                                : 'yyyy-MM-dd');
+                                                    else shopStatusChk
+                                                "
+                                            >
+                                                <a
+                                                    href=""
+                                                    class="btn btn-warning"
+                                                    ><i
+                                                        class="
+                                                            material-icons
+                                                            btn__icon--left
+                                                        "
+                                                        >autorenew</i
+                                                    >
+                                                    Renew
+                                                </a>
+                                            </ng-container>
+                                        </ng-container>
+                                        <ng-template #shopStatusChk>
+                                            <ng-container
+                                                *ngIf="
+                                                    shops.shop_status == 2;
+                                                    else activateChk
+                                                "
+                                            >
+                                                <a
+                                                    href=""
+                                                    class="btn btn-warning"
+                                                >
+                                                    <i
+                                                        class="
+                                                            material-icons
+                                                            btn__icon--left
+                                                        "
+                                                        >autorenew</i
+                                                    >
+                                                    Reactivate
+                                                </a>
+                                                <button class="btn btn-success">
+                                                    Activated
+                                                </button>
+                                            </ng-container>
+                                        </ng-template>
+                                        <ng-template #activateChk>
+                                            <button class="btn btn-success">
+                                                Activated
+                                            </button>
+                                        </ng-template>
+                                        <ng-container
+                                            *ngIf="
+                                                shops.shop_payment_status == 0
+                                            "
+                                        >
+                                            <ng-container
+                                                *ngIf="
+                                                    shops.trail_activate == 1;
+                                                    else trialChk
+                                                "
+                                            >
+                                                <button class="btn btn-danger">
+                                                    In-Active
+                                                </button>
+                                            </ng-container>
+                                            <ng-template #trialChk>
+                                                <button
+                                                    class="btn btn-primary"
+                                                    onclick="return confirm('Are you sure to activate trail period of 3months?')?true:false;"
+                                                >
+                                                    Activate Trial
+                                                </button>
+                                            </ng-template>
+                                        </ng-container>
+                                    </div>
+                                </div>
+
+                                <br />
+                                <!-- Default Payment -->
+                                <div
+                                    class="
+                                        flex
+                                        items-center
+                                        leading-5
+                                        text-md text-secondary
+                                    "
+                                >
+                                    <ng-container
+                                        *ngIf="shops.shop_payment_status == 1"
+                                    >
+                                        <ng-container
+                                            *ngIf="
+                                                (shops.shop_exp_date
+                                                    | date: 'yyyy-MM-dd') <
+                                                    (dateObj
+                                                        | date: 'yyyy-MM-dd');
+                                                else shopStatusChk2
+                                            "
+                                        >
+                                            <div class="ml-1.5">
+                                                Activated on
+                                                {{
+                                                    shops.shop_payment_date
+                                                        | date: "yyyy-MM-dd"
+                                                }}
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                    <ng-template #shopStatusChk2>
+                                        <ng-container
+                                            *ngIf="
+                                                shops.shop_status == 2;
+                                                else activateChk2
+                                            "
+                                        >
+                                            <div class="ml-1.5">
+                                                Activated on
+                                                {{
+                                                    shops.shop_payment_date
+                                                        | date: "yyyy-MM-dd"
+                                                }}
+                                            </div>
+                                        </ng-container>
+                                    </ng-template>
+                                    <ng-template #activateChk2>
+                                        <div class="ml-1.5">
+                                            Activated on
+                                            {{
+                                                shops.shop_payment_date
+                                                    | date: "yyyy-MM-dd"
+                                            }}
+                                        </div>
+                                    </ng-template>
+                                </div>
+
+                                <div
+                                    class="
+                                        flex
+                                        items-center
+                                        leading-5
+                                        text-md text-secondary
+                                    "
+                                >
+                                    <ng-container
+                                        *ngIf="shops.shop_payment_status == 1"
+                                    >
+                                        <ng-container
+                                            *ngIf="
+                                                (shops.shop_exp_date
+                                                    | date: 'yyyy-MM-dd') <
+                                                    (dateObj
+                                                        | date: 'yyyy-MM-dd');
+                                                else shopStatusChk3
+                                            "
+                                        >
+                                            <div class="ml-1.5">
+                                                Expired on
+                                                {{
+                                                    shops.shop_exp_date
+                                                        | date: "yyyy-MM-dd"
+                                                }}
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                    <ng-template #shopStatusChk3>
+                                        <ng-container
+                                            *ngIf="
+                                                shops.shop_status == 2;
+                                                else activateChk3
+                                            "
+                                        >
+                                            <div class="ml-1.5">
+                                                Expires on
+                                                {{
+                                                    shops.shop_exp_date
+                                                        | date: "yyyy-MM-dd"
+                                                }}
+                                            </div>
+                                        </ng-container>
+                                    </ng-template>
+                                    <ng-template #activateChk3>
+                                        <div class="ml-1.5">
+                                            Expires on
+                                            {{
+                                                shops.shop_exp_date
+                                                    | date: "yyyy-MM-dd"
+                                            }}
+                                        </div>
+                                    </ng-template>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
+
+            <!-- No courses -->
+            <ng-template #noShops>
+                <div
+                    class="
+                        flex flex-auto flex-col
+                        items-center
+                        justify-center
+                        bg-gray-100
+                        dark:bg-transparent
+                    "
+                >
+                    <mat-icon
+                        class="icon-size-20"
+                        [svgIcon]="'iconsmind:file_search'"
+                    ></mat-icon>
+                    <div
+                        class="
+                            mt-6
+                            text-2xl
+                            font-semibold
+                            tracking-tight
+                            text-secondary
+                        "
+                    >
+                        No subscriptions found!
+                    </div>
+                    <div class="text-md font-medium truncate">
+                        <button
+                            class="lg:mt-6"
+                            mat-flat-button
+                            [color]="'primary'"
+                            [routerLink]="['/create-shop']"
+                        >
+                            Add Shop
+                        </button>
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>

@@ -45,6 +45,7 @@ export class VerifyEmailComponent implements OnInit {
     retailerData: any;
     email: any;
     password: any;
+    flashMessage: string;
 
     /**
      * Constructor
@@ -80,6 +81,7 @@ export class VerifyEmailComponent implements OnInit {
         this._authService
             .getRetailerDetailsById(routeParams.user_id)
             .subscribe((retailerData) => {
+                this.showFlashMessage('success');
                 this.retailerData = retailerData;
                 this.signInForm.patchValue(retailerData);
                 this.cd.detectChanges();
@@ -135,5 +137,24 @@ export class VerifyEmailComponent implements OnInit {
                 this.showAlert = true;
             }
         );
+    }
+
+    /**
+     * Show flash message
+     */
+    showFlashMessage(type: 'success' | 'error'): void {
+        // Show the message
+        this.flashMessage = type;
+
+        // Mark for check
+        this.cd.markForCheck();
+
+        // Hide it after 3 seconds
+        setTimeout(() => {
+            this.flashMessage = null;
+
+            // Mark for check
+            this.cd.markForCheck();
+        }, 3000);
     }
 }

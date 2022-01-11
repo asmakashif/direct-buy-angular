@@ -23,6 +23,7 @@ import { HotTableModule } from '@handsontable/angular';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { SalesComponent } from 'app/modules/admin/orders/sales/sales.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 //import { projectRoutes } from 'app/modules/admin/dashboards/project/project.routing';
 
 const salesRoutes: Route[] = [
@@ -36,6 +37,7 @@ const salesRoutes: Route[] = [
     declarations: [SalesComponent],
     imports: [
         RouterModule.forChild(salesRoutes),
+        FontAwesomeModule,
         MatButtonModule,
         MatButtonToggleModule,
         MatDividerModule,

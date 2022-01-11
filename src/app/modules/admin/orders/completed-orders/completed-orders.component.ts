@@ -8,6 +8,8 @@ import {
 import { MatPaginator } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CompletedOrdersService } from 'app/modules/admin/orders/completed-orders/completed-orders.service';
+import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { DashboardService } from '../../dashboard/dashboard.service';
 
 @Component({
     selector: 'app-completed-orders',
@@ -17,18 +19,18 @@ import { CompletedOrdersService } from 'app/modules/admin/orders/completed-order
         /* language=SCSS */
         `
             .inventory-grid {
-                grid-template-columns: 48px auto 40px;
+                grid-template-columns: auto 40px;
 
                 @screen sm {
-                    grid-template-columns: 48px auto 112px 72px;
+                    grid-template-columns: auto 112px 72px;
                 }
 
                 @screen md {
-                    grid-template-columns: 48px 112px auto 112px 72px;
+                    grid-template-columns: 112px auto 112px 72px;
                 }
 
                 @screen lg {
-                    grid-template-columns: 48px 112px auto 112px 96px 96px 72px;
+                    grid-template-columns: 112px auto 112px 96px 96px 72px;
                 }
             }
         `,
@@ -41,6 +43,7 @@ import { CompletedOrdersService } from 'app/modules/admin/orders/completed-order
     ],
 })
 export class CompletedOrdersComponent implements OnInit {
+    faStore = faStore;
     selectedProject: string = 'Dashbaord';
     displayedColumns: string[] = [
         'order_code',
@@ -62,9 +65,11 @@ export class CompletedOrdersComponent implements OnInit {
     completedOrders: any;
     pendingOrders: any;
     allOrders: any;
+    domainname: any;
 
     constructor(
         private apiService: CompletedOrdersService,
+        private _dashboardService: DashboardService,
         private _router: Router,
         private routes: ActivatedRoute,
         private cd: ChangeDetectorRef
@@ -116,13 +121,27 @@ export class CompletedOrdersComponent implements OnInit {
                 this.completedOrders = completedOrdersByStr;
                 console.log(this.completedOrders);
             });
+
+        this._dashboardService
+            .getRetailerDetailsById(user_id)
+            .subscribe((data) => {
+                this.profileData = data;
+                this.firstname = this.profileData.firstname;
+                this.domainname = this.profileData.domainname;
+                this.cd.detectChanges();
+            });
     }
 
     orderDetailsByCode(order_code): void {
         const routeParams = this.routes.snapshot.params;
         console.log(order_code);
         this._router.navigate([
-            '/order-details/' + order_code + '/' + routeParams.shopId,
+            '/order-details/' +
+                order_code +
+                '/' +
+                routeParams.shopId +
+                '/' +
+                routeParams.shop_name,
         ]);
     }
 

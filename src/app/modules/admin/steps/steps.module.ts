@@ -20,6 +20,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { SharedModule } from 'app/shared/shared.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { StepsComponent } from 'app/modules/admin/steps/steps.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 const stepsRoutes: Route[] = [
     {
@@ -32,6 +33,7 @@ const stepsRoutes: Route[] = [
     declarations: [StepsComponent],
     imports: [
         RouterModule.forChild(stepsRoutes),
+        FontAwesomeModule,
         MatTooltipModule,
         MatButtonModule,
         MatButtonToggleModule,

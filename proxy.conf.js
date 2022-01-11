@@ -1,7 +1,7 @@
 const PROXY_CONFIG = [
     {
         "/api/*": {
-            target: "http://localhost:8080",
+            target: "http://localhost",
             secure: false,
             pathRewrite: { "^/api": "" },
             changeOrigin: true,

@@ -3,15 +3,7 @@
     <div class="bg-card">
         <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
             <div
-                class="
-                    flex flex-col
-                    sm:flex-row
-                    flex-auto
-                    sm:items-center
-                    min-w-0
-                    my-8
-                    sm:my-12
-                "
+                class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-8 sm:my-12"
             >
                 <!-- Avatar and name -->
                 <div class="flex flex-auto items-center min-w-0">
@@ -24,15 +16,7 @@
                     <div class="flex flex-col min-w-0 ml-4">
                         <ng-container *transloco="let t">
                             <div
-                                class="
-                                    text-2xl
-                                    md:text-5xl
-                                    font-semibold
-                                    tracking-tight
-                                    leading-7
-                                    md:leading-snug
-                                    truncate
-                                "
+                                class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate"
                             >
                                 {{ t("welcome-back") }}, {{ firstname }}!
                             </div>
@@ -45,7 +29,7 @@
                             <div
                                 class="ml-1.5 leading-6 truncate text-secondary"
                             >
-                                You have 2 new messages and 15 new tasks
+                                You have 0 new messages
                             </div>
                         </div>
                         <!-- <flash-messages></flash-messages> -->
@@ -65,35 +49,46 @@
                         ></mat-icon>
                         <span class="ml-2">Home</span>
                     </button>
-                    <button
+                    <!-- <button
                         class="fuse-mat-button-rounded"
+                        mat-flat-button
+                        [color]="'primary'"
+                        (click)="gotToCustomerSection(domainname)"
+                    >
+                        <fa-icon [icon]="faStore"></fa-icon>
+                        <span class="ml-2">Store</span>
+                    </button> -->
+                    <a
+                        target="_blank"
+                        class="fuse-mat-button-rounded"
+                        href="https://{{ domainname }}.direct-buy.in"
+                        mat-flat-button
+                        [color]="'primary'"
+                    >
+                        <fa-icon [icon]="faStore"></fa-icon>
+                        <span class="ml-2">Store</span>
+                    </a>
+                    <a
+                        target="_blank"
+                        class="fuse-mat-button-rounded"
+                        href="https://wa.me/?text=Dear Customer,We are delighted to inform you that our store is now online on https://{{
+                            domainname
+                        }}.direct-buy.in and orders can be placed online.
+                        Regards - {{ firstname }}"
                         mat-flat-button
                         [color]="'primary'"
                     >
                         <mat-icon
                             class="icon-size-5"
-                            [svgIcon]="'heroicons_solid:cog'"
+                            [svgIcon]="'heroicons_solid:chat'"
                         ></mat-icon>
-                        <span class="ml-2">Settings</span>
-                    </button>
+                        <span class="ml-2">Whatsapp</span>
+                    </a>
                 </div>
             </div>
             <!-- Project selector -->
             <div
-                class="
-                    relative
-                    flex
-                    self-start
-                    pt-2
-                    pb-1
-                    pl-5
-                    pr-4
-                    cursor-pointer
-                    overflow-hidden
-                    rounded-t-xl
-                    border border-b-0
-                    bg-default
-                "
+                class="relative flex self-start pt-2 pb-1 pl-5 pr-4 cursor-pointer overflow-hidden rounded-t-xl border border-b-0 bg-default"
                 matRipple
                 [matMenuTriggerFor]="projectsMenu"
             >
@@ -147,35 +142,14 @@
                 <mat-tab label="Shops">
                     <ng-template matTabContent>
                         <div
-                            class="
-                                grid grid-cols-1
-                                sm:grid-cols-2
-                                md:grid-cols-3
-                                lg:grid-cols-4
-                                gap-6
-                                w-full
-                                min-w-0
-                            "
+                            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full min-w-0"
                         >
                             <div
-                                class="
-                                    flex flex-col flex-auto
-                                    p-6
-                                    bg-card
-                                    shadow
-                                    rounded-2xl
-                                    overflow-hidden
-                                "
+                                class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
                             >
                                 <div class="flex items-start justify-between">
                                     <div
-                                        class="
-                                            text-lg
-                                            font-medium
-                                            tracking-tight
-                                            leading-6
-                                            truncate
-                                        "
+                                        class="text-lg font-medium tracking-tight leading-6 truncate"
                                     >
                                         Shop Summary
                                     </div>
@@ -209,50 +183,29 @@
                                 </div>
                                 <div class="flex flex-col items-center mt-2">
                                     <div
-                                        class="
-                                            text-7xl
-                                            sm:text-8xl
-                                            font-bold
-                                            tracking-tight
-                                            leading-none
-                                            text-blue-500
-                                        "
+                                        class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500"
                                     >
                                         {{ this.count }}
                                     </div>
                                     <div
-                                        class="
-                                            text-lg
-                                            font-medium
-                                            text-blue-600
-                                            dark:text-blue-500
-                                        "
+                                        class="text-lg font-medium text-blue-600 dark:text-blue-500"
                                     >
                                         No of Shops
                                     </div>
                                     <div
-                                        class="
-                                            flex
-                                            items-baseline
-                                            justify-center
-                                            w-full
-                                            mt-5
-                                            text-secondary
-                                        "
-                                    ></div>
+                                        class="flex items-baseline justify-center w-full mt-3 text-secondary"
+                                    >
+                                        <div class="text-md font-medium">
+                                            Shows number of shops in your
+                                            account
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
                             <ng-container *ngFor="let data of this.data">
                                 <div
-                                    class="
-                                        flex flex-col flex-auto
-                                        p-6
-                                        bg-card
-                                        shadow
-                                        rounded-2xl
-                                        overflow-hidden
-                                    "
+                                    class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
                                 >
                                     <div
                                         class="flex items-start justify-between"
@@ -263,19 +216,13 @@
                                             style="text-decoration: none"
                                         > -->
                                         <div
-                                            class="
-                                                text-lg
-                                                font-medium
-                                                tracking-tight
-                                                leading-6
-                                                truncate
-                                            "
+                                            class="text-lg font-medium tracking-tight leading-6 truncate"
                                         >
                                             {{ data.shop_name }}
                                             <!-- {{ data.shopId }} -->
                                         </div>
                                         <!-- </a> -->
-                                        <div
+                                        <!-- <div
                                             class="ml-2 -mt-2 -mr-3"
                                             *ngIf="
                                                 data.shop_payment_status == 1
@@ -302,13 +249,8 @@
                                                     Manage Shop
                                                 </button>
                                             </mat-menu>
-                                        </div>
-                                        <div
-                                            class="ml-2 -mt-2 -mr-3"
-                                            *ngIf="
-                                                data.shop_payment_status == 0
-                                            "
-                                        >
+                                        </div> -->
+                                        <div class="ml-2 -mt-2 -mr-3">
                                             <button
                                                 mat-icon-button
                                                 [matMenuTriggerFor]="
@@ -336,14 +278,7 @@
                                         class="flex flex-col items-center mt-2"
                                     >
                                         <div
-                                            class="
-                                                text-7xl
-                                                sm:text-8xl
-                                                font-bold
-                                                tracking-tight
-                                                leading-none
-                                                text-blue-500
-                                            "
+                                            class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500"
                                         >
                                             {{ data.completed_orders }}
                                         </div>
@@ -351,14 +286,26 @@
                                             href="javascript:void(0);"
                                             (click)="completedOrders(data)"
                                             style="text-decoration: none"
+                                            *ngIf="
+                                                data.shop_payment_status == 1
+                                            "
                                         >
                                             <div
-                                                class="
-                                                    text-lg
-                                                    font-medium
-                                                    text-blue-600
-                                                    dark:text-blue-500
-                                                "
+                                                class="text-lg font-medium text-blue-600 dark:text-blue-500"
+                                            >
+                                                Completed Orders
+                                            </div>
+                                        </a>
+                                        <a
+                                            href="javascript:void(0);"
+                                            (click)="steps(data)"
+                                            style="text-decoration: none"
+                                            *ngIf="
+                                                data.shop_payment_status == 0
+                                            "
+                                        >
+                                            <div
+                                                class="text-lg font-medium text-blue-600 dark:text-blue-500"
                                             >
                                                 Completed Orders
                                             </div>
@@ -367,32 +314,43 @@
                                             href="javascript:void(0);"
                                             (click)="pendingOrders(data)"
                                             style="text-decoration: none"
+                                            *ngIf="
+                                                data.shop_payment_status == 1
+                                            "
                                         >
                                             <div
-                                                class="
-                                                    flex
-                                                    items-baseline
-                                                    justify-center
-                                                    w-full
-                                                    mt-5
-                                                    text-secondary
-                                                "
+                                                class="flex items-baseline justify-center w-full mt-3 text-secondary"
                                             >
                                                 <div
-                                                    class="
-                                                        text-md
-                                                        font-medium
-                                                        truncate
-                                                    "
+                                                    class="text-md font-medium truncate"
                                                 >
                                                     Pending Orders:
                                                 </div>
                                                 <div
-                                                    class="
-                                                        ml-1.5
-                                                        text-lg
-                                                        font-semibold
-                                                    "
+                                                    class="ml-1.5 text-lg font-semibold"
+                                                >
+                                                    {{ data.pending_orders }}
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a
+                                            href="javascript:void(0);"
+                                            (click)="steps(data)"
+                                            style="text-decoration: none"
+                                            *ngIf="
+                                                data.shop_payment_status == 0
+                                            "
+                                        >
+                                            <div
+                                                class="flex items-baseline justify-center w-full mt-3 text-secondary"
+                                            >
+                                                <div
+                                                    class="text-md font-medium truncate"
+                                                >
+                                                    Pending Orders:
+                                                </div>
+                                                <div
+                                                    class="ml-1.5 text-lg font-semibold"
                                                 >
                                                     {{ data.pending_orders }}
                                                 </div>
@@ -409,35 +367,14 @@
                 <mat-tab label="Payment">
                     <ng-template matTabContent>
                         <div
-                            class="
-                                grid grid-cols-1
-                                sm:grid-cols-2
-                                md:grid-cols-3
-                                lg:grid-cols-4
-                                gap-6
-                                w-full
-                                min-w-0
-                            "
+                            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full min-w-0"
                         >
                             <div
-                                class="
-                                    flex flex-col flex-auto
-                                    p-6
-                                    bg-card
-                                    shadow
-                                    rounded-2xl
-                                    overflow-hidden
-                                "
+                                class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
                             >
                                 <div class="flex items-start justify-between">
                                     <div
-                                        class="
-                                            text-lg
-                                            font-medium
-                                            tracking-tight
-                                            leading-6
-                                            truncate
-                                        "
+                                        class="text-lg font-medium tracking-tight leading-6 truncate"
                                     >
                                         Payment Gateway
                                     </div>
@@ -467,62 +404,35 @@
                                 </div>
                                 <div class="flex flex-col items-center mt-2">
                                     <div
-                                        class="
-                                            text-7xl
-                                            sm:text-8xl
-                                            font-bold
-                                            tracking-tight
-                                            leading-none
-                                            text-blue-500
-                                        "
+                                        class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500"
                                     >
                                         {{ this.paymentCount }}
                                     </div>
                                     <div
-                                        class="
-                                            text-lg
-                                            font-medium
-                                            text-blue-600
-                                            dark:text-blue-500
-                                        "
+                                        class="text-lg font-medium text-blue-600 dark:text-blue-500"
                                     >
                                         No of PaymentGateway
                                     </div>
                                     <div
-                                        class="
-                                            flex
-                                            items-baseline
-                                            justify-center
-                                            w-full
-                                            mt-5
-                                            text-secondary
-                                        "
-                                    ></div>
+                                        class="flex items-baseline justify-center w-full mt-3 text-secondary"
+                                    >
+                                        <div class="text-md font-medium">
+                                            Setup payment solution and attach to
+                                            shop
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
                             <ng-container *ngFor="let payment of this.payment">
                                 <div
-                                    class="
-                                        flex flex-col flex-auto
-                                        p-6
-                                        bg-card
-                                        shadow
-                                        rounded-2xl
-                                        overflow-hidden
-                                    "
+                                    class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
                                 >
                                     <div
                                         class="flex items-start justify-between"
                                     >
                                         <div
-                                            class="
-                                                text-lg
-                                                font-medium
-                                                tracking-tight
-                                                leading-6
-                                                truncate
-                                            "
+                                            class="text-lg font-medium tracking-tight leading-6 truncate"
                                         >
                                             {{ payment.payment_name }}
                                         </div>
@@ -556,29 +466,17 @@
                                         class="flex flex-col items-center mt-2"
                                     >
                                         <div
-                                            class="
-                                                text-7xl
-                                                sm:text-8xl
-                                                font-bold
-                                                tracking-tight
-                                                leading-none
-                                                text-blue-500
-                                            "
+                                            class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500"
                                         >
                                             {{ payment.attachToStr }}
                                         </div>
                                         <a
                                             href="javascript:void(0);"
-                                            (click)="completedOrders(data)"
+                                            (click)="attachToStr(payment)"
                                             style="text-decoration: none"
                                         >
                                             <div
-                                                class="
-                                                    text-lg
-                                                    font-medium
-                                                    text-blue-600
-                                                    dark:text-blue-500
-                                                "
+                                                class="text-lg font-medium text-blue-600 dark:text-blue-500"
                                             >
                                                 Attach To store
                                             </div>
@@ -625,55 +523,18 @@
                     </ng-template>
                 </mat-tab>
 
-                <!-- Reports -->
-                <mat-tab label="Reports">
-                    <ng-template matTabContent>
-                        <div
-                            class="
-                                grid grid-cols-1
-                                sm:grid-cols-2
-                                md:grid-cols-3
-                                lg:grid-cols-4
-                                gap-6
-                                w-full
-                                min-w-0
-                            "
-                        ></div>
-                    </ng-template>
-                </mat-tab>
                 <!--General Setting-->
                 <mat-tab label="General Settings">
                     <ng-template matTabContent>
                         <div
-                            class="
-                                grid grid-cols-1
-                                sm:grid-cols-2
-                                md:grid-cols-3
-                                lg:grid-cols-4
-                                gap-6
-                                w-full
-                                min-w-0
-                            "
+                            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full min-w-0"
                         >
                             <div
-                                class="
-                                    flex flex-col flex-auto
-                                    p-6
-                                    bg-card
-                                    shadow
-                                    rounded-2xl
-                                    overflow-hidden
-                                "
+                                class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
                             >
                                 <div class="flex items-start justify-between">
                                     <div
-                                        class="
-                                            text-lg
-                                            font-medium
-                                            tracking-tight
-                                            leading-6
-                                            truncate
-                                        "
+                                        class="text-lg font-medium tracking-tight leading-6 truncate"
                                     >
                                         Minimum order value
                                     </div>
@@ -703,86 +564,38 @@
                                 </div>
                                 <div class="flex flex-col items-center mt-2">
                                     <div
-                                        class="
-                                            text-7xl
-                                            sm:text-8xl
-                                            font-bold
-                                            tracking-tight
-                                            leading-none
-                                            text-blue-500
-                                        "
+                                        class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500"
                                     >
                                         {{ totalMinOrder }}
                                     </div>
                                     <a
                                         href="javascript:void(0);"
-                                        (click)="completedOrders(data)"
+                                        [routerLink]="['/minOrderValue']"
                                         style="text-decoration: none"
                                     >
                                         <div
-                                            class="
-                                                text-lg
-                                                font-medium
-                                                text-blue-600
-                                                dark:text-blue-500
-                                            "
+                                            class="text-lg font-medium text-blue-600 dark:text-blue-500"
                                         >
                                             Minimum Order Value
                                         </div>
                                     </a>
-                                    <a
-                                        href="javascript:void(0);"
-                                        (click)="pendingOrders(data)"
-                                        style="text-decoration: none"
+                                    <div
+                                        class="flex items-baseline justify-center w-full mt-3 text-secondary"
                                     >
-                                        <div
-                                            class="
-                                                flex
-                                                items-baseline
-                                                justify-center
-                                                w-full
-                                                mt-5
-                                                text-secondary
-                                            "
-                                        >
-                                            <div
-                                                class="
-                                                    text-md
-                                                    font-medium
-                                                    truncate
-                                                "
-                                            ></div>
-                                            <div
-                                                class="
-                                                    ml-1.5
-                                                    text-lg
-                                                    font-semibold
-                                                "
-                                            ></div>
+                                        <div class="text-md font-medium">
+                                            Set minimum order value here for
+                                            home delivery
                                         </div>
-                                    </a>
+                                    </div>
                                 </div>
                             </div>
 
                             <div
-                                class="
-                                    flex flex-col flex-auto
-                                    p-6
-                                    bg-card
-                                    shadow
-                                    rounded-2xl
-                                    overflow-hidden
-                                "
+                                class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
                             >
                                 <div class="flex items-start justify-between">
                                     <div
-                                        class="
-                                            text-lg
-                                            font-medium
-                                            tracking-tight
-                                            leading-6
-                                            truncate
-                                        "
+                                        class="text-lg font-medium tracking-tight leading-6 truncate"
                                     >
                                         Home Delivery
                                     </div>
@@ -812,64 +625,87 @@
                                 </div>
                                 <div class="flex flex-col items-center mt-2">
                                     <div
-                                        class="
-                                            text-7xl
-                                            sm:text-8xl
-                                            font-bold
-                                            tracking-tight
-                                            leading-none
-                                            text-blue-500
-                                        "
+                                        class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500"
                                     >
                                         {{ usertotalHomeDel }}
                                     </div>
                                     <a
                                         href="javascript:void(0);"
-                                        (click)="completedOrders(data)"
+                                        [routerLink]="['/HomeDeliverySetting']"
                                         style="text-decoration: none"
                                     >
                                         <div
-                                            class="
-                                                text-lg
-                                                font-medium
-                                                text-blue-600
-                                                dark:text-blue-500
-                                            "
+                                            class="text-lg font-medium text-blue-600 dark:text-blue-500"
                                         >
                                             Home Delivery Slots
                                         </div>
                                     </a>
+                                    <div
+                                        class="flex items-baseline justify-center w-full mt-3 text-secondary"
+                                    >
+                                        <div class="text-md font-medium">
+                                            Set home delivery time, for
+                                            customers to choose
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
+                            >
+                                <div class="flex items-start justify-between">
+                                    <div
+                                        class="text-lg font-medium tracking-tight leading-6 truncate"
+                                    >
+                                        Whatsapp Message
+                                    </div>
+                                    <div class="ml-2 -mt-2 -mr-3">
+                                        <button
+                                            mat-icon-button
+                                            [matMenuTriggerFor]="whatsAppMenu"
+                                        >
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                [svgIcon]="
+                                                    'heroicons_solid:dots-vertical'
+                                                "
+                                            ></mat-icon>
+                                        </button>
+                                        <mat-menu #whatsAppMenu="matMenu">
+                                            <button
+                                                [routerLink]="['/whatsapp']"
+                                                mat-menu-item
+                                            >
+                                                Manage
+                                            </button>
+                                        </mat-menu>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col items-center mt-2">
+                                    <div
+                                        class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500"
+                                    >
+                                        1
+                                    </div>
                                     <a
                                         href="javascript:void(0);"
-                                        (click)="pendingOrders(data)"
+                                        [routerLink]="['/whatsapp']"
                                         style="text-decoration: none"
                                     >
                                         <div
-                                            class="
-                                                flex
-                                                items-baseline
-                                                justify-center
-                                                w-full
-                                                mt-5
-                                                text-secondary
-                                            "
+                                            class="text-lg font-medium text-blue-600 dark:text-blue-500"
                                         >
-                                            <div
-                                                class="
-                                                    text-md
-                                                    font-medium
-                                                    truncate
-                                                "
-                                            ></div>
-                                            <div
-                                                class="
-                                                    ml-1.5
-                                                    text-lg
-                                                    font-semibold
-                                                "
-                                            ></div>
+                                            Whatsapp Messages
                                         </div>
                                     </a>
+                                    <div
+                                        class="flex items-baseline justify-center w-full mt-3 text-secondary"
+                                    >
+                                        <div class="text-md font-medium">
+                                            WhatsApp message for your shop
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -878,6 +714,11 @@
                 <!-- Communication -->
                 <mat-tab label="Communication">
                     <ng-template matTabContent>
+                        <div
+                            class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center"
+                        >
+                            Coming Soon!
+                        </div>
                         <!-- <form
                             class="flex flex-col w-full"
                             [formGroup]="messageForm"
@@ -970,38 +811,17 @@
                 <mat-tab label="Home">
                     <ng-template matTabContent>
                         <div
-                            class="
-                                grid grid-cols-1
-                                sm:grid-cols-2
-                                md:grid-cols-3
-                                lg:grid-cols-4
-                                gap-6
-                                w-full
-                                min-w-0
-                            "
+                            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full min-w-0"
                         >
                             <!-- New Orders -->
                             <div
-                                class="
-                                    flex flex-col flex-auto
-                                    p-6
-                                    bg-card
-                                    shadow
-                                    rounded-2xl
-                                    overflow-hidden
-                                "
+                                class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
                             >
                                 <div class="flex items-start justify-between">
                                     <div
-                                        class="
-                                            text-lg
-                                            font-medium
-                                            tracking-tight
-                                            leading-6
-                                            truncate
-                                        "
+                                        class="text-lg font-medium tracking-tight leading-6 truncate"
                                     >
-                                        New Orders
+                                        This Month
                                     </div>
                                     <div class="ml-2 -mt-2 -mr-3">
                                         <button
@@ -1030,14 +850,7 @@
                                 </div>
                                 <div class="flex flex-col items-center mt-2">
                                     <div
-                                        class="
-                                            text-7xl
-                                            sm:text-8xl
-                                            font-bold
-                                            tracking-tight
-                                            leading-none
-                                            text-amber-500
-                                        "
+                                        class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-amber-500"
                                     >
                                         {{ this.openOrderCount }}
                                     </div>
@@ -1047,25 +860,13 @@
                                         style="text-decoration: none"
                                     >
                                         <div
-                                            class="
-                                                text-lg
-                                                font-medium
-                                                text-amber-600
-                                                dark:text-amber-500
-                                            "
+                                            class="text-lg font-medium text-amber-600 dark:text-amber-500"
                                         >
                                             Open Orders
                                         </div>
                                     </a>
                                     <div
-                                        class="
-                                            flex
-                                            items-baseline
-                                            justify-center
-                                            w-full
-                                            mt-5
-                                            text-secondary
-                                        "
+                                        class="flex items-baseline justify-center w-full mt-5 text-secondary"
                                     >
                                         <div
                                             class="text-md font-medium truncate"
@@ -1082,26 +883,13 @@
                             </div>
                             <!-- Sales -->
                             <div
-                                class="
-                                    flex flex-col flex-auto
-                                    p-6
-                                    bg-card
-                                    shadow
-                                    rounded-2xl
-                                    overflow-hidden
-                                "
+                                class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
                             >
                                 <div class="flex items-start justify-between">
                                     <div
-                                        class="
-                                            text-lg
-                                            font-medium
-                                            tracking-tight
-                                            leading-6
-                                            truncate
-                                        "
+                                        class="text-lg font-medium tracking-tight leading-6 truncate"
                                     >
-                                        Sales
+                                        This Month
                                     </div>
                                     <div class="ml-2 -mt-2 -mr-3">
                                         <button
@@ -1124,14 +912,7 @@
                                 </div>
                                 <div class="flex flex-col items-center mt-2">
                                     <div
-                                        class="
-                                            text-7xl
-                                            sm:text-8xl
-                                            font-bold
-                                            tracking-tight
-                                            leading-none
-                                            text-accent-500
-                                        "
+                                        class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-accent-500"
                                     >
                                         {{ allOrderCount }}
                                     </div>
@@ -1141,25 +922,13 @@
                                         style="text-decoration: none"
                                     >
                                         <div
-                                            class="
-                                                text-lg
-                                                font-medium
-                                                text-accent-600
-                                                dark:text-accent-500
-                                            "
+                                            class="text-lg font-medium text-accent-600 dark:text-accent-500"
                                         >
                                             Sales
                                         </div>
                                     </a>
                                     <div
-                                        class="
-                                            flex
-                                            items-baseline
-                                            justify-center
-                                            w-full
-                                            mt-5
-                                            text-secondary
-                                        "
+                                        class="flex items-baseline justify-center w-full mt-5 text-secondary"
                                     >
                                         <div
                                             class="text-md font-medium truncate"
@@ -1176,24 +945,11 @@
                             </div>
                             <!-- This Month -->
                             <div
-                                class="
-                                    flex flex-col flex-auto
-                                    p-6
-                                    bg-card
-                                    shadow
-                                    rounded-2xl
-                                    overflow-hidden
-                                "
+                                class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
                             >
                                 <div class="flex items-start justify-between">
                                     <div
-                                        class="
-                                            text-lg
-                                            font-medium
-                                            tracking-tight
-                                            leading-6
-                                            truncate
-                                        "
+                                        class="text-lg font-medium tracking-tight leading-6 truncate"
                                     >
                                         This Month
                                     </div>
@@ -1224,14 +980,7 @@
                                 </div>
                                 <div class="flex flex-col items-center mt-2">
                                     <div
-                                        class="
-                                            text-7xl
-                                            sm:text-8xl
-                                            font-bold
-                                            tracking-tight
-                                            leading-none
-                                            text-red-500
-                                        "
+                                        class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-red-500"
                                     >
                                         {{ this.curMonthOrderCount }}
                                     </div>
@@ -1241,25 +990,13 @@
                                         style="text-decoration: none"
                                     >
                                         <div
-                                            class="
-                                                text-lg
-                                                font-medium
-                                                text-red-600
-                                                dark:text-red-500
-                                            "
+                                            class="text-lg font-medium text-red-600 dark:text-red-500"
                                         >
                                             Unique Orders
                                         </div>
                                     </a>
                                     <div
-                                        class="
-                                            flex
-                                            items-baseline
-                                            justify-center
-                                            w-full
-                                            mt-5
-                                            text-secondary
-                                        "
+                                        class="flex items-baseline justify-center w-full mt-5 text-secondary"
                                     >
                                         <div
                                             class="text-md font-medium truncate"
@@ -1276,24 +1013,11 @@
                             </div>
                             <!-- Previous Month -->
                             <div
-                                class="
-                                    flex flex-col flex-auto
-                                    p-6
-                                    bg-card
-                                    shadow
-                                    rounded-2xl
-                                    overflow-hidden
-                                "
+                                class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
                             >
                                 <div class="flex items-start justify-between">
                                     <div
-                                        class="
-                                            text-lg
-                                            font-medium
-                                            tracking-tight
-                                            leading-6
-                                            truncate
-                                        "
+                                        class="text-lg font-medium tracking-tight leading-6 truncate"
                                     >
                                         Previous Month
                                     </div>
@@ -1324,14 +1048,7 @@
                                 </div>
                                 <div class="flex flex-col items-center mt-2">
                                     <div
-                                        class="
-                                            text-7xl
-                                            sm:text-8xl
-                                            font-bold
-                                            tracking-tight
-                                            leading-none
-                                            text-blue-500
-                                        "
+                                        class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500"
                                     >
                                         <!-- {{ allOrderCount }} -->
                                         {{ this.prevMonthOrderCount }}
@@ -1342,25 +1059,13 @@
                                         style="text-decoration: none"
                                     >
                                         <div
-                                            class="
-                                                text-lg
-                                                font-medium
-                                                text-blue-600
-                                                dark:text-blue-500
-                                            "
+                                            class="text-lg font-medium text-blue-600 dark:text-blue-500"
                                         >
                                             Orders Fulfilled
                                         </div>
                                     </a>
                                     <div
-                                        class="
-                                            flex
-                                            items-baseline
-                                            justify-center
-                                            w-full
-                                            mt-5
-                                            text-secondary
-                                        "
+                                        class="flex items-baseline justify-center w-full mt-5 text-secondary"
                                     >
                                         <div
                                             class="text-md font-medium truncate"
@@ -1377,7 +1082,7 @@
                             </div>
 
                             <!-- Customers -->
-                            <div
+                            <!-- <div
                                 class="
                                     flex flex-col flex-auto
                                     p-6
@@ -1469,7 +1174,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </ng-template>
                 </mat-tab>
@@ -1480,21 +1185,11 @@
                     <ng-template matTabContent>
                         <!-- Actions -->
                         <div
-                            class="
-                                flex flex-shrink-0
-                                items-center
-                                mt-6
-                                sm:mt-0 sm:ml-4
-                            "
+                            class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4"
                         >
                             <!-- Search -->
                             <mat-form-field
-                                class="
-                                    fuse-mat-dense
-                                    fuse-mat-no-subscript
-                                    fuse-mat-rounded
-                                    min-w-64
-                                "
+                                class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-64"
                             >
                                 <mat-icon
                                     class="icon-size-5"
@@ -1570,23 +1265,7 @@
                             <div class="grid">
                                 <!-- Header -->
                                 <div
-                                    class="
-                                        inventory-grid
-                                        z-10
-                                        sticky
-                                        top-0
-                                        grid
-                                        gap-4
-                                        py-4
-                                        px-6
-                                        md:px-8
-                                        shadow
-                                        text-md
-                                        font-semibold
-                                        text-secondary
-                                        bg-gray-50
-                                        dark:bg-black dark:bg-opacity-5
-                                    "
+                                    class="inventory-grid z-10 sticky top-0 grid gap-4 py-4 px-6 md:px-8 shadow text-md font-semibold text-secondary bg-gray-50 dark:bg-black dark:bg-opacity-5"
                                     matSort
                                     matSortDisableClear
                                 >
@@ -1625,33 +1304,12 @@
                                     "
                                 >
                                     <div
-                                        class="
-                                            inventory-grid
-                                            grid
-                                            items-center
-                                            gap-4
-                                            py-3
-                                            px-6
-                                            md:px-8
-                                            border-b
-                                            bg-card
-                                        "
+                                        class="inventory-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b bg-card"
                                     >
                                         <!-- Image -->
                                         <div class="flex items-center">
                                             <div
-                                                class="
-                                                    relative
-                                                    flex flex-0
-                                                    items-center
-                                                    justify-center
-                                                    w-12
-                                                    h-12
-                                                    mr-6
-                                                    rounded
-                                                    overflow-hidden
-                                                    border
-                                                "
+                                                class="relative flex flex-0 items-center justify-center w-12 h-12 mr-6 rounded overflow-hidden border"
                                                 *ngIf="product.product_img"
                                             >
                                                 <img
@@ -1675,33 +1333,11 @@
                                                 />
                                             </div>
                                             <div
-                                                class="
-                                                    relative
-                                                    flex flex-0
-                                                    items-center
-                                                    justify-center
-                                                    w-12
-                                                    h-12
-                                                    mr-6
-                                                    rounded
-                                                    overflow-hidden
-                                                    border
-                                                "
+                                                class="relative flex flex-0 items-center justify-center w-12 h-12 mr-6 rounded overflow-hidden border"
                                                 *ngIf="!product.product_img"
                                             >
                                                 <div
-                                                    class="
-                                                        flex
-                                                        items-center
-                                                        justify-center
-                                                        w-full
-                                                        h-full
-                                                        text-xs
-                                                        font-semibold
-                                                        leading-none
-                                                        text-center
-                                                        uppercase
-                                                    "
+                                                    class="flex items-center justify-center w-full h-full text-xs font-semibold leading-none text-center uppercase"
                                                 >
                                                     NO THUMB
                                                 </div>
@@ -1737,76 +1373,34 @@
                                             </div>
                                             <!-- Low stock -->
                                             <div
-                                                class="
-                                                    flex
-                                                    items-end
-                                                    ml-2
-                                                    w-1
-                                                    h-4
-                                                    bg-red-200
-                                                    rounded
-                                                    overflow-hidden
-                                                "
+                                                class="flex items-end ml-2 w-1 h-4 bg-red-200 rounded overflow-hidden"
                                                 *ngIf="product.product_qty < 20"
                                             >
                                                 <div
-                                                    class="
-                                                        flex
-                                                        w-full
-                                                        h-1/3
-                                                        bg-red-600
-                                                    "
+                                                    class="flex w-full h-1/3 bg-red-600"
                                                 ></div>
                                             </div>
                                             <!-- Medium stock -->
                                             <div
-                                                class="
-                                                    flex
-                                                    items-end
-                                                    ml-2
-                                                    w-1
-                                                    h-4
-                                                    bg-orange-200
-                                                    rounded
-                                                    overflow-hidden
-                                                "
+                                                class="flex items-end ml-2 w-1 h-4 bg-orange-200 rounded overflow-hidden"
                                                 *ngIf="
                                                     product.product_qty >= 20 &&
                                                     product.product_qty < 30
                                                 "
                                             >
                                                 <div
-                                                    class="
-                                                        flex
-                                                        w-full
-                                                        h-2/4
-                                                        bg-orange-400
-                                                    "
+                                                    class="flex w-full h-2/4 bg-orange-400"
                                                 ></div>
                                             </div>
                                             <!-- High stock -->
                                             <div
-                                                class="
-                                                    flex
-                                                    items-end
-                                                    ml-2
-                                                    w-1
-                                                    h-4
-                                                    bg-green-100
-                                                    rounded
-                                                    overflow-hidden
-                                                "
+                                                class="flex items-end ml-2 w-1 h-4 bg-green-100 rounded overflow-hidden"
                                                 *ngIf="
                                                     product.product_qty >= 30
                                                 "
                                             >
                                                 <div
-                                                    class="
-                                                        flex
-                                                        w-full
-                                                        h-full
-                                                        bg-green-400
-                                                    "
+                                                    class="flex w-full h-full bg-green-400"
                                                 ></div>
                                             </div>
                                         </div>
@@ -1819,10 +1413,7 @@
                                                 "
                                             >
                                                 <mat-icon
-                                                    class="
-                                                        text-green-400
-                                                        icon-size-5
-                                                    "
+                                                    class="text-green-400 icon-size-5"
                                                     [svgIcon]="
                                                         'heroicons_solid:check'
                                                     "
@@ -1834,10 +1425,7 @@
                                                 "
                                             >
                                                 <mat-icon
-                                                    class="
-                                                        text-gray-400
-                                                        icon-size-5
-                                                    "
+                                                    class="text-gray-400 icon-size-5"
                                                     [svgIcon]="
                                                         'heroicons_solid:x'
                                                     "
@@ -1854,12 +1442,7 @@
                                             "
                                         >
                                             <button
-                                                class="
-                                                    min-w-10 min-h-7
-                                                    h-7
-                                                    px-2
-                                                    leading-6
-                                                "
+                                                class="min-w-10 min-h-7 h-7 px-2 leading-6"
                                                 mat-stroked-button
                                                 (click)="
                                                     editDetails(
@@ -1883,12 +1466,7 @@
                                             "
                                         >
                                             <button
-                                                class="
-                                                    min-w-10 min-h-7
-                                                    h-7
-                                                    px-2
-                                                    leading-6
-                                                "
+                                                class="min-w-10 min-h-7 h-7 px-2 leading-6"
                                                 mat-stroked-button
                                                 (click)="
                                                     cancelDetails(
@@ -1955,36 +1533,17 @@
                                             [formGroup]="selectedProductForm"
                                         >
                                             <div
-                                                class="
-                                                    flex flex-col
-                                                    sm:flex-row
-                                                    p-8
-                                                "
+                                                class="flex flex-col sm:flex-row p-8"
                                             >
                                                 <!-- Product images and status -->
                                                 <div
-                                                    class="
-                                                        flex flex-col
-                                                        items-center
-                                                        sm:items-start
-                                                        mb-8
-                                                        sm:mb-0
-                                                    "
+                                                    class="flex flex-col items-center sm:items-start mb-8 sm:mb-0"
                                                 >
                                                     <div
-                                                        class="
-                                                            flex flex-col
-                                                            items-center
-                                                        "
+                                                        class="flex flex-col items-center image"
                                                     >
                                                         <div
-                                                            class="
-                                                                w-32
-                                                                h-44
-                                                                border
-                                                                rounded
-                                                                overflow-hidden
-                                                            "
+                                                            class="w-32 h-44 border rounded overflow-hidden"
                                                         >
                                                             <ng-container
                                                                 *ngIf="
@@ -2011,25 +1570,13 @@
                                                                         product.product_img
                                                                     "
                                                                 />
-                                                                &nbsp;
-                                                                <input
-                                                                    type="file"
-                                                                    accept=".png, .jpg, .jpeg"
-                                                                    name="product_image"
-                                                                    (change)="
-                                                                        onFileUpload(
-                                                                            $event
-                                                                        )
-                                                                    "
-                                                                />
                                                             </ng-container>
+
                                                             <ng-template
                                                                 #noImage
                                                             >
                                                                 <div
-                                                                    class="
-                                                                        image-upload
-                                                                    "
+                                                                    class="image-upload"
                                                                 >
                                                                     <label
                                                                         for="file-input"
@@ -2056,6 +1603,30 @@
                                                                 </div>
                                                             </ng-template>
                                                         </div>
+                                                        <i class="fa fa-edit"
+                                                            ><div
+                                                                class="image-upload"
+                                                            >
+                                                                <label
+                                                                    for="file-input"
+                                                                >
+                                                                    <img
+                                                                        src="assets/images/avatars/upload.png"
+                                                                    />
+                                                                </label>
+                                                                <input
+                                                                    type="file"
+                                                                    id="file-input"
+                                                                    accept=".png, .jpg, .jpeg"
+                                                                    name="product_image"
+                                                                    #fileInput
+                                                                    (change)="
+                                                                        onFileUpload(
+                                                                            $event
+                                                                        )
+                                                                    "
+                                                                /></div
+                                                        ></i>
                                                         <!-- <div
                                                             class="
                                                                 flex
@@ -2107,20 +1678,14 @@
                                                         </div> -->
                                                     </div>
                                                     <div
-                                                        class="
-                                                            flex flex-col
-                                                            mt-8
-                                                        "
+                                                        class="flex flex-col mt-8"
                                                         *ngIf="
                                                             product.product_status ==
                                                             0
                                                         "
                                                     >
                                                         <span
-                                                            class="
-                                                                font-semibold
-                                                                mb-2
-                                                            "
+                                                            class="font-semibold mb-2"
                                                             >Product
                                                             status</span
                                                         >
@@ -2139,29 +1704,20 @@
                                                                 matCheckbox
                                                             />{{ "Disabled" }}
                                                             <span
-                                                                class="
-                                                                    slider
-                                                                    round
-                                                                "
+                                                                class="slider round"
                                                             >
                                                             </span>
                                                         </label>
                                                     </div>
                                                     <div
-                                                        class="
-                                                            flex flex-col
-                                                            mt-8
-                                                        "
+                                                        class="flex flex-col mt-8"
                                                         *ngIf="
                                                             product.product_status ==
                                                             1
                                                         "
                                                     >
                                                         <span
-                                                            class="
-                                                                font-semibold
-                                                                mb-2
-                                                            "
+                                                            class="font-semibold mb-2"
                                                             >Product
                                                             status</span
                                                         >
@@ -2181,10 +1737,7 @@
                                                                 matCheckbox
                                                             />
                                                             <span
-                                                                class="
-                                                                    slider
-                                                                    round
-                                                                "
+                                                                class="slider round"
                                                             ></span>
                                                             {{ "Active" }}
                                                         </label>
@@ -2192,18 +1745,11 @@
                                                 </div>
 
                                                 <div
-                                                    class="
-                                                        flex flex-auto flex-wrap
-                                                    "
+                                                    class="flex flex-auto flex-wrap"
                                                 >
                                                     <!-- Name, SKU & etc. -->
                                                     <div
-                                                        class="
-                                                            flex flex-col
-                                                            w-full
-                                                            lg:w-2/4
-                                                            sm:pl-8
-                                                        "
+                                                        class="flex flex-col w-full lg:w-2/4 sm:pl-8"
                                                     >
                                                         <!-- Name -->
                                                         <mat-form-field
@@ -2223,100 +1769,207 @@
                                                         <!-- Type and Subtype -->
                                                         <div class="flex">
                                                             <mat-form-field
-                                                                class="
-                                                                    w-2/3
-                                                                    pl-2
-                                                                "
+                                                                class="w-2/3 pl-2"
                                                             >
                                                                 <mat-label
                                                                     >Product
                                                                     Type</mat-label
                                                                 >
-                                                                <input
-                                                                    matInput
+                                                                <mat-select
+                                                                    class="flex items-center h-10 min-h-10 px-4"
                                                                     [formControlName]="
                                                                         'product_type'
                                                                     "
-                                                                />
+                                                                    placeholder="Select Product-Type"
+                                                                    (selectionChange)="
+                                                                        onChangeProductType(
+                                                                            $event
+                                                                        )
+                                                                    "
+                                                                >
+                                                                    <mat-option
+                                                                        [value]="
+                                                                            'select'
+                                                                        "
+                                                                        >Select</mat-option
+                                                                    >
+
+                                                                    <ng-container
+                                                                        *ngFor="
+                                                                            let tag of product_type
+                                                                        "
+                                                                    >
+                                                                        <mat-option
+                                                                            [value]="
+                                                                                tag.product_type
+                                                                            "
+                                                                            >{{
+                                                                                tag.product_type
+                                                                            }}</mat-option
+                                                                        >
+                                                                    </ng-container>
+                                                                </mat-select>
                                                             </mat-form-field>
                                                             <mat-form-field
-                                                                class="
-                                                                    w-1/3
-                                                                    pr-2
-                                                                "
+                                                                class="w-1/3 pr-2"
                                                             >
                                                                 <mat-label
                                                                     >Product
                                                                     SubType</mat-label
                                                                 >
-                                                                <input
-                                                                    matInput
+                                                                <mat-select
+                                                                    class="flex items-center h-10 min-h-10 px-4"
                                                                     [formControlName]="
                                                                         'product_sub_type'
                                                                     "
-                                                                />
+                                                                    placeholder="Select Product-SubType"
+                                                                >
+                                                                    <mat-option
+                                                                        [value]="
+                                                                            'select'
+                                                                        "
+                                                                        >Select</mat-option
+                                                                    >
+                                                                    <ng-container
+                                                                        *ngFor="
+                                                                            let tag of product_sub_type
+                                                                        "
+                                                                    >
+                                                                        <mat-option
+                                                                            [value]="
+                                                                                tag.product_sub_type
+                                                                            "
+                                                                            >{{
+                                                                                tag.product_sub_type
+                                                                            }}</mat-option
+                                                                        >
+                                                                    </ng-container>
+                                                                </mat-select>
                                                             </mat-form-field>
                                                         </div>
 
                                                         <!-- Category, Brand & SubCategory -->
                                                         <div class="flex">
                                                             <mat-form-field
-                                                                class="
-                                                                    w-1/3
-                                                                    pr-2
-                                                                "
+                                                                class="w-1/3 pr-2"
                                                             >
                                                                 <mat-label
                                                                     >Category</mat-label
                                                                 >
-                                                                <input
-                                                                    matInput
+                                                                <mat-select
+                                                                    class="flex items-center h-10 min-h-10 px-4"
                                                                     [formControlName]="
                                                                         'category'
                                                                     "
-                                                                />
+                                                                    placeholder="Select Category"
+                                                                    (selectionChange)="
+                                                                        onChangeCategory(
+                                                                            $event
+                                                                        )
+                                                                    "
+                                                                >
+                                                                    <mat-option
+                                                                        *ngFor="
+                                                                            let tag of category
+                                                                        "
+                                                                        [value]="
+                                                                            tag.category
+                                                                        "
+                                                                    >
+                                                                        {{
+                                                                            tag.category
+                                                                        }}
+                                                                    </mat-option>
+                                                                </mat-select>
                                                             </mat-form-field>
                                                             <mat-form-field
-                                                                class="
-                                                                    w-1/3
-                                                                    pr-2
-                                                                "
+                                                                class="w-1/3 pr-2"
                                                             >
                                                                 <mat-label
                                                                     >SubCategory</mat-label
                                                                 >
-                                                                <input
+                                                                <!-- <input
                                                                     matInput
                                                                     [formControlName]="
                                                                         'sub_category'
                                                                     "
-                                                                />
+                                                                /> -->
+                                                                <mat-select
+                                                                    class="flex items-center h-10 min-h-10 px-4"
+                                                                    [formControlName]="
+                                                                        'sub_category'
+                                                                    "
+                                                                    placeholder="Select Sub-Category"
+                                                                >
+                                                                    <mat-option
+                                                                        [value]="
+                                                                            'select'
+                                                                        "
+                                                                        >Select</mat-option
+                                                                    >
+                                                                    <ng-container
+                                                                        *ngFor="
+                                                                            let subcat of sub_category
+                                                                        "
+                                                                    >
+                                                                        <mat-option
+                                                                            [value]="
+                                                                                subcat.sub_category
+                                                                            "
+                                                                            >{{
+                                                                                subcat.sub_category
+                                                                            }}</mat-option
+                                                                        >
+                                                                    </ng-container>
+                                                                </mat-select>
                                                             </mat-form-field>
                                                             <mat-form-field
-                                                                class="
-                                                                    w-1/3
-                                                                    pr-2
-                                                                "
+                                                                class="w-1/3 pr-2"
                                                             >
                                                                 <mat-label
                                                                     >Brand</mat-label
                                                                 >
-                                                                <input
+                                                                <!-- <input
                                                                     matInput
                                                                     [formControlName]="
                                                                         'brand'
                                                                     "
-                                                                />
+                                                                /> -->
+                                                                <mat-select
+                                                                    class="flex items-center h-10 min-h-10 px-4"
+                                                                    [formControlName]="
+                                                                        'brand'
+                                                                    "
+                                                                    placeholder="Select Brand"
+                                                                >
+                                                                    <mat-option
+                                                                        [value]="
+                                                                            'select'
+                                                                        "
+                                                                        >Select</mat-option
+                                                                    >
+                                                                    <ng-container
+                                                                        *ngFor="
+                                                                            let tag of brand
+                                                                        "
+                                                                    >
+                                                                        <mat-option
+                                                                            [value]="
+                                                                                tag.brand
+                                                                            "
+                                                                            >{{
+                                                                                tag.brand
+                                                                            }}</mat-option
+                                                                        >
+                                                                    </ng-container>
+                                                                </mat-select>
                                                             </mat-form-field>
                                                         </div>
 
                                                         <!-- Stock and Reserved -->
                                                         <div class="flex">
                                                             <mat-form-field
-                                                                class="
-                                                                    w-1/3
-                                                                    pr-2
-                                                                "
+                                                                class="w-1/3 pr-2"
                                                             >
                                                                 <mat-label
                                                                     >Stock</mat-label
@@ -2348,12 +2001,7 @@
 
                                                     <!-- Cost, Base price, Tax & Price -->
                                                     <div
-                                                        class="
-                                                            flex flex-col
-                                                            w-full
-                                                            lg:w-1/4
-                                                            sm:pl-8
-                                                        "
+                                                        class="flex flex-col w-full lg:w-1/4 sm:pl-8"
                                                     >
                                                         <mat-form-field
                                                             class="w-full"
@@ -2403,12 +2051,7 @@
 
                                                     <!-- Weight & Tags -->
                                                     <div
-                                                        class="
-                                                            flex flex-col
-                                                            w-full
-                                                            lg:w-1/4
-                                                            sm:pl-8
-                                                        "
+                                                        class="flex flex-col w-full lg:w-1/4 sm:pl-8"
                                                     >
                                                         <mat-form-field
                                                             class="w-full"
@@ -2448,15 +2091,7 @@
                                             </div>
 
                                             <div
-                                                class="
-                                                    flex
-                                                    items-center
-                                                    justify-between
-                                                    w-full
-                                                    border-t
-                                                    px-8
-                                                    py-4
-                                                "
+                                                class="flex items-center justify-between w-full border-t px-8 py-4"
                                             >
                                                 <button
                                                     class="-ml-4"
@@ -2470,11 +2105,7 @@
                                                 </button>
                                                 <div class="flex items-center">
                                                     <div
-                                                        class="
-                                                            flex
-                                                            items-center
-                                                            mr-4
-                                                        "
+                                                        class="flex items-center mr-4"
                                                         *ngIf="flashMessage"
                                                     >
                                                         <ng-container
@@ -2484,9 +2115,7 @@
                                                             "
                                                         >
                                                             <mat-icon
-                                                                class="
-                                                                    text-green-500
-                                                                "
+                                                                class="text-green-500"
                                                                 [svgIcon]="
                                                                     'heroicons_outline:check'
                                                                 "
@@ -2503,9 +2132,7 @@
                                                             "
                                                         >
                                                             <mat-icon
-                                                                class="
-                                                                    text-red-500
-                                                                "
+                                                                class="text-red-500"
                                                                 [svgIcon]="
                                                                     'heroicons_outline:x'
                                                                 "
@@ -2540,36 +2167,15 @@
                 <mat-tab label="Configuration">
                     <ng-template matTabContent>
                         <div
-                            class="
-                                grid grid-cols-1
-                                sm:grid-cols-2
-                                md:grid-cols-3
-                                lg:grid-cols-4
-                                gap-6
-                                w-full
-                                min-w-0
-                            "
+                            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full min-w-0"
                         >
                             <!-- Payment Options -->
                             <div
-                                class="
-                                    flex flex-col flex-auto
-                                    p-6
-                                    bg-card
-                                    shadow
-                                    rounded-2xl
-                                    overflow-hidden
-                                "
+                                class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
                             >
                                 <div class="flex items-start justify-between">
                                     <div
-                                        class="
-                                            text-lg
-                                            font-medium
-                                            tracking-tight
-                                            leading-6
-                                            truncate
-                                        "
+                                        class="text-lg font-medium tracking-tight leading-6 truncate"
                                     >
                                         Payment Options
                                     </div>
@@ -2599,28 +2205,17 @@
                                 </div>
                                 <div class="flex flex-col items-center mt-2">
                                     <div
-                                        class="
-                                            text-7xl
-                                            sm:text-8xl
-                                            font-bold
-                                            tracking-tight
-                                            leading-none
-                                            text-blue-500
-                                        "
+                                        class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500"
                                     >
                                         {{ strPaymentCount }}
                                     </div>
                                     <a
+                                        (click)="storePayment()"
                                         href="javascript:void(0);"
                                         style="text-decoration: none"
                                     >
                                         <div
-                                            class="
-                                                text-lg
-                                                font-medium
-                                                text-blue-600
-                                                dark:text-blue-500
-                                            "
+                                            class="text-lg font-medium text-blue-600 dark:text-blue-500"
                                         >
                                             No of Payment Options
                                         </div>
@@ -2650,24 +2245,11 @@
                             </div>
                             <!-- Minimum Order Value -->
                             <div
-                                class="
-                                    flex flex-col flex-auto
-                                    p-6
-                                    bg-card
-                                    shadow
-                                    rounded-2xl
-                                    overflow-hidden
-                                "
+                                class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
                             >
                                 <div class="flex items-start justify-between">
                                     <div
-                                        class="
-                                            text-lg
-                                            font-medium
-                                            tracking-tight
-                                            leading-6
-                                            truncate
-                                        "
+                                        class="text-lg font-medium tracking-tight leading-6 truncate"
                                     >
                                         Minimum Order Value
                                     </div>
@@ -2686,9 +2268,7 @@
                                         <mat-menu #uniqueMenu="matMenu">
                                             <button
                                                 mat-menu-item
-                                                routerLink="/minOrderConfig/{{
-                                                    shop_id
-                                                }}"
+                                                (click)="minOrderConfig()"
                                             >
                                                 Manage
                                             </button>
@@ -2697,70 +2277,41 @@
                                 </div>
                                 <div class="flex flex-col items-center mt-2">
                                     <div
-                                        class="
-                                            text-7xl
-                                            sm:text-8xl
-                                            font-bold
-                                            tracking-tight
-                                            leading-none
-                                            text-red-500
+                                        class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500"
+                                        *ngIf="
+                                            min_order_val == 0;
+                                            else minOrderVal
                                         "
                                     >
-                                        1
+                                        0
                                     </div>
+                                    <ng-template #minOrderVal>
+                                        <div
+                                            class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500"
+                                        >
+                                            1
+                                        </div>
+                                    </ng-template>
                                     <a
+                                        (click)="minOrderConfig()"
                                         href="javascript:void(0);"
-                                        (click)="uniqueOrdersCurMonth()"
                                         style="text-decoration: none"
                                     >
                                         <div
-                                            class="
-                                                text-lg
-                                                font-medium
-                                                text-red-600
-                                                dark:text-red-500
-                                            "
-                                        ></div>
+                                            class="text-lg font-medium text-blue-600 dark:text-blue-500"
+                                        >
+                                            No of Minimum Order Value
+                                        </div>
                                     </a>
-                                    <div
-                                        class="
-                                            flex
-                                            items-baseline
-                                            justify-center
-                                            w-full
-                                            mt-5
-                                            text-secondary
-                                        "
-                                    >
-                                        <div
-                                            class="text-md font-medium truncate"
-                                        ></div>
-                                        <div
-                                            class="ml-1.5 text-lg font-semibold"
-                                        ></div>
-                                    </div>
                                 </div>
                             </div>
                             <!-- Home Delivery -->
                             <div
-                                class="
-                                    flex flex-col flex-auto
-                                    p-6
-                                    bg-card
-                                    shadow
-                                    rounded-2xl
-                                    overflow-hidden
-                                "
+                                class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
                             >
                                 <div class="flex items-start justify-between">
                                     <div
-                                        class="
-                                            text-lg
-                                            font-medium
-                                            tracking-tight
-                                            leading-6
-                                            truncate
-                                        "
+                                        class="text-lg font-medium tracking-tight leading-6 truncate"
                                     >
                                         Home Delivery
                                     </div>
@@ -2779,9 +2330,7 @@
                                         <mat-menu #homeDelMenu="matMenu">
                                             <button
                                                 mat-menu-item
-                                                routerLink="/homeDelConfig/{{
-                                                    shop_id
-                                                }}"
+                                                (click)="homeDelConfig()"
                                             >
                                                 Manage
                                             </button>
@@ -2790,48 +2339,21 @@
                                 </div>
                                 <div class="flex flex-col items-center mt-2">
                                     <div
-                                        class="
-                                            text-7xl
-                                            sm:text-8xl
-                                            font-bold
-                                            tracking-tight
-                                            leading-none
-                                            text-red-500
-                                        "
+                                        class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500"
                                     >
                                         {{ totalHomeDelOrder }}
                                     </div>
                                     <a
+                                        (click)="homeDelConfig()"
                                         href="javascript:void(0);"
-                                        (click)="uniqueOrdersCurMonth()"
                                         style="text-decoration: none"
                                     >
                                         <div
-                                            class="
-                                                text-lg
-                                                font-medium
-                                                text-red-600
-                                                dark:text-red-500
-                                            "
-                                        ></div>
+                                            class="text-lg font-medium text-blue-600 dark:text-blue-500"
+                                        >
+                                            No of Minimum Order Value
+                                        </div>
                                     </a>
-                                    <div
-                                        class="
-                                            flex
-                                            items-baseline
-                                            justify-center
-                                            w-full
-                                            mt-5
-                                            text-secondary
-                                        "
-                                    >
-                                        <div
-                                            class="text-md font-medium truncate"
-                                        ></div>
-                                        <div
-                                            class="ml-1.5 text-lg font-semibold"
-                                        ></div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -2844,14 +2366,7 @@
                         <div class="grid grid-cols-1 gap-6 w-full min-w-0">
                             <!-- Payment Options -->
                             <div
-                                class="
-                                    flex flex-col flex-auto
-                                    p-6
-                                    bg-card
-                                    shadow
-                                    rounded-2xl
-                                    overflow-hidden
-                                "
+                                class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
                             >
                                 <p><b>Edit Shop Details</b></p>
                                 <form
@@ -2862,12 +2377,7 @@
                                         <div class="flex flex-auto flex-wrap">
                                             <!-- Name -->
                                             <div
-                                                class="
-                                                    flex flex-col
-                                                    w-full
-                                                    lg:w-1/4
-                                                    sm:pl-8
-                                                "
+                                                class="flex flex-col w-full lg:w-1/4 sm:pl-8"
                                             >
                                                 <!-- Name -->
                                                 <mat-form-field class="w-full">
@@ -2877,16 +2387,29 @@
                                                         formControlName="shop_name"
                                                     />
                                                 </mat-form-field>
+
+                                                <!-- <mat-form-field class="w-full">
+                                                    <mat-label
+                                                        >Shop Logo</mat-label
+                                                    >
+
+                                                    <input
+                                                        matInput
+                                                        type="file"
+                                                        accept=".png, .jpg, .jpeg"
+                                                        formControlName="shop_logo"
+                                                        (change)="
+                                                            onShopLogoUpload(
+                                                                $event
+                                                            )
+                                                        "
+                                                    />
+                                                </mat-form-field> -->
                                             </div>
 
                                             <!-- Address -->
                                             <div
-                                                class="
-                                                    flex flex-col
-                                                    w-full
-                                                    lg:w-2/4
-                                                    sm:pl-8
-                                                "
+                                                class="flex flex-col w-full lg:w-2/4 sm:pl-8"
                                             >
                                                 <mat-form-field class="w-full">
                                                     <mat-label
@@ -2901,12 +2424,7 @@
 
                                             <!-- GST -->
                                             <div
-                                                class="
-                                                    flex flex-col
-                                                    w-full
-                                                    lg:w-1/4
-                                                    sm:pl-8
-                                                "
+                                                class="flex flex-col w-full lg:w-1/4 sm:pl-8"
                                             >
                                                 <mat-form-field class="w-full">
                                                     <mat-label>GST</mat-label>
@@ -2920,14 +2438,7 @@
                                     </div>
 
                                     <div
-                                        class="
-                                            flex
-                                            items-center
-                                            justify-between
-                                            w-full
-                                            px-8
-                                            py-4
-                                        "
+                                        class="flex items-center justify-between w-full px-8 py-4"
                                     >
                                         <button
                                             class="-ml-4"
@@ -3007,6 +2518,69 @@
                                 </form>
                                 <br />
                                 <!-- Separator -->
+                                <!-- <div class="flex items-center mt-4">
+                                    <div class="flex-auto mt-px border-t"></div>
+                                </div>
+                                <br />
+                                <b>Shop Logo</b>
+                                <form
+                                    class="flex flex-col w-full"
+                                    [formGroup]="logoForm"
+                                >
+                                    <div
+                                        class="flex flex-col items-center image"
+                                    >
+                                        <div
+                                            class="w-32 h-44 border rounded overflow-hidden"
+                                        >
+                                            <ng-container
+                                                *ngIf="shop_logo; else noImage"
+                                            >
+                                                <img
+                                                    [src]="
+                                                        imagePath + shop_logo
+                                                    "
+                                                />
+                                            </ng-container>
+
+                                            <ng-template #noImage>
+                                                <input
+                                                    type="file"
+                                                    id="file-input"
+                                                    accept=".png, .jpg, .jpeg"
+                                                    name="shop_logo"
+                                                    #fileInput
+                                                    (change)="
+                                                        onShopLogoUpload($event)
+                                                    "
+                                                />
+                                            </ng-template>
+                                        </div>
+                                        <ng-container *ngIf="shop_logo">
+                                            <i class="fa fa-edit"
+                                                ><div class="image-upload">
+                                                    <label for="file-input">
+                                                        <img
+                                                            src="assets/images/avatars/upload.png"
+                                                        />
+                                                    </label>
+                                                    <input
+                                                        type="file"
+                                                        id="file-input"
+                                                        accept=".png, .jpg, .jpeg"
+                                                        name="shop_logo"
+                                                        #fileInput
+                                                        (change)="
+                                                            onShopLogoUpload(
+                                                                $event
+                                                            )
+                                                        "
+                                                    /></div
+                                            ></i>
+                                        </ng-container>
+                                    </div>
+                                </form> -->
+                                <!-- Separator -->
                                 <div class="flex items-center mt-4">
                                     <div class="flex-auto mt-px border-t"></div>
                                 </div>
@@ -3031,32 +2605,15 @@
                                     ngNativeValidate
                                 >
                                     <div
-                                        class="
-                                            relative
-                                            flex flex-col
-                                            sm:flex-row
-                                            flex-0
-                                            sm:items-center sm:justify-between
-                                            border-b
-                                        "
+                                        class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between border-b"
                                     >
                                         <!-- Actions -->
                                         <div
-                                            class="
-                                                flex flex-shrink-0
-                                                items-center
-                                                mt-6
-                                                sm:mt-0 sm:ml-4
-                                            "
+                                            class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4"
                                         >
                                             <!-- Vacation mode off -->
                                             <div
-                                                class="
-                                                    flex flex-col
-                                                    w-full
-                                                    lg:w-2/4
-                                                    sm:pl-8
-                                                "
+                                                class="flex flex-col w-full lg:w-2/4 sm:pl-8"
                                                 *ngIf="
                                                     shopData.vacation_mode == 0
                                                 "
@@ -3072,12 +2629,7 @@
                                             &nbsp; &nbsp;
                                             <!-- Vacation mode on -->
                                             <div
-                                                class="
-                                                    flex flex-col
-                                                    w-full
-                                                    lg:w-3/4
-                                                    sm:pl-8
-                                                "
+                                                class="flex flex-col w-full lg:w-3/4 sm:pl-8"
                                                 *ngIf="
                                                     shopData.vacation_mode == 1
                                                 "
@@ -3094,11 +2646,7 @@
                                             <!-- Vacation button -->
                                             <div class="flex items-center">
                                                 <div
-                                                    class="
-                                                        flex
-                                                        items-center
-                                                        mr-4
-                                                    "
+                                                    class="flex items-center mr-4"
                                                     *ngIf="flashMessage"
                                                 >
                                                     <ng-container
@@ -3108,9 +2656,7 @@
                                                         "
                                                     >
                                                         <mat-icon
-                                                            class="
-                                                                text-green-500
-                                                            "
+                                                            class="text-green-500"
                                                             [svgIcon]="
                                                                 'heroicons_outline:check'
                                                             "
@@ -3177,32 +2723,15 @@
                                     ngNativeValidate
                                 >
                                     <div
-                                        class="
-                                            relative
-                                            flex flex-col
-                                            sm:flex-row
-                                            flex-0
-                                            sm:items-center sm:justify-between
-                                            border-b
-                                        "
+                                        class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between border-b"
                                     >
                                         <!-- Actions -->
                                         <div
-                                            class="
-                                                flex flex-shrink-0
-                                                items-center
-                                                mt-6
-                                                sm:mt-0 sm:ml-4
-                                            "
+                                            class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4"
                                         >
                                             <!-- Display Product -->
                                             <div
-                                                class="
-                                                    flex flex-col
-                                                    w-full
-                                                    lg:w-2/4
-                                                    sm:pl-8
-                                                "
+                                                class="flex flex-col w-full lg:w-2/4 sm:pl-8"
                                                 *ngIf="
                                                     shopData.hide_0productQty ==
                                                     0
@@ -3219,12 +2748,7 @@
                                             &nbsp; &nbsp;
                                             <!-- Hide Product -->
                                             <div
-                                                class="
-                                                    flex flex-col
-                                                    w-full
-                                                    lg:w-3/4
-                                                    sm:pl-8
-                                                "
+                                                class="flex flex-col w-full lg:w-3/4 sm:pl-8"
                                                 *ngIf="
                                                     shopData.hide_0productQty ==
                                                     1
@@ -3242,11 +2766,7 @@
                                             <!-- Vacation button -->
                                             <div class="flex items-center">
                                                 <div
-                                                    class="
-                                                        flex
-                                                        items-center
-                                                        mr-4
-                                                    "
+                                                    class="flex items-center mr-4"
                                                     *ngIf="flashMessage"
                                                 >
                                                     <ng-container
@@ -3256,9 +2776,7 @@
                                                         "
                                                     >
                                                         <mat-icon
-                                                            class="
-                                                                text-green-500
-                                                            "
+                                                            class="text-green-500"
                                                             [svgIcon]="
                                                                 'heroicons_outline:check'
                                                             "

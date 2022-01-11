@@ -1,0 +1,408 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div class="bg-card">
+        <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
+            <div
+                class="
+                    flex flex-col
+                    sm:flex-row
+                    flex-auto
+                    sm:items-center
+                    min-w-0
+                    my-8
+                    sm:my-12
+                "
+            >
+                <!-- Avatar and name -->
+                <div class="flex flex-auto items-center min-w-0">
+                    <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
+                        <img
+                            class="w-full h-full object-cover"
+                            src="assets/images/avatars/avatar.png"
+                        />
+                    </div>
+                    <div class="flex flex-col min-w-0 ml-4">
+                        <ng-container *transloco="let t">
+                            <div
+                                class="
+                                    text-2xl
+                                    md:text-5xl
+                                    font-semibold
+                                    tracking-tight
+                                    leading-7
+                                    md:leading-snug
+                                    truncate
+                                "
+                            >
+                                {{ t("welcome-back") }}, Brian!
+                            </div>
+                        </ng-container>
+                        <div class="flex items-center">
+                            <mat-icon
+                                class="icon-size-5"
+                                [svgIcon]="'heroicons_solid:bell'"
+                            ></mat-icon>
+                            <div
+                                class="ml-1.5 leading-6 truncate text-secondary"
+                            >
+                                You have 2 new messages and 15 new tasks
+                            </div>
+                        </div>
+                        <flash-messages></flash-messages>
+                    </div>
+                </div>
+                <!-- Actions -->
+                <div class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3">
+                    <button
+                        class="fuse-mat-button-rounded bg-accent-700"
+                        mat-flat-button
+                        [color]="'accent'"
+                        [routerLink]="['/dashboard']"
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:home'"
+                        ></mat-icon>
+                        <span class="ml-2">Home</span>
+                    </button>
+                    <button
+                        class="fuse-mat-button-rounded"
+                        mat-flat-button
+                        [color]="'primary'"
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:cog'"
+                        ></mat-icon>
+                        <span class="ml-2">Settings</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <!-- Tabs -->
+            <mat-tab-group class="sm:px-2" [animationDuration]="'0'">
+                <!-- Orders -->
+                <mat-tab label="Orders">
+                    <ng-template matTabContent>
+                        <div
+                            class="
+                                grid grid-cols-1
+                                sm:grid-cols-6
+                                gap-6
+                                w-full
+                                min-w-0
+                            "
+                        ></div>
+                    </ng-template>
+                </mat-tab>
+
+                <!-- CRM -->
+                <mat-tab label="CRM">
+                    <ng-template matTabContent>
+                        <div
+                            class="
+                                grid grid-cols-1
+                                sm:grid-cols-6
+                                gap-6
+                                w-full
+                                min-w-0
+                            "
+                        ></div>
+                    </ng-template>
+                </mat-tab>
+
+                <!-- StoreSetting -->
+                <mat-tab label="StoreSetting">
+                    <mat-accordion class="example-headers-align">
+                        <mat-expansion-panel
+                            [expanded]="step === 0"
+                            (opened)="setStep(0)"
+                            hideToggle
+                        >
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Store Information
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <form
+                                class="
+                                    flex flex-col
+                                    p-8
+                                    pb-4
+                                    rounded-2xl
+                                    overflow-hidden
+                                "
+                                [formGroup]="editForm"
+                                (ngSubmit)="onUpdate()"
+                                autocomplete="off"
+                            >
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Shop name</mat-label>
+                                    <input
+                                        type="text"
+                                        formControlName="shop_name"
+                                        placeholder="Shop name"
+                                        name="shop_name"
+                                        class="form-control"
+                                        matInput
+                                    />
+                                </mat-form-field>
+                                &nbsp;
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Shop Address</mat-label>
+                                    <textarea
+                                        formControlName="shop_address"
+                                        name="shop_address"
+                                        matInput
+                                        [rows]="3"
+                                        matTextareaAutosize
+                                    ></textarea>
+                                </mat-form-field>
+                                <button class="btn btn-success">Update</button>
+                            </form>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel
+                            [expanded]="step === 1"
+                            (opened)="setStep(1)"
+                            hideToggle
+                        >
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Store Payment Details
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <button
+                                class="btn btn-success"
+                                (click)="setUpPayment()"
+                            >
+                                Choose Payment Option
+                            </button>
+                            <br />
+                            <br />
+                            <form
+                                [formGroup]="paymentForm"
+                                (ngSubmit)="onSubmit()"
+                                autocomplete="off"
+                            >
+                                <ul>
+                                    <div class="row">
+                                        <div
+                                            class="col-md-4"
+                                            *ngFor="let payment of payment"
+                                        >
+                                            <li class="list-group-item">
+                                                <div
+                                                    class="media-body"
+                                                    *ngIf="
+                                                        payment.default_payment ==
+                                                        0
+                                                    "
+                                                >
+                                                    <p>
+                                                        {{
+                                                            payment.pInfo_payment_name
+                                                        }}
+                                                        <br />
+                                                        <span
+                                                            style="
+                                                                font-size: 12px;
+                                                            "
+                                                            *ngIf="
+                                                                payment.default_payment ==
+                                                                0
+                                                            "
+                                                            >Make Default
+                                                            <input
+                                                                type="checkbox"
+                                                                [value]="
+                                                                    payment.shop_pInfo_id
+                                                                "
+                                                                name="shop_pInfo_id[]"
+                                                                (change)="
+                                                                    onDefaultSelect(
+                                                                        $event
+                                                                    )
+                                                                "
+                                                                matCheckbox
+                                                            />
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                                <div
+                                                    class="media-body"
+                                                    *ngIf="
+                                                        payment.default_payment ==
+                                                        1
+                                                    "
+                                                >
+                                                    <p>
+                                                        {{
+                                                            payment.pInfo_payment_name
+                                                        }}
+                                                        <br />
+                                                        <span
+                                                            style="
+                                                                font-size: 12px;
+                                                            "
+                                                            >Default Payment
+                                                            <input
+                                                                type="checkbox"
+                                                                checked
+                                                                matCheckbox
+                                                            />
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </li>
+                                        </div>
+                                    </div>
+                                </ul>
+                                <button class="btn btn-success">Save</button>
+                            </form>
+
+                            <!-- <mdb-card>
+                                <mdb-card-body>
+                                    <mdb-card-title>
+                                        <h4>Panel title</h4>
+                                    </mdb-card-title>
+                                    <mdb-card-text
+                                        >Some quick example text to build on the
+                                        card title and make up the bulk of the
+                                        card's content.</mdb-card-text
+                                    >
+                                    <div class="flex-row">
+                                        <a class="card-link">Card link</a>
+                                        <a class="card-link">Another link</a>
+                                    </div>
+                                </mdb-card-body>
+                            </mdb-card> -->
+                        </mat-expansion-panel>
+
+                        <!-- <a
+                            href="javascript:void(0);"
+                            (click)="shopConfiguration(data.shopId)"
+                        >
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        Store Configuration
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                            </mat-expansion-panel>
+                        </a> -->
+                        <mat-expansion-panel
+                            [expanded]="step === 2"
+                            (opened)="setStep(2)"
+                            hideToggle
+                        >
+                            <mat-expansion-panel-header>
+                                <mat-panel-title> Additional </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <form
+                                class="example-form"
+                                [formGroup]="formGroup"
+                                (ngSubmit)="onFormSubmit(formGroup.value)"
+                                ngNativeValidate
+                            >
+                                <div class="row">
+                                    <div
+                                        class="col-md-3"
+                                        *ngIf="data.home_delivery == 0"
+                                    >
+                                        <span>
+                                            <strong
+                                                >Home Delivery-<span
+                                                    style="color: red"
+                                                    >Off</span
+                                                ></strong
+                                            >
+                                        </span>
+                                    </div>
+                                    <div
+                                        class="col-md-3"
+                                        *ngIf="data.home_delivery == 1"
+                                    >
+                                        <span>
+                                            <strong
+                                                >Home Delivery-<span
+                                                    style="color: green"
+                                                    >On</span
+                                                ></strong
+                                            >
+                                        </span>
+                                    </div>
+                                    <div
+                                        class="col-md-3"
+                                        *ngIf="data.home_delivery == 1"
+                                    >
+                                        <mat-slide-toggle
+                                            color="accent"
+                                            checked
+                                        ></mat-slide-toggle>
+                                    </div>
+                                    <div
+                                        class="col-md-3"
+                                        *ngIf="data.home_delivery == 0"
+                                    >
+                                        <mat-slide-toggle
+                                            color="primary"
+                                            formControlName="home_delivery"
+                                        ></mat-slide-toggle>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input
+                                            type="submit"
+                                            class="btn btn-success"
+                                            name="submit"
+                                            value="Save"
+                                        />
+                                    </div>
+                                </div>
+                            </form>
+                            <br />
+                            <br />
+                            <form
+                                [formGroup]="minOrderValGroup"
+                                (ngSubmit)="onMinOrderValGroupSubmit()"
+                            >
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <span>
+                                            <strong>Minimum Order Value</strong>
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            formControlName="min_order_val"
+                                            name="min_order_val"
+                                            placeholder="Enter Minimum order value"
+                                        />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <input
+                                                type="submit"
+                                                class="btn btn-success"
+                                                name="submit"
+                                                value="Save"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</div>

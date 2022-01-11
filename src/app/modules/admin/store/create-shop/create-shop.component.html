@@ -3,15 +3,7 @@
     <div class="bg-card">
         <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
             <div
-                class="
-                    flex flex-col
-                    sm:flex-row
-                    flex-auto
-                    sm:items-center
-                    min-w-0
-                    my-8
-                    sm:my-12
-                "
+                class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-8 sm:my-12"
             >
                 <!-- Avatar and name -->
                 <div class="flex flex-auto items-center min-w-0">
@@ -24,15 +16,7 @@
                     <div class="flex flex-col min-w-0 ml-4">
                         <ng-container *transloco="let t">
                             <div
-                                class="
-                                    text-2xl
-                                    md:text-5xl
-                                    font-semibold
-                                    tracking-tight
-                                    leading-7
-                                    md:leading-snug
-                                    truncate
-                                "
+                                class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate"
                             >
                                 {{ t("welcome-back") }}, Brian!
                             </div>
@@ -45,7 +29,7 @@
                             <div
                                 class="ml-1.5 leading-6 truncate text-secondary"
                             >
-                                You have 2 new messages and 15 new tasks
+                                You have 0 new messages
                             </div>
                         </div>
                     </div>
@@ -64,17 +48,32 @@
                         ></mat-icon>
                         <span class="ml-2">Home</span>
                     </button>
-                    <button
+                    <a
+                        target="_blank"
                         class="fuse-mat-button-rounded"
+                        href="https://{{ domainname }}.direct-buy.in"
+                        mat-flat-button
+                        [color]="'primary'"
+                    >
+                        <fa-icon [icon]="faStore"></fa-icon>
+                        <span class="ml-2">Store</span>
+                    </a>
+                    <a
+                        target="_blank"
+                        class="fuse-mat-button-rounded"
+                        href="https://wa.me/?text=Dear Customer,We are delighted to inform you that our store is now online on https://{{
+                            domainname
+                        }}.direct-buy.in and orders can be placed online.
+                        Regards - {{ firstname }}"
                         mat-flat-button
                         [color]="'primary'"
                     >
                         <mat-icon
                             class="icon-size-5"
-                            [svgIcon]="'heroicons_solid:cog'"
+                            [svgIcon]="'heroicons_solid:chat'"
                         ></mat-icon>
-                        <span class="ml-2">Settings</span>
-                    </button>
+                        <span class="ml-2">Whatsapp</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -83,17 +82,67 @@
     <!-- Main -->
     <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
         <div class="w-full max-w-screen-xl mx-auto">
+            <div class="flex-1 min-w-0 pl-4">
+                <!-- Breadcrumbs -->
+                <div class="flex flex-wrap items-center font-medium">
+                    <div>
+                        <a
+                            href="javascript:void(0);"
+                            style="text-decoration: none"
+                            [routerLink]="['/dashboard']"
+                            class="whitespace-nowrap text-primary-500"
+                            >Home</a
+                        >
+                    </div>
+
+                    <div class="flex items-center ml-1 whitespace-nowrap">
+                        <mat-icon
+                            class="icon-size-5 text-secondary"
+                            [svgIcon]="'heroicons_solid:chevron-right'"
+                        ></mat-icon>
+                        <a
+                            href="javascript:void(0);"
+                            style="text-decoration: none"
+                            [routerLink]="['/store']"
+                            class="ml-1 text-primary-500"
+                            >Shops</a
+                        >
+                    </div>
+
+                    <div class="flex items-center ml-1 whitespace-nowrap">
+                        <mat-icon
+                            class="icon-size-5 text-secondary"
+                            [svgIcon]="'heroicons_solid:chevron-right'"
+                        ></mat-icon>
+                        <span class="ml-1 text-secondary">Create Shop</span>
+                    </div>
+                    <!-- <div class="flex items-center ml-1 whitespace-nowrap">
+                        <mat-icon
+                            class="icon-size-5 text-secondary"
+                            [svgIcon]="'heroicons_solid:chevron-right'"
+                        ></mat-icon>
+                        <span class="ml-1 text-secondary">Common</span>
+                    </div> -->
+                </div>
+                <!-- Title -->
+                <!-- <div class="mt-2">
+                    <h2
+                        class="
+                            text-3xl
+                            md:text-4xl
+                            font-extrabold
+                            tracking-tight
+                            leading-7
+                            sm:leading-10
+                            truncate
+                        "
+                    >
+                        Languages
+                    </h2>
+                </div> -->
+            </div>
             <div
-                class="
-                    flex flex-col
-                    m-8
-                    p-8
-                    pb-4
-                    bg-card
-                    rounded-2xl
-                    shadow
-                    overflow-hidden
-                "
+                class="flex flex-col m-8 p-8 pb-4 bg-card rounded-2xl shadow overflow-hidden"
             >
                 <p><b>Create Shop</b></p>
                 <form

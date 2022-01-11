@@ -45,7 +45,7 @@
                             <div
                                 class="ml-1.5 leading-6 truncate text-secondary"
                             >
-                                You have 2 new messages and 15 new tasks
+                                You have 0 new messages
                             </div>
                         </div>
                         <!-- <flash-messages></flash-messages> -->
@@ -65,23 +65,60 @@
                         ></mat-icon>
                         <span class="ml-2">Home</span>
                     </button>
-                    <button
+                    <a
+                        target="_blank"
                         class="fuse-mat-button-rounded"
+                        href="https://{{ domainname }}.direct-buy.in"
+                        mat-flat-button
+                        [color]="'primary'"
+                    >
+                        <fa-icon [icon]="faStore"></fa-icon>
+                        <span class="ml-2">Store</span>
+                    </a>
+                    <a
+                        target="_blank"
+                        class="fuse-mat-button-rounded"
+                        href="https://wa.me/?text=Dear Customer,We are delighted to inform you that our store is now online on https://{{
+                            domainname
+                        }}.direct-buy.in and orders can be placed online.
+                        Regards - {{firstname}}"
                         mat-flat-button
                         [color]="'primary'"
                     >
                         <mat-icon
                             class="icon-size-5"
-                            [svgIcon]="'heroicons_solid:cog'"
+                            [svgIcon]="'heroicons_solid:chat'"
                         ></mat-icon>
-                        <span class="ml-2">Settings</span>
-                    </button>
+                        <span class="ml-2">Whatsapp</span>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
     <div class="flex flex-col flex-auto w-full">
         <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
+            <div class="flex-1 min-w-0 pl-4">
+                <!-- Breadcrumbs -->
+                <div class="flex flex-wrap items-center font-medium">
+                    <div>
+                        <a
+                            href="javascript:void(0);"
+                            style="text-decoration: none"
+                            [routerLink]="['/dashboard']"
+                            class="whitespace-nowrap text-primary-500"
+                            >Home</a
+                        >
+                    </div>
+
+                    <div class="flex items-center ml-1 whitespace-nowrap">
+                        <mat-icon
+                            class="icon-size-5 text-secondary"
+                            [svgIcon]="'heroicons_solid:chevron-right'"
+                        ></mat-icon>
+                        <span class="ml-1 text-secondary">Payment</span>
+                    </div>
+                </div>
+            </div>
             <!-- Section title -->
             <div
                 class="
@@ -221,6 +258,20 @@
                         >
                             Add Payment
                         </button>
+                    </div>
+                    <div
+                        class="
+                            flex
+                            items-baseline
+                            justify-center
+                            w-full
+                            mt-3
+                            text-secondary
+                        "
+                    >
+                        <div class="text-md font-medium">
+                            Setup payment solution and attach to shop
+                        </div>
                     </div>
                 </div>
             </div>

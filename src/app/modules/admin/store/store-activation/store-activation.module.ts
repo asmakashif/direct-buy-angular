@@ -15,6 +15,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { SharedModule } from 'app/shared/shared.module';
 import { StoreActivationComponent } from 'app/modules/admin/store/store-activation/store-activation.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 //import { projectRoutes } from 'app/modules/admin/dashboards/project/project.routing';
 
 const storeActivationRoutes: Route[] = [
@@ -29,6 +30,7 @@ const storeActivationRoutes: Route[] = [
     imports: [
         RouterModule.forChild(storeActivationRoutes),
         FlashMessagesModule.forRoot(),
+        FontAwesomeModule,
         MatButtonModule,
         MatButtonToggleModule,
         MatDividerModule,

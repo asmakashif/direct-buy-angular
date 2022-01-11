@@ -1,6 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Routes } from '@angular/router';
+import { faStore } from '@fortawesome/free-solid-svg-icons';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { DashboardService } from '../dashboard/dashboard.service';
 import { StepsService } from './steps.service';
 //import { MatStepper } from '@angular/material/stepper';
 
@@ -10,6 +12,9 @@ import { StepsService } from './steps.service';
     styleUrls: ['./steps.component.scss'],
 })
 export class StepsComponent implements OnInit {
+    faStore = faStore;
+    domainname: any;
+    profileData: any;
     data: any;
     product_status: any;
     payment_status: any;
@@ -20,6 +25,8 @@ export class StepsComponent implements OnInit {
     dbcreation_status: any;
     constructor(
         private _stepsService: StepsService,
+        private _dashboardService: DashboardService,
+        private cd: ChangeDetectorRef,
         private _router: Router,
         private routes: ActivatedRoute,
         private _fuseConfirmationService: FuseConfirmationService
@@ -42,6 +49,15 @@ export class StepsComponent implements OnInit {
                 console.log(this.data.product_status);
             });
 
+        this._dashboardService
+            .getRetailerDetailsById(user_id)
+            .subscribe((data) => {
+                this.profileData = data;
+                this.firstname = this.profileData.firstname;
+                this.domainname = this.profileData.domainname;
+                this.cd.detectChanges();
+            });
+
         // if (this.isMobile()) {
         //     //alert('mobile');
         //     this._router.navigate(['/steps/' + routeParams.shopId]);
@@ -50,17 +66,40 @@ export class StepsComponent implements OnInit {
     }
 
     setUpProducts(): void {
+        // const confirmation = this._fuseConfirmationService.open({
+        //     message: 'Would you like to add products from our central database or you would like to add your own products',
+        //     // icon: {
+        //     //     show: true,
+        //     //     name: 'heroicons_outline:check',
+        //     //     color: 'primary',
+        //     // },
+        //     actions: {
+        //         confirm: {
+        //             label: 'Okay',
+        //             color: 'primary',
+        //         },
+        //     },
+        // });
+
+        // // Subscribe to the confirmation dialog closed action
+        // confirmation.afterClosed().subscribe((result) => {
+        //     // If the confirm button pressed...
+        //     if (result === 'confirmed') {
+        //         this._router.navigate(['/store/']);
+        //     }
+        // });
+
         const routeParams = this.routes.snapshot.params;
-        // this._router.navigate(['/product-config/' + routeParams.shopId]);
-        if (this.isMobile()) {
-            //alert('mobile');
-            this._router.navigate([
-                '/mobile/product-config/' + routeParams.shopId,
-            ]);
-            // this._router.resetConfig(this.mobileRoutes);
-        } else {
-            this._router.navigate(['/product-config/' + routeParams.shopId]);
-        }
+        this._router.navigate(['/product-config/' + routeParams.shopId]);
+        // if (this.isMobile()) {
+        //     //alert('mobile');
+        //     this._router.navigate([
+        //         '/mobile/product-config/' + routeParams.shopId,
+        //     ]);
+        //     // this._router.resetConfig(this.mobileRoutes);
+        // } else {
+        //     this._router.navigate(['/product-config/' + routeParams.shopId]);
+        // }
     }
 
     completePreviousStep(): void {

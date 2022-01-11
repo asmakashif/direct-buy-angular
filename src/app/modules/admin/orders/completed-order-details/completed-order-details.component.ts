@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { CompletedOrderDetailsService } from 'app/modules/admin/orders/completed-order-details/completed-order-details.service';
 import { Router, Params, ActivatedRoute } from '@angular/router';
-import { Data } from '../../../../Model/data';
+import { faStore } from '@fortawesome/free-solid-svg-icons';
 import { DashboardService } from '../../dashboard/dashboard.service';
 
 @Component({
@@ -13,6 +13,7 @@ import { DashboardService } from '../../dashboard/dashboard.service';
     styleUrls: ['./completed-order-details.component.css'],
 })
 export class CompletedOrderDetailsComponent implements OnInit {
+    faStore = faStore;
     displayedColumns: string[] = [
         'product_name',
         'product_price',
@@ -26,15 +27,19 @@ export class CompletedOrderDetailsComponent implements OnInit {
     order_code: any;
     c_fname: any;
     total: any;
+    domainname: any;
 
     constructor(
         private apiService: CompletedOrderDetailsService,
+        private _dashboardService: DashboardService,
         private _router: Router,
-        private routes: ActivatedRoute
+        private routes: ActivatedRoute,
+        private cd: ChangeDetectorRef
     ) {}
 
     ngOnInit(): void {
         const routeParams = this.routes.snapshot.params;
+        const user_id = localStorage.getItem('user_id');
         console.log(routeParams);
         this.apiService
             .getCompletedOrderById(routeParams.order_code)
@@ -54,6 +59,15 @@ export class CompletedOrderDetailsComponent implements OnInit {
             .subscribe((dataSource) => {
                 this.dataSource = dataSource;
                 console.log(this.dataSource);
+            });
+
+        this._dashboardService
+            .getRetailerDetailsById(user_id)
+            .subscribe((data) => {
+                this.profileData = data;
+                this.firstname = this.profileData.firstname;
+                this.domainname = this.profileData.domainname;
+                this.cd.detectChanges();
             });
     }
 }

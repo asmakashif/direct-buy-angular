@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -24,6 +25,7 @@ import { authSignupRoutes } from 'app/modules/auth/sign-up/sign-up.routing';
         MatProgressSpinnerModule,
         FuseCardModule,
         FuseAlertModule,
+        MatSelectModule,
         SharedModule,
     ],
 })

@@ -9,6 +9,8 @@ import {
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StoreActivationService } from 'app/modules/admin/store/store-activation/store-activation.service';
+import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { DashboardService } from '../../dashboard/dashboard.service';
 
 declare var $: any;
 
@@ -18,12 +20,16 @@ declare var $: any;
     styleUrls: ['./store-activation.component.scss'],
 })
 export class StoreActivationComponent implements OnInit {
+    faStore = faStore;
+    domainname: any;
+    profileData: any;
     storeCheckoutForm: FormGroup;
     sub;
     params: any;
     data: any;
     shop_payment_status: any;
     flashMessage: string;
+    firstname: any;
 
     constructor(
         private flashMessagesService: FlashMessagesService,
@@ -31,7 +37,8 @@ export class StoreActivationComponent implements OnInit {
         private apiService: StoreActivationService,
         private routes: ActivatedRoute,
         private _router: Router,
-        private cd: ChangeDetectorRef
+        private cd: ChangeDetectorRef,
+        private _dashboardService: DashboardService
     ) {}
 
     ngOnInit(): void {
@@ -44,6 +51,15 @@ export class StoreActivationComponent implements OnInit {
                 this.shop_payment_status = this.data.shop_payment_status;
                 this.cd.detectChanges();
                 console.log(this.data.shopId);
+            });
+
+        this._dashboardService
+            .getRetailerDetailsById(user_id)
+            .subscribe((data) => {
+                this.profileData = data;
+                this.firstname = this.profileData.firstname;
+                this.domainname = this.profileData.domainname;
+                this.cd.detectChanges();
             });
         // this.routes.paramMap.subscribe((params) => {
         //     this.storeCheckoutForm.patchValue(params);

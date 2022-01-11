@@ -101,12 +101,7 @@
                 <!-- Email field -->
                 <mat-form-field class="w-full">
                     <mat-label>Email address</mat-label>
-                    <input
-                        id="email"
-                        (keyup)="keyup($event.target.value)"
-                        matInput
-                        [formControlName]="'email'"
-                    />
+                    <input id="email" matInput [formControlName]="'email'" />
                     <mat-error
                         *ngIf="signUpForm.get('email').hasError('required')"
                     >
@@ -117,9 +112,7 @@
                     >
                         Please enter a valid email address
                     </mat-error>
-                    <mat-error *ngIf="signUpForm.get('email')">
-                        Email address already present
-                    </mat-error>
+                    <span id="emailMsg"></span>
                 </mat-form-field>
 
                 <!-- Password field -->
@@ -192,13 +185,20 @@
                     <mat-error> Password is required </mat-error>
                 </mat-form-field>
 
-                <!-- Company field -->
+                <!--Domain name -->
                 <mat-form-field class="w-full">
                     <mat-label>Domain</mat-label>
+                    <!-- <input
+                        id="company-confirm"
+                        matInput
+                        [formControlName]="'company'"
+                    /> -->
                     <input
                         id="company-confirm"
                         matInput
                         [formControlName]="'company'"
+                        (keyup)="onChange($event.target.value)"
+                        [(ngModel)]="desc"
                     />
                     <mat-error
                         *ngIf="signUpForm.get('company').hasError('required')"
@@ -210,7 +210,75 @@
                     >
                         Please, Enter valid name .
                     </mat-error>
+                    <span id="domainMsg"></span>
                 </mat-form-field>
+
+                <!-- Company field -->
+                <mat-form-field class="w-full" *ngIf="desc.length > 3">
+                    <mat-label>Your Shop Domain name will be</mat-label>
+                    <input
+                        id="domain"
+                        matInput
+                        [formControlName]="'domain'"
+                        readonly="true"
+                        value="{{ value }}.directbuy.in"
+                    />
+                </mat-form-field>
+
+                <!-- City field -->
+                <mat-form-field class="w-full">
+                    <mat-label>Enter your city name</mat-label>
+                    <input id="city" matInput [formControlName]="'city'" />
+                    <mat-error
+                        *ngIf="signUpForm.get('city').hasError('required')"
+                    >
+                        Please, Enter the city name
+                    </mat-error>
+
+                    <mat-error
+                        *ngIf="signUpForm.get('city').hasError('pattern')"
+                    >
+                        Please, Enter the city name
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- State field -->
+                <mat-form-field class="w-full">
+                    <mat-label>State</mat-label>
+                    <!-- <mat-select [formControlName]="'state'">
+                        <mat-option *ngFor="let state of stateList" [value]="state">{{ state }}</mat-option>
+                    </mat-select> -->
+
+                    <mat-select [formControlName]="'state'">
+                        <ng-container *ngFor="let state of stateList">
+                            <mat-option [value]="state">
+                                {{ state }}
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                    <mat-error
+                        *ngIf="signUpForm.get('state').hasError('required')"
+                    >
+                        Please, Enter the state
+                    </mat-error>
+
+                    <mat-error
+                        *ngIf="signUpForm.get('state').hasError('pattern')"
+                    >
+                        Please, Enter the state
+                    </mat-error>
+                </mat-form-field>
+                <!-- State field -->
+                <!-- <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>Enter your state name </mat-label>
+                    <mat-select [formControlName]="'state'">
+                        <mat-option *ngFor="let state of stateList" [value]="state">{{ state }}</mat-option>
+                      </mat-select>
+                      <mat-error
+                        *ngIf="signUpForm.get('state').hasError('required')">
+                        Please, select the state.
+                    </mat-error> 
+                </mat-form-field> -->
 
                 <!-- ToS and PP -->
                 <div class="inline-flex items-end w-full mt-1.5">
@@ -237,7 +305,7 @@
                 <input
                     type="submit"
                     class="btn btn-success"
-                    value=" Create your account"
+                    value=" Register"
                     id="checkBtn"
                     name="submit"
                     style="width: 100px"
@@ -335,14 +403,15 @@
         <div class="z-10 relative w-full max-w-2xl">
             <div class="text-7xl font-bold leading-none text-gray-100">
                 <div>Welcome to</div>
-                <div>our community</div>
+                <div>direct-buy</div>
             </div>
             <div class="mt-6 text-lg tracking-tight leading-6 text-gray-400">
-                Fuse helps developers to build organized and well coded
-                dashboards full of beautiful and rich modules. Join us and start
-                building your application today.
+                The Direct-Buy platform takes your local business online. With
+                Direct-Buy, you get a wider coverage, giving your customers the
+                choice of buying from their favourite store, at their
+                convenience.
             </div>
-            <div class="flex items-center mt-8">
+            <!-- <div class="flex items-center mt-8">
                 <div class="flex flex-0 items-center -space-x-1.5">
                     <img
                         class="
@@ -358,53 +427,11 @@
                         "
                         src="assets/images/avatars/female-18.jpg"
                     />
-                    <img
-                        class="
-                            flex-0
-                            w-10
-                            h-10
-                            rounded-full
-                            ring-4
-                            ring-offset-1
-                            ring-gray-800
-                            ring-offset-gray-800
-                            object-cover
-                        "
-                        src="assets/images/avatars/female-11.jpg"
-                    />
-                    <img
-                        class="
-                            flex-0
-                            w-10
-                            h-10
-                            rounded-full
-                            ring-4
-                            ring-offset-1
-                            ring-gray-800
-                            ring-offset-gray-800
-                            object-cover
-                        "
-                        src="assets/images/avatars/male-09.jpg"
-                    />
-                    <img
-                        class="
-                            flex-0
-                            w-10
-                            h-10
-                            rounded-full
-                            ring-4
-                            ring-offset-1
-                            ring-gray-800
-                            ring-offset-gray-800
-                            object-cover
-                        "
-                        src="assets/images/avatars/male-16.jpg"
-                    />
                 </div>
                 <div class="ml-4 font-medium tracking-tight text-gray-400">
                     More than 17k people joined us, it's your turn
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

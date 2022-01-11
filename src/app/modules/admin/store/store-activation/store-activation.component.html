@@ -3,15 +3,7 @@
     <div class="bg-card">
         <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
             <div
-                class="
-                    flex flex-col
-                    sm:flex-row
-                    flex-auto
-                    sm:items-center
-                    min-w-0
-                    my-8
-                    sm:my-12
-                "
+                class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-8 sm:my-12"
             >
                 <!-- Avatar and name -->
                 <div class="flex flex-auto items-center min-w-0">
@@ -24,15 +16,7 @@
                     <div class="flex flex-col min-w-0 ml-4">
                         <ng-container *transloco="let t">
                             <div
-                                class="
-                                    text-2xl
-                                    md:text-5xl
-                                    font-semibold
-                                    tracking-tight
-                                    leading-7
-                                    md:leading-snug
-                                    truncate
-                                "
+                                class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate"
                             >
                                 {{ t("welcome-back") }}, Brian!
                             </div>
@@ -45,7 +29,7 @@
                             <div
                                 class="ml-1.5 leading-6 truncate text-secondary"
                             >
-                                You have 2 new messages and 15 new tasks
+                                You have 0 new messages
                             </div>
                         </div>
                         <flash-messages></flash-messages>
@@ -65,17 +49,32 @@
                         ></mat-icon>
                         <span class="ml-2">Home</span>
                     </button>
-                    <button
+                    <a
+                        target="_blank"
                         class="fuse-mat-button-rounded"
+                        href="https://{{ domainname }}.direct-buy.in"
+                        mat-flat-button
+                        [color]="'primary'"
+                    >
+                        <fa-icon [icon]="faStore"></fa-icon>
+                        <span class="ml-2">Store</span>
+                    </a>
+                    <a
+                        target="_blank"
+                        class="fuse-mat-button-rounded"
+                        href="https://wa.me/?text=Dear Customer,We are delighted to inform you that our store is now online on https://{{
+                            domainname
+                        }}.direct-buy.in and orders can be placed online.
+                        Regards - {{ firstname }}"
                         mat-flat-button
                         [color]="'primary'"
                     >
                         <mat-icon
                             class="icon-size-5"
-                            [svgIcon]="'heroicons_solid:cog'"
+                            [svgIcon]="'heroicons_solid:chat'"
                         ></mat-icon>
-                        <span class="ml-2">Settings</span>
-                    </button>
+                        <span class="ml-2">Whatsapp</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -85,18 +84,9 @@
     <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
         <div class="w-full max-w-screen-xl mx-auto">
             <div
-                class="
-                    flex flex-col
-                    m-8
-                    p-8
-                    pb-4
-                    bg-card
-                    rounded-2xl
-                    shadow
-                    overflow-hidden
-                "
+                class="flex flex-col m-8 p-8 pb-4 bg-card rounded-2xl shadow overflow-hidden"
             >
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-2">
                         <button
                             class="lg:mt-6"
@@ -117,8 +107,7 @@
                             Next
                         </button>
                     </div>
-                </div>
-                <br />
+                </div> -->
                 <div *ngIf="shop_payment_status == 0">
                     <div class="row">
                         <div
@@ -159,13 +148,31 @@
                                         >
                                     </ng-container>
                                 </div>
-                                <a
-                                    href="javascript:void(0);"
+
+                                <button
+                                    class="lg:mt-6"
+                                    mat-flat-button
+                                    [color]="'warn'"
+                                    (click)="prevStep()"
+                                >
+                                    Back
+                                </button>
+                                &nbsp;
+                                <button
+                                    class="lg:mt-6"
+                                    mat-flat-button
+                                    [color]="'primary'"
                                     (click)="activateTrial(this.data.shopId)"
+                                >
+                                    Activate 3 months Trial
+                                </button>
+                                <!-- <a
+                                    href="javascript:void(0);"
+                                    
                                     class="btn btn-primary"
                                     onclick="return confirm('Are you sure to activate trial period of 3months?')?true:false;"
                                     >Activate 3 months Trial</a
-                                >
+                                > -->
                             </div>
                         </div>
                         <div
@@ -207,11 +214,20 @@
                                     </ng-container>
                                 </div>
                                 <button
-                                    class="ml-4"
+                                    class="lg:mt-6"
+                                    mat-flat-button
+                                    [color]="'warn'"
+                                    (click)="prevStep()"
+                                >
+                                    Back
+                                </button>
+                                &nbsp;
+                                <button
+                                    class="lg:mt-6"
                                     mat-flat-button
                                     [color]="'primary'"
                                 >
-                                    <span class="ml-2 mr-1">Activate</span>
+                                    Activate
                                 </button>
                             </div>
                         </div>
@@ -231,15 +247,16 @@
                             store.
                         </strong>
                     </span>
-                    <!-- <br />
-                    <a
-                        href="javascript:void(0);"
-                        class="btn btn-success ml-4"
-                        id="nextStep"
-                        (click)="complete()"
-                        style="width: 100px"
-                        >Completed</a
-                    > -->
+                    <div class="flex items-center">
+                        <button
+                            class="lg:mt-6"
+                            mat-flat-button
+                            [color]="'primary'"
+                            (click)="nextStep()"
+                        >
+                            Next
+                        </button>
+                    </div>
                 </div>
                 <!-- <form [formGroup]="storeCheckoutForm" autocomplete="off">
                     <div class="form-group">

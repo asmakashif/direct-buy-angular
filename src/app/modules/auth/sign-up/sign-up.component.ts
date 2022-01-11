@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+    ChangeDetectorRef,
+    Component,
+    OnInit,
+    ViewChild,
+    ViewEncapsulation,
+} from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
@@ -25,7 +31,11 @@ export class AuthSignUpComponent implements OnInit {
     showAlert: boolean = false;
     checkEmail: any;
     email: any;
-
+    value: any;
+    desc = '';
+    state = '';
+    stateList = ['Karnataka', 'Tamilnadu', 'Hyderabad', 'Mumbai'];
+    flashMessage: string;
     /**
      * Constructor
      */
@@ -33,7 +43,8 @@ export class AuthSignUpComponent implements OnInit {
         private apiService: CreateShopService,
         private _authService: AuthService,
         private _formBuilder: FormBuilder,
-        private _router: Router
+        private _router: Router,
+        private cd: ChangeDetectorRef
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -46,22 +57,38 @@ export class AuthSignUpComponent implements OnInit {
     ngOnInit(): void {
         // Create the form
         this.signUpForm = this._formBuilder.group({
-            name: ['', Validators.required],
+            name: ['', [Validators.required]],
             contact: [
+                '',
+                [Validators.required, Validators.pattern('^[0-9]{10}$')],
+            ],
+            email: [
                 '',
                 [
                     Validators.required,
-                    Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$'),
+                    Validators.email,
+                    Validators.pattern(
+                        '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'
+                    ),
                 ],
             ],
-            email: ['', [Validators.required, Validators.email]],
-            password: ['', Validators.required],
+            //password: ['', Validators.required],
+            password: ['', [Validators.required, Validators.minLength(8)]],
             confirm_password: ['', Validators.required],
             company: [
                 '',
                 [Validators.required, Validators.pattern("^[a-zA-Z']+")],
             ],
-            // title: ['', [Validators.pattern('^[A-Za-z0-9ñÑáéíóúÁÉÍÓÚ ]+$')],
+            domain: [''],
+            city: [
+                '',
+                [
+                    Validators.required,
+                    Validators.pattern("^[a-zA-Z']+"),
+                    Validators.minLength(4),
+                ],
+            ],
+            state: ['', Validators.required],
             agreements: ['', Validators.requiredTrue],
         });
 
@@ -72,21 +99,61 @@ export class AuthSignUpComponent implements OnInit {
 
             $('#submit').removeAttr('disabled', 'disabled');
         });
+
+        $(' #email').on('keyup', function () {
+            var email = $('#email').val();
+            $.ajax({
+                url: '/api/checkEmail.php/',
+                method: 'POST',
+                data: { email: email },
+                success: function (data) {
+                    if (data == 0) {
+                        $('#emailMsg').html('Good to go').css('color', 'green');
+                    } else {
+                        $('#emailMsg')
+                            .html('Email already present')
+                            .css('color', 'red');
+                    }
+                },
+            });
+        });
+
+        $(' #company-confirm').on('keyup', function () {
+            var domainname = $('#company-confirm').val();
+            $.ajax({
+                url: '/api/checkDomain.php/',
+                method: 'POST',
+                data: { domainname: domainname },
+                success: function (data) {
+                    if (data == 0) {
+                        $('#domainMsg')
+                            .html('Good to go')
+                            .css('color', 'green');
+                    } else {
+                        $('#domainMsg')
+                            .html('Domain already present')
+                            .css('color', 'red');
+                    }
+                },
+            });
+        });
     }
 
-    keyup(event) {
-        this._authService
-            .checkOtpVerification(this.signUpForm.value)
-            .subscribe((data) => {
-                this.checkEmail = data;
-                this.email = this.checkEmail.email;
-                // if (this.email == '') {
-                //     alert('proceed');
-                // } else {
-                //     alert('present');
-                // }
-                console.log(this.email);
-            });
+    // keyup(event) {
+    //     this._authService.checkOtpVerification(event).subscribe((data) => {
+    //         this.checkEmail = data;
+    //         this.email = this.checkEmail.email;
+    //         // if (this.email == '') {
+    //         //     alert('proceed');
+    //         // } else {
+    //         //     alert('present');
+    //         // }
+    //         console.log(this.email);
+    //     });
+    // }
+
+    onChange(value) {
+        this.value = value;
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -97,6 +164,7 @@ export class AuthSignUpComponent implements OnInit {
      * Sign up
      */
     signUp(): void {
+        console.log(this.signUpForm.value);
         // Do nothing if the form is invalid
         if (this.signUpForm.invalid) {
             return;
@@ -115,7 +183,8 @@ export class AuthSignUpComponent implements OnInit {
                 this._router.navigateByUrl('/confirmation-required');
             },
             (response) => {
-                this._router.navigateByUrl('/confirmation-required');
+                this.showFlashMessage('error');
+                this.ngOnInit();
                 // Re-enable the form
                 this.signUpForm.enable();
 
@@ -132,6 +201,25 @@ export class AuthSignUpComponent implements OnInit {
                 this.showAlert = true;
             }
         );
+    }
+
+    /**
+     * Show flash message
+     */
+    showFlashMessage(type: 'success' | 'error'): void {
+        // Show the message
+        this.flashMessage = type;
+
+        // Mark for check
+        this.cd.markForCheck();
+
+        // Hide it after 3 seconds
+        setTimeout(() => {
+            this.flashMessage = null;
+
+            // Mark for check
+            this.cd.markForCheck();
+        }, 3000);
     }
 
     // onSubmit() {

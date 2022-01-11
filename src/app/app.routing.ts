@@ -217,6 +217,20 @@ export const appRoutes: Route[] = [
                     ).then((m) => m.AddProductModule),
             },
             {
+                path: 'add-category/:shopId/:shop_name',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/product/add-category/add-category.module'
+                    ).then((m) => m.AddCategoryModule),
+            },
+            {
+                path: 'add-product-type/:shopId/:shop_name/:product_type',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/product/add-product-type/add-product-type.module'
+                    ).then((m) => m.AddProductTypeModule),
+            },
+            {
                 path: 'ecommerce',
                 loadChildren: () =>
                     import('app/modules/admin/ecommerce/ecommerce.module').then(
@@ -280,42 +294,42 @@ export const appRoutes: Route[] = [
                     ).then((m) => m.PendingOrdersModule),
             },
             {
-                path: 'order-details/:order_code/:shopId',
+                path: 'order-details/:order_code/:shopId/:shop_name',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/orders/order-details/order-details.module'
                     ).then((m) => m.OrderDetailsModule),
             },
             {
-                path: 'new-registration/:shopId',
+                path: 'new-registration/:shopId/:shop_name',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/orders/new-registration/new-registration.module'
                     ).then((m) => m.NewRegistrationModule),
             },
             {
-                path: 'open-orders/:shopId',
+                path: 'open-orders/:shopId/:shop_name',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/orders/open-orders/open-orders.module'
                     ).then((m) => m.OpenOrdersModule),
             },
             {
-                path: 'orders-fulfilled/:shopId',
+                path: 'orders-fulfilled/:shopId/:shop_name',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/orders/orders-fulfilled/orders-fulfilled.module'
                     ).then((m) => m.OrdersFulfilledModule),
             },
             {
-                path: 'sales/:shopId',
+                path: 'sales/:shopId/:shop_name',
                 loadChildren: () =>
                     import('app/modules/admin/orders/sales/sales.module').then(
                         (m) => m.SalesModule
                     ),
             },
             {
-                path: 'unique-orders/:shopId',
+                path: 'unique-orders/:shopId/:shop_name',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/orders/unique-orders/unique-orders.module'
@@ -364,6 +378,13 @@ export const appRoutes: Route[] = [
                     ).then((m) => m.AttachPaymentModule),
             },
             {
+                path: 'store-payment/:shopId/:shop_name',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/store/store-payment/store-payment.module'
+                    ).then((m) => m.StorePaymentModule),
+            },
+            {
                 path: 'store-payment/:shopId',
                 loadChildren: () =>
                     import(
@@ -406,11 +427,18 @@ export const appRoutes: Route[] = [
                     ),
             },
             {
-                path: 'my-account',
+                path: 'my-subscription',
                 loadChildren: () =>
                     import(
-                        'app/modules/auth/my-account/my-account.module'
-                    ).then((m) => m.MyAccountModule),
+                        'app/modules/auth/my-subscription/my-subscription.module'
+                    ).then((m) => m.MySubscriptionModule),
+            },
+            {
+                path: 'settings',
+                loadChildren: () =>
+                    import('app/modules/admin/settings/settings.module').then(
+                        (m) => m.SettingsModule
+                    ),
             },
             {
                 path: 'table-edit/:shopId',
@@ -424,35 +452,84 @@ export const appRoutes: Route[] = [
                 path: 'HomeDeliverySetting',
                 loadChildren: () =>
                     import(
-                        'app/modules/admin/home-delivery-setting/home-delivery-setting.module'
+                        'app/modules/admin/general-settings/home-delivery-setting/home-delivery-setting.module'
                     ).then((m) => m.HomeDeliverySettingModule),
             },
             {
                 path: 'minOrderValue',
                 loadChildren: () =>
                     import(
-                        'app/modules/admin/min-order-val/min-order-val.module'
+                        'app/modules/admin/general-settings/min-order-val/min-order-val.module'
                     ).then((m) => m.MinOrderValModule),
             },
             {
-                path: 'minOrderConfig/:shop_id',
+                path: 'minOrderConfig/:shopId/:shop_name',
                 loadChildren: () =>
                     import(
-                        'app/modules/admin/min-order-config/min-order-config.module'
+                        'app/modules/admin/general-settings/min-order-config/min-order-config.module'
                     ).then((m) => m.MinOrderConfigModule),
             },
             {
-                path: 'homeDelConfig/:shop_id',
+                path: 'homeDelConfig/:shopId/:shop_name',
                 loadChildren: () =>
                     import(
-                        'app/modules/admin/home-del-config/home-del-config.module'
+                        'app/modules/admin/general-settings/home-del-config/home-del-config.module'
                     ).then((m) => m.HomeDelConfigModule),
+            },
+            {
+                path: 'whatsapp',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/general-settings/whatsapp/whatsapp.module'
+                    ).then((m) => m.WhatsAppModule),
             },
             {
                 path: 'reports',
                 loadChildren: () =>
                     import('app/modules/admin/reports/reports.module').then(
                         (m) => m.ReportsComponentModule
+                    ),
+            },
+            {
+                path: 'reports',
+                loadChildren: () =>
+                    import('app/modules/admin/reports/reports.module').then(
+                        (m) => m.ReportsComponentModule
+                    ),
+            },
+            {
+                path: 'invoice/:order_code',
+                loadChildren: () =>
+                    import('app/modules/admin/invoice/invoice.module').then(
+                        (m) => m.InvoiceComponentModule
+                    ),
+            },
+            {
+                path: 'A5/:order_code',
+                loadChildren: () =>
+                    import('app/modules/admin/A5/A5.module').then(
+                        (m) => m.A5ComponentModule
+                    ),
+            },
+            {
+                path: 'A6/:order_code',
+                loadChildren: () =>
+                    import('app/modules/admin/A6/A6.module').then(
+                        (m) => m.A6ComponentModule
+                    ),
+            },
+            {
+                path: 'A7/:order_code',
+                loadChildren: () =>
+                    import('app/modules/admin/A7/A7.module').then(
+                        (m) => m.A7ComponentModule
+                    ),
+            },
+            {
+                path: 'A8/:order_code',
+                loadChildren: () =>
+                    import('app/modules/admin/A8/A8.module').then(
+                        (m) => m.A8ComponentModule
                     ),
             },
             {

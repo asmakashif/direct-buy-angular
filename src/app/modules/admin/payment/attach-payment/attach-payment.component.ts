@@ -1,14 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import {
-    FormGroup,
-    FormBuilder,
-    Validators,
-    NgForm,
-    FormArray,
-    FormControl,
-} from '@angular/forms';
-import { StorePaymentService } from 'app/modules/admin/store/store-payment/store-payment.service';
-import { Router, Params, ActivatedRoute } from '@angular/router';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { DashboardService } from '../../dashboard/dashboard.service';
 import { AttachPaymentService } from './attach-payment.service';
 
 @Component({
@@ -17,6 +12,9 @@ import { AttachPaymentService } from './attach-payment.service';
     styleUrls: ['./attach-payment.component.scss'],
 })
 export class AttachPaymentComponent implements OnInit {
+    faStore = faStore;
+    profileData: any;
+    domainname: any;
     payment: any;
     paymentForm: FormGroup;
     selection = [];
@@ -25,12 +23,15 @@ export class AttachPaymentComponent implements OnInit {
     imagePath: string = '/assets/icons/';
     image: any;
     shopPayment: any;
+    firstname: any;
     constructor(
         private formBuilder: FormBuilder,
         private _apiService: AttachPaymentService,
+        private _dashboardService: DashboardService,
         private _router: Router,
         private routes: ActivatedRoute,
-        private cd: ChangeDetectorRef
+        private cd: ChangeDetectorRef,
+        private _fuseConfirmationService: FuseConfirmationService
     ) {}
 
     ngOnInit(): void {
@@ -49,6 +50,14 @@ export class AttachPaymentComponent implements OnInit {
                     //alert(error.message);
                 }
             );
+        this._dashboardService
+            .getRetailerDetailsById(user_id)
+            .subscribe((data) => {
+                this.profileData = data;
+                this.firstname = this.profileData.firstname;
+                this.domainname = this.profileData.domainname;
+                this.cd.detectChanges();
+            });
     }
 
     strPayment(e) {
@@ -84,8 +93,43 @@ export class AttachPaymentComponent implements OnInit {
             user_id: user_id,
             payment_name: routeParams.payment_name,
         };
+
         this._apiService.saveStrPayments(data).subscribe((data) => {
             this.ngOnInit();
+        });
+    }
+
+    removeFromStr(shops): void {
+        const routeParams = this.routes.snapshot.params;
+        const user_id = localStorage.getItem('user_id');
+        const data = {
+            shopId: shops.shopId,
+            user_id: user_id,
+            payment_name: routeParams.payment_name,
+        };
+
+        const confirmation = this._fuseConfirmationService.open({
+            title: 'Delete payment',
+            message:
+                'Confirm, you wish to remove this payment gateway from' +
+                shops.shop_name,
+            actions: {
+                confirm: {
+                    label: 'Delete',
+                },
+            },
+        });
+
+        // Subscribe to the confirmation dialog closed action
+        confirmation.afterClosed().subscribe((result) => {
+            // If the confirm button pressed...
+            if (result === 'confirmed') {
+                this._apiService
+                    .deleteStrPaymentByShopId(data)
+                    .subscribe((data) => {
+                        this.ngOnInit();
+                    });
+            }
         });
     }
 

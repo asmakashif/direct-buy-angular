@@ -52,6 +52,16 @@ export class ProductConfigService {
         );
     }
 
+    pushProductsTOStrDb(shopId: string): Observable<any> {
+        return this.http.get('/api/mobileAPI/pushProductsTOStrDb.php?shopId=' + shopId);
+    }
+
+    skipProductSetup(shopId: string): Observable<any> {
+        return this.http.get(
+            '/api/products/skipProductSetup.php?shopId=' + shopId
+        );
+    }
+
     // getProductsByBrandGroup(user: Data): Observable<ApiResponse> {
     //     return this.http.post<ApiResponse>(
     //         '/api/getProductsByBrandGroup.php',

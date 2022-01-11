@@ -1,0 +1,225 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div class="bg-card">
+        <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
+            <div
+                class="
+                    flex flex-col
+                    sm:flex-row
+                    flex-auto
+                    sm:items-center
+                    min-w-0
+                    my-8
+                    sm:my-12
+                "
+            >
+                <!-- Avatar and name -->
+                <div class="flex flex-auto items-center min-w-0">
+                    <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
+                        <img
+                            class="w-full h-full object-cover"
+                            src="assets/images/avatars/avatar.png"
+                        />
+                    </div>
+                    <div class="flex flex-col min-w-0 ml-4">
+                        <ng-container *transloco="let t">
+                            <div
+                                class="
+                                    text-2xl
+                                    md:text-5xl
+                                    font-semibold
+                                    tracking-tight
+                                    leading-7
+                                    md:leading-snug
+                                    truncate
+                                "
+                            >
+                                {{ t("welcome-back") }}, Brian!
+                            </div>
+                        </ng-container>
+                        <div class="flex items-center">
+                            <mat-icon
+                                class="icon-size-5"
+                                [svgIcon]="'heroicons_solid:bell'"
+                            ></mat-icon>
+                            <div
+                                class="ml-1.5 leading-6 truncate text-secondary"
+                            >
+                                You have 0 new messages
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Actions -->
+                <div class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3">
+                    <button
+                        class="fuse-mat-button-rounded bg-accent-700"
+                        mat-flat-button
+                        [color]="'accent'"
+                        [routerLink]="['/dashboard']"
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:home'"
+                        ></mat-icon>
+                        <span class="ml-2">Home</span>
+                    </button>
+                    <a
+                        target="_blank"
+                        class="fuse-mat-button-rounded"
+                        href="https://{{ domainname }}.direct-buy.in"
+                        mat-flat-button
+                        [color]="'primary'"
+                    >
+                        <fa-icon [icon]="faStore"></fa-icon>
+                        <span class="ml-2">Store</span>
+                    </a>
+                    <a
+                        target="_blank"
+                        class="fuse-mat-button-rounded"
+                        href="https://wa.me/?text=Dear Customer,We are delighted to inform you that our store is now online on https://{{
+                            domainname
+                        }}.direct-buy.in and orders can be placed online.
+                        Regards - {{firstname}}"
+                        mat-flat-button
+                        [color]="'primary'"
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:chat'"
+                        ></mat-icon>
+                        <span class="ml-2">Whatsapp</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <div class="flex-1 min-w-0 pl-3">
+                <!-- Breadcrumbs -->
+                <div class="flex flex-wrap items-center font-medium">
+                    <div>
+                        <a
+                            href="javascript:void(0);"
+                            style="text-decoration: none"
+                            (click)="storeDashboard()"
+                            class="whitespace-nowrap text-primary-500"
+                            >Store Dashboard</a
+                        >
+                    </div>
+                    <div class="flex items-center ml-1 whitespace-nowrap">
+                        <mat-icon
+                            class="icon-size-5 text-secondary"
+                            [svgIcon]="'heroicons_solid:chevron-right'"
+                        ></mat-icon>
+                        <a
+                            href="javascript:void(0);"
+                            style="text-decoration: none"
+                            (click)="gotToAddProduct()"
+                            class="ml-1 text-primary-500"
+                            >Add Product</a
+                        >
+                    </div>
+                    <div class="flex items-center ml-1 whitespace-nowrap">
+                        <mat-icon
+                            class="icon-size-5 text-secondary"
+                            [svgIcon]="'heroicons_solid:chevron-right'"
+                        ></mat-icon>
+                        <span class="ml-1 text-secondary"
+                            >Add Product Type</span
+                        >
+                    </div>
+                </div>
+            </div>
+            <div
+                class="
+                    flex flex-col
+                    m-8
+                    p-8
+                    pb-4
+                    bg-card
+                    rounded-2xl
+                    shadow
+                    overflow-hidden
+                "
+            >
+                <form [formGroup]="selectedProductForm" autocomplete="off">
+                    <div class="flex flex-col sm:flex-row p-8">
+                        <div class="flex flex-auto flex-wrap">
+                            <!-- Name, SKU & etc. -->
+                            <div class="flex flex-col w-full lg:w-2/4 sm:pl-8">
+                                <!-- Name -->
+                                <mat-form-field class="w-full">
+                                    <mat-label>Product Type</mat-label>
+                                    <input
+                                        matInput
+                                        [formControlName]="'product_type'"
+                                    />
+                                </mat-form-field>
+                            </div>
+
+                            <!-- Payment Name, Merchant Key-->
+                            <div class="flex flex-col w-full lg:w-2/4 sm:pl-8">
+                                <mat-form-field class="w-full">
+                                    <mat-label>Product Sub Type</mat-label>
+
+                                    <input
+                                        matInput
+                                        [formControlName]="'product_sub_type'"
+                                    />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="
+                            flex
+                            items-center
+                            justify-between
+                            w-full
+                            px-8
+                            py-4
+                        "
+                    >
+                        <div class="flex items-center">
+                            <div
+                                class="flex items-center mr-4"
+                                *ngIf="flashMessage"
+                            >
+                                <ng-container
+                                    *ngIf="flashMessage === 'success'"
+                                >
+                                    <mat-icon
+                                        class="text-green-500"
+                                        [svgIcon]="'heroicons_outline:check'"
+                                    ></mat-icon>
+                                    <span class="ml-2">Category Added</span>
+                                </ng-container>
+                                <ng-container *ngIf="flashMessage === 'error'">
+                                    <mat-icon
+                                        class="text-red-500"
+                                        [svgIcon]="'heroicons_outline:x'"
+                                    ></mat-icon>
+                                    <span class="ml-2"
+                                        >An error occurred, try again!</span
+                                    >
+                                </ng-container>
+                            </div>
+                            <button
+                                mat-flat-button
+                                [color]="'primary'"
+                                (click)="addProductType()"
+                            >
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

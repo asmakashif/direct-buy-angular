@@ -124,6 +124,24 @@ export class DashboardService {
         );
     }
 
+    getAllOrdersByStore(shopId: string): Observable<ApiResponse> {
+        return this._httpClient.get<ApiResponse>(
+            '/api/orders/getAllOrdersByStore.php?shopId=' + shopId
+        );
+    }
+
+    getPendingOrdersByStore(shopId: string): Observable<ApiResponse> {
+        return this._httpClient.get<ApiResponse>(
+            '/api/orders/pendingOrdersByStr.php?shopId=' + shopId
+        );
+    }
+
+    getCompletedOrdersByStore(shopId: string): Observable<ApiResponse> {
+        return this._httpClient.get<ApiResponse>(
+            '/api/orders/completedOrdersByStr.php?shopId=' + shopId
+        );
+    }
+
     getProductsByStr(shopId): Observable<any> {
         return this._httpClient.get(
             '/api/products/getStoreProducts.php?shopId=' + shopId
@@ -210,6 +228,24 @@ export class DashboardService {
     deactivateShop(shopId): Observable<InventoryProduct> {
         return this._httpClient.get<InventoryProduct>(
             '/api/store_setting/deactivateShop.php?shopId=' + shopId
+        );
+    }
+
+    getCategories(): Observable<any> {
+        return this._httpClient.get('/api/mobileAPI/getCategory.php');
+    }
+
+    getBrand(): Observable<any> {
+        return this._httpClient.get('/api/mobileAPI/getBrand.php');
+    }
+
+    getProductType(): Observable<any> {
+        return this._httpClient.get('/api/mobileAPI/getProductType.php');
+    }
+
+    pushProductsTOStrDb(shopId: string): Observable<any> {
+        return this._httpClient.get(
+            '/api/mobileAPI/pushProductsTOStrDb.php?shopId=' + shopId
         );
     }
 }

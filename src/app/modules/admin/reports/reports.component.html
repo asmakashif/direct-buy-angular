@@ -1,6 +1,27 @@
   
-<p>
+<!-- <p>
     Print this
   </p>
     
-  <button (click)="printPage()">print</button>
+  <button (click)="printPage()">print</button> -->
+  <div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Order Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let dt of repots; let i = index;">
+        <th scope="row">{{i + 1}}</th>
+        <td>{{dt.order_code}}</td>
+        <td>{{dt.c_fname}}</td>
+        <td><a  class="btn btn-success btn-sm" routerLink="/invoice/{{dt.order_code}}">View</a></td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>

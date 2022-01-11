@@ -13,6 +13,10 @@ import { HttpClient } from '@angular/common/http';
 import { DashboardService } from 'app/modules/admin/dashboard/dashboard.service';
 import { AddProductService } from './add-product.service';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { faStore } from '@fortawesome/free-solid-svg-icons';
+import * as $ from 'jquery';
+
+declare var $: any;
 
 @Component({
     selector: 'app-add-product',
@@ -20,19 +24,38 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
     styleUrls: ['./add-product.component.scss'],
 })
 export class AddProductComponent implements OnInit {
+    faStore = faStore;
+    profileData: any;
+    domainname: any;
     products: any;
     selectedProduct: InventoryProduct;
     selectedProductForm: any;
     editCache: { [key: string]: any } = {};
     flashMessage: string;
     keyword = 'category';
-    tags: InventoryProduct[];
-    filteredTags: InventoryProduct[];
+    //tags: InventoryProduct[];
+    filteredCategories: InventoryProduct[];
+    filteredSubCategories: InventoryProduct[];
     // tagsEditMode: boolean = false;
-    category: any;
+    category: any[] = [];
+    sub_category: any;
+    brand: any;
+    filteredBrand: any;
+    product_sub_type: any;
+    product_type: any;
+    filteredProductType: any;
+    filteredProductSubType: any;
+
+    filteredList1: any;
+
+    selectedCategory: string[] = this.category;
+    firstname: any;
+    //filteredDataToSearch: any[] = [];
+
     constructor(
         private _fuseConfirmationService: FuseConfirmationService,
         private _addProductService: AddProductService,
+        private _dashboardService: DashboardService,
         private formBuilder: FormBuilder,
         private _router: Router,
         private routes: ActivatedRoute,
@@ -43,7 +66,6 @@ export class AddProductComponent implements OnInit {
     ngOnInit(): void {
         const user_id = localStorage.getItem('user_id');
         const routeParams = this.routes.snapshot.params;
-
         // Create the selected product form
         this.selectedProductForm = this.formBuilder.group({
             user_id: [user_id],
@@ -67,12 +89,76 @@ export class AddProductComponent implements OnInit {
 
         this._addProductService.getCategories().subscribe((category) => {
             this.category = category;
-            console.log(this.category);
+            this.filteredList1 = this.category.slice();
         });
+
+        // this._addProductService.getSubCategory().subscribe((sub_category) => {
+        //     this.sub_category = sub_category;
+        // });
+
+        this._addProductService.getBrand().subscribe((brand) => {
+            this.brand = brand;
+        });
+
+        this._addProductService.getProductType().subscribe((data) => {
+            this.product_type = data;
+        });
+
+        // this._addProductService.getProductSubType().subscribe((data) => {
+        //     this.product_sub_type = data;
+        // });
+
+        this._dashboardService
+            .getRetailerDetailsById(user_id)
+            .subscribe((data) => {
+                this.profileData = data;
+                this.firstname = this.profileData.firstname;
+                this.domainname = this.profileData.domainname;
+                this.cd.detectChanges();
+            });
     }
 
+    onChangeCategory(ob) {
+        let category = ob.value;
+        if (category) {
+            this._httpClient
+                .get('/api/mobileAPI/getSubCategory.php?category=' + category)
+                .subscribe((data) => {
+                    this.sub_category = data;
+                });
+        } else {
+            this.sub_category = null;
+        }
+    }
+
+    onChangeProductType(ob) {
+        let product_type = ob.value;
+        if (product_type) {
+            this._httpClient
+                .get(
+                    '/api/mobileAPI/getProductSubType.php?product_type=' +
+                        product_type
+                )
+                .subscribe((data) => {
+                    this.product_sub_type = data;
+                });
+        } else {
+            this.product_sub_type = null;
+        }
+    }
+
+    // filterTags(event): void {
+    //     // Get the value
+    //     const value = event.target.value.toLowerCase();
+
+    //     // Filter the tags
+    //     this.filteredCategories = this.category.filter((tag) =>
+    //         tag.category.toLowerCase().includes(value)
+    //     );
+    // }
+
     /**
-     * Filter tags
+     * Filter categories
      *
      * @param event
      */
@@ -81,89 +167,93 @@ export class AddProductComponent implements OnInit {
         const value = event.target.value.toLowerCase();
 
         // Filter the tags
-        this.filteredTags = this.category.filter((tag) =>
+        this.filteredCategories = this.category.filter((tag) =>
             tag.category.toLowerCase().includes(value)
+        );
+
+        this.filteredSubCategories = this.sub_category.filter((tag) =>
+            tag.sub_category.toLowerCase().includes(value)
+        );
+
+        this.filteredBrand = this.brand.filter((tag) =>
+            tag.brand.toLowerCase().includes(value)
+        );
+
+        this.filteredProductType = this.product_type.filter((tag) =>
+            tag.product_type.toLowerCase().includes(value)
+        );
+
+        this.filteredProductSubType = this.product_sub_type.filter((tag) =>
+            tag.product_sub_type.toLowerCase().includes(value)
         );
     }
 
     /**
-     * Filter tags input key down event
+     * Filter categories input key down event
      *
      * @param event
      */
-    filterTagsInputKeyDown(event): void {
+    filterTagInputKeyDown(event): void {
         // Return if the pressed key is not 'Enter'
         if (event.key !== 'Enter') {
             return;
         }
-
         // If there is no tag available...
-        if (this.filteredTags.length === 0) {
-            // Create the tag
-            this.createTag(event.target.value);
-
+        if (this.filteredCategories.length === 0) {
             // Clear the input
             event.target.value = '';
-
+            // Return
+            return;
+        }
+        if (this.filteredSubCategories.length === 0) {
+            // Clear the input
+            event.target.value = '';
             // Return
             return;
         }
 
-        // If there is a tag...
-        const category = this.filteredTags[0];
-        const isTagApplied = this.selectedProduct.category.find(
-            (base_product_id) => base_product_id === category.base_product_id
-        );
-
-        // If the found tag is already applied to the product...
-        if (isTagApplied) {
-            // Remove the tag from the product
-            this.removeTagFromProduct(category);
-        } else {
-            // Otherwise add the tag to the product
-            this.addTagToProduct(category);
+        if (this.filteredBrand.length === 0) {
+            // Clear the input
+            event.target.value = '';
+            // Return
+            return;
         }
+
+        if (this.filteredProductType.length === 0) {
+            // Clear the input
+            event.target.value = '';
+            // Return
+            return;
+        }
+
+        if (this.filteredProductSubType.length === 0) {
+            // Clear the input
+            event.target.value = '';
+            // Return
+            return;
+        }
+        // If there is a tag...
+        const category = this.filteredCategories[0];
+        const sub_category = this.filteredSubCategories[0];
+        const brand = this.filteredBrand[0];
+        const product_type = this.filteredProductType[0];
+        const product_sub_type = this.filteredProductSubType[0];
+        // const isTagApplied = this.selectedProduct.category.find(
+        //     (base_product_id) => base_product_id === category.base_product_id
+        // );
     }
 
     /**
-     * Add tag to the product
+     * Create a new category
      *
-     * @param tag
+     * @param title
      */
-    addTagToProduct(category: InventoryProduct): void {
-        // Add the tag
-        this.selectedProduct.category.unshift(category.base_product_id);
-
-        // Update the selected product form
-        this.selectedProductForm
-            .get('category')
-            .patchValue(this.selectedProduct.category);
-
-        // Mark for check
-        this.cd.markForCheck();
-    }
-
-    /**
-     * Remove tag from the product
-     *
-     * @param tag
-     */
-    removeTagFromProduct(category: InventoryProduct): void {
-        // Remove the tag
-        this.selectedProduct.category.splice(
-            this.selectedProduct.category.findIndex(
-                (item) => item === category.base_product_id
-            ),
-            1
-        );
-
-        // Update the selected product form
-        this.selectedProductForm
-            .get('category')
-            .patchValue(this.selectedProduct.category);
-
-        // Mark for check
-        this.cd.markForCheck();
+    createCategory(): void {
+        // Create tag on the server
+        const routeParams = this.routes.snapshot.params;
+        this._router.navigate([
+            '/add-category/' + routeParams.shopId + '/' + routeParams.shop_name,
+        ]);
     }
 
     /**
@@ -171,16 +261,31 @@ export class AddProductComponent implements OnInit {
      *
      * @param title
      */
-    createTag(category: string): void {
-        const cat = {
-            category,
+    createBrand(brand: string): void {
+        const routeParams = this.routes.snapshot.params;
+        const shopId = routeParams.shopId;
+        const user_id = localStorage.getItem('user_id');
+        const tag = {
+            brand,
+            shopId,
+            user_id,
         };
-
         // Create tag on the server
-        // this._inventoryService.createTag(tag).subscribe((response) => {
-        //     // Add the tag to the product
-        //     this.addTagToProduct(response);
-        // });
+        this._addProductService.createBrand(tag).subscribe((response) => {});
+    }
+
+    createProductType(newProductTypeInput): void {
+        //alert(newProductTypeInput);
+        // Create tag on the server
+        const routeParams = this.routes.snapshot.params;
+        this._router.navigate([
+            '/add-product-type/' +
+                routeParams.shopId +
+                '/' +
+                routeParams.shop_name +
+                '/' +
+                newProductTypeInput,
+        ]);
     }
 
     /**
@@ -188,12 +293,66 @@ export class AddProductComponent implements OnInit {
      *
      * @param inputValue
      */
-    shouldShowCreateTagButton(inputValue: string): boolean {
+    shouldShowCreateCategoryButton(inputValue: string): boolean {
         //alert(inputValue);
         return !!!(
             inputValue === '' ||
             this.category.findIndex(
                 (cat) => cat.category.toLowerCase() === inputValue.toLowerCase()
+            ) > -1
+        );
+    }
+
+    /**
+     * Should the create tag button be visible
+     *
+     * @param inputValue
+     */
+    shouldShowCreateSubCategoryButton(inputValue: string): boolean {
+        //alert(inputValue);
+        return !!!(
+            inputValue === '' ||
+            this.sub_category.findIndex(
+                (cat) =>
+                    cat.sub_category.toLowerCase() === inputValue.toLowerCase()
+            ) > -1
+        );
+    }
+
+    /**
+     * Should the create tag button be visible
+     *
+     * @param inputValue
+     */
+    shouldShowCreateBrandButton(inputValue: string): boolean {
+        //alert(inputValue);
+        return !!!(
+            inputValue === '' ||
+            this.brand.findIndex(
+                (cat) => cat.brand.toLowerCase() === inputValue.toLowerCase()
+            ) > -1
+        );
+    }
+
+    shouldShowCreateProductTypeButton(inputValue: string): boolean {
+        //alert(inputValue);
+        return !!!(
+            inputValue === '' ||
+            this.product_type.findIndex(
+                (cat) =>
+                    cat.product_type.toLowerCase() === inputValue.toLowerCase()
+            ) > -1
+        );
+    }
+
+    shouldShowCreateProductSubTypeButton(inputValue: string): boolean {
+        //alert(inputValue);
+        return !!!(
+            inputValue === '' ||
+            this.product_sub_type.findIndex(
+                (cat) =>
+                    cat.product_sub_type.toLowerCase() ===
+                    inputValue.toLowerCase()
             ) > -1
         );
     }
@@ -350,5 +509,12 @@ export class AddProductComponent implements OnInit {
             // Mark for check
             this.cd.markForCheck();
         }, 3000);
+    }
+
+    storeDashboard(): void {
+        const routeParams = this.routes.snapshot.params;
+        this._router.navigate([
+            '/dashboard/' + routeParams.shopId + '/' + routeParams.shop_name,
+        ]);
     }
 }

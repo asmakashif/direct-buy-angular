@@ -2,7 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { faStore } from '@fortawesome/free-solid-svg-icons';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { DashboardService } from '../../dashboard/dashboard.service';
 import { ManagePaymentService } from './manage-payment.service';
 
 @Component({
@@ -11,13 +13,18 @@ import { ManagePaymentService } from './manage-payment.service';
     styleUrls: ['./manage-payment-gateway.component.scss'],
 })
 export class ManagePaymentGatewayComponent implements OnInit {
+    faStore = faStore;
+    profileData: any;
+    domainname: any;
     selectedPaymentForm: any;
     paymentData: any;
     provider_type: any;
     flashMessage: string;
+    firstname: any;
 
     constructor(
         private _fuseConfirmationService: FuseConfirmationService,
+        private _dashboardService: DashboardService,
         private formBuilder: FormBuilder,
         private _paymentService: ManagePaymentService,
         private _router: Router,
@@ -47,6 +54,15 @@ export class ManagePaymentGatewayComponent implements OnInit {
                 this.paymentData = data;
                 this.provider_type = this.paymentData.provider_type;
                 console.log(this.provider_type);
+            });
+
+        this._dashboardService
+            .getRetailerDetailsById(user_id)
+            .subscribe((data) => {
+                this.profileData = data;
+                this.firstname = this.profileData.firstname;
+                this.domainname = this.profileData.domainname;
+                this.cd.detectChanges();
             });
     }
 

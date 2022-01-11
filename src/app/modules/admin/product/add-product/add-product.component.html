@@ -3,15 +3,7 @@
     <div class="bg-card">
         <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
             <div
-                class="
-                    flex flex-col
-                    sm:flex-row
-                    flex-auto
-                    sm:items-center
-                    min-w-0
-                    my-8
-                    sm:my-12
-                "
+                class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-8 sm:my-12"
             >
                 <!-- Avatar and name -->
                 <div class="flex flex-auto items-center min-w-0">
@@ -24,15 +16,7 @@
                     <div class="flex flex-col min-w-0 ml-4">
                         <ng-container *transloco="let t">
                             <div
-                                class="
-                                    text-2xl
-                                    md:text-5xl
-                                    font-semibold
-                                    tracking-tight
-                                    leading-7
-                                    md:leading-snug
-                                    truncate
-                                "
+                                class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate"
                             >
                                 {{ t("welcome-back") }}, {{ firstname }}!
                             </div>
@@ -45,7 +29,7 @@
                             <div
                                 class="ml-1.5 leading-6 truncate text-secondary"
                             >
-                                You have 2 new messages and 15 new tasks
+                                You have 0 new messages
                             </div>
                         </div>
                         <!-- <flash-messages></flash-messages> -->
@@ -65,17 +49,32 @@
                         ></mat-icon>
                         <span class="ml-2">Home</span>
                     </button>
-                    <button
+                    <a
+                        target="_blank"
                         class="fuse-mat-button-rounded"
+                        href="https://{{ domainname }}.direct-buy.in"
+                        mat-flat-button
+                        [color]="'primary'"
+                    >
+                        <fa-icon [icon]="faStore"></fa-icon>
+                        <span class="ml-2">Store</span>
+                    </a>
+                    <a
+                        target="_blank"
+                        class="fuse-mat-button-rounded"
+                        href="https://wa.me/?text=Dear Customer,We are delighted to inform you that our store is now online on https://{{
+                            domainname
+                        }}.direct-buy.in and orders can be placed online.
+                        Regards - {{firstname}}"
                         mat-flat-button
                         [color]="'primary'"
                     >
                         <mat-icon
                             class="icon-size-5"
-                            [svgIcon]="'heroicons_solid:cog'"
+                            [svgIcon]="'heroicons_solid:chat'"
                         ></mat-icon>
-                        <span class="ml-2">Settings</span>
-                    </button>
+                        <span class="ml-2">Whatsapp</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -84,26 +83,48 @@
     <!--Main-->
     <div class="flex flex-col flex-auto w-full">
         <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
-            <!-- Visitors vs. Page Views -->
+            <div class="flex-1 min-w-0 pl-3">
+                <!-- Breadcrumbs -->
+                <div class="flex flex-wrap items-center font-medium">
+                    <div>
+                        <a
+                            href="javascript:void(0);"
+                            style="text-decoration: none"
+                            [routerLink]="['/dashboard']"
+                            class="whitespace-nowrap text-primary-500"
+                            >Home</a
+                        >
+                    </div>
+
+                    <div class="flex items-center ml-1 whitespace-nowrap">
+                        <mat-icon
+                            class="icon-size-5 text-secondary"
+                            [svgIcon]="'heroicons_solid:chevron-right'"
+                        ></mat-icon>
+                        <a
+                            href="javascript:void(0);"
+                            style="text-decoration: none"
+                            (click)="storeDashboard()"
+                            class="whitespace-nowrap text-primary-500"
+                            >Store Dashboard</a
+                        >
+                    </div>
+
+                    <div class="flex items-center ml-1 whitespace-nowrap">
+                        <mat-icon
+                            class="icon-size-5 text-secondary"
+                            [svgIcon]="'heroicons_solid:chevron-right'"
+                        ></mat-icon>
+                        <span class="ml-1 text-secondary">Add Product</span>
+                    </div>
+                </div>
+            </div>
             <div
-                class="
-                    flex flex-col flex-auto
-                    mt-8
-                    bg-card
-                    shadow
-                    rounded-2xl
-                    overflow-hidden
-                "
+                class="flex flex-col flex-auto mt-8 bg-card shadow rounded-2xl overflow-hidden"
             >
                 <div class="flex items-start justify-between m-6 mb-0">
                     <div
-                        class="
-                            text-lg
-                            font-medium
-                            tracking-tight
-                            leading-6
-                            truncate
-                        "
+                        class="text-lg font-medium tracking-tight leading-6 truncate"
                     >
                         <div class="shadow-lg overflow-hidden">
                             <div class="flex border-b">
@@ -115,28 +136,13 @@
                                     <div class="flex flex-col sm:flex-row p-8">
                                         <!-- Product images and status -->
                                         <div
-                                            class="
-                                                flex flex-col
-                                                items-center
-                                                sm:items-start
-                                                mb-8
-                                                sm:mb-0
-                                            "
+                                            class="flex flex-col items-center sm:items-start mb-8 sm:mb-0"
                                         >
                                             <div
-                                                class="
-                                                    flex flex-col
-                                                    items-center
-                                                "
+                                                class="flex flex-col items-center"
                                             >
                                                 <div
-                                                    class="
-                                                        w-32
-                                                        h-44
-                                                        border
-                                                        rounded
-                                                        overflow-hidden
-                                                    "
+                                                    class="w-32 h-44 border rounded overflow-hidden"
                                                 >
                                                     <div class="image-upload">
                                                         <label for="file-input">
@@ -189,12 +195,7 @@
                                         <div class="flex flex-auto flex-wrap">
                                             <!-- Name, SKU & etc. -->
                                             <div
-                                                class="
-                                                    flex flex-col
-                                                    w-full
-                                                    lg:w-2/4
-                                                    sm:pl-8
-                                                "
+                                                class="flex flex-col w-full lg:w-2/4 sm:pl-8"
                                             >
                                                 <!-- Name -->
                                                 <mat-form-field class="w-full">
@@ -208,41 +209,224 @@
                                                 </mat-form-field>
 
                                                 <!-- Type and Subtype -->
-                                                <div class="flex">
-                                                    <mat-form-field
-                                                        class="w-full"
+
+                                                <!-- Product Type -->
+                                                <span
+                                                    class="mb-px font-medium leading-tight"
+                                                    >Product Type</span
+                                                >
+                                                <div
+                                                    class="mt-1.5 rounded-md border border-gray-300 dark:border-gray-500 shadow-sm overflow-hidden"
+                                                >
+                                                    <!-- Header -->
+                                                    <div
+                                                        class="flex items-center -my-px py-2 px-3"
                                                     >
-                                                        <mat-label
-                                                            >Product
-                                                            Type</mat-label
+                                                        <div
+                                                            class="flex items-center flex-auto min-w-0"
                                                         >
-                                                        <input
-                                                            matInput
+                                                            <mat-icon
+                                                                class="icon-size-5"
+                                                                [svgIcon]="
+                                                                    'heroicons_solid:search'
+                                                                "
+                                                            ></mat-icon>
+                                                            <input
+                                                                class="min-w-0 ml-2 py-1 border-0"
+                                                                type="text"
+                                                                placeholder="Enter Product Type"
+                                                                [maxLength]="50"
+                                                                (input)="
+                                                                    filterTags(
+                                                                        $event
+                                                                    )
+                                                                "
+                                                                (keydown)="
+                                                                    filterTagInputKeyDown(
+                                                                        $event
+                                                                    )
+                                                                "
+                                                                #newProductTypeInput
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <!-- Available SubCategory -->
+                                                    <div
+                                                        class="h-14 leading-none overflow-y-auto border-t border-gray-300 dark:border-gray-500"
+                                                    >
+                                                        <div
+                                                            class="flex items-center h-10 min-h-10 -ml-0.5 pl-4 pr-3 leading-none cursor-pointer border-t hover:bg-gray-50 dark:hover:bg-hover"
+                                                            *ngIf="
+                                                                shouldShowCreateProductTypeButton(
+                                                                    newProductTypeInput.value
+                                                                )
+                                                            "
+                                                            (click)="
+                                                                createProductType(
+                                                                    newProductTypeInput.value
+                                                                )
+                                                            "
+                                                            matRipple
+                                                        >
+                                                            <mat-icon
+                                                                class="mr-2 icon-size-5"
+                                                                [svgIcon]="
+                                                                    'heroicons_solid:plus-circle'
+                                                                "
+                                                            ></mat-icon>
+                                                            <div
+                                                                class="break-all"
+                                                            >
+                                                                Create "<b>{{
+                                                                    newProductTypeInput.value
+                                                                }}</b
+                                                                >"
+                                                            </div>
+                                                        </div>
+                                                        <!-- Tags -->
+                                                        <mat-select
+                                                            class="flex items-center h-10 min-h-10 px-4"
                                                             [formControlName]="
                                                                 'product_type'
                                                             "
-                                                        />
-                                                    </mat-form-field>
-                                                    <!--  -->
-                                                </div>
-
-                                                <!-- Category, Brand & SubCategory -->
-                                                <div class="flex">
-                                                    <mat-form-field
-                                                        class="w-full"
-                                                    >
-                                                        <mat-label
-                                                            >Product
-                                                            SubType</mat-label
+                                                            placeholder="Select Product-Type"
+                                                            (selectionChange)="
+                                                                onChangeProductType(
+                                                                    $event
+                                                                )
+                                                            "
                                                         >
-                                                        <input
-                                                            matInput
+                                                            <mat-option
+                                                                [value]="
+                                                                    'select'
+                                                                "
+                                                                >Select</mat-option
+                                                            >
+
+                                                            <ng-container
+                                                                *ngFor="
+                                                                    let tag of product_type
+                                                                "
+                                                            >
+                                                                <mat-option
+                                                                    [value]="
+                                                                        tag.product_type
+                                                                    "
+                                                                    >{{
+                                                                        tag.product_type
+                                                                    }}</mat-option
+                                                                >
+                                                            </ng-container>
+                                                        </mat-select>
+                                                    </div>
+                                                </div>
+                                                &nbsp;
+
+                                                <!-- Product Sub Type -->
+                                                <span
+                                                    class="mb-px font-medium leading-tight"
+                                                    >Product Sub Type</span
+                                                >
+                                                <div
+                                                    class="mt-1.5 rounded-md border border-gray-300 dark:border-gray-500 shadow-sm overflow-hidden"
+                                                >
+                                                    <!-- Header -->
+                                                    <div
+                                                        class="flex items-center -my-px py-2 px-3"
+                                                    >
+                                                        <div
+                                                            class="flex items-center flex-auto min-w-0"
+                                                        >
+                                                            <mat-icon
+                                                                class="icon-size-5"
+                                                                [svgIcon]="
+                                                                    'heroicons_solid:search'
+                                                                "
+                                                            ></mat-icon>
+                                                            <input
+                                                                class="min-w-0 ml-2 py-1 border-0"
+                                                                type="text"
+                                                                placeholder="Enter Product Sub type"
+                                                                [maxLength]="50"
+                                                                (input)="
+                                                                    filterTags(
+                                                                        $event
+                                                                    )
+                                                                "
+                                                                (keydown)="
+                                                                    filterTagInputKeyDown(
+                                                                        $event
+                                                                    )
+                                                                "
+                                                                #newProductSubTypeInput
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <!-- Available SubCategory -->
+                                                    <div
+                                                        class="h-14 leading-none overflow-y-auto border-t border-gray-300 dark:border-gray-500"
+                                                    >
+                                                        <div
+                                                            class="flex items-center h-10 min-h-10 -ml-0.5 pl-4 pr-3 leading-none cursor-pointer border-t hover:bg-gray-50 dark:hover:bg-hover"
+                                                            *ngIf="
+                                                                shouldShowCreateProductSubTypeButton(
+                                                                    newProductSubTypeInput.value
+                                                                )
+                                                            "
+                                                            (click)="
+                                                                createProductType(
+                                                                    newProductTypeInput.value
+                                                                )
+                                                            "
+                                                            matRipple
+                                                        >
+                                                            <mat-icon
+                                                                class="mr-2 icon-size-5"
+                                                                [svgIcon]="
+                                                                    'heroicons_solid:plus-circle'
+                                                                "
+                                                            ></mat-icon>
+                                                            <div
+                                                                class="break-all"
+                                                            >
+                                                                Create "<b>{{
+                                                                    newProductSubTypeInput.value
+                                                                }}</b
+                                                                >"
+                                                            </div>
+                                                        </div>
+                                                        <!-- Tags -->
+                                                        <mat-select
+                                                            class="flex items-center h-10 min-h-10 px-4"
                                                             [formControlName]="
                                                                 'product_sub_type'
                                                             "
-                                                        />
-                                                    </mat-form-field>
+                                                            placeholder="Select Product-SubType"
+                                                        >
+                                                            <mat-option
+                                                                [value]="
+                                                                    'select'
+                                                                "
+                                                                >Select</mat-option
+                                                            >
+                                                            <ng-container
+                                                                *ngFor="
+                                                                    let tag of product_sub_type
+                                                                "
+                                                            >
+                                                                <mat-option
+                                                                    [value]="
+                                                                        tag.product_sub_type
+                                                                    "
+                                                                    >{{
+                                                                        tag.product_sub_type
+                                                                    }}</mat-option
+                                                                >
+                                                            </ng-container>
+                                                        </mat-select>
+                                                    </div>
                                                 </div>
+                                                &nbsp;
 
                                                 <!-- Description -->
                                                 <div class="flex">
@@ -264,26 +448,224 @@
 
                                             <!-- Cost, Base price, Tax & Price -->
                                             <div
-                                                class="
-                                                    flex flex-col
-                                                    w-full
-                                                    lg:w-1/4
-                                                    sm:pl-8
-                                                "
+                                                class="flex flex-col w-full lg:w-1/4 sm:pl-8"
                                             >
-                                                <mat-form-field class="w-full">
-                                                    <mat-label
-                                                        >Category</mat-label
+                                                <!-- Category -->
+                                                <span
+                                                    class="mb-px font-medium leading-tight"
+                                                    >Category</span
+                                                >
+                                                <div
+                                                    class="mt-1.5 rounded-md border border-gray-300 dark:border-gray-500 shadow-sm overflow-hidden"
+                                                >
+                                                    <!-- Header -->
+                                                    <div
+                                                        class="flex items-center -my-px py-2 px-3"
                                                     >
-                                                    <input
-                                                        matInput
-                                                        [formControlName]="
-                                                            'category'
-                                                        "
-                                                    />
-                                                </mat-form-field>
+                                                        <div
+                                                            class="flex items-center flex-auto min-w-0"
+                                                        >
+                                                            <mat-icon
+                                                                class="icon-size-5"
+                                                                [svgIcon]="
+                                                                    'heroicons_solid:search'
+                                                                "
+                                                            ></mat-icon>
+                                                            <input
+                                                                class="min-w-0 ml-2 py-1 border-0"
+                                                                type="text"
+                                                                placeholder="Enter Category name"
+                                                                [maxLength]="50"
+                                                                (input)="
+                                                                    filterTags(
+                                                                        $event
+                                                                    )
+                                                                "
+                                                                (keydown)="
+                                                                    filterTagInputKeyDown(
+                                                                        $event
+                                                                    )
+                                                                "
+                                                                #newTagInput
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <!-- Available Category -->
+                                                    <div
+                                                        class="h-14 leading-none overflow-y-auto border-t border-gray-300 dark:border-gray-500"
+                                                    >
+                                                        <div
+                                                            class="flex items-center h-10 min-h-10 -ml-0.5 pl-4 pr-3 leading-none cursor-pointer border-t hover:bg-gray-50 dark:hover:bg-hover"
+                                                            *ngIf="
+                                                                shouldShowCreateCategoryButton(
+                                                                    newTagInput.value
+                                                                )
+                                                            "
+                                                            (click)="
+                                                                createCategory()
+                                                            "
+                                                            matRipple
+                                                        >
+                                                            <mat-icon
+                                                                class="mr-2 icon-size-5"
+                                                                [svgIcon]="
+                                                                    'heroicons_solid:plus-circle'
+                                                                "
+                                                            ></mat-icon>
+                                                            <div
+                                                                class="break-all"
+                                                            >
+                                                                Create "<b>{{
+                                                                    newTagInput.value
+                                                                }}</b
+                                                                >"
+                                                            </div>
+                                                        </div>
+                                                        <!-- Tags -->
+                                                        <mat-select
+                                                            class="flex items-center h-10 min-h-10 px-4"
+                                                            [formControlName]="
+                                                                'category'
+                                                            "
+                                                            placeholder="Select Category"
+                                                            (selectionChange)="
+                                                                onChangeCategory(
+                                                                    $event
+                                                                )
+                                                            "
+                                                        >
+                                                            <!-- <mat-select-filter
+                                                                [array]="
+                                                                    category
+                                                                "
+                                                                (filteredReturn)="
+                                                                    filteredList1 =
+                                                                        $event
+                                                                "
+                                                            ></mat-select-filter> -->
 
-                                                <mat-form-field class="w-full">
+                                                            <mat-option
+                                                                *ngFor="
+                                                                    let tag of category
+                                                                "
+                                                                [value]="
+                                                                    tag.category
+                                                                "
+                                                            >
+                                                                {{
+                                                                    tag.category
+                                                                }}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </div>
+                                                </div>
+
+                                                &nbsp;
+
+                                                <!-- Sub Category -->
+                                                <span
+                                                    class="mb-px font-medium leading-tight"
+                                                    >Sub Category</span
+                                                >
+                                                <div
+                                                    class="mt-1.5 rounded-md border border-gray-300 dark:border-gray-500 shadow-sm overflow-hidden"
+                                                >
+                                                    <!-- Header -->
+                                                    <div
+                                                        class="flex items-center -my-px py-2 px-3"
+                                                    >
+                                                        <div
+                                                            class="flex items-center flex-auto min-w-0"
+                                                        >
+                                                            <mat-icon
+                                                                class="icon-size-5"
+                                                                [svgIcon]="
+                                                                    'heroicons_solid:search'
+                                                                "
+                                                            ></mat-icon>
+                                                            <input
+                                                                class="min-w-0 ml-2 py-1 border-0"
+                                                                type="text"
+                                                                placeholder="Enter Sub Category name"
+                                                                [maxLength]="50"
+                                                                (input)="
+                                                                    filterTags(
+                                                                        $event
+                                                                    )
+                                                                "
+                                                                (keydown)="
+                                                                    filterTagInputKeyDown(
+                                                                        $event
+                                                                    )
+                                                                "
+                                                                #newSubCategoryInput
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <!-- Available SubCategory -->
+                                                    <div
+                                                        class="h-14 leading-none overflow-y-auto border-t border-gray-300 dark:border-gray-500"
+                                                    >
+                                                        <div
+                                                            class="flex items-center h-10 min-h-10 -ml-0.5 pl-4 pr-3 leading-none cursor-pointer border-t hover:bg-gray-50 dark:hover:bg-hover"
+                                                            *ngIf="
+                                                                shouldShowCreateSubCategoryButton(
+                                                                    newSubCategoryInput.value
+                                                                )
+                                                            "
+                                                            (click)="
+                                                                createCategory()
+                                                            "
+                                                            matRipple
+                                                        >
+                                                            <mat-icon
+                                                                class="mr-2 icon-size-5"
+                                                                [svgIcon]="
+                                                                    'heroicons_solid:plus-circle'
+                                                                "
+                                                            ></mat-icon>
+                                                            <div
+                                                                class="break-all"
+                                                            >
+                                                                Create "<b>{{
+                                                                    newSubCategoryInput.value
+                                                                }}</b
+                                                                >"
+                                                            </div>
+                                                        </div>
+                                                        <!-- Tags -->
+                                                        <mat-select
+                                                            class="flex items-center h-10 min-h-10 px-4"
+                                                            [formControlName]="
+                                                                'sub_category'
+                                                            "
+                                                            placeholder="Select Sub-Category"
+                                                        >
+                                                            <mat-option
+                                                                [value]="
+                                                                    'select'
+                                                                "
+                                                                >Select</mat-option
+                                                            >
+                                                            <ng-container
+                                                                *ngFor="
+                                                                    let subcat of sub_category
+                                                                "
+                                                            >
+                                                                <mat-option
+                                                                    [value]="
+                                                                        subcat.sub_category
+                                                                    "
+                                                                    >{{
+                                                                        subcat.sub_category
+                                                                    }}</mat-option
+                                                                >
+                                                            </ng-container>
+                                                        </mat-select>
+                                                    </div>
+                                                </div>
+
+                                                <!-- <mat-form-field class="w-full">
                                                     <mat-label
                                                         >SubCategory</mat-label
                                                     >
@@ -293,14 +675,142 @@
                                                             'sub_category'
                                                         "
                                                     />
-                                                </mat-form-field>
+                                                </mat-form-field> -->
 
-                                                <mat-form-field class="w-full">
+                                                &nbsp;
+
+                                                <!--Brand -->
+                                                <span
+                                                    class="mb-px font-medium leading-tight"
+                                                    >Brand</span
+                                                >
+                                                <div
+                                                    class="mt-1.5 rounded-md border border-gray-300 dark:border-gray-500 shadow-sm overflow-hidden"
+                                                >
+                                                    <!-- Header -->
+                                                    <div
+                                                        class="flex items-center -my-px py-2 px-3"
+                                                    >
+                                                        <div
+                                                            class="flex items-center flex-auto min-w-0"
+                                                        >
+                                                            <mat-icon
+                                                                class="icon-size-5"
+                                                                [svgIcon]="
+                                                                    'heroicons_solid:search'
+                                                                "
+                                                            ></mat-icon>
+                                                            <input
+                                                                class="min-w-0 ml-2 py-1 border-0"
+                                                                type="text"
+                                                                placeholder="Enter Brand name"
+                                                                [maxLength]="50"
+                                                                (input)="
+                                                                    filterTags(
+                                                                        $event
+                                                                    )
+                                                                "
+                                                                (keydown)="
+                                                                    filterTagInputKeyDown(
+                                                                        $event
+                                                                    )
+                                                                "
+                                                                #newBrandInput
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <!-- Available SubCategory -->
+                                                    <div
+                                                        class="h-14 leading-none overflow-y-auto border-t border-gray-300 dark:border-gray-500"
+                                                    >
+                                                        <div
+                                                            class="flex items-center h-10 min-h-10 -ml-0.5 pl-4 pr-3 leading-none cursor-pointer border-t hover:bg-gray-50 dark:hover:bg-hover"
+                                                            *ngIf="
+                                                                shouldShowCreateBrandButton(
+                                                                    newBrandInput.value
+                                                                )
+                                                            "
+                                                            (click)="
+                                                                createBrand(
+                                                                    newBrandInput.value
+                                                                );
+                                                                newBrandInput.value =
+                                                                    ''
+                                                            "
+                                                            matRipple
+                                                        >
+                                                            <mat-icon
+                                                                class="mr-2 icon-size-5"
+                                                                [svgIcon]="
+                                                                    'heroicons_solid:plus-circle'
+                                                                "
+                                                            ></mat-icon>
+                                                            <div
+                                                                class="break-all"
+                                                            >
+                                                                Create "<b>{{
+                                                                    newBrandInput.value
+                                                                }}</b
+                                                                >"
+                                                            </div>
+                                                        </div>
+                                                        <!-- Brand -->
+                                                        <mat-select
+                                                            class="flex items-center h-10 min-h-10 px-4"
+                                                            [formControlName]="
+                                                                'brand'
+                                                            "
+                                                            placeholder="Select Brand"
+                                                        >
+                                                            <mat-option
+                                                                [value]="
+                                                                    'select'
+                                                                "
+                                                                >Select</mat-option
+                                                            >
+                                                            <ng-container
+                                                                *ngFor="
+                                                                    let tag of brand
+                                                                "
+                                                            >
+                                                                <mat-option
+                                                                    [value]="
+                                                                        tag.brand
+                                                                    "
+                                                                    >{{
+                                                                        tag.brand
+                                                                    }}</mat-option
+                                                                >
+                                                            </ng-container>
+                                                        </mat-select>
+                                                    </div>
+                                                </div>
+
+                                                <!-- <mat-form-field class="w-full">
                                                     <mat-label>Brand</mat-label>
                                                     <input
                                                         matInput
                                                         [formControlName]="
                                                             'brand'
+                                                        "
+                                                    />
+                                                </mat-form-field> -->
+                                            </div>
+
+                                            <!-- Weight & Weight type & Stock -->
+                                            <div
+                                                class="flex flex-col w-full lg:w-1/4 sm:pl-8"
+                                            >
+                                                <mat-form-field class="w-full">
+                                                    <mat-label
+                                                        >Selling
+                                                        Price</mat-label
+                                                    >
+                                                    <span matSuffix>₹</span>
+                                                    <input
+                                                        matInput
+                                                        [formControlName]="
+                                                            'offer_price'
                                                         "
                                                     />
                                                 </mat-form-field>
@@ -313,31 +823,11 @@
                                                     <input
                                                         matInput
                                                         [formControlName]="
-                                                            'offer_price'
-                                                        "
-                                                    />
-                                                </mat-form-field>
-                                            </div>
-
-                                            <!-- Weight & Weight type & Stock -->
-                                            <div
-                                                class="
-                                                    flex flex-col
-                                                    w-full
-                                                    lg:w-1/4
-                                                    sm:pl-8
-                                                "
-                                            >
-                                                <mat-form-field class="w-full">
-                                                    <mat-label>Price</mat-label>
-                                                    <span matSuffix>₹</span>
-                                                    <input
-                                                        matInput
-                                                        [formControlName]="
                                                             'product_price'
                                                         "
                                                     />
                                                 </mat-form-field>
+
                                                 <mat-form-field class="w-full">
                                                     <mat-label
                                                         >Weight</mat-label
@@ -373,185 +863,15 @@
                                                 </mat-form-field>
                                             </div>
 
-                                            <!-- Weight & Tags -->
+                                            <!-- Category -->
                                             <div
-                                                class="
-                                                    flex flex-col
-                                                    w-full
-                                                    lg:w-1/4
-                                                    sm:pl-8
-                                                "
-                                            >
-                                                <!-- Category -->
-                                                <span
-                                                    class="
-                                                        mb-px
-                                                        font-medium
-                                                        leading-tight
-                                                    "
-                                                    >Category</span
-                                                >
-                                                <div
-                                                    class="
-                                                        mt-1.5
-                                                        rounded-md
-                                                        border border-gray-300
-                                                        dark:border-gray-500
-                                                        shadow-sm
-                                                        overflow-hidden
-                                                    "
-                                                >
-                                                    <!-- Header -->
-                                                    <div
-                                                        class="
-                                                            flex
-                                                            items-center
-                                                            -my-px
-                                                            py-2
-                                                            px-3
-                                                        "
-                                                    >
-                                                        <div
-                                                            class="
-                                                                flex
-                                                                items-center
-                                                                flex-auto
-                                                                min-w-0
-                                                            "
-                                                        >
-                                                            <mat-icon
-                                                                class="
-                                                                    icon-size-5
-                                                                "
-                                                                [svgIcon]="
-                                                                    'heroicons_solid:search'
-                                                                "
-                                                            ></mat-icon>
-                                                            <input
-                                                                class="
-                                                                    min-w-0
-                                                                    ml-2
-                                                                    py-1
-                                                                    border-0
-                                                                "
-                                                                type="text"
-                                                                placeholder="Enter tag name"
-                                                                [maxLength]="50"
-                                                                (input)="
-                                                                    filterTags(
-                                                                        $event
-                                                                    )
-                                                                "
-                                                                (keydown)="
-                                                                    filterTagsInputKeyDown(
-                                                                        $event
-                                                                    )
-                                                                "
-                                                                #newTagInput
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                    <!-- Available Category -->
-                                                    <div
-                                                        class="
-                                                            h-44
-                                                            leading-none
-                                                            overflow-y-auto
-                                                            border-t
-                                                            border-gray-300
-                                                            dark:border-gray-500
-                                                        "
-                                                    >
-                                                        <div
-                                                            class="
-                                                                flex
-                                                                items-center
-                                                                h-10
-                                                                min-h-10
-                                                                -ml-0.5
-                                                                pl-4
-                                                                pr-3
-                                                                leading-none
-                                                                cursor-pointer
-                                                                border-t
-                                                                hover:bg-gray-50
-                                                                dark:hover:bg-hover
-                                                            "
-                                                            *ngIf="
-                                                                shouldShowCreateTagButton(
-                                                                    newTagInput.value
-                                                                )
-                                                            "
-                                                            (click)="
-                                                                createTag(
-                                                                    newTagInput.value
-                                                                );
-                                                                newTagInput.value =
-                                                                    ''
-                                                            "
-                                                            matRipple
-                                                        >
-                                                            <mat-icon
-                                                                class="
-                                                                    mr-2
-                                                                    icon-size-5
-                                                                "
-                                                                [svgIcon]="
-                                                                    'heroicons_solid:plus-circle'
-                                                                "
-                                                            ></mat-icon>
-                                                            <div
-                                                                class="
-                                                                    break-all
-                                                                "
-                                                            >
-                                                                Create "<b>{{
-                                                                    newTagInput.value
-                                                                }}</b
-                                                                >"
-                                                            </div>
-                                                        </div>
-                                                        <!-- Tags -->
-                                                        <ng-container>
-                                                            <ng-container
-                                                                *ngFor="
-                                                                    let tag of category
-                                                                "
-                                                            >
-                                                                <mat-checkbox
-                                                                    class="
-                                                                        flex
-                                                                        items-center
-                                                                        h-10
-                                                                        min-h-10
-                                                                        px-4
-                                                                    "
-                                                                    [color]="
-                                                                        'primary'
-                                                                    "
-                                                                >
-                                                                    {{
-                                                                        tag.category
-                                                                    }}
-                                                                </mat-checkbox>
-                                                            </ng-container>
-                                                        </ng-container>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                class="flex flex-col w-full lg:w-1/4 sm:pl-8"
+                                            ></div>
                                         </div>
                                     </div>
 
                                     <div
-                                        class="
-                                            flex
-                                            items-center
-                                            justify-between
-                                            w-full
-                                            border-t
-                                            px-8
-                                            py-4
-                                        "
+                                        class="flex items-center justify-between w-full border-t px-8 py-4"
                                     >
                                         <div class="flex items-center">
                                             <div

@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { DashboardService } from '../dashboard/dashboard.service';
 import { Data } from 'app/Model/data';
+import { faStore } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-mobile',
@@ -10,7 +11,11 @@ import { Data } from 'app/Model/data';
     styleUrls: ['./store.component.scss'],
 })
 export class StoreComponent implements OnInit {
+    faStore = faStore;
+    domainname: any;
+    profileData: any;
     shops: any;
+    firstname: any;
     constructor(
         private _dashboardService: DashboardService,
         private _router: Router,
@@ -30,6 +35,14 @@ export class StoreComponent implements OnInit {
                 //alert(error.message);
             }
         );
+        this._dashboardService
+            .getRetailerDetailsById(user_id)
+            .subscribe((data) => {
+                this.profileData = data;
+                this.firstname = this.profileData.firstname;
+                this.domainname = this.profileData.domainname;
+                this.cd.detectChanges();
+            });
     }
 
     shopDetails(shops): void {

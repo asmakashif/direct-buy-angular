@@ -3,6 +3,7 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProfileService } from 'app/modules/auth/profile/profile.service';
 import { Router } from '@angular/router';
+import { faStore } from '@fortawesome/free-solid-svg-icons';
 
 declare var $: any;
 
@@ -12,9 +13,12 @@ declare var $: any;
     styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
+    faStore = faStore;
     profileForm: FormGroup;
     profileData: any;
     flashMessage: string;
+    domainname: any;
+    firstname: any;
     constructor(
         private flashMessagesService: FlashMessagesService,
         private formBuilder: FormBuilder,
@@ -39,6 +43,8 @@ export class ProfileComponent implements OnInit {
         this.apiService.getRetailerDetailsById(user_id).subscribe((data) => {
             this.profileForm.patchValue(data);
             this.profileData = data;
+            this.firstname = this.profileData.firstname;
+            this.domainname = this.profileData.domainname;
             console.log(this.profileData);
         });
     }

@@ -24,6 +24,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import 'handsontable/dist/handsontable.min.css';
 import 'pikaday/css/pikaday.css';
 import { ProductConfigComponent } from 'app/modules/admin/product/product-config/product-config.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 //import { projectRoutes } from 'app/modules/admin/dashboards/project/project.routing';
 
 const productConfigRoutes: Route[] = [
@@ -37,6 +38,7 @@ const productConfigRoutes: Route[] = [
     declarations: [ProductConfigComponent],
     imports: [
         RouterModule.forChild(productConfigRoutes),
+        FontAwesomeModule,
         MatButtonModule,
         MatButtonToggleModule,
         MatDividerModule,

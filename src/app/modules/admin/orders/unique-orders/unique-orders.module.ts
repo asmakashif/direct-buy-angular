@@ -23,6 +23,7 @@ import { HotTableModule } from '@handsontable/angular';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { UniqueOrdersComponent } from 'app/modules/admin/orders/unique-orders/unique-orders.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 //import { projectRoutes } from 'app/modules/admin/dashboards/project/project.routing';
 
 const uniqueOrdersRoutes: Route[] = [
@@ -36,6 +37,7 @@ const uniqueOrdersRoutes: Route[] = [
     declarations: [UniqueOrdersComponent],
     imports: [
         RouterModule.forChild(uniqueOrdersRoutes),
+        FontAwesomeModule,
         MatButtonModule,
         MatButtonToggleModule,
         MatDividerModule,

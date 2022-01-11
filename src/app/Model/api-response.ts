@@ -6,4 +6,5 @@ export class ApiResponse {
     name: any;
     vendor: any;
     stock: any;
+    domainame: any;
 }

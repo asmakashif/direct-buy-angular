@@ -22,6 +22,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 const managepaymentGatewayRoutes: Route[] = [
     {
         path: '',
@@ -33,6 +34,7 @@ const managepaymentGatewayRoutes: Route[] = [
     declarations: [ManagePaymentGatewayComponent],
     imports: [
         RouterModule.forChild(managepaymentGatewayRoutes),
+        FontAwesomeModule,
         MatFormFieldModule,
         MatButtonModule,
         MatIconModule,

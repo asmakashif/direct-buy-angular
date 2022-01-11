@@ -5,6 +5,7 @@ import {
     ViewEncapsulation,
     Inject,
     Injectable,
+    ViewChild,
 } from '@angular/core';
 
 import { FlashMessagesService } from 'angular2-flash-messages';
@@ -13,6 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DashboardService } from 'app/modules/admin/dashboard/dashboard.service';
 import { Data } from '../../../Model/data';
 import { InventoryProduct } from '../../../Model/inventory.types';
+import { faStore } from '@fortawesome/free-solid-svg-icons';
 import {
     FormArray,
     FormBuilder,
@@ -56,8 +58,11 @@ declare var $: any;
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardComponent {
+    @ViewChild('closebutton') closebutton;
+    faStore = faStore;
     selectedProject: string = 'Dashbaord';
     imagePath: string = '/api/products/uploads/';
+    // imageShopPath: string = '/api/shops/uploads/';
     dateObj: number = Date.now();
     data: [];
     count: [];
@@ -106,6 +111,21 @@ export class DashboardComponent {
     deviceId: any;
     shop_status: any;
     hideproductQtyForm: FormGroup;
+    domainname: any;
+    shop_name: any;
+    shopId: any;
+    allOrders: any;
+    pendingOrder: any;
+    completedOrder: any;
+    min_order_val: any;
+    logoForm: FormGroup;
+    shopLogo: any;
+    shop_logo: any;
+    product_sub_type: Object;
+    sub_category: any;
+    product_type: any;
+    brand: any;
+    category: any;
 
     constructor(
         @Inject(DOCUMENT)
@@ -119,6 +139,10 @@ export class DashboardComponent {
         private cd: ChangeDetectorRef,
         private _httpClient: HttpClient
     ) {}
+
+    public onSave() {
+        this.closebutton.nativeElement.click();
+    }
 
     ngOnInit(): void {
         const accessToken = localStorage.getItem('accessToken');
@@ -161,6 +185,11 @@ export class DashboardComponent {
             str_msg: ['', Validators.required],
         });
 
+        this.logoForm = this.formBuilder.group({
+            shopId: [routeParams.shopId],
+            shop_logo: [''],
+        });
+
         this.vacationForm = this.formBuilder.group({
             shopId: [routeParams.shopId],
             vacation_mode: [false, Validators.requiredTrue],
@@ -186,7 +215,11 @@ export class DashboardComponent {
             .subscribe((data: any) => {
                 this.editShopForm.patchValue(data);
                 this.shopData = data;
+                this.shop_name = this.shopData.shop_name;
+                this.shopId = this.shopData.shopId;
                 this.shop_status = this.shopData.shop_status;
+                this.shop_logo = this.shopData.shop_logo;
+                this.min_order_val = this.shopData.min_order_val;
             });
 
         this._dashboardService.getNoOfShops(user_id).subscribe((count) => {
@@ -282,6 +315,7 @@ export class DashboardComponent {
                 this.messageForm.patchValue(data);
                 this.profileData = data;
                 this.firstname = this.profileData.firstname;
+                this.domainname = this.profileData.domainname;
                 // this.deviceId = this.profileData.deviceId;
                 this.cd.detectChanges();
                 // if (!this.deviceId) {
@@ -323,6 +357,107 @@ export class DashboardComponent {
                 this.products = products;
                 this.cd.detectChanges();
             });
+
+        this._dashboardService
+            .getAllOrdersByStore(routeParams.shopId)
+            .subscribe((allOrdersByStr) => {
+                this.allOrders = allOrdersByStr;
+                console.log(this.allOrders);
+            });
+
+        this._dashboardService
+            .getPendingOrdersByStore(routeParams.shopId)
+            .subscribe((pendingOrdersByStr) => {
+                this.pendingOrder = pendingOrdersByStr;
+                console.log(this.pendingOrder);
+            });
+
+        this._dashboardService
+            .getCompletedOrdersByStore(routeParams.shopId)
+            .subscribe((completedOrdersByStr) => {
+                this.completedOrder = completedOrdersByStr;
+                console.log(this.completedOrder);
+            });
+
+        this._dashboardService.getCategories().subscribe((category) => {
+            this.category = category;
+        });
+
+        this._dashboardService.getBrand().subscribe((brand) => {
+            this.brand = brand;
+        });
+
+        this._dashboardService.getProductType().subscribe((data) => {
+            this.product_type = data;
+        });
+    }
+
+    onChangeCategory(ob) {
+        let category = ob.value;
+        if (category) {
+            this._httpClient
+                .get('/api/mobileAPI/getSubCategory.php?category=' + category)
+                .subscribe((data) => {
+                    this.sub_category = data;
+                });
+        } else {
+            this.sub_category = null;
+        }
+    }
+
+    onChangeProductType(ob) {
+        let product_type = ob.value;
+        if (product_type) {
+            this._httpClient
+                .get(
+                    '/api/mobileAPI/getProductSubType.php?product_type=' +
+                        product_type
+                )
+                .subscribe((data) => {
+                    this.product_sub_type = data;
+                });
+        } else {
+            this.product_sub_type = null;
+        }
+    }
+
+    attachToStr(payment): void {
+        const paymentRedirect = 'payment';
+        localStorage.setItem('payment', paymentRedirect);
+        this._router.navigate([
+            '/attach-payment/' +
+                payment.payment_id +
+                '/' +
+                payment.payment_name,
+        ]);
+    }
+
+    gotToCustomerSection(domainname) {
+        //alert(domainname);
+        window.open(
+            'https://' + domainname + '.direct-buy.in',
+            '_blank' // <- This is what makes it open in a new window.
+        );
+        // (window.location.href =
+        //     'https://' + domainname + '.brokeronline.in'),
+        //     '_blank';
+    }
+
+    onShopLogoUpload(event) {
+        // this.selectedFile = event.target.files[0];
+        const file = event.target.files[0];
+        console.log(file);
+        this.logoForm.get('shop_logo').setValue(file);
+
+        const formData = new FormData();
+        formData.append('shopId', this.logoForm.get('shopId').value);
+        formData.append('myFile', this.logoForm.get('shop_logo').value);
+        this._httpClient
+            .post<any>('/api/products/uploadLogo.php', formData)
+            .subscribe((data) => {
+                this.ngOnInit();
+                //this.logoForm.get('shop_logo').setValue(file['name']);
+            });
     }
 
     clearSearchField() {
@@ -330,6 +465,8 @@ export class DashboardComponent {
     }
 
     changeStore(stores): void {
+        var shop_name = stores.shop_name;
+        localStorage.setItem('shop_name', shop_name);
         if (stores.shop_payment_status == 1) {
             this._router
                 .navigate([
@@ -356,7 +493,12 @@ export class DashboardComponent {
         const routeParams = this.routes.snapshot.params;
         const configurations = 'configurations';
         localStorage.setItem('redirect', configurations);
-        this._router.navigate(['/store-payment/' + routeParams.shopId]);
+        this._router.navigate([
+            '/store-payment/' +
+                routeParams.shopId +
+                '/' +
+                routeParams.shop_name,
+        ]);
     }
 
     shopDetails(data: Data): void {
@@ -389,11 +531,21 @@ export class DashboardComponent {
     }
 
     completedOrders(data: Data): void {
-        this._router.navigate(['/completed-orders/' + data.shopId]);
+        // this._router.navigate(['/completed-orders/' + data.shopId]);
+        this._router.navigate([
+            'dashboard/' + data.shopId + '/' + data.shop_name,
+        ]);
     }
 
     pendingOrders(data: Data): void {
-        this._router.navigate(['/pending-orders/' + data.shopId]);
+        //this._router.navigate(['/pending-orders/' + data.shopId]);
+        this._router.navigate([
+            'dashboard/' + data.shopId + '/' + data.shop_name,
+        ]);
+        // const routeParams = this.routes.snapshot.params;
+        // this._router.navigate([
+        //     '/open-orders/' + data.shopId + '/' + data.shop_name,
+        // ]);
     }
 
     enableMessageField() {
@@ -471,27 +623,66 @@ export class DashboardComponent {
 
     uniqueOrdersCurMonth(): void {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate(['/unique-orders/' + routeParams.shopId]);
+        this._router.navigate([
+            '/unique-orders/' +
+                routeParams.shopId +
+                '/' +
+                routeParams.shop_name,
+        ]);
     }
 
     ordersFulFilledPrevMonth() {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate(['/orders-fulfilled/' + routeParams.shopId]);
+        this._router.navigate([
+            '/orders-fulfilled/' +
+                routeParams.shopId +
+                '/' +
+                routeParams.shop_name,
+        ]);
     }
 
     openOrdersAllMonth() {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate(['/open-orders/' + routeParams.shopId]);
+        this._router.navigate([
+            '/open-orders/' + routeParams.shopId + '/' + routeParams.shop_name,
+        ]);
     }
 
     allSales() {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate(['/sales/' + routeParams.shopId]);
+        this._router.navigate([
+            '/sales/' + routeParams.shopId + '/' + routeParams.shop_name,
+        ]);
     }
 
     newRegistration() {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate(['/new-registration/' + routeParams.shopId]);
+        this._router.navigate([
+            '/new-registration/' +
+                routeParams.shopId +
+                '/' +
+                routeParams.shop_name,
+        ]);
+    }
+
+    minOrderConfig() {
+        const routeParams = this.routes.snapshot.params;
+        this._router.navigate([
+            '/minOrderConfig/' +
+                routeParams.shopId +
+                '/' +
+                routeParams.shop_name,
+        ]);
+    }
+
+    homeDelConfig() {
+        const routeParams = this.routes.snapshot.params;
+        this._router.navigate([
+            '/homeDelConfig/' +
+                routeParams.shopId +
+                '/' +
+                routeParams.shop_name,
+        ]);
     }
 
     managePayment(payment): void {
@@ -682,6 +873,7 @@ export class DashboardComponent {
      * Update the selected product using the form data
      */
     updateSelectedProduct(): void {
+        const routeParams = this.routes.snapshot.params;
         // Get the product object
         const product = this.selectedProductForm.getRawValue();
         console.log(product);
@@ -696,11 +888,14 @@ export class DashboardComponent {
         //         this.ngOnInit();
         //     });
         this._dashboardService.updateProduct(product).subscribe(() => {
-            // Show a success message
-            this.showFlashMessage('success');
-            // this.ngOnInit();
-            // this.editDetails(product.productId);
-            this.cd.markForCheck();
+            this._dashboardService
+                .pushProductsTOStrDb(routeParams.shopId)
+                .subscribe((data) => {
+                    // Show a success message
+                    this.showFlashMessage('success');
+                    // this.ngOnInit();
+                    this.cd.markForCheck();
+                });
         });
     }
 

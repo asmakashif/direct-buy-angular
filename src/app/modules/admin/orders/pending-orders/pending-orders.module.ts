@@ -23,6 +23,7 @@ import { HotTableModule } from '@handsontable/angular';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { PendingOrdersComponent } from 'app/modules/admin/orders/pending-orders/pending-orders.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 //import { projectRoutes } from 'app/modules/admin/dashboards/project/project.routing';
 
 const pendingOrdersRoutes: Route[] = [
@@ -36,6 +37,7 @@ const pendingOrdersRoutes: Route[] = [
     declarations: [PendingOrdersComponent],
     imports: [
         RouterModule.forChild(pendingOrdersRoutes),
+        FontAwesomeModule,
         MatButtonModule,
         MatButtonToggleModule,
         MatDividerModule,

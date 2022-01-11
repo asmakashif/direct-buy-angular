@@ -10,14 +10,19 @@ import {
 } from '@angular/forms';
 import { FuseAlertType } from '@fuse/components/alert';
 import { CreateShopService } from 'app/modules/admin/store/create-shop/create-shop.service';
+import { DashboardService } from '../../dashboard/dashboard.service';
+import { faStore } from '@fortawesome/free-solid-svg-icons';
 
 declare var $: any;
 @Component({
     selector: 'app-create-shop',
     templateUrl: './create-shop.component.html',
-    //styleUrls: ['./create-shop.component.css'],
+    styleUrls: ['./create-shop.component.scss'],
 })
 export class CreateShopComponent implements OnInit {
+    faStore = faStore;
+    domainname: any;
+    profileData: any;
     @ViewChild('shopForm') shopForm: NgForm;
     alert: { type: FuseAlertType; message: string } = {
         type: 'success',
@@ -26,12 +31,15 @@ export class CreateShopComponent implements OnInit {
     showAlert: boolean = false;
     shopType: any;
     flashMessage: string;
+    redirectto: string;
+    firstname: any;
 
     constructor(
         private formBuilder: FormBuilder,
         private apiService: CreateShopService,
         private _router: Router,
-        private cd: ChangeDetectorRef
+        private cd: ChangeDetectorRef,
+        private _dashboardService: DashboardService
     ) {}
     addForm: FormGroup;
 
@@ -49,6 +57,7 @@ export class CreateShopComponent implements OnInit {
 
     ngOnInit(): void {
         const user_id = localStorage.getItem('user_id');
+        //this.redirectto = localStorage.getItem('store');
         var shop_id = this.randomString(6);
 
         // this.apiService.getStoreTypes().subscribe((shopType) => {
@@ -63,7 +72,14 @@ export class CreateShopComponent implements OnInit {
             shop_address: ['', Validators.required],
             //shopType: this.formBuilder.array([], [Validators.required]),
         });
-
+        this._dashboardService
+            .getRetailerDetailsById(user_id)
+            .subscribe((data) => {
+                this.profileData = data;
+                this.firstname = this.profileData.firstname;
+                this.domainname = this.profileData.domainname;
+                this.cd.detectChanges();
+            });
         //this.validateShop();
     }
 
@@ -116,35 +132,21 @@ export class CreateShopComponent implements OnInit {
         if (this.addForm.invalid) {
             return;
         }
-        if (!this.isMobile()) {
-            //alert('desktop');
-            this.apiService.createUser(this.addForm.value).subscribe(
-                () => {
-                    // this.router.navigate(['/product-config/' + shopId]);
-                    this.showFlashMessage('success');
-                    this._router.navigate(['/steps/' + shopId]);
-                },
-                (response) => {
-                    this.showFlashMessage('error');
-                    this.ngOnInit();
-                    // Reset the form
-                    //this.shopForm.resetForm();
-                }
-            );
-        } else {
-            this.apiService.createUser(this.addForm.value).subscribe(
-                () => {
-                    // this.router.navigate(['/product-config/' + shopId]);
-                    this._router.navigate(['/steps/' + shopId]);
-                },
-                (response) => {
-                    this.showFlashMessage('error');
-                    this.ngOnInit();
-                    // Reset the form
-                    //this.shopForm.resetForm();
-                }
-            );
-        }
+
+        //alert('desktop');
+        this.apiService.createUser(this.addForm.value).subscribe(
+            () => {
+                // this.router.navigate(['/product-config/' + shopId]);
+                this.showFlashMessage('success');
+                this._router.navigate(['/steps/' + shopId]);
+            },
+            (response) => {
+                this.showFlashMessage('error');
+                this.ngOnInit();
+                // Reset the form
+                //this.shopForm.resetForm();
+            }
+        );
     }
 
     /**

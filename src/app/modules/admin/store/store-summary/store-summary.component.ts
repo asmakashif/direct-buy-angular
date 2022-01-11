@@ -10,12 +10,19 @@ import {
 import { StoreSummaryService } from 'app/modules/admin/store/store-summary/store-summary.service';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { DashboardService } from '../../dashboard/dashboard.service';
+//import { CookieService } from 'ngx-cookie';
 
 @Component({
     selector: 'app-store-summary',
     templateUrl: './store-summary.component.html',
+    styleUrls: ['./store-summary.component.scss'],
 })
 export class StoreSummaryComponent implements OnInit {
+    faStore = faStore;
+    domainname: any;
+    profileData: any;
     activeLink = 'StoreSummmary';
     data: any;
     countProduct: any;
@@ -27,6 +34,9 @@ export class StoreSummaryComponent implements OnInit {
     shop_address: any;
     shopId: any;
     shopdata: any;
+    dbcreation_status: any;
+    shopCreationStatus: any;
+    createShopDb: string;
 
     constructor(
         private _fuseConfirmationService: FuseConfirmationService,
@@ -34,7 +44,8 @@ export class StoreSummaryComponent implements OnInit {
         private apiService: StoreSummaryService,
         private _router: Router,
         private routes: ActivatedRoute,
-        private cd: ChangeDetectorRef
+        private cd: ChangeDetectorRef, //private cookieService: CookieService
+        private _dashboardService: DashboardService
     ) {}
 
     ngOnInit(): void {
@@ -49,9 +60,16 @@ export class StoreSummaryComponent implements OnInit {
                 this.shopId = this.data.shopId;
                 this.shop_name = this.data.shop_name;
                 this.shop_address = this.data.shop_address;
-                if (this.data.dbcreation_status == 1) {
-                    this.showFlashMessage('success');
-                }
+                this.dbcreation_status = this.data.dbcreation_status;
+            });
+
+        this._dashboardService
+            .getRetailerDetailsById(user_id)
+            .subscribe((data) => {
+                this.profileData = data;
+                this.firstname = this.profileData.firstname;
+                this.domainname = this.profileData.domainname;
+                this.cd.detectChanges();
             });
 
         this.apiService
@@ -69,6 +87,10 @@ export class StoreSummaryComponent implements OnInit {
             ),
         });
     }
+
+    // getCookie(key: string) {
+    //     return this.cookieService.get(key);
+    // }
 
     onProductUpdateSelect(e) {
         const productUpdate_status: FormArray = this.summaryForm.get(
@@ -111,14 +133,19 @@ export class StoreSummaryComponent implements OnInit {
             .getShopDetailsById(routeParams.shopId, user_id)
             .subscribe((data: any) => {
                 this.shopdata = data;
-                if (this.shopdata.dbcreation_status == 1) {
+                if (this.shopdata.dbcreation_status == 3) {
                     const confirmation = this._fuseConfirmationService.open({
-                        title: 'Proceed Next',
                         message:
-                            'You will be moved out of this page to proceed with next step',
+                            'Congratulations, You are now ready to create the store. Click Okay to continue. You may come back to this step from the menu Shops -> Manage Shop',
+                        icon: {
+                            show: true,
+                            name: 'heroicons_outline:check',
+                            color: 'accent',
+                        },
                         actions: {
                             confirm: {
                                 label: 'Okay',
+                                color: 'primary',
                             },
                         },
                     });
@@ -126,15 +153,19 @@ export class StoreSummaryComponent implements OnInit {
                     confirmation.afterClosed().subscribe((result) => {
                         // If the confirm button pressed...
                         if (result === 'confirmed') {
-                            this._router.navigate([
-                                '/store-activation/' + routeParams.shopId,
-                            ]);
+                            this._router
+                                .navigate([
+                                    '/store-activation/' + routeParams.shopId,
+                                ])
+                                .then(() => {
+                                    localStorage.removeItem('createShopDb');
+                                });
                         }
                     });
                 } else {
                     const confirmation = this._fuseConfirmationService.open({
-                        title: 'Proceed Next',
-                        message: 'Setup the store to proceed with next step',
+                        message:
+                            'We are Sorry, there was a problem in creating the store. This will be reported to our technical team. Please wait to hear from us before you proceed.',
                         actions: {
                             confirm: {
                                 label: 'Okay',
@@ -154,13 +185,23 @@ export class StoreSummaryComponent implements OnInit {
     createShopDB() {
         const routeParams = this.routes.snapshot.params;
         const user_id = localStorage.getItem('user_id');
+        const createShopDb = 'createShopDb';
+        localStorage.setItem('createShopDb', createShopDb);
+        this.createShopDb = localStorage.getItem('createShopDb');
         this.apiService
             .createDB(routeParams.shopId, user_id)
             .subscribe((data) => {
-                // this.createDb = data;
-                // alert(this.createDb);
                 this.ngOnInit();
-                //this.showFlashMessage('success');
+                this.apiService
+                    .createtables(routeParams.shopId, user_id)
+                    .subscribe((data) => {
+                        this.ngOnInit();
+                        this.apiService
+                            .pushData(routeParams.shopId, user_id)
+                            .subscribe((data) => {
+                                this.ngOnInit();
+                            });
+                    });
             });
     }
 

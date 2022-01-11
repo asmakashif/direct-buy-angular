@@ -7,7 +7,9 @@ import {
     Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { faStore } from '@fortawesome/free-solid-svg-icons';
 import { PaymentGatewayService } from 'app/modules/admin/payment/payment-gateway/payment-gateway.service';
+import { DashboardService } from '../../dashboard/dashboard.service';
 
 interface Animal {
     name: string;
@@ -20,20 +22,25 @@ interface Animal {
     styleUrls: ['./payment-gateway.component.scss'],
 })
 export class PaymentGatewayComponent implements OnInit {
+    faStore = faStore;
+    profileData: any;
+    domainname: any;
     paymentGatewayForm: FormGroup;
     flashMessage: string;
     @ViewChild('shopForm') shopForm: NgForm;
     provider_type: string;
+    firstname: any;
 
     constructor(
         private formBuilder: FormBuilder,
         private apiService: PaymentGatewayService,
+        private _dashboardService: DashboardService,
         private _router: Router,
         private routes: ActivatedRoute,
         private cd: ChangeDetectorRef
     ) {}
     providerType = [
-        // { provider_name: 'Razorpay' },
+        { provider_name: 'CashOnDelivery' },
         { provider_name: 'GooglePay' },
         { provider_name: 'Phonepe' },
         { provider_name: 'Paytm' },
@@ -45,12 +52,20 @@ export class PaymentGatewayComponent implements OnInit {
             user_id: [user_id],
             provider_type: ['', Validators.required],
             payment_name: ['', Validators.required],
-            payment_api_key: ['', Validators.required],
-            payment_secret_key: ['', Validators.required],
+            payment_api_key: [''],
+            payment_secret_key: [''],
             transaction_note: [''],
             merchant_code: [''],
             salt_index: [''],
         });
+        this._dashboardService
+            .getRetailerDetailsById(user_id)
+            .subscribe((data) => {
+                this.profileData = data;
+                this.firstname = this.profileData.firstname;
+                this.domainname = this.profileData.domainname;
+                this.cd.detectChanges();
+            });
     }
 
     onSubmit() {

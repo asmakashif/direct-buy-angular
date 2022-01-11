@@ -19,10 +19,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SharedModule } from 'app/shared/shared.module';
 import { HotTableModule } from '@handsontable/angular';
-
+//import { CookieService } from 'ngx-cookie';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import 'handsontable/dist/handsontable.min.css';
 import 'pikaday/css/pikaday.css';
 import { StoreSummaryComponent } from 'app/modules/admin/store/store-summary/store-summary.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 //import { projectRoutes } from 'app/modules/admin/dashboards/project/project.routing';
 
 const storeSummaryRoutes: Route[] = [
@@ -36,6 +39,8 @@ const storeSummaryRoutes: Route[] = [
     declarations: [StoreSummaryComponent],
     imports: [
         RouterModule.forChild(storeSummaryRoutes),
+        FontAwesomeModule,
+        NgbModule,
         MatButtonModule,
         MatButtonToggleModule,
         MatDividerModule,
@@ -56,6 +61,7 @@ const storeSummaryRoutes: Route[] = [
         MatStepperModule,
         SharedModule,
         HotTableModule,
+        MatTooltipModule,
     ],
 })
 export class StoreSummaryModule {}

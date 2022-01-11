@@ -3,15 +3,7 @@
     <div class="bg-card">
         <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
             <div
-                class="
-                    flex flex-col
-                    sm:flex-row
-                    flex-auto
-                    sm:items-center
-                    min-w-0
-                    my-8
-                    sm:my-12
-                "
+                class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-8 sm:my-12"
             >
                 <!-- Avatar and name -->
                 <div class="flex flex-auto items-center min-w-0">
@@ -24,17 +16,9 @@
                     <div class="flex flex-col min-w-0 ml-4">
                         <ng-container *transloco="let t">
                             <div
-                                class="
-                                    text-2xl
-                                    md:text-5xl
-                                    font-semibold
-                                    tracking-tight
-                                    leading-7
-                                    md:leading-snug
-                                    truncate
-                                "
+                                class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate"
                             >
-                                {{ t("welcome-back") }}, Brian!
+                                {{ t("welcome-back") }}, {{ Asma }}!
                             </div>
                         </ng-container>
                         <div class="flex items-center">
@@ -45,10 +29,10 @@
                             <div
                                 class="ml-1.5 leading-6 truncate text-secondary"
                             >
-                                You have 2 new messages and 15 new tasks
+                                You have 0 new messages
                             </div>
                         </div>
-                        <flash-messages></flash-messages>
+                        <!-- <flash-messages></flash-messages> -->
                     </div>
                 </div>
                 <!-- Actions -->
@@ -65,18 +49,58 @@
                         ></mat-icon>
                         <span class="ml-2">Home</span>
                     </button>
-                    <button
+                    <a
+                        target="_blank"
                         class="fuse-mat-button-rounded"
+                        href="https://{{ domainname }}.direct-buy.in"
+                        mat-flat-button
+                        [color]="'primary'"
+                    >
+                        <fa-icon [icon]="faStore"></fa-icon>
+                        <span class="ml-2">Store</span>
+                    </a>
+                    <a
+                        target="_blank"
+                        class="fuse-mat-button-rounded"
+                        href="https://wa.me/?text=Dear Customer,We are delighted to inform you that our store is now online on https://{{
+                            domainname
+                        }}.direct-buy.in and orders can be placed online.
+                        Regards - {{ firstname }}"
                         mat-flat-button
                         [color]="'primary'"
                     >
                         <mat-icon
                             class="icon-size-5"
-                            [svgIcon]="'heroicons_solid:cog'"
+                            [svgIcon]="'heroicons_solid:chat'"
                         ></mat-icon>
-                        <span class="ml-2">Settings</span>
-                    </button>
+                        <span class="ml-2">Whatsapp</span>
+                    </a>
                 </div>
+            </div>
+            <!-- Project selector -->
+            <div
+                class="relative flex self-start pt-2 pb-1 pl-5 pr-4 cursor-pointer overflow-hidden rounded-t-xl border border-b-0 bg-default"
+                matRipple
+                [matMenuTriggerFor]="projectsMenu"
+            >
+                <div class="flex items-center">
+                    <div class="overflow-hidden">
+                        <div class="font-medium leading-6 truncate">
+                            {{ selectedProject | titlecase }}
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center pl-2">
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:chevron-down'"
+                        ></mat-icon>
+                    </div>
+                </div>
+                <mat-menu #projectsMenu="matMenu" [xPosition]="'before'">
+                    <button (click)="dashbaord()" mat-menu-item>
+                        Dashboard
+                    </button>
+                </mat-menu>
             </div>
         </div>
     </div>
@@ -86,321 +110,386 @@
         <div class="w-full max-w-screen-xl mx-auto">
             <!-- Tabs -->
             <mat-tab-group class="sm:px-2" [animationDuration]="'0'">
-                <!-- Orders -->
-                <mat-tab label="Orders">
+                <!-- Settings -->
+                <mat-tab label="Settings">
                     <ng-template matTabContent>
-                        <div
-                            class="
-                                grid grid-cols-1
-                                sm:grid-cols-6
-                                gap-6
-                                w-full
-                                min-w-0
-                            "
-                        ></div>
-                    </ng-template>
-                </mat-tab>
-
-                <!-- CRM -->
-                <mat-tab label="CRM">
-                    <ng-template matTabContent>
-                        <div
-                            class="
-                                grid grid-cols-1
-                                sm:grid-cols-6
-                                gap-6
-                                w-full
-                                min-w-0
-                            "
-                        ></div>
-                    </ng-template>
-                </mat-tab>
-
-                <!-- StoreSetting -->
-                <mat-tab label="StoreSetting">
-                    <mat-accordion class="example-headers-align">
-                        <mat-expansion-panel
-                            [expanded]="step === 0"
-                            (opened)="setStep(0)"
-                            hideToggle
-                        >
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    Store Information
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <form
-                                class="
-                                    flex flex-col
-                                    p-8
-                                    pb-4
-                                    rounded-2xl
-                                    overflow-hidden
-                                "
-                                [formGroup]="editForm"
-                                (ngSubmit)="onUpdate()"
-                                autocomplete="off"
+                        <div class="grid grid-cols-1 gap-6 w-full min-w-0">
+                            <!-- Payment Options -->
+                            <div
+                                class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
                             >
-                                <mat-form-field appearance="fill">
-                                    <mat-label>Shop name</mat-label>
-                                    <input
-                                        type="text"
-                                        formControlName="shop_name"
-                                        placeholder="Shop name"
-                                        name="shop_name"
-                                        class="form-control"
-                                        matInput
-                                    />
-                                </mat-form-field>
-                                &nbsp;
-                                <mat-form-field appearance="fill">
-                                    <mat-label>Shop Address</mat-label>
-                                    <textarea
-                                        formControlName="shop_address"
-                                        name="shop_address"
-                                        matInput
-                                        [rows]="3"
-                                        matTextareaAutosize
-                                    ></textarea>
-                                </mat-form-field>
-                                <button class="btn btn-success">Update</button>
-                            </form>
-                        </mat-expansion-panel>
+                                <p><b>Edit Shop Details</b></p>
+                                <form
+                                    [formGroup]="editShopForm"
+                                    autocomplete="off"
+                                >
+                                    <div class="flex flex-col sm:flex-row p-4">
+                                        <div class="flex flex-auto flex-wrap">
+                                            <!-- Name -->
+                                            <div
+                                                class="flex flex-col w-full lg:w-1/4 sm:pl-8"
+                                            >
+                                                <!-- Name -->
+                                                <mat-form-field class="w-full">
+                                                    <mat-label>Name</mat-label>
+                                                    <input
+                                                        matInput
+                                                        formControlName="shop_name"
+                                                    />
+                                                </mat-form-field>
+                                            </div>
 
-                        <mat-expansion-panel
-                            [expanded]="step === 1"
-                            (opened)="setStep(1)"
-                            hideToggle
-                        >
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    Store Payment Details
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <button
-                                class="btn btn-success"
-                                (click)="setUpPayment()"
-                            >
-                                Choose Payment Option
-                            </button>
-                            <br />
-                            <br />
-                            <form
-                                [formGroup]="paymentForm"
-                                (ngSubmit)="onSubmit()"
-                                autocomplete="off"
-                            >
-                                <ul>
-                                    <div class="row">
-                                        <div
-                                            class="col-md-4"
-                                            *ngFor="let payment of payment"
+                                            <!-- Address -->
+                                            <div
+                                                class="flex flex-col w-full lg:w-2/4 sm:pl-8"
+                                            >
+                                                <mat-form-field class="w-full">
+                                                    <mat-label
+                                                        >Address</mat-label
+                                                    >
+                                                    <input
+                                                        matInput
+                                                        formControlName="shop_address"
+                                                    />
+                                                </mat-form-field>
+                                            </div>
+
+                                            <!-- GST -->
+                                            <div
+                                                class="flex flex-col w-full lg:w-1/4 sm:pl-8"
+                                            >
+                                                <mat-form-field class="w-full">
+                                                    <mat-label>GST</mat-label>
+                                                    <input
+                                                        matInput
+                                                        formControlName="shop_gst"
+                                                    />
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="flex items-center justify-between w-full px-8 py-4"
+                                    >
+                                        <button
+                                            class="-ml-4"
+                                            mat-button
+                                            [color]="'warn'"
+                                            (click)="deleteShop()"
                                         >
-                                            <li class="list-group-item">
-                                                <div
-                                                    class="media-body"
+                                            Delete
+                                        </button>
+                                        <button
+                                            (click)="reactivateShop()"
+                                            mat-button
+                                            [color]="'warn'"
+                                            *ngIf="
+                                                shop_status == 2;
+                                                else deactivate
+                                            "
+                                        >
+                                            Deactivated
+                                        </button>
+                                        <ng-template #deactivate>
+                                            <button
+                                                (click)="deactivateShop()"
+                                                mat-button
+                                                [color]="'warn'"
+                                            >
+                                                Deactivate
+                                            </button>
+                                        </ng-template>
+                                        <div class="flex items-center">
+                                            <div
+                                                class="flex items-center mr-4"
+                                                *ngIf="flashMessage"
+                                            >
+                                                <ng-container
                                                     *ngIf="
-                                                        payment.default_payment ==
-                                                        0
+                                                        flashMessage ===
+                                                        'success'
                                                     "
                                                 >
-                                                    <p>
-                                                        {{
-                                                            payment.pInfo_payment_name
-                                                        }}
-                                                        <br />
-                                                        <span
-                                                            style="
-                                                                font-size: 12px;
-                                                            "
-                                                            *ngIf="
-                                                                payment.default_payment ==
-                                                                0
-                                                            "
-                                                            >Make Default
-                                                            <input
-                                                                type="checkbox"
-                                                                [value]="
-                                                                    payment.shop_pInfo_id
-                                                                "
-                                                                name="shop_pInfo_id[]"
-                                                                (change)="
-                                                                    onDefaultSelect(
-                                                                        $event
-                                                                    )
-                                                                "
-                                                                matCheckbox
-                                                            />
-                                                        </span>
-                                                    </p>
-                                                </div>
-                                                <div
-                                                    class="media-body"
+                                                    <mat-icon
+                                                        class="text-green-500"
+                                                        [svgIcon]="
+                                                            'heroicons_outline:check'
+                                                        "
+                                                    ></mat-icon>
+                                                    <span class="ml-2"
+                                                        >Product updated</span
+                                                    >
+                                                </ng-container>
+                                                <ng-container
                                                     *ngIf="
-                                                        payment.default_payment ==
-                                                        1
+                                                        flashMessage === 'error'
                                                     "
                                                 >
-                                                    <p>
-                                                        {{
-                                                            payment.pInfo_payment_name
-                                                        }}
-                                                        <br />
-                                                        <span
-                                                            style="
-                                                                font-size: 12px;
+                                                    <mat-icon
+                                                        class="text-red-500"
+                                                        [svgIcon]="
+                                                            'heroicons_outline:x'
+                                                        "
+                                                    ></mat-icon>
+                                                    <span class="ml-2"
+                                                        >An error occurred, try
+                                                        again!</span
+                                                    >
+                                                </ng-container>
+                                            </div>
+                                            <button
+                                                mat-flat-button
+                                                [color]="'primary'"
+                                                (click)="updateShopDetails()"
+                                            >
+                                                Update
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <br />
+                                <!-- Separator -->
+                                <div class="flex items-center mt-4">
+                                    <div class="flex-auto mt-px border-t"></div>
+                                </div>
+                                <br />
+                                <p *ngIf="shopData.vacation_mode == 0">
+                                    <b>Vacation Mode</b>
+                                    <br />
+                                    <span style="color: red">Note:</span>
+                                    Enabling this option will stop customers
+                                    from placing orders from your online store.
+                                </p>
+                                <p *ngIf="shopData.vacation_mode == 1">
+                                    <b>Vacation Mode</b>
+                                    <br />
+                                    <span style="color: red">Note:</span>
+                                    Disabling this option will make customers to
+                                    place orders from your online store.
+                                </p>
+                                <form
+                                    class="example-form"
+                                    [formGroup]="vacationForm"
+                                    ngNativeValidate
+                                >
+                                    <div
+                                        class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between border-b"
+                                    >
+                                        <!-- Actions -->
+                                        <div
+                                            class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4"
+                                        >
+                                            <!-- Vacation mode off -->
+                                            <div
+                                                class="flex flex-col w-full lg:w-2/4 sm:pl-8"
+                                                *ngIf="
+                                                    shopData.vacation_mode == 0
+                                                "
+                                            >
+                                                <mat-slide-toggle
+                                                    color="primary"
+                                                    formControlName="vacation_mode"
+                                                    >{{
+                                                        "OFF"
+                                                    }}</mat-slide-toggle
+                                                >
+                                            </div>
+                                            &nbsp; &nbsp;
+                                            <!-- Vacation mode on -->
+                                            <div
+                                                class="flex flex-col w-full lg:w-3/4 sm:pl-8"
+                                                *ngIf="
+                                                    shopData.vacation_mode == 1
+                                                "
+                                            >
+                                                <mat-slide-toggle
+                                                    color="accent"
+                                                    checked
+                                                    >{{
+                                                        " ON"
+                                                    }}</mat-slide-toggle
+                                                >
+                                            </div>
+                                            &nbsp; &nbsp;
+                                            <!-- Vacation button -->
+                                            <div class="flex items-center">
+                                                <div
+                                                    class="flex items-center mr-4"
+                                                    *ngIf="flashMessage"
+                                                >
+                                                    <ng-container
+                                                        *ngIf="
+                                                            flashMessage ===
+                                                            'success'
+                                                        "
+                                                    >
+                                                        <mat-icon
+                                                            class="text-green-500"
+                                                            [svgIcon]="
+                                                                'heroicons_outline:check'
                                                             "
-                                                            >Default Payment
-                                                            <input
-                                                                type="checkbox"
-                                                                checked
-                                                                matCheckbox
-                                                            />
-                                                        </span>
-                                                    </p>
+                                                        ></mat-icon>
+                                                        <span class="ml-2"
+                                                            >Updated</span
+                                                        >
+                                                    </ng-container>
+                                                    <ng-container
+                                                        *ngIf="
+                                                            flashMessage ===
+                                                            'error'
+                                                        "
+                                                    >
+                                                        <mat-icon
+                                                            class="text-red-500"
+                                                            [svgIcon]="
+                                                                'heroicons_outline:x'
+                                                            "
+                                                        ></mat-icon>
+                                                        <span class="ml-2"
+                                                            >An error occurred,
+                                                            try again!</span
+                                                        >
+                                                    </ng-container>
                                                 </div>
-                                            </li>
+                                                <button
+                                                    mat-flat-button
+                                                    [color]="'primary'"
+                                                    (click)="
+                                                        onVacationSubmit(
+                                                            vacationForm.value
+                                                        )
+                                                    "
+                                                >
+                                                    Update
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </ul>
-                                <button class="btn btn-success">Save</button>
-                            </form>
-
-                            <!-- <mdb-card>
-                                <mdb-card-body>
-                                    <mdb-card-title>
-                                        <h4>Panel title</h4>
-                                    </mdb-card-title>
-                                    <mdb-card-text
-                                        >Some quick example text to build on the
-                                        card title and make up the bulk of the
-                                        card's content.</mdb-card-text
-                                    >
-                                    <div class="flex-row">
-                                        <a class="card-link">Card link</a>
-                                        <a class="card-link">Another link</a>
-                                    </div>
-                                </mdb-card-body>
-                            </mdb-card> -->
-                        </mat-expansion-panel>
-
-                        <!-- <a
-                            href="javascript:void(0);"
-                            (click)="shopConfiguration(data.shopId)"
-                        >
-                            <mat-expansion-panel>
-                                <mat-expansion-panel-header>
-                                    <mat-panel-title>
-                                        Store Configuration
-                                    </mat-panel-title>
-                                </mat-expansion-panel-header>
-                            </mat-expansion-panel>
-                        </a> -->
-                        <mat-expansion-panel
-                            [expanded]="step === 2"
-                            (opened)="setStep(2)"
-                            hideToggle
-                        >
-                            <mat-expansion-panel-header>
-                                <mat-panel-title> Additional </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <form
-                                class="example-form"
-                                [formGroup]="formGroup"
-                                (ngSubmit)="onFormSubmit(formGroup.value)"
-                                ngNativeValidate
-                            >
-                                <div class="row">
+                                </form>
+                                <!-- <div class="flex items-center mt-4">
+                                    <div class="flex-auto mt-px border-t"></div>
+                                </div> -->
+                                <br />
+                                <br />
+                                <p *ngIf="shopData.hide_0productQty == 0">
+                                    <b>Product Stock Setting</b>
+                                    <br />
+                                    <span style="color: red">Note:</span>
+                                    Enabling this option will display the zero
+                                    stock products to customer
+                                </p>
+                                <p *ngIf="shopData.hide_0productQty == 1">
+                                    <b>Product Quantity Setting</b>
+                                    <br />
+                                    <span style="color: red">Note:</span>
+                                    Disabling this option will hide the zero
+                                    stock products from customer
+                                </p>
+                                <form
+                                    class="example-form"
+                                    [formGroup]="hideproductQtyForm"
+                                    ngNativeValidate
+                                >
                                     <div
-                                        class="col-md-3"
-                                        *ngIf="data.home_delivery == 0"
+                                        class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between border-b"
                                     >
-                                        <span>
-                                            <strong
-                                                >Home Delivery-<span
-                                                    style="color: red"
-                                                    >Off</span
-                                                ></strong
+                                        <!-- Actions -->
+                                        <div
+                                            class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4"
+                                        >
+                                            <!-- Display Product -->
+                                            <div
+                                                class="flex flex-col w-full lg:w-2/4 sm:pl-8"
+                                                *ngIf="
+                                                    shopData.hide_0productQty ==
+                                                    0
+                                                "
                                             >
-                                        </span>
-                                    </div>
-                                    <div
-                                        class="col-md-3"
-                                        *ngIf="data.home_delivery == 1"
-                                    >
-                                        <span>
-                                            <strong
-                                                >Home Delivery-<span
-                                                    style="color: green"
-                                                    >On</span
-                                                ></strong
+                                                <mat-slide-toggle
+                                                    color="primary"
+                                                    formControlName="hide_0productQty"
+                                                    >{{
+                                                        "OFF"
+                                                    }}</mat-slide-toggle
+                                                >
+                                            </div>
+                                            &nbsp; &nbsp;
+                                            <!-- Hide Product -->
+                                            <div
+                                                class="flex flex-col w-full lg:w-3/4 sm:pl-8"
+                                                *ngIf="
+                                                    shopData.hide_0productQty ==
+                                                    1
+                                                "
                                             >
-                                        </span>
-                                    </div>
-                                    <div
-                                        class="col-md-3"
-                                        *ngIf="data.home_delivery == 1"
-                                    >
-                                        <mat-slide-toggle
-                                            color="accent"
-                                            checked
-                                        ></mat-slide-toggle>
-                                    </div>
-                                    <div
-                                        class="col-md-3"
-                                        *ngIf="data.home_delivery == 0"
-                                    >
-                                        <mat-slide-toggle
-                                            color="primary"
-                                            formControlName="home_delivery"
-                                        ></mat-slide-toggle>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input
-                                            type="submit"
-                                            class="btn btn-success"
-                                            name="submit"
-                                            value="Save"
-                                        />
-                                    </div>
-                                </div>
-                            </form>
-                            <br />
-                            <br />
-                            <form
-                                [formGroup]="minOrderValGroup"
-                                (ngSubmit)="onMinOrderValGroupSubmit()"
-                            >
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <span>
-                                            <strong>Minimum Order Value</strong>
-                                        </span>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            formControlName="min_order_val"
-                                            name="min_order_val"
-                                            placeholder="Enter Minimum order value"
-                                        />
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <input
-                                                type="submit"
-                                                class="btn btn-success"
-                                                name="submit"
-                                                value="Save"
-                                            />
+                                                <mat-slide-toggle
+                                                    color="accent"
+                                                    checked
+                                                    >{{
+                                                        " ON"
+                                                    }}</mat-slide-toggle
+                                                >
+                                            </div>
+                                            &nbsp; &nbsp;
+                                            <!-- Vacation button -->
+                                            <div class="flex items-center">
+                                                <div
+                                                    class="flex items-center mr-4"
+                                                    *ngIf="flashMessage"
+                                                >
+                                                    <ng-container
+                                                        *ngIf="
+                                                            flashMessage ===
+                                                            'success'
+                                                        "
+                                                    >
+                                                        <mat-icon
+                                                            class="text-green-500"
+                                                            [svgIcon]="
+                                                                'heroicons_outline:check'
+                                                            "
+                                                        ></mat-icon>
+                                                        <span class="ml-2"
+                                                            >Updated</span
+                                                        >
+                                                    </ng-container>
+                                                    <ng-container
+                                                        *ngIf="
+                                                            flashMessage ===
+                                                            'error'
+                                                        "
+                                                    >
+                                                        <mat-icon
+                                                            class="text-red-500"
+                                                            [svgIcon]="
+                                                                'heroicons_outline:x'
+                                                            "
+                                                        ></mat-icon>
+                                                        <span class="ml-2"
+                                                            >An error occurred,
+                                                            try again!</span
+                                                        >
+                                                    </ng-container>
+                                                </div>
+                                                <button
+                                                    mat-flat-button
+                                                    [color]="'primary'"
+                                                    (click)="
+                                                        hideproductQtyFormSubmit(
+                                                            hideproductQtyForm.value
+                                                        )
+                                                    "
+                                                >
+                                                    Update
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
-                        </mat-expansion-panel>
-                    </mat-accordion>
+                                </form>
+                            </div>
+                        </div>
+                    </ng-template>
                 </mat-tab>
             </mat-tab-group>
         </div>

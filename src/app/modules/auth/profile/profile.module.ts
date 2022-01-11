@@ -17,6 +17,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SharedModule } from 'app/shared/shared.module';
 import { ProfileComponent } from 'app/modules/auth/profile/profile.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 const profileRoutes: Route[] = [
     {
@@ -45,6 +46,7 @@ const profileRoutes: Route[] = [
         SharedModule,
         MatInputModule,
         MatFormFieldModule,
+        FontAwesomeModule,
     ],
 })
 export class ProfileModule {}

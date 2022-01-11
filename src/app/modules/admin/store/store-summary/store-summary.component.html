@@ -3,15 +3,7 @@
     <div class="bg-card">
         <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
             <div
-                class="
-                    flex flex-col
-                    sm:flex-row
-                    flex-auto
-                    sm:items-center
-                    min-w-0
-                    my-8
-                    sm:my-12
-                "
+                class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-8 sm:my-12"
             >
                 <!-- Avatar and name -->
                 <div class="flex flex-auto items-center min-w-0">
@@ -24,15 +16,7 @@
                     <div class="flex flex-col min-w-0 ml-4">
                         <ng-container *transloco="let t">
                             <div
-                                class="
-                                    text-2xl
-                                    md:text-5xl
-                                    font-semibold
-                                    tracking-tight
-                                    leading-7
-                                    md:leading-snug
-                                    truncate
-                                "
+                                class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate"
                             >
                                 {{ t("welcome-back") }}, Brian!
                             </div>
@@ -45,7 +29,7 @@
                             <div
                                 class="ml-1.5 leading-6 truncate text-secondary"
                             >
-                                You have 2 new messages and 15 new tasks
+                                You have 0 new messages
                             </div>
                         </div>
                         <div
@@ -87,17 +71,32 @@
                         ></mat-icon>
                         <span class="ml-2">Home</span>
                     </button>
-                    <button
+                    <a
+                        target="_blank"
                         class="fuse-mat-button-rounded"
+                        href="https://{{ domainname }}.direct-buy.in"
+                        mat-flat-button
+                        [color]="'primary'"
+                    >
+                        <fa-icon [icon]="faStore"></fa-icon>
+                        <span class="ml-2">Store</span>
+                    </a>
+                    <a
+                        target="_blank"
+                        class="fuse-mat-button-rounded"
+                        href="https://wa.me/?text=Dear Customer,We are delighted to inform you that our store is now online on https://{{
+                            domainname
+                        }}.direct-buy.in and orders can be placed online.
+                        Regards - {{ firstname }}"
                         mat-flat-button
                         [color]="'primary'"
                     >
                         <mat-icon
                             class="icon-size-5"
-                            [svgIcon]="'heroicons_solid:cog'"
+                            [svgIcon]="'heroicons_solid:chat'"
                         ></mat-icon>
-                        <span class="ml-2">Settings</span>
-                    </button>
+                        <span class="ml-2">Whatsapp</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -107,80 +106,137 @@
     <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
         <div class="w-full max-w-screen-xl mx-auto">
             <div
-                class="
-                    flex flex-col
-                    m-8
-                    p-8
-                    bg-card
-                    rounded-2xl
-                    shadow
-                    overflow-hidden
-                "
+                class="flex flex-col m-8 p-8 bg-card rounded-2xl shadow overflow-hidden"
             >
-                <div class="row">
-                    <div class="col-md-2">
-                        <button
-                            class="lg:mt-6"
-                            mat-flat-button
-                            [color]="'primary'"
-                            (click)="prevStep()"
-                        >
-                            Back
-                        </button>
+                <div *ngIf="dbcreation_status == 0">
+                    <div class="circles" *ngIf="createShopDb; else notClicked">
+                        {{ "Creating database" }}
+                        <div class="primary"></div>
+                        <div class="primary"></div>
+                        <div class="primary"></div>
+                        <div class="primary"></div>
+                        <div class="alternate"></div>
+                        <div class="alternate"></div>
                     </div>
-                    <div class="col-md-2">
-                        <button
-                            class="lg:mt-6"
-                            mat-flat-button
-                            [color]="'primary'"
-                            (click)="nextStep()"
-                        >
-                            Next
-                        </button>
-                    </div>
+                    <ng-template #notClicked>
+                        <div class="circles">
+                            {{ "Click to create shop" }}
+                            <div class="primary"></div>
+                            <div class="primary"></div>
+                            <div class="primary"></div>
+                            <div class="primary"></div>
+                            <div class="alternate"></div>
+                            <div class="alternate"></div>
+                        </div>
+                    </ng-template>
+                    <ngb-progressbar
+                        type="primary"
+                        textType="white"
+                        [value]="1"
+                        [showValue]="true"
+                    ></ngb-progressbar>
                 </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-3">
-                        <span><strong>Store Name :</strong></span>
+                <div *ngIf="dbcreation_status == 1">
+                    <div class="circles">
+                        {{ "Creating tables" }}
+                        <div class="primary"></div>
+                        <div class="primary"></div>
+                        <div class="primary"></div>
+                        <div class="primary"></div>
+                        <div class="alternate"></div>
+                        <div class="alternate"></div>
                     </div>
-                    <div class="col-md-9">{{ shop_name }}</div>
+                    <ngb-progressbar
+                        type="warning"
+                        [value]="25"
+                        [striped]="true"
+                        [animated]="true"
+                        ><i>25%</i></ngb-progressbar
+                    >
                 </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <span><strong>Store Address :</strong></span>
+
+                <div *ngIf="dbcreation_status == 2">
+                    <div class="circles">
+                        {{ "Pushing data" }}
+                        <div class="primary"></div>
+                        <div class="primary"></div>
+                        <div class="primary"></div>
+                        <div class="primary"></div>
+                        <div class="alternate"></div>
+                        <div class="alternate"></div>
                     </div>
-                    <div class="col-md-9">{{ shop_address }}</div>
+                    <ngb-progressbar
+                        type="warning"
+                        [value]="50"
+                        [striped]="true"
+                        [animated]="true"
+                        ><i>50%</i></ngb-progressbar
+                    >
                 </div>
-                <!-- <div class="row">
-                    <div class="col-md-3">
-                        <span><strong>Store Type : </strong></span>
-                    </div>
-                    <div class="col-md-9">
-                        Super Market | Franchisee | Hypermarket |
-                    </div>
-                </div> -->
-                <div class="row">
-                    <div class="col-md-3">
-                        <span><strong>Store Unique Code : </strong></span>
-                    </div>
-                    <div class="col-md-9">{{ shopId }}</div>
+
+                <div *ngIf="dbcreation_status == 3">
+                    <ngb-progressbar
+                        type="success"
+                        [value]="100"
+                        [striped]="true"
+                        >Completed!</ngb-progressbar
+                    >
                 </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <span><strong>No of Products : </strong></span>
-                    </div>
-                    <div class="col-md-9">{{ countProduct }}</div>
+
+                <div class="mt-1.5 text-lg text-secondary">
+                    <b>Store Name :</b> {{ shop_name }}
                 </div>
+                <div class="mt-1.5 text-lg text-secondary">
+                    <b>Store Address :</b> {{ shop_address }}
+                </div>
+                <div class="mt-1.5 text-lg text-secondary">
+                    <b>Store Unique Code :</b> {{ shopId }}
+                </div>
+                <div class="mt-1.5 text-lg text-secondary">
+                    <b>No of Products :</b> {{ countProduct }}
+                </div>
+
                 <div class="flex items-center">
                     <button
                         class="lg:mt-6"
                         mat-flat-button
-                        [color]="'primary'"
-                        (click)="createShopDB()"
+                        [color]="'warn'"
+                        (click)="prevStep()"
                     >
-                        Create Shop
+                        Back
                     </button>
+                    &nbsp;
+                    <button
+                        class="lg:mt-6"
+                        mat-flat-button
+                        [color]="'primary'"
+                        (click)="nextStep()"
+                        *ngIf="dbcreation_status == 3; else createShop"
+                    >
+                        Next
+                    </button>
+                    &nbsp;
+                    <ng-template #createShop>
+                        <button
+                            class="lg:mt-6"
+                            mat-flat-button
+                            [color]="'primary'"
+                            (click)="createShopDB()"
+                            *ngIf="!createShopDb; else notClicked"
+                        >
+                            Create Shop
+                        </button>
+                    </ng-template>
+                    <ng-template #notClicked>
+                        <button
+                            class="lg:mt-6"
+                            mat-flat-button
+                            [color]="'primary'"
+                            disabled="true"
+                        >
+                            Create Shop
+                        </button>
+                    </ng-template>
                 </div>
                 <!-- <div class="col-md-10">
                     <span

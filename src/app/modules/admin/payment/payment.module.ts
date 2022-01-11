@@ -23,6 +23,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 const paymentRoutes: Route[] = [
     {
@@ -36,6 +37,7 @@ const paymentRoutes: Route[] = [
     imports: [
         RouterModule.forChild(paymentRoutes),
         FlashMessagesModule.forRoot(),
+        FontAwesomeModule,
         NgbModule,
         MatButtonModule,
         MatButtonToggleModule,

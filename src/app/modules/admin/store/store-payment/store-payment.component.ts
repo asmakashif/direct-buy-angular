@@ -10,6 +10,8 @@ import {
 import { StorePaymentService } from 'app/modules/admin/store/store-payment/store-payment.service';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { DashboardService } from '../../dashboard/dashboard.service';
+import { faStore } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-store-payment',
@@ -17,6 +19,9 @@ import { FuseConfirmationService } from '@fuse/services/confirmation';
     styleUrls: ['./store-payment.component.scss'],
 })
 export class StorePaymentComponent implements OnInit {
+    faStore = faStore;
+    domainname: any;
+    profileData: any;
     payment: any;
     paymentForm: FormGroup;
     selection = [];
@@ -25,13 +30,15 @@ export class StorePaymentComponent implements OnInit {
     imagePath: string = '/assets/icons/';
     image: any;
     shopdata: any;
+    firstname: any;
     constructor(
         private _fuseConfirmationService: FuseConfirmationService,
         private formBuilder: FormBuilder,
         private apiService: StorePaymentService,
         private _router: Router,
         private routes: ActivatedRoute,
-        private cd: ChangeDetectorRef
+        private cd: ChangeDetectorRef,
+        private _dashboardService: DashboardService
     ) {}
 
     ngOnInit(): void {
@@ -44,6 +51,15 @@ export class StorePaymentComponent implements OnInit {
                 this.payment = payment;
                 this.image = this.payment.provider_img;
                 console.log(this.image);
+            });
+
+        this._dashboardService
+            .getRetailerDetailsById(user_id)
+            .subscribe((data) => {
+                this.profileData = data;
+                this.firstname = this.profileData.firstname;
+                this.domainname = this.profileData.domainname;
+                this.cd.detectChanges();
             });
 
         // this.apiService
@@ -201,12 +217,17 @@ export class StorePaymentComponent implements OnInit {
                 this.shopdata = data;
                 if (this.shopdata.payment_status == 1) {
                     const confirmation = this._fuseConfirmationService.open({
-                        title: 'Proceed Next',
                         message:
-                            'You will be moved out of this page to proceed with next step',
+                            'Congratulations, A payment solution has been attached to the store. To add more payment solutions, click Cancel. You may come back to this step from the menu Shops -> Manage Shop',
+                        icon: {
+                            show: true,
+                            name: 'heroicons_outline:check',
+                            color: 'accent',
+                        },
                         actions: {
                             confirm: {
                                 label: 'Okay',
+                                color: 'primary',
                             },
                         },
                     });
@@ -222,9 +243,8 @@ export class StorePaymentComponent implements OnInit {
                     });
                 } else {
                     const confirmation = this._fuseConfirmationService.open({
-                        title: 'Proceed Next',
                         message:
-                            'Choose atleast one payment option to proceed next',
+                            'Oops, a store should have at least one payment solution added. Click Cancel and add one. Click Ok to continue without adding.  You may come back to this step from the menu Shops -> Manage Shop',
                         actions: {
                             confirm: {
                                 label: 'Okay',
@@ -240,6 +260,14 @@ export class StorePaymentComponent implements OnInit {
                     });
                 }
             });
+    }
+
+    dashbaordConfiguration(): void {
+        const routeParams = this.routes.snapshot.params;
+
+        this._router.navigate([
+            '/dashboard/' + routeParams.shopId + '/' + routeParams.shop_name,
+        ]);
     }
 
     // onSubmit() {

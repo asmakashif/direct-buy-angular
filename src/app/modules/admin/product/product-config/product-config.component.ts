@@ -15,6 +15,7 @@ import { InventoryProduct } from 'app/Model/inventory.types';
 import { DashboardService } from '../../dashboard/dashboard.service';
 import { HttpClient } from '@angular/common/http';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { faStore } from '@fortawesome/free-solid-svg-icons';
 
 declare var $: any;
 
@@ -44,6 +45,9 @@ declare var $: any;
     ],
 })
 export class ProductConfigComponent implements OnInit {
+    faStore = faStore;
+    profileData: any;
+    domainname: any;
     imagePath: string = '/api/products/uploads/';
     @ViewChild('stepper') stepper: MatStepper;
     shopType: any;
@@ -77,6 +81,7 @@ export class ProductConfigComponent implements OnInit {
     flashMessage: string;
     isLoading: boolean = false;
     searchText;
+    firstname: any;
 
     constructor(
         private _fuseConfirmationService: FuseConfirmationService,
@@ -146,13 +151,42 @@ export class ProductConfigComponent implements OnInit {
                 console.log(this.products);
             });
 
-        if (this.isMobile()) {
-            //alert('mobile');
-            this._router.navigate([
-                '/mobile/product-config/' + routeParams.shopId,
-            ]);
-            // this._router.resetConfig(this.mobileRoutes);
-        }
+        this._dashboardService
+            .getRetailerDetailsById(user_id)
+            .subscribe((data) => {
+                this.profileData = data;
+                this.firstname = this.profileData.firstname;
+                this.domainname = this.profileData.domainname;
+                this.cd.detectChanges();
+            });
+
+        // if (this.isMobile()) {
+        //     //alert('mobile');
+        //     this._router.navigate([
+        //         '/mobile/product-config/' + routeParams.shopId,
+        //     ]);
+        //     // this._router.resetConfig(this.mobileRoutes);
+        // }
+
+        // $(document).on('click', 'input[name="base_product_id"]', function () {
+        //     $('input[name="base_product_id"]').not(this).prop('checked', false);
+        // });
+        // $('#checkBtn').click(function () {
+        //     var checked = $('input[type=checkbox]:checked').length;
+
+        //     if (!checked) {
+        //         //alert('You must check at least one checkbox.');
+        //         const confirmation = this._fuseConfirmationService.open({
+        //             title: 'Select ShopType',
+        //             message: 'You must check at least one checkbox.',
+        //             actions: {
+        //                 confirm: {
+        //                     label: 'Delete',
+        //                 },
+        //             },
+        //         });
+        //     }
+        // });
     }
 
     selectAllShopType(e) {
@@ -319,15 +353,17 @@ export class ProductConfigComponent implements OnInit {
 
     onBrandSubmit() {
         //more code
+        // console.log(this.subCategoryGroup.value);
         console.log(this.brandGroup.value);
         const arr = this.brandGroup.value;
+        //const sub_category = this.subCategoryGroup.value;
         localStorage.setItem('dbrands', JSON.stringify(arr.brand));
 
         this.apiService
             .getProductsByBrand(this.brandGroup.value)
             .subscribe((products) => {
                 this.dataset = products;
-                console.log(this.dataset.base_product_id);
+                console.log(this.dataset);
                 this.shop_type = JSON.parse(localStorage.getItem('dshop_type'));
                 this.category = JSON.parse(localStorage.getItem('dcategory'));
                 this.subCategory = JSON.parse(
@@ -369,11 +405,52 @@ export class ProductConfigComponent implements OnInit {
     }
 
     onDataFilterSubmit() {
+        const routeParams = this.routes.snapshot.params;
         console.log(this.dataFilteredGroup.value);
         //more code
         this.apiService
             .saveFilteredData(this.dataFilteredGroup.value)
-            .subscribe((data) => {});
+            .subscribe((data) => {
+                this.apiService
+                    .pushProductsTOStrDb(routeParams.shopId)
+                    .subscribe((data) => {});
+            });
+    }
+
+    skipProductSetup() {
+        const routeParams = this.routes.snapshot.params;
+        this.apiService
+            .skipProductSetup(routeParams.shopId)
+            .subscribe((data) => {
+                const confirmation = this._fuseConfirmationService.open({
+                    message:
+                        'Congratulations, Products are added to your store. To add more products, click Cancel. You may come back to this step from the menu Shops -> Manage Shop',
+                    icon: {
+                        show: true,
+                        name: 'heroicons_outline:check',
+                        color: 'primary',
+                    },
+                    actions: {
+                        confirm: {
+                            label: 'Okay',
+                            color: 'primary',
+                        },
+                    },
+                });
+
+                // Subscribe to the confirmation dialog closed action
+                confirmation.afterClosed().subscribe((result) => {
+                    // If the confirm button pressed...
+                    if (result === 'confirmed') {
+                        this._router.navigate(['/steps/' + routeParams.shopId]);
+                    }
+                });
+            });
+    }
+
+    gotToSteps() {
+        const routeParams = this.routes.snapshot.params;
+        this._router.navigate(['/steps/' + routeParams.shopId]);
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -387,6 +464,7 @@ export class ProductConfigComponent implements OnInit {
      */
 
     editDetails(productId: string): void {
+        alert(productId);
         // If the product is already selected...
         this.editCache[productId] = true;
 
@@ -542,12 +620,17 @@ export class ProductConfigComponent implements OnInit {
         const routeParams = this.routes.snapshot.params;
         // Open the confirmation dialog
         const confirmation = this._fuseConfirmationService.open({
-            title: 'Proceed Next Step',
             message:
-                'By Clicking next you will be moved out of this page.Are you sure you want to move out of this step? This action cannot be undone!',
+                'Congratulations, Products are added to your store. To add more products, click Cancel. You may come back to this step from the menu Shops -> Manage Shop',
+            icon: {
+                show: true,
+                name: 'heroicons_outline:check',
+                color: 'primary',
+            },
             actions: {
                 confirm: {
                     label: 'Okay',
+                    color: 'primary',
                 },
             },
         });
@@ -556,7 +639,7 @@ export class ProductConfigComponent implements OnInit {
         confirmation.afterClosed().subscribe((result) => {
             // If the confirm button pressed...
             if (result === 'confirmed') {
-                this._router.navigate(['/store-payment/' + routeParams.shopId]);
+                this._router.navigate(['/steps/' + routeParams.shopId]);
             }
         });
     }

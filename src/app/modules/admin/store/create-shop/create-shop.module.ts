@@ -20,6 +20,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { SharedModule } from 'app/shared/shared.module';
 
 import { CreateShopComponent } from 'app/modules/admin/store/create-shop/create-shop.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 //import { projectRoutes } from 'app/modules/admin/dashboards/project/project.routing';
 
 const createShopRoutes: Route[] = [
@@ -33,6 +34,7 @@ const createShopRoutes: Route[] = [
     declarations: [CreateShopComponent],
     imports: [
         RouterModule.forChild(createShopRoutes),
+        FontAwesomeModule,
         MatButtonModule,
         MatButtonToggleModule,
         MatDividerModule,

@@ -22,6 +22,7 @@ import { HotTableModule } from '@handsontable/angular';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { StorePaymentComponent } from 'app/modules/admin/store/store-payment/store-payment.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 const storePaymentRoutes: Route[] = [
     {
@@ -34,6 +35,7 @@ const storePaymentRoutes: Route[] = [
     declarations: [StorePaymentComponent],
     imports: [
         RouterModule.forChild(storePaymentRoutes),
+        FontAwesomeModule,
         MatButtonModule,
         MatButtonToggleModule,
         MatDividerModule,

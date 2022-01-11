@@ -23,6 +23,7 @@ import { HotTableModule } from '@handsontable/angular';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { CompletedOrdersComponent } from 'app/modules/admin/orders/completed-orders/completed-orders.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 //import { projectRoutes } from 'app/modules/admin/dashboards/project/project.routing';
 
 const completedOrdersRoutes: Route[] = [
@@ -59,6 +60,7 @@ const completedOrdersRoutes: Route[] = [
         MatExpansionModule,
         CdkAccordionModule,
         MatPaginatorModule,
+        FontAwesomeModule,
     ],
 })
 export class CompletedOrdersModule {}

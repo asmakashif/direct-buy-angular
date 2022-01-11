@@ -19,4 +19,8 @@ export class ProductInfoService {
             '/api/products/getStoreProducts.php?shopId=' + shopId
         );
     }
+
+    getCategories(): Observable<any> {
+        return this._httpClient.get('/api/mobileAPI/getCategory.php');
+    }
 }

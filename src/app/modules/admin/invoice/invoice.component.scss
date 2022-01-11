@@ -1,0 +1,25 @@
+.table>:not(caption)>*>* {
+    border-bottom-width:0px;
+
+}
+.btn.btn-success{
+    background-color:green;
+}
+@media print {
+    .btn.btn-success {
+      display: none
+    }
+    .col-md-3
+    {
+        width: 50%;
+    }
+    .form-group{
+        display: none;
+    }
+
+}
+@page {
+    size:var(--width) 197mm;
+    margin: 0;
+  }
+  

@@ -41,9 +41,7 @@
                             }
                         ],
                         "stylePreprocessorOptions": {
-                            "includePaths": [
-                                "src/@fuse/styles"
-                            ]
+                            "includePaths": ["src/@fuse/styles"]
                         },
                         "styles": [
                             "src/@fuse/styles/tailwind.scss",
@@ -54,9 +52,7 @@
                             "src/styles/tailwind.scss",
                             "node_modules/bootstrap/dist/css/bootstrap.min.css"
                         ],
-                        "scripts": [
-                            "node_modules/jquery/dist/jquery.min.js"
-                        ]
+                        "scripts": ["node_modules/jquery/dist/jquery.min.js"]
                     },
                     "configurations": {
                         "production": {
@@ -93,7 +89,7 @@
                 },
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
-                    
+
                     "configurations": {
                         "production": {
                             "browserTarget": "fuse:build:production"
@@ -125,20 +121,19 @@
                         ],
                         "styles": [
                             "src/styles/styles.scss",
-                            "node_modules/bootstrap/dist/css/bootstrap.min.css"
+                            "node_modules/bootstrap/dist/css/bootstrap.min.css",
+                            "node_modules/select2/dist/css/select2.min.css"
                         ],
                         "scripts": [
-                            "node_modules/jquery/dist/jquery.min.js"
+                            "node_modules/jquery/dist/jquery.min.js",
+                            "node_modules/select2/dist/js/select2.min.js"
                         ]
                     }
                 },
                 "lint": {
                     "builder": "@angular-eslint/builder:lint",
                     "options": {
-                        "lintFilePatterns": [
-                            "src/**/*.ts",
-                            "src/**/*.html"
-                        ]
+                        "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
                     }
                 }
             }
@@ -146,7 +141,7 @@
     },
     "defaultProject": "fuse",
     "cli": {
-      "analytics": "099a0dea-53ad-433d-9609-08a84d7af72d",
+        "analytics": "099a0dea-53ad-433d-9609-08a84d7af72d",
         "defaultCollection": "@angular-eslint/schematics"
     }
 }

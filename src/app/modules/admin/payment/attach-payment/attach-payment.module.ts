@@ -21,6 +21,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AttachPaymentComponent } from './attach-payment.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 const attachpaymentGatewayRoutes: Route[] = [
     {
         path: '',
@@ -32,6 +33,7 @@ const attachpaymentGatewayRoutes: Route[] = [
     declarations: [AttachPaymentComponent],
     imports: [
         RouterModule.forChild(attachpaymentGatewayRoutes),
+        FontAwesomeModule,
         MatFormFieldModule,
         MatButtonModule,
         MatIconModule,

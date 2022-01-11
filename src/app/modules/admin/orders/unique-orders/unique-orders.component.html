@@ -45,7 +45,7 @@
                             <div
                                 class="ml-1.5 leading-6 truncate text-secondary"
                             >
-                                Pending Orders
+                                You have 0 new messages
                             </div>
                         </div>
                     </div>
@@ -64,17 +64,32 @@
                         ></mat-icon>
                         <span class="ml-2">Home</span>
                     </button>
-                    <button
+                    <a
+                        target="_blank"
                         class="fuse-mat-button-rounded"
+                        href="https://{{ domainname }}.direct-buy.in"
+                        mat-flat-button
+                        [color]="'primary'"
+                    >
+                        <fa-icon [icon]="faStore"></fa-icon>
+                        <span class="ml-2">Store</span>
+                    </a>
+                    <a
+                        target="_blank"
+                        class="fuse-mat-button-rounded"
+                        href="https://wa.me/?text=Dear Customer,We are delighted to inform you that our store is now online on https://{{
+                            domainname
+                        }}.direct-buy.in and orders can be placed online.
+                        Regards - {{firstname}}"
                         mat-flat-button
                         [color]="'primary'"
                     >
                         <mat-icon
                             class="icon-size-5"
-                            [svgIcon]="'heroicons_solid:cog'"
+                            [svgIcon]="'heroicons_solid:chat'"
                         ></mat-icon>
-                        <span class="ml-2">Settings</span>
-                    </button>
+                        <span class="ml-2">Whatsapp</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -83,6 +98,43 @@
     <!-- Main -->
     <div class="flex-auto border-t -mt-px">
         <div class="w-full max-w-screen-xl mx-auto p-4">
+            <div class="flex-1 min-w-0 pl-4">
+                <!-- Breadcrumbs -->
+                <div class="flex flex-wrap items-center font-medium">
+                    <div>
+                        <a
+                            href="javascript:void(0);"
+                            style="text-decoration: none"
+                            [routerLink]="['/dashboard']"
+                            class="whitespace-nowrap text-primary-500"
+                            >Dashboard</a
+                        >
+                    </div>
+
+                    <div class="flex items-center ml-1 whitespace-nowrap">
+                        <mat-icon
+                            class="icon-size-5 text-secondary"
+                            [svgIcon]="'heroicons_solid:chevron-right'"
+                        ></mat-icon>
+                        <a
+                            href="javascript:void(0);"
+                            style="text-decoration: none"
+                            (click)="storeDashboard()"
+                            class="whitespace-nowrap text-primary-500"
+                            >Store Dashboard</a
+                        >
+                    </div>
+
+                    <div class="flex items-center ml-1 whitespace-nowrap">
+                        <mat-icon
+                            class="icon-size-5 text-secondary"
+                            [svgIcon]="'heroicons_solid:chevron-right'"
+                        ></mat-icon>
+                        <span class="ml-1 text-secondary">Unique Orders</span>
+                    </div>
+                </div>
+            </div>
+            <br />
             <div class="mat-elevation-z8">
                 <table
                     mat-table

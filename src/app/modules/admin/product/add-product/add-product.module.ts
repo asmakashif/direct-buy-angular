@@ -18,11 +18,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { AddProductComponent } from './add-product.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatSelectFilterModule } from 'mat-select-filter';
+//import { MatSelectSearchModule } from 'mat-select-search';
 
 const addProductRoutes: Route[] = [
     {
@@ -36,6 +40,7 @@ const addProductRoutes: Route[] = [
     imports: [
         RouterModule.forChild(addProductRoutes),
         FlashMessagesModule.forRoot(),
+        FontAwesomeModule,
         NgbModule,
         MatButtonModule,
         MatButtonToggleModule,
@@ -51,12 +56,15 @@ const addProductRoutes: Route[] = [
         SharedModule,
         MatCheckboxModule,
         MatFormFieldModule,
+        MatSelectFilterModule,
         MatInputModule,
         MatPaginatorModule,
         MatSelectModule,
         MatSlideToggleModule,
         MatTooltipModule,
         AutocompleteLibModule,
+        MatAutocompleteModule,
+        //MatSelectSearchModule,
     ],
 })
 export class AddProductModule {}

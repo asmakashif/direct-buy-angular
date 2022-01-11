@@ -37,4 +37,22 @@ export class StoreSummaryService {
                 user_id
         );
     }
+
+    createtables(shopId: string, user_id): Observable<ApiResponse> {
+        return this.http.get<ApiResponse>(
+            '/api/databaseCreation/create_table.php?shopId=' +
+                shopId +
+                '&user_id=' +
+                user_id
+        );
+    }
+
+    pushData(shopId: string, user_id): Observable<ApiResponse> {
+        return this.http.get<ApiResponse>(
+            '/api/databaseCreation/pushData.php?shopId=' +
+                shopId +
+                '&user_id=' +
+                user_id
+        );
+    }
 }

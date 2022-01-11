@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { FlashMessagesModule } from 'angular2-flash-messages';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
+import { FlashMessagesModule } from 'angular2-flash-messages';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatRippleModule } from '@angular/material/core';
@@ -12,20 +12,18 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MatStepperModule } from '@angular/material/stepper';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatSelectModule } from '@angular/material/select';
-import { MatInputModule } from '@angular/material/input';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { SharedModule } from 'app/shared/shared.module';
-import { HotTableModule } from '@handsontable/angular';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { CdkAccordionModule } from '@angular/cdk/accordion';
-
-import { ShopDetailsComponent } from 'app/modules/admin/store/shop-details/shop-details.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-//import { projectRoutes } from 'app/modules/admin/dashboards/project/project.routing';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { ShopDetailsComponent } from './shop-details.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 const shopDetailsRoutes: Route[] = [
     {
@@ -39,6 +37,8 @@ const shopDetailsRoutes: Route[] = [
     imports: [
         RouterModule.forChild(shopDetailsRoutes),
         FlashMessagesModule.forRoot(),
+        FontAwesomeModule,
+        NgbModule,
         MatButtonModule,
         MatButtonToggleModule,
         MatDividerModule,
@@ -50,18 +50,15 @@ const shopDetailsRoutes: Route[] = [
         MatSortModule,
         MatTableModule,
         MatTabsModule,
+        SharedModule,
         MatCheckboxModule,
         MatFormFieldModule,
-        MatIconModule,
         MatInputModule,
-        MatRadioModule,
+        MatPaginatorModule,
         MatSelectModule,
-        MatStepperModule,
-        SharedModule,
-        HotTableModule,
-        MatExpansionModule,
-        CdkAccordionModule,
         MatSlideToggleModule,
+        MatTooltipModule,
+        Ng2SearchPipeModule,
     ],
 })
 export class ShopDetailsModule {}

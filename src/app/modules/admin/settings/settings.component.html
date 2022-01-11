@@ -1,0 +1,524 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div class="bg-card">
+        <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
+            <div
+                class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-8 sm:my-12"
+            >
+                <!-- Avatar and name -->
+                <div class="flex flex-auto items-center min-w-0">
+                    <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
+                        <img
+                            class="w-full h-full object-cover"
+                            src="assets/images/avatars/avatar.png"
+                        />
+                    </div>
+                    <div class="flex flex-col min-w-0 ml-4">
+                        <ng-container *transloco="let t">
+                            <div
+                                class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate"
+                            >
+                                {{ t("welcome-back") }}, {{ Asma }}!
+                            </div>
+                        </ng-container>
+                        <div class="flex items-center">
+                            <mat-icon
+                                class="icon-size-5"
+                                [svgIcon]="'heroicons_solid:bell'"
+                            ></mat-icon>
+                            <div
+                                class="ml-1.5 leading-6 truncate text-secondary"
+                            >
+                                You have 2 new messages and 15 new tasks
+                            </div>
+                        </div>
+                        <!-- <flash-messages></flash-messages> -->
+                    </div>
+                </div>
+                <!-- Actions -->
+                <div class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3">
+                    <button
+                        class="fuse-mat-button-rounded bg-accent-700"
+                        mat-flat-button
+                        [color]="'accent'"
+                        [routerLink]="['/dashboard']"
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:home'"
+                        ></mat-icon>
+                        <span class="ml-2">Home</span>
+                    </button>
+                    <a
+                        target="_blank"
+                        class="fuse-mat-button-rounded"
+                        href="https://{{ domainname }}.direct-buy.in"
+                        mat-flat-button
+                        [color]="'primary'"
+                    >
+                        <fa-icon [icon]="faStore"></fa-icon>
+                        <span class="ml-2">Store</span>
+                    </a>
+                    <a
+                        target="_blank"
+                        class="fuse-mat-button-rounded"
+                        href="https://wa.me/?text=Dear Customer,We are delighted to inform you that our store is now online on https://{{
+                            domainname
+                        }}.direct-buy.in and orders can be placed online.
+                        Regards - {{ firstname }}"
+                        mat-flat-button
+                        [color]="'primary'"
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:chat'"
+                        ></mat-icon>
+                        <span class="ml-2">Whatsapp</span>
+                    </a>
+                </div>
+            </div>
+            <!-- Project selector -->
+            <div
+                class="relative flex self-start pt-2 pb-1 pl-5 pr-4 cursor-pointer overflow-hidden rounded-t-xl border border-b-0 bg-default"
+                matRipple
+                [matMenuTriggerFor]="projectsMenu"
+            >
+                <div class="flex items-center">
+                    <div class="overflow-hidden">
+                        <div class="font-medium leading-6 truncate">
+                            {{ selectedProject | titlecase }}
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center pl-2">
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:chevron-down'"
+                        ></mat-icon>
+                    </div>
+                </div>
+                <mat-menu #projectsMenu="matMenu" [xPosition]="'before'">
+                    <button mat-menu-item>Dashboard</button>
+                </mat-menu>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <!-- Tabs -->
+            <mat-tab-group class="sm:px-2" [animationDuration]="'0'">
+                <!-- Shop -->
+                <mat-tab label="Account Info">
+                    <ng-template matTabContent>
+                        <form [formGroup]="profileForm" autocomplete="off">
+                            <div class="flex flex-col sm:flex-row p-8">
+                                <!-- Product images and status -->
+                                <div
+                                    class="flex flex-col items-center sm:items-start mb-8 sm:mb-0"
+                                >
+                                    <div
+                                        class="flex flex-col items-center image"
+                                    >
+                                        <div
+                                            class="w-32 h-44 border rounded overflow-hidden"
+                                        >
+                                            <ng-container
+                                                *ngIf="logo; else noImage"
+                                            >
+                                                <img [src]="imagePath + logo" />
+                                            </ng-container>
+
+                                            <ng-template #noImage>
+                                                <input
+                                                    type="file"
+                                                    id="file-input"
+                                                    accept=".png, .jpg, .jpeg"
+                                                    name="logo"
+                                                    #fileInput
+                                                    (change)="
+                                                        onLogoUpload($event)
+                                                    "
+                                                />
+                                            </ng-template>
+                                        </div>
+                                        <ng-container *ngIf="logo">
+                                            <i class="fa fa-edit"
+                                                ><div class="image-upload">
+                                                    <label for="file-input">
+                                                        <img
+                                                            src="assets/images/avatars/upload.png"
+                                                        />
+                                                    </label>
+                                                    <input
+                                                        type="file"
+                                                        id="file-input"
+                                                        accept=".png, .jpg, .jpeg"
+                                                        name="logo"
+                                                        #fileInput
+                                                        (change)="
+                                                            onLogoUpload($event)
+                                                        "
+                                                    /></div
+                                            ></i>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                                <div class="flex flex-auto flex-wrap">
+                                    <!-- Name, SKU & etc. -->
+                                    <div
+                                        class="flex flex-col w-full lg:w-2/4 sm:pl-8"
+                                    >
+                                        <!-- Name -->
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Name</mat-label>
+                                            <input
+                                                matInput
+                                                [formControlName]="'firstname'"
+                                                readonly="true"
+                                            />
+                                        </mat-form-field>
+
+                                        <!-- Email -->
+                                        <div class="flex">
+                                            <mat-form-field class="w-full">
+                                                <mat-label>Email</mat-label>
+                                                <input
+                                                    matInput
+                                                    readonly="true"
+                                                    type="email"
+                                                    [formControlName]="'email'"
+                                                />
+                                            </mat-form-field>
+                                        </div>
+
+                                        <!---City-->
+                                        <div class="flex">
+                                            <mat-form-field class="w-full">
+                                                <mat-label>City</mat-label>
+                                                <input
+                                                    matInput
+                                                    [formControlName]="'city'"
+                                                    readonly="true"
+                                                />
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <!-- Domain Name-->
+                                    <div
+                                        class="flex flex-col w-full lg:w-2/4 sm:pl-8"
+                                    >
+                                        <ng-container>
+                                            <div class="flex">
+                                                <mat-form-field class="w-full">
+                                                    <mat-label
+                                                        >Domain Name</mat-label
+                                                    >
+
+                                                    <input
+                                                        matInput
+                                                        [formControlName]="
+                                                            'domainname'
+                                                        "
+                                                        readonly="true"
+                                                    />
+                                                </mat-form-field>
+                                            </div>
+
+                                            <!-- Contact -->
+                                            <div class="flex">
+                                                <mat-form-field class="w-full">
+                                                    <mat-label
+                                                        >Contact</mat-label
+                                                    >
+
+                                                    <input
+                                                        matInput
+                                                        [formControlName]="
+                                                            'contact'
+                                                        "
+                                                        readonly="true"
+                                                    />
+                                                </mat-form-field>
+                                            </div>
+
+                                            <div class="flex">
+                                                <mat-form-field class="w-full">
+                                                    <mat-label>State</mat-label>
+                                                    <input
+                                                        matInput
+                                                        [formControlName]="
+                                                            'state'
+                                                        "
+                                                        readonly="true"
+                                                    />
+                                                </mat-form-field>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- Separator -->
+                        <!-- <div class="flex items-center mt-2">
+                            <div class="flex-auto mt-px border-t"></div>
+                        </div>
+                        <br />
+                        <b>Shop Logo</b>
+
+                        <form
+                            class="flex flex-col w-full"
+                            [formGroup]="logoForm"
+                        >
+                            <div class="flex flex-col sm:flex-row p-8">
+                                <div
+                                    class="flex flex-col items-center sm:items-start mb-8 sm:mb-0"
+                                ></div>
+                            </div>
+                        </form> -->
+                    </ng-template>
+                </mat-tab>
+
+                <!-- Profile -->
+                <mat-tab label="Profile">
+                    <ng-template matTabContent>
+                        <form [formGroup]="profileForm" autocomplete="off">
+                            <div class="flex flex-col sm:flex-row p-8">
+                                <div class="flex flex-auto flex-wrap">
+                                    <!-- Name, SKU & etc. -->
+                                    <div
+                                        class="flex flex-col w-full lg:w-2/4 sm:pl-8"
+                                    >
+                                        <!-- Name -->
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Name</mat-label>
+                                            <input
+                                                matInput
+                                                [formControlName]="'firstname'"
+                                                readonly="true"
+                                            />
+                                        </mat-form-field>
+
+                                        <!-- Email -->
+                                        <div class="flex">
+                                            <mat-form-field class="w-full">
+                                                <mat-label>Email</mat-label>
+                                                <input
+                                                    matInput
+                                                    type="email"
+                                                    [formControlName]="'email'"
+                                                />
+                                            </mat-form-field>
+                                        </div>
+
+                                        <!---City-->
+                                        <div class="flex">
+                                            <mat-form-field class="w-full">
+                                                <mat-label>City</mat-label>
+                                                <input
+                                                    matInput
+                                                    [formControlName]="'city'"
+                                                />
+                                            </mat-form-field>
+                                        </div>
+
+                                        <!---Password-->
+                                        <div class="flex">
+                                            <mat-form-field class="w-full">
+                                                <mat-label>Password</mat-label>
+                                                <input
+                                                    matInput
+                                                    type="password"
+                                                    [formControlName]="
+                                                        'password'
+                                                    "
+                                                />
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <!-- Domain Name-->
+                                    <div
+                                        class="flex flex-col w-full lg:w-2/4 sm:pl-8"
+                                    >
+                                        <ng-container>
+                                            <div class="flex">
+                                                <mat-form-field class="w-full">
+                                                    <mat-label
+                                                        >Domain Name</mat-label
+                                                    >
+
+                                                    <input
+                                                        matInput
+                                                        [formControlName]="
+                                                            'domainname'
+                                                        "
+                                                    />
+                                                </mat-form-field>
+                                            </div>
+
+                                            <!-- Contact -->
+                                            <div class="flex">
+                                                <mat-form-field class="w-full">
+                                                    <mat-label
+                                                        >Contact</mat-label
+                                                    >
+
+                                                    <input
+                                                        matInput
+                                                        [formControlName]="
+                                                            'contact'
+                                                        "
+                                                    />
+                                                </mat-form-field>
+                                            </div>
+
+                                            <div class="flex">
+                                                <mat-form-field class="w-full">
+                                                    <mat-label>State</mat-label>
+                                                    <input
+                                                        matInput
+                                                        [formControlName]="
+                                                            'state'
+                                                        "
+                                                    />
+                                                </mat-form-field>
+                                            </div>
+
+                                            <!-- Password -->
+                                            <!-- <div class="flex">
+                                                <mat-form-field class="w-full">
+                                                    <mat-label>Logo</mat-label>
+                                                    <input
+                                                        type="password"
+                                                        [formControlName]="
+                                                            'password'
+                                                        "
+                                                    />
+                                                </mat-form-field>
+                                            </div> -->
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="flex items-center justify-between w-full px-8 py-4"
+                            >
+                                <div class="flex items-center">
+                                    <div
+                                        class="flex items-center mr-4"
+                                        *ngIf="flashMessage"
+                                    >
+                                        <ng-container
+                                            *ngIf="flashMessage === 'success'"
+                                        >
+                                            <mat-icon
+                                                class="text-green-500"
+                                                [svgIcon]="
+                                                    'heroicons_outline:check'
+                                                "
+                                            ></mat-icon>
+                                            <span class="ml-2"
+                                                >Profile updated</span
+                                            >
+                                        </ng-container>
+                                        <ng-container
+                                            *ngIf="flashMessage === 'error'"
+                                        >
+                                            <mat-icon
+                                                class="text-red-500"
+                                                [svgIcon]="
+                                                    'heroicons_outline:x'
+                                                "
+                                            ></mat-icon>
+                                            <span class="ml-2"
+                                                >An error occurred, try
+                                                again!</span
+                                            >
+                                        </ng-container>
+                                    </div>
+                                    <button
+                                        mat-flat-button
+                                        [color]="'primary'"
+                                        (click)="onProfileUpdate()"
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        mat-flat-button
+                                        [color]="'primary'"
+                                        (click)="onProfileUpdate()"
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </ng-template>
+                </mat-tab>
+
+                <!-- Shops -->
+
+                <mat-tab label="Shops">
+                    <ng-template matTabContent>
+                        <div
+                            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full min-w-0"
+                        >
+                            <ng-container *ngFor="let data of this.data">
+                                <div
+                                    class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
+                                >
+                                    <div
+                                        class="flex flex-col items-center mt-2"
+                                    >
+                                        <div
+                                            class="text-6xl sm:text-8l font-bold tracking-tight leading-none text-blue-500"
+                                        >
+                                            {{ data.shop_name }}
+                                        </div>
+                                        &nbsp; &nbsp;
+                                        <button
+                                            mat-flat-button
+                                            [color]="'primary'"
+                                            (click)="shopDetails(data)"
+                                            style="width: 8em"
+                                        >
+                                            Enter
+                                        </button>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </ng-template>
+                </mat-tab>
+
+                <!--Users-->
+                <mat-tab label="Users">
+                    <ng-template matTabContent>
+                        <div class="grid grid-cols-1 gap-6 w-full min-w-0">
+                            <div
+                                class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
+                            >
+                                <p><b>Coming Soon!!</b></p>
+                            </div>
+                        </div>
+                    </ng-template>
+                </mat-tab>
+
+                <!-- Integration -->
+                <mat-tab label="Integration">
+                    <ng-template matTabContent>
+                        <div class="grid grid-cols-1 gap-6 w-full min-w-0">
+                            <div
+                                class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
+                            >
+                                <p><b>Coming Soon!!</b></p>
+                            </div>
+                        </div>
+                    </ng-template>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</div>
