@@ -50,6 +50,7 @@ export class AddProductComponent implements OnInit {
 
     selectedCategory: string[] = this.category;
     firstname: any;
+    imagename: any;
     //filteredDataToSearch: any[] = [];
 
     constructor(
@@ -377,7 +378,8 @@ export class AddProductComponent implements OnInit {
     onFileUpload(event) {
         // this.selectedFile = event.target.files[0];
         const file = event.target.files[0];
-        console.log(file);
+        this.imagename = file['name'];
+        console.log(this.imagename);
         this.selectedProductForm.get('product_image').setValue(file);
 
         const formData = new FormData();
@@ -409,13 +411,17 @@ export class AddProductComponent implements OnInit {
         const product = this.selectedProductForm.getRawValue();
         console.log(product);
         this._addProductService.addProduct(product).subscribe((product) => {
-            this.showFlashMessage('success');
-            this._router.navigate([
-                '/dashboard/' +
-                    routeParams.shopId +
-                    '/' +
-                    routeParams.shop_name,
-            ]);
+            this._addProductService
+                .pushProductsTOStrDb(routeParams.shopId)
+                .subscribe((data) => {
+                    this.showFlashMessage('success');
+                    this._router.navigate([
+                        '/dashboard/' +
+                            routeParams.shopId +
+                            '/' +
+                            routeParams.shop_name,
+                    ]);
+                });
         });
         // const product = new FormData();
         // product.append(

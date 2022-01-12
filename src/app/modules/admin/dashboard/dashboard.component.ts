@@ -126,6 +126,7 @@ export class DashboardComponent {
     product_type: any;
     brand: any;
     category: any;
+    mobile: boolean;
 
     constructor(
         @Inject(DOCUMENT)
@@ -145,6 +146,7 @@ export class DashboardComponent {
     }
 
     ngOnInit(): void {
+        localStorage.removeItem('open_orders');
         const accessToken = localStorage.getItem('accessToken');
         //const deviceId = localStorage.getItem('deviceId');
         //const uuid = new DeviceUUID().get();
@@ -154,6 +156,7 @@ export class DashboardComponent {
         if (!accessToken) {
             this._router.navigate(['sign-in']);
         }
+        this.mobile = this.isMobile();
 
         // Create the selected product form
         this.selectedProductForm = this.formBuilder.group({

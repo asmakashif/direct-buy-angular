@@ -54,7 +54,8 @@ export class OpenOrdersComponent implements OnInit {
 
     orderDetailsByCode(order_code): void {
         const routeParams = this.routes.snapshot.params;
-        console.log(order_code);
+        const open_orders = 'open_orders';
+        localStorage.setItem('open_orders', open_orders);
         this._router.navigate([
             '/order-details/' +
                 order_code +

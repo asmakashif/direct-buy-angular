@@ -61,7 +61,8 @@ export class SalesComponent implements OnInit {
 
     orderDetailsByCode(order_code): void {
         const routeParams = this.routes.snapshot.params;
-        console.log(order_code);
+        const sales = 'sales';
+        localStorage.setItem('sales', sales);
         this._router.navigate([
             '/order-details/' +
                 order_code +

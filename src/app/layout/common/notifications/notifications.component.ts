@@ -16,6 +16,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Notification } from 'app/layout/common/notifications/notifications.types';
 import { NotificationsService } from 'app/layout/common/notifications/notifications.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'notifications',
@@ -41,6 +42,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         private _changeDetectorRef: ChangeDetectorRef,
         private _notificationsService: NotificationsService,
         private _overlay: Overlay,
+        private _router: Router,
         private _viewContainerRef: ViewContainerRef
     ) {}
 
@@ -130,6 +132,20 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         // Mark all as read
         this._notificationsService
             .markAllAsRead(user_id)
+            .subscribe((data: any) => {
+                this._changeDetectorRef.markForCheck();
+            });
+    }
+
+    /**
+     * Toggle read status of the given notification
+     */
+    notificationRedirect(notification) {
+        alert(notification.NotificationRedirect);
+        const redirect = notification.NotificationRedirect;
+        window.location.href = redirect;
+        this._notificationsService
+            .update(notification)
             .subscribe((data: any) => {
                 this._changeDetectorRef.markForCheck();
             });
@@ -237,7 +253,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
 
         if (this.notifications && this.notifications.length) {
             count = this.notifications.filter(
-                (notification) => !notification.read
+                (notification) => !notification.Iscomplete
             ).length;
         }
 

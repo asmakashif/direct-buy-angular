@@ -41,21 +41,31 @@
         {
             $upload_format=0;
         }
-        $product_status=$DecodedData['product_status'][0];
-        $store_SKU=$category.$sub_category.$brand.$product_name.$product_type.$product_weight;
-        $product_added_date=date('Y-m-d');
-        $product_updated_date=date('Y-m-d');
-
-
-        $sql="INSERT INTO `temp_str_config`(user_id,temp_shopId,base_product_id,category,sub_category,brand,product_name,product_type,product_sub_type,product_description,product_weight,product_weight_type,product_qty,product_price,offer_price,product_img,upload_format,product_status,store_SKU,product_added_date,product_updated_date) values('$user_id','$temp_shopId','$base_product_id','$category','$sub_category','$brand','$product_name','$product_type','$product_sub_type','$product_description','$product_weight','$product_weight_type','$product_qty','$product_price','$offer_price','$product_img','$upload_format','$product_status','$store_SKU','$product_added_date','$product_updated_date')";
-
-        $R=mysqli_query($CN,$sql) or die("database error:". mysqli_error($CN));
-        if($R)
+        $productStatus=$DecodedData['product_status'][0];
+        if($productStatus=='')
         {
-            http_response_code(204);
+            $product_status=0;
         }
         else{
-            http_response_code(422);
+            $product_status=$productStatus;
         }
+        $store_SKU=$category.$sub_category.$brand.$product_name.$product_type.$product_weight;
+        $hide_product=0;
+        $product_added_date=date('Y-m-d');
+        $product_updated_date=date('Y-m-d');
+        $sold_count=0;
+
+        
+            $sql="INSERT INTO `temp_str_config`(user_id,temp_shopId,base_product_id,category,sub_category,brand,product_name,product_type,product_sub_type,product_description,product_weight,product_weight_type,product_qty,product_price,offer_price,product_img,upload_format,product_status,store_SKU,hide_product,product_added_date,product_updated_date,sold_count) values('$user_id','$temp_shopId','$base_product_id','$category','$sub_category','$brand','$product_name','$product_type','$product_sub_type','$product_description','$product_weight','$product_weight_type','$product_qty','$product_price','$offer_price','$product_img','$upload_format','$product_status','$store_SKU','$hide_product','$product_added_date','$product_updated_date','$sold_count')";
+    
+            $R=mysqli_query($CN,$sql) or die("database error:". mysqli_error($CN));
+            if($R)
+            {
+                http_response_code(204);
+            }
+            else{
+                http_response_code(422);
+            }
+        
     }
 ?>

@@ -15,4 +15,5 @@ export interface Notification {
     CreatedDateTime: string;
     NotiRID: string;
     IsRead: boolean;
+    Iscomplete: boolean;
 }

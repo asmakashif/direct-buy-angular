@@ -77,12 +77,13 @@
         else{
             http_response_code(422);
             // $nd=[
-            //     'NotificationContent'=>'Customer Placed an order',
-            //     'NotificationRedirect'=>'https://retailer.direct-buy.in/open-orders/'.$shopId.'/'.'shop_name',//path to be passed inside site_url()
+            //     'NotificationContent'=>'Order - '.$order_code .' placed an order by'.$customer_name,
+            //     'NotificationRedirect'=>'https://retailer.direct-buy.in/order-details/'.$order_code.'/'.$shopId.'/'.'shop_name',//path to be passed inside site_url()
             //     'Iscomplete'=>0,
             //     'NotificationStatus'=>0,
             //     'CreatedDateTime'=>date('Y-m-d')
             // ];
+            // 'https://'.$domain.'.direct-buy.in/'
         }
     }
 ?>

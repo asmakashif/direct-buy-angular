@@ -72,7 +72,7 @@
                             class="icon-size-5"
                             [svgIcon]="'heroicons_solid:chat'"
                         ></mat-icon>
-                        <span class="ml-2">Whatsapp</span>
+                        <span class="ml-2">WhatsApp</span>
                     </a>
                 </div>
             </div>
@@ -109,7 +109,10 @@
                         >
                     </div>
 
-                    <div class="flex items-center ml-1 whitespace-nowrap">
+                    <div
+                        class="flex items-center ml-1 whitespace-nowrap"
+                        *ngIf="open_orders"
+                    >
                         <mat-icon
                             class="icon-size-5 text-secondary"
                             [svgIcon]="'heroicons_solid:chevron-right'"
@@ -119,7 +122,25 @@
                             style="text-decoration: none"
                             (click)="openOrdersAllMonth()"
                             class="whitespace-nowrap text-primary-500"
-                            >Open Orders</a
+                        >
+                            Open Orders</a
+                        >
+                    </div>
+
+                    <div
+                        class="flex items-center ml-1 whitespace-nowrap"
+                        *ngIf="sales"
+                    >
+                        <mat-icon
+                            class="icon-size-5 text-secondary"
+                            [svgIcon]="'heroicons_solid:chevron-right'"
+                        ></mat-icon>
+                        <a
+                            href="javascript:void(0);"
+                            style="text-decoration: none"
+                            (click)="openOrdersAllMonth()"
+                            class="whitespace-nowrap text-primary-500"
+                            >Sales</a
                         >
                     </div>
 
@@ -206,6 +227,12 @@
                 </div>
                 <div class="row" *ngIf="order_status == 0">
                     <div class="example-button-row">
+                        <!-- <button
+                            class="btn btn-success"
+                            routerLink="/invoice/{{ order_code }}"
+                        >
+                            Print
+                        </button> -->
                         <button
                             class="btn btn-success"
                             (click)="orderComplete()"

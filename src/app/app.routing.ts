@@ -74,6 +74,13 @@ export const appRoutes: Route[] = [
                         (m) => m.AuthSignUpModule
                     ),
             },
+            {
+                path: 'terms',
+                loadChildren: () =>
+                    import('app/modules/auth/terms/terms.module').then(
+                        (m) => m.TermsModule
+                    ),
+            },
         ],
     },
 

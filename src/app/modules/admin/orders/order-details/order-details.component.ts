@@ -31,6 +31,8 @@ export class OrderDetailsComponent implements OnInit {
     profileData: any;
     domainname: any;
     firstname: any;
+    open_orders: string;
+    sales: string;
 
     constructor(
         private apiService: OrderDetailsService,
@@ -43,6 +45,8 @@ export class OrderDetailsComponent implements OnInit {
     ngOnInit(): void {
         const routeParams = this.routes.snapshot.params;
         const user_id = localStorage.getItem('user_id');
+        this.open_orders = localStorage.getItem('open_orders');
+        this.sales = localStorage.getItem('sales');
         this.apiService
             .getPendingOrderById(routeParams.order_code)
             .subscribe((orderDetailsById) => {
@@ -77,7 +81,12 @@ export class OrderDetailsComponent implements OnInit {
         this.apiService
             .updateOrderStatus(routeParams.order_code, routeParams.shopId)
             .subscribe((data) => {
-                this._router.navigate(['dashboard']);
+                this._router.navigate([
+                    '/open-orders/' +
+                        routeParams.shopId +
+                        '/' +
+                        routeParams.shop_name,
+                ]);
             });
     }
 
@@ -90,8 +99,22 @@ export class OrderDetailsComponent implements OnInit {
 
     openOrdersAllMonth() {
         const routeParams = this.routes.snapshot.params;
-        this._router.navigate([
-            '/open-orders/' + routeParams.shopId + '/' + routeParams.shop_name,
-        ]);
+        const open_orders = localStorage.getItem('open_orders');
+        if (open_orders) {
+            this._router
+                .navigate([
+                    '/open-orders/' +
+                        routeParams.shopId +
+                        '/' +
+                        routeParams.shop_name,
+                ])
+                .then(() => {
+                    localStorage.removeItem('open_orders');
+                });
+        } else {
+            this._router.navigate([
+                '/sales/' + routeParams.shopId + '/' + routeParams.shop_name,
+            ]);
+        }
     }
 }

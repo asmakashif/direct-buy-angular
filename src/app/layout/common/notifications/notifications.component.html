@@ -58,6 +58,7 @@
                 <div
                     class="flex group hover:bg-gray-50 dark:hover:bg-black dark:hover:bg-opacity-5"
                     [ngClass]="{ unread: !notification.read }"
+                    *ngIf="notification.Iscomplete == 0"
                 >
                     <!-- Notification with a link -->
                     <ng-container *ngIf="notification.NotificationRedirect">
@@ -65,7 +66,7 @@
                         <ng-container *ngIf="!notification.useRouter">
                             <a
                                 class="flex flex-auto py-5 pl-6 cursor-pointer"
-                                [href]="notification.NotificationRedirect"
+                                (click)="notificationRedirect(notification)"
                             >
                                 <ng-container
                                     *ngTemplateOutlet="notificationContent"
@@ -76,7 +77,7 @@
                         <ng-container *ngIf="notification.useRouter">
                             <a
                                 class="flex flex-auto py-5 pl-6 cursor-pointer"
-                                [routerLink]="notification.NotificationRedirect"
+                                (click)="notificationRedirect(notification)"
                             >
                                 <ng-container
                                     *ngTemplateOutlet="notificationContent"

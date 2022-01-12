@@ -1,81 +1,119 @@
 <div class="container">
-    <br/>
+    <br />
     <div class="row">
-       
-    <h4 style="text-align: center;">Invoice </h4>
-    <hr style=" border: 1px solid black">
-    <br/>
-</div>
-<div class="row" *ngFor="let dt of orderData;">
-<div class="col-md-3">
-<small><b>Order Id : {{dt.order_code}}</b></small>
-</div>
-<div class="col-md-3">
-    <small *ngIf="dt.store_pickup==1"><b>Order Type : Store Pickup</b></small>
-    <small *ngIf="dt.store_pickup==0"><b>Order Type : Home Delivery</b></small>
+        <h4 style="text-align: center">Invoice</h4>
+        <hr style="border: 1px solid black" />
+        <br />
     </div>
-    <div class="col-md-3">
-        <small><b>Store : {{dt.shop_name}}</b></small>
+    <div class="row" *ngFor="let dt of orderData">
+        <div class="col-md-3">
+            <small
+                ><b>Order Id : {{ dt.order_code }}</b></small
+            >
+        </div>
+        <div class="col-md-3">
+            <small *ngIf="dt.store_pickup == 1"
+                ><b>Order Type : Store Pickup</b></small
+            >
+            <small *ngIf="dt.store_pickup == 0"
+                ><b>Order Type : Home Delivery</b></small
+            >
+        </div>
+        <div class="col-md-3">
+            <small
+                ><b>Store : {{ dt.shop_name }}</b></small
+            >
+        </div>
+        <div class="col-md-3">
+            <small
+                ><b>Date : {{ dt.order_fulfilled_date }}</b></small
+            >
+        </div>
     </div>
-<div class="col-md-3">
-    <small><b>Date : {{dt.order_fulfilled_date}}</b></small>
-</div>
-</div>
-<hr style=" border: 1px solid black">
-<table class="table table-condensed">
-    <tr>
-    <th><small>No.</small></th>
-    <th><small>Product</small></th>
-    <th><small>Qty</small></th>
-    <th><small>Price</small></th>
-    <th><small>Total</small></th>
-    </tr>
+    <hr style="border: 1px solid black" />
+    <table class="table table-condensed">
+        <tr>
+            <th><small>No.</small></th>
+            <th><small>Product</small></th>
+            <th><small>Qty</small></th>
+            <th><small>Price</small></th>
+            <th><small>Total</small></th>
+        </tr>
 
-    <tr *ngFor="let dt of orderItems;let i = index;">
-        <td><small>{{i+1}}</small></td>
-        <td><small>{{dt.product_name}}</small></td>
-        <td><small>{{dt.product_qty}}</small></td>
-        <td><small>&#8377;{{dt.product_price}}</small></td>
-        <td><small>&#8377;{{dt.product_subtotal}}</small></td>
-    </tr>
-</table>
-<hr style=" border: 1px solid black">
-<small *ngFor="let dt of orderData;"><b>Grand Total : &#8377;{{dt.total}}</b></small>
-<hr style=" border: 1px solid black">
-<div *ngFor="let dt of orderData;">
-    <small *ngIf="dt.store_pickup==1"><b>Store Address : {{dt.shop_address}}</b></small>
-    <small *ngIf="dt.store_pickup==0"><b>Home Address : {{dt.c_address1}},{{dt.c_address2}},{{dt.city}},{{dt.pincode}}</b></small>
-</div>
-<hr style=" border: 1px solid black">
-<div *ngFor="let dt of orderData;">
-    <div style="text-align: center;">
-        <small>Shop Details : </small>
+        <tr *ngFor="let dt of orderItems; let i = index">
+            <td>
+                <small>{{ i + 1 }}</small>
+            </td>
+            <td>
+                <small>{{ dt.product_name }}</small>
+            </td>
+            <td>
+                <small>{{ dt.product_qty }}</small>
+            </td>
+            <td>
+                <small>&#8377;{{ dt.product_price }}</small>
+            </td>
+            <td>
+                <small>&#8377;{{ dt.product_subtotal }}</small>
+            </td>
+        </tr>
+    </table>
+    <hr style="border: 1px solid black" />
+    <small *ngFor="let dt of orderData"
+        ><b>Grand Total : &#8377;{{ dt.total }}</b></small
+    >
+    <hr style="border: 1px solid black" />
+    <div *ngFor="let dt of orderData">
+        <small *ngIf="dt.store_pickup == 1"
+            ><b>Store Address : {{ dt.shop_address }}</b></small
+        >
+        <small *ngIf="dt.store_pickup == 0"
+            ><b
+                >Home Address : {{ dt.c_address1 }},{{ dt.c_address2 }},{{
+                    dt.city
+                }},{{ dt.pincode }}</b
+            ></small
+        >
     </div>
-    
-    <div style="text-align: center;font-size:small">
-        
-        <small style="font-size:small;">{{dt.shop_address}}, Contact : {{dt.contact}}</small></div>
-    
-    <div style="text-align: center;font-size:small"><small>GST : {{dt.gst}}</small></div>
-</div>
+    <hr style="border: 1px solid black" />
+    <div *ngFor="let dt of orderData">
+        <div style="text-align: center">
+            <small>Shop Details : </small>
+        </div>
 
-    <hr style=" border: 1px solid black">
+        <div style="text-align: center; font-size: small">
+            <small style="font-size: small"
+                >{{ dt.shop_address }}, Contact : {{ dt.contact }}</small
+            >
+        </div>
+
+        <div style="text-align: center; font-size: small">
+            <small>GST : {{ dt.gst }}</small>
+        </div>
+    </div>
+
+    <hr style="border: 1px solid black" />
     <div class="row">
         <div class="col-md-3">
-        <div class="form-group">
-            <select class="form-control"  (change)="pageSelected($event.target.value)" >
-              <option selected disabled>Select Page</option>
-              <option>A8</option>
-              <option>A7</option>
-              <option>A6</option>
-              <option>A5</option>
-              <option>A4</option>
-            </select>
-          </div>
+            <div class="form-group">
+                <select
+                    class="form-control"
+                    (change)="pageSelected($event.target.value)"
+                >
+                    <option selected disabled>Select Page</option>
+                    <option>A8</option>
+                    <option>A7</option>
+                    <option>A6</option>
+                    <option>A5</option>
+                    <option>A4</option>
+                </select>
+            </div>
         </div>
         <div class="col-md-4">
-    <button (click)="printPage()" class="btn btn-success">Print</button>
+            <button (click)="printPage()" class="btn btn-success">Print</button>
+            <!-- <button class="btn btn-success" (click)="orderComplete()">
+                Fulfil Order
+            </button> -->
+        </div>
     </div>
-    </div>
-   
 </div>

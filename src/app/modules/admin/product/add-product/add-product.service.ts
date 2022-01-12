@@ -101,4 +101,10 @@ export class AddProductService {
             productType
         );
     }
+
+    pushProductsTOStrDb(shopId: string): Observable<any> {
+        return this._httpClient.get(
+            '/api/mobileAPI/pushProductsTOStrDb.php?shopId=' + shopId
+        );
+    }
 }
