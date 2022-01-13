@@ -105,16 +105,7 @@
                 </div>
             </div>
             <div
-                class="
-                    flex flex-col
-                    m-8
-                    p-8
-                    pb-4
-                    bg-card
-                    rounded-2xl
-                    shadow
-                    overflow-hidden
-                "
+                class="flex flex-col m-8 p-8 pb-4 bg-card rounded-2xl shadow overflow-hidden"
             >
                 <p><b>Edit Profile</b></p>
                 <form [formGroup]="profileForm" autocomplete="off">
@@ -128,22 +119,10 @@
                                     <input
                                         matInput
                                         [formControlName]="'firstname'"
+                                        readonly="true"
                                     />
                                 </mat-form-field>
 
-                                <!-- Domain Name -->
-                                <div class="flex">
-                                    <mat-form-field class="w-full">
-                                        <mat-label>Contact</mat-label>
-
-                                        <input
-                                            matInput
-                                            [formControlName]="'contact'"
-                                        />
-                                    </mat-form-field>
-                                </div>
-
-                                <!-- Category, Brand & SubCategory -->
                                 <div class="flex">
                                     <mat-form-field class="w-full">
                                         <mat-label>Email</mat-label>
@@ -160,22 +139,16 @@
                             <!-- Payment Name, Merchant Key-->
                             <div class="flex flex-col w-full lg:w-2/4 sm:pl-8">
                                 <ng-container>
-                                    <mat-form-field class="w-full">
-                                        <mat-label>Domain Name</mat-label>
+                                    <div class="flex">
+                                        <mat-form-field class="w-full">
+                                            <mat-label>Contact</mat-label>
 
-                                        <input
-                                            matInput
-                                            [formControlName]="'domainname'"
-                                        />
-                                    </mat-form-field>
-
-                                    <mat-form-field class="w-full">
-                                        <mat-label>Address</mat-label>
-                                        <input
-                                            matInput
-                                            [formControlName]="'address'"
-                                        />
-                                    </mat-form-field>
+                                            <input
+                                                matInput
+                                                [formControlName]="'contact'"
+                                            />
+                                        </mat-form-field>
+                                    </div>
 
                                     <mat-form-field class="w-full">
                                         <mat-label>Password</mat-label>
@@ -192,14 +165,7 @@
                     </div>
 
                     <div
-                        class="
-                            flex
-                            items-center
-                            justify-between
-                            w-full
-                            px-8
-                            py-4
-                        "
+                        class="flex items-center justify-between w-full px-8 py-4"
                     >
                         <div class="flex items-center">
                             <div

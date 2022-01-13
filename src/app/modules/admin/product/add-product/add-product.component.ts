@@ -411,17 +411,18 @@ export class AddProductComponent implements OnInit {
         const product = this.selectedProductForm.getRawValue();
         console.log(product);
         this._addProductService.addProduct(product).subscribe((product) => {
-            this._addProductService
-                .pushProductsTOStrDb(routeParams.shopId)
-                .subscribe((data) => {
-                    this.showFlashMessage('success');
-                    this._router.navigate([
-                        '/dashboard/' +
-                            routeParams.shopId +
-                            '/' +
-                            routeParams.shop_name,
-                    ]);
-                });
+            this.showFlashMessage('success');
+            this._router.navigate([
+                '/dashboard/' +
+                    routeParams.shopId +
+                    '/' +
+                    routeParams.shop_name,
+            ]);
+            // this._addProductService
+            //     .pushProductsTOStrDb(routeParams.shopId)
+            //     .subscribe((data) => {
+
+            //     });
         });
         // const product = new FormData();
         // product.append(

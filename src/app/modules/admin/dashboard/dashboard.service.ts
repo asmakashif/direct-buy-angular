@@ -155,6 +155,18 @@ export class DashboardService {
         );
     }
 
+    getProductByStrId(
+        temp_str_config_id: string,
+        shopId
+    ): Observable<InventoryProduct> {
+        return this._httpClient.get<InventoryProduct>(
+            '/api/products/getStoreProductsById.php?temp_str_config_id=' +
+                temp_str_config_id +
+                '&shopId=' +
+                shopId
+        );
+    }
+
     /**
      * Create product
      */

@@ -161,6 +161,7 @@ export class DashboardComponent {
         // Create the selected product form
         this.selectedProductForm = this.formBuilder.group({
             temp_str_config_id: [''],
+            temp_shopId: [routeParams.shopId],
             category: [''],
             sub_category: [''],
             brand: [''],
@@ -734,11 +735,22 @@ export class DashboardComponent {
         //     this.closeDetails();
         //     return;
         // }
+        const routeParams = this.routes.snapshot.params;
+        const shopId = routeParams.shopId;
+        const temp_str_config_id = productId;
+
         this.editCache[productId] = true;
 
         // Get the product by id
+        // this._httpClient.get<InventoryProduct>(
+        //     '/api/products/getStoreProductsById.php?temp_str_config_id=' +
+        //         temp_str_config_id +
+        //         '&shopId=' +
+        //         shopId
+        // );
+
         this._dashboardService
-            .getProductById(productId)
+            .getProductByStrId(productId, shopId)
             .subscribe((product) => {
                 // Set the selected product
                 this.selectedProduct = product;
@@ -824,6 +836,7 @@ export class DashboardComponent {
             'myFile',
             this.selectedProductForm.get('product_image').value
         );
+
         this._httpClient
             .post<any>('/api/products/upload.php', formData)
             .subscribe(() => {
@@ -891,14 +904,16 @@ export class DashboardComponent {
         //         this.ngOnInit();
         //     });
         this._dashboardService.updateProduct(product).subscribe(() => {
-            this._dashboardService
-                .pushProductsTOStrDb(routeParams.shopId)
-                .subscribe((data) => {
-                    // Show a success message
-                    this.showFlashMessage('success');
-                    // this.ngOnInit();
-                    this.cd.markForCheck();
-                });
+            this.showFlashMessage('success');
+            this.cd.markForCheck();
+            // this._dashboardService
+            //     .pushProductsTOStrDb(routeParams.shopId)
+            //     .subscribe((data) => {
+            //         // Show a success message
+            //         this.showFlashMessage('success');
+            //         // this.ngOnInit();
+            //         this.cd.markForCheck();
+            //     });
         });
     }
 
