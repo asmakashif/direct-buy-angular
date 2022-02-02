@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HomeDeliverySettingService } from './home-delivery-setting.service';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 import { DashboardService } from '../../dashboard/dashboard.service';
 @Component({
     selector: 'app-home-delivery-setting',
@@ -12,6 +13,7 @@ import { DashboardService } from '../../dashboard/dashboard.service';
 })
 export class HomeDeliverySettingComponent implements OnInit {
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     profileData: any;
     domainname: any;
     names: any;

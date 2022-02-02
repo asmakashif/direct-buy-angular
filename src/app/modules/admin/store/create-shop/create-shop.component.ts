@@ -12,6 +12,7 @@ import { FuseAlertType } from '@fuse/components/alert';
 import { CreateShopService } from 'app/modules/admin/store/create-shop/create-shop.service';
 import { DashboardService } from '../../dashboard/dashboard.service';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 
 declare var $: any;
 @Component({
@@ -21,6 +22,7 @@ declare var $: any;
 })
 export class CreateShopComponent implements OnInit {
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     domainname: any;
     profileData: any;
     @ViewChild('shopForm') shopForm: NgForm;

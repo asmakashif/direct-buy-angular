@@ -10,6 +10,7 @@ import {
 import { MatPaginator } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 import { DashboardService } from '../../dashboard/dashboard.service';
 
 @Component({
@@ -45,6 +46,7 @@ import { DashboardService } from '../../dashboard/dashboard.service';
 })
 export class PendingOrdersComponent implements OnInit {
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     profileData: any;
     domainname: any;
     selectedProject: string = 'Dashbaord';

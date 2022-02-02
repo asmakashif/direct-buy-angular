@@ -63,18 +63,14 @@
                     </a>
                     <a
                         target="_blank"
-                        class="fuse-mat-button-rounded"
+                        class="fuse-mat-button-rounded whatsappbtn"
                         href="https://wa.me/?text=Dear Customer,We are delighted to inform you that our store is now online on https://{{
                             domainname
                         }}.direct-buy.in and orders can be placed online.
-                        Regards - {{firstname}}"
-                        mat-flat-button
-                        [color]="'primary'"
+                        Regards - {{ firstname }}"
+                        
                     >
-                        <mat-icon
-                            class="icon-size-5"
-                            [svgIcon]="'heroicons_solid:chat'"
-                        ></mat-icon>
+                        <fa-icon [icon]="faWhatsapp"></fa-icon>
                         <span class="ml-2">WhatsApp</span>
                     </a>
                 </div>

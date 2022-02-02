@@ -13,6 +13,7 @@ import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { InventoryProduct } from '../../../../Model/inventory.types';
 import { HttpClient } from '@angular/common/http';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 
 declare var $: any;
 
@@ -43,6 +44,7 @@ declare var $: any;
 })
 export class ProductInfoComponent implements OnInit {
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     profileData: any;
     domainname: any;
     imagePath: string = '/api/products/uploads/';

@@ -10,6 +10,7 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StoreActivationService } from 'app/modules/admin/store/store-activation/store-activation.service';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 import { DashboardService } from '../../dashboard/dashboard.service';
 
 declare var $: any;
@@ -21,6 +22,7 @@ declare var $: any;
 })
 export class StoreActivationComponent implements OnInit {
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     domainname: any;
     profileData: any;
     storeCheckoutForm: FormGroup;

@@ -14,6 +14,7 @@ import { DashboardService } from 'app/modules/admin/dashboard/dashboard.service'
 import { AddProductService } from './add-product.service';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 import * as $ from 'jquery';
 
 declare var $: any;
@@ -25,6 +26,7 @@ declare var $: any;
 })
 export class AddProductComponent implements OnInit {
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     profileData: any;
     domainname: any;
     products: any;

@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MinOrderValService } from './min-order-val.service';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 import { DashboardService } from '../../dashboard/dashboard.service';
 @Component({
     selector: 'app-min-order-val',
@@ -12,6 +13,7 @@ import { DashboardService } from '../../dashboard/dashboard.service';
 })
 export class MinOrderValComponent implements OnInit {
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     profileData: any;
     domainname: any;
     firstname: any;

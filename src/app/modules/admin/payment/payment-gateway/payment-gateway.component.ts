@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 import { PaymentGatewayService } from 'app/modules/admin/payment/payment-gateway/payment-gateway.service';
 import { DashboardService } from '../../dashboard/dashboard.service';
 
@@ -23,6 +24,7 @@ interface Animal {
 })
 export class PaymentGatewayComponent implements OnInit {
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     profileData: any;
     domainname: any;
     paymentGatewayForm: FormGroup;

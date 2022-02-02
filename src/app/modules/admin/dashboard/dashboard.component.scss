@@ -110,6 +110,18 @@ input:checked + .slider:before {
     color: cornflowerblue;
     box-shadow: 0 0 8px 3px #b8b8b8;
 }
+
+.whatsappbtn {
+    background-color: #25D366;
+    color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    font-size: 14px;
+    vertical-align: middle;
+    padding: 10px 10px;
+    outline: none;
+    text-decoration: none;
+}
 // button.mat-menu-item {
 //     line-height: 24px !important;
 // }

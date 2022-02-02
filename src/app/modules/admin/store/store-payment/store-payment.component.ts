@@ -12,6 +12,7 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { DashboardService } from '../../dashboard/dashboard.service';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 
 @Component({
     selector: 'app-store-payment',
@@ -20,6 +21,7 @@ import { faStore } from '@fortawesome/free-solid-svg-icons';
 })
 export class StorePaymentComponent implements OnInit {
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     domainname: any;
     profileData: any;
     payment: any;

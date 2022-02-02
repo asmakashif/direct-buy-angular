@@ -42,7 +42,6 @@ const productConfigRoutes: Route[] = [
         MatButtonModule,
         MatButtonToggleModule,
         MatDividerModule,
-        MatIconModule,
         MatMenuModule,
         MatProgressBarModule,
         MatRippleModule,

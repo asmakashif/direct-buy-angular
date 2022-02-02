@@ -9,6 +9,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CompletedOrdersService } from 'app/modules/admin/orders/completed-orders/completed-orders.service';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 import { DashboardService } from '../../dashboard/dashboard.service';
 
 @Component({
@@ -44,6 +45,7 @@ import { DashboardService } from '../../dashboard/dashboard.service';
 })
 export class CompletedOrdersComponent implements OnInit {
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     selectedProject: string = 'Dashbaord';
     displayedColumns: string[] = [
         'order_code',

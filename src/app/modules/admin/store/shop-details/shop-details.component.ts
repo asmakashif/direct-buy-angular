@@ -26,6 +26,7 @@ import { HttpClient } from '@angular/common/http';
 import { DeviceUUID } from 'device-uuid';
 import { formatDate } from '@angular/common';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 
 declare var $: any;
 
@@ -58,6 +59,7 @@ declare var $: any;
 })
 export class ShopDetailsComponent {
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     domainname: any;
     profileData: any;
     selectedProject: string = 'Dashbaord';

@@ -6,6 +6,7 @@ import { InventoryProduct } from '../../../../Model/inventory.types';
 import { HttpClient } from '@angular/common/http';
 import { AddProductService } from '../add-product/add-product.service';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 import { DashboardService } from '../../dashboard/dashboard.service';
 
 @Component({
@@ -15,6 +16,7 @@ import { DashboardService } from '../../dashboard/dashboard.service';
 })
 export class AddProductTypeComponent implements OnInit {
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     profileData: any;
     domainname: any;
     products: any;

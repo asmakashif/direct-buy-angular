@@ -6,6 +6,7 @@ import { OrderDetailsService } from 'app/modules/admin/orders/order-details/orde
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Data } from '../../../../Model/data';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 import { DashboardService } from '../../dashboard/dashboard.service';
 
 @Component({
@@ -15,6 +16,7 @@ import { DashboardService } from '../../dashboard/dashboard.service';
 })
 export class OrderDetailsComponent implements OnInit {
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     isScreenSmall: boolean;
     displayedColumns: string[] = [
         'product_name',

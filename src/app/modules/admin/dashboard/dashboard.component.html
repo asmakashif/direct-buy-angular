@@ -68,7 +68,21 @@
                         <fa-icon [icon]="faStore"></fa-icon>
                         <span class="ml-2">Store</span>
                     </a>
+
                     <a
+                        target="_blank"
+                        class="fuse-mat-button-rounded whatsappbtn"
+                        href="https://wa.me/?text=Dear Customer,We are delighted to inform you that our store is now online on https://{{
+                            domainname
+                        }}.direct-buy.in and orders can be placed online.
+                        Regards - {{ firstname }}"
+                        
+                    >
+                        <fa-icon [icon]="faWhatsapp"></fa-icon>
+                        <span class="ml-2">WhatsApp</span>
+                    </a>
+
+                    <!-- <a
                         target="_blank"
                         class="fuse-mat-button-rounded"
                         href="https://wa.me/?text=Dear Customer,We are delighted to inform you that our store is now online on https://{{
@@ -76,14 +90,13 @@
                         }}.direct-buy.in and orders can be placed online.
                         Regards - {{ firstname }}"
                         mat-flat-button
-                        [color]="'primary'"
+                        [color]="'success'"
+                        
                     >
-                        <mat-icon
-                            class="icon-size-5"
-                            [svgIcon]="'heroicons_solid:chat'"
-                        ></mat-icon>
+                        <fa-icon [icon]="faWhatsapp"></fa-icon>
                         <span class="ml-2">WhatsApp</span>
-                    </a>
+                        
+                    </a> -->
                 </div>
             </div>
             <!-- Project selector -->

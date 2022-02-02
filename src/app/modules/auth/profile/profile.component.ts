@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProfileService } from 'app/modules/auth/profile/profile.service';
 import { Router } from '@angular/router';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 
 declare var $: any;
 
@@ -14,6 +15,7 @@ declare var $: any;
 })
 export class ProfileComponent implements OnInit {
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     profileForm: FormGroup;
     profileData: any;
     flashMessage: string;

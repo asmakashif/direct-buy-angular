@@ -5,15 +5,17 @@ import { MatTableDataSource } from '@angular/material/table';
 import { CompletedOrderDetailsService } from 'app/modules/admin/orders/completed-order-details/completed-order-details.service';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 import { DashboardService } from '../../dashboard/dashboard.service';
 
 @Component({
     selector: 'app-completed-order-details',
     templateUrl: './completed-order-details.component.html',
-    styleUrls: ['./completed-order-details.component.css'],
+    styleUrls: ['./completed-order-details.component.scss'],
 })
 export class CompletedOrderDetailsComponent implements OnInit {
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     displayedColumns: string[] = [
         'product_name',
         'product_price',

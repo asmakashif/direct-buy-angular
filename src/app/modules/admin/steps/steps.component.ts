@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Routes } from '@angular/router';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { DashboardService } from '../dashboard/dashboard.service';
 import { StepsService } from './steps.service';
@@ -13,6 +14,7 @@ import { StepsService } from './steps.service';
 })
 export class StepsComponent implements OnInit {
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     domainname: any;
     profileData: any;
     data: any;

@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MinOrderConfigService } from './min-order-config.service';
 import { DashboardService } from '../../dashboard/dashboard.service';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 @Component({
     selector: 'app-min-order-config',
     templateUrl: './min-order-config.component.html',
@@ -12,6 +13,7 @@ import { faStore } from '@fortawesome/free-solid-svg-icons';
 })
 export class MinOrderConfigComponent implements OnInit {
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     profileData: any;
     domainname: any;
     days: any;

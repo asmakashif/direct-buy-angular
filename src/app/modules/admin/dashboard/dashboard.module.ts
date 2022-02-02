@@ -25,6 +25,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+// import { Icon } from '@iconify/vue';
 
 const dashboardRoutes: Route[] = [
     {
@@ -61,6 +62,7 @@ const dashboardRoutes: Route[] = [
         MatTooltipModule,
         Ng2SearchPipeModule,
         FontAwesomeModule,
+        // Icon,
     ],
 })
 export class DashboardModule {}

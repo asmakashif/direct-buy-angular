@@ -83,18 +83,14 @@
                     </a>
                     <a
                         target="_blank"
-                        class="fuse-mat-button-rounded"
+                        class="fuse-mat-button-rounded whatsappbtn"
                         href="https://wa.me/?text=Dear Customer,We are delighted to inform you that our store is now online on https://{{
                             domainname
                         }}.direct-buy.in and orders can be placed online.
                         Regards - {{ firstname }}"
-                        mat-flat-button
-                        [color]="'primary'"
+                        
                     >
-                        <mat-icon
-                            class="icon-size-5"
-                            [svgIcon]="'heroicons_solid:chat'"
-                        ></mat-icon>
+                        <fa-icon [icon]="faWhatsapp"></fa-icon>
                         <span class="ml-2">WhatsApp</span>
                     </a>
                 </div>
@@ -121,18 +117,18 @@
                     <ng-template #notClicked>
                         <div class="circles">
                             {{ "Click to create shop" }}
-                            <div class="primary"></div>
+                            <!-- <div class="primary"></div>
                             <div class="primary"></div>
                             <div class="primary"></div>
                             <div class="primary"></div>
                             <div class="alternate"></div>
-                            <div class="alternate"></div>
+                            <div class="alternate"></div> -->
                         </div>
                     </ng-template>
                     <ngb-progressbar
                         type="primary"
                         textType="white"
-                        [value]="1"
+                        [value]="0"
                         [showValue]="true"
                     ></ngb-progressbar>
                 </div>
@@ -197,15 +193,7 @@
                 </div>
 
                 <div class="flex items-center">
-                    <button
-                        class="lg:mt-6"
-                        mat-flat-button
-                        [color]="'warn'"
-                        (click)="prevStep()"
-                    >
-                        Back
-                    </button>
-                    &nbsp;
+                    
                     <button
                         class="lg:mt-6"
                         mat-flat-button
@@ -216,18 +204,39 @@
                         Next
                     </button>
                     &nbsp;
-                    <ng-template #createShop>
+                    <ng-template #createShop >
+                        <div class="flex items-center" *ngIf="!createShopDb; else notClicked">
+                            <button
+                                class="lg:mt-6"
+                                mat-flat-button
+                                [color]="'warn'"
+                                (click)="prevStep()"
+                                
+                            >
+                                Back
+                            </button>
+                            &nbsp;
+                            <button
+                                class="lg:mt-6"
+                                mat-flat-button
+                                [color]="'primary'"
+                                (click)="createShopDB()"
+                                
+                            >
+                                Create Shop
+                            </button>
+                        </div>
+                    </ng-template>
+                    <ng-template #notClicked>
                         <button
                             class="lg:mt-6"
                             mat-flat-button
-                            [color]="'primary'"
-                            (click)="createShopDB()"
-                            *ngIf="!createShopDb; else notClicked"
+                            [color]="'warn'"
+                            disabled="true"
                         >
-                            Create Shop
+                            Back
                         </button>
-                    </ng-template>
-                    <ng-template #notClicked>
+                        &nbsp;
                         <button
                             class="lg:mt-6"
                             mat-flat-button

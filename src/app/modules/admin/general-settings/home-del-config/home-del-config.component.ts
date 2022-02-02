@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HomeDelConfigService } from './home-del-config.service';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 import { DashboardService } from '../../dashboard/dashboard.service';
 @Component({
     selector: 'app-home-del-config',
@@ -12,6 +13,7 @@ import { DashboardService } from '../../dashboard/dashboard.service';
 })
 export class HomeDelConfigComponent implements OnInit {
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     message: any;
     msg: any;
     flashMessage: string;

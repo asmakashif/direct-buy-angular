@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { DashboardService } from '../../dashboard/dashboard.service';
 import { AttachPaymentService } from './attach-payment.service';
@@ -13,6 +14,7 @@ import { AttachPaymentService } from './attach-payment.service';
 })
 export class AttachPaymentComponent implements OnInit {
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     profileData: any;
     domainname: any;
     payment: any;

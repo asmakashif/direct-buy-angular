@@ -15,6 +15,7 @@ import { DashboardService } from 'app/modules/admin/dashboard/dashboard.service'
 import { Data } from '../../../Model/data';
 import { InventoryProduct } from '../../../Model/inventory.types';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 import {
     FormArray,
     FormBuilder,
@@ -60,6 +61,7 @@ declare var $: any;
 export class DashboardComponent {
     @ViewChild('closebutton') closebutton;
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     selectedProject: string = 'Dashbaord';
     imagePath: string = '/api/products/uploads/';
     // imageShopPath: string = '/api/shops/uploads/';

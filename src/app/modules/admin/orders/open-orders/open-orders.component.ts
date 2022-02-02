@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OpenOrdersService } from './open-orders.service';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 import { DashboardService } from '../../dashboard/dashboard.service';
 
 @Component({
@@ -12,6 +13,7 @@ import { DashboardService } from '../../dashboard/dashboard.service';
 })
 export class OpenOrdersComponent implements OnInit {
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     displayedColumns: string[] = [
         'order_code',
         'c_fname',

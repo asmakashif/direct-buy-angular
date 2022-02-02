@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 import { ProfileService } from '../profile/profile.service';
 import { MySubscriptionService } from './my-subscription.service';
 
@@ -10,6 +11,7 @@ import { MySubscriptionService } from './my-subscription.service';
 })
 export class MySubscriptionComponent implements OnInit {
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     shops: any;
     curDate: string;
     dateObj: number = Date.now();

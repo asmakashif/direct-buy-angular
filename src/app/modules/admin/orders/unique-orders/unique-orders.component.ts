@@ -2,6 +2,7 @@ import { Component, ViewChild, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 import { DashboardService } from '../../dashboard/dashboard.service';
 import { UniqueOrdersService } from './unique-orders.service';
 
@@ -12,6 +13,7 @@ import { UniqueOrdersService } from './unique-orders.service';
 })
 export class UniqueOrdersComponent implements OnInit {
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     profileData: any;
     domainname: any;
     displayedColumns: string[] = [

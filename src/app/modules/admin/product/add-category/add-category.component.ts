@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { AddProductService } from '../add-product/add-product.service';
 import { DashboardService } from '../../dashboard/dashboard.service';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 
 declare var $: any;
@@ -17,6 +18,7 @@ declare var $: any;
 })
 export class AddCategoryComponent implements OnInit {
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     profileData: any;
     domainname: any;
     products: any;

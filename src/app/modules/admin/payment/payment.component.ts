@@ -4,6 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { DashboardService } from '../dashboard/dashboard.service';
 import { Data } from 'app/Model/data';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 
 @Component({
     selector: 'app-mobile',
@@ -12,6 +13,7 @@ import { faStore } from '@fortawesome/free-solid-svg-icons';
 })
 export class PaymentComponent implements OnInit {
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     profileData: any;
     domainname: any;
     shops: any;

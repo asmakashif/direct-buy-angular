@@ -17,6 +17,7 @@ import { SettingsService } from './settings.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { DashboardService } from '../dashboard/dashboard.service';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 
 declare var $: any;
 
@@ -29,6 +30,7 @@ declare var $: any;
 })
 export class SettingsComponent {
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     selectedProject: string = 'Settings';
     imagePath: string = '/api/products/uploads/';
     profileForm: FormGroup;

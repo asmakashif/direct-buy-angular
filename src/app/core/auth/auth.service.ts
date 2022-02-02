@@ -127,7 +127,7 @@ export class AuthService {
     }
 
     checkOtpVerification(email): Observable<any> {
-        return this._httpClient.post<any>('/api/checkEmail.php', email);
+        return this._httpClient.post<any>('/api/checkOtpVerification.php', email);
     }
 
     /**

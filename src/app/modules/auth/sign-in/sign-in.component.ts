@@ -122,6 +122,7 @@ export class AuthSignInComponent implements OnInit {
             (data) => {
                 this.retailerData = data;
                 const user_id = this.retailerData.id;
+                console.log(user_id);
                 this._router.navigate(['verify-email/' + user_id]);
             },
             (response) => {

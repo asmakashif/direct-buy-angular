@@ -11,6 +11,7 @@ import { StoreSummaryService } from 'app/modules/admin/store/store-summary/store
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 import { DashboardService } from '../../dashboard/dashboard.service';
 //import { CookieService } from 'ngx-cookie';
 
@@ -21,6 +22,7 @@ import { DashboardService } from '../../dashboard/dashboard.service';
 })
 export class StoreSummaryComponent implements OnInit {
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     domainname: any;
     profileData: any;
     activeLink = 'StoreSummmary';

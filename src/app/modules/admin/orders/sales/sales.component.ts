@@ -8,6 +8,7 @@ import {
 import { MatPaginator } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 import { DashboardService } from '../../dashboard/dashboard.service';
 import { SalesService } from './sales.service';
 
@@ -18,6 +19,7 @@ import { SalesService } from './sales.service';
 })
 export class SalesComponent implements OnInit {
     faStore = faStore;
+    faWhatsapp = faWhatsapp;
     profileData: any;
     domainname: any;
     displayedColumns: string[] = [
