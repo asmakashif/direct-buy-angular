@@ -1,6 +1,7 @@
 import {
     ChangeDetectionStrategy,
     Component,
+    ViewChild,
     ViewEncapsulation,
 } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
@@ -18,6 +19,8 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 import { DashboardService } from '../dashboard/dashboard.service';
 import { faStore } from '@fortawesome/free-solid-svg-icons';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { ModalComponent } from './modal/modal.component';
 
 declare var $: any;
 
@@ -47,8 +50,17 @@ export class SettingsComponent {
     logoForm: FormGroup;
     logo: any;
 
+    @ViewChild('modal', { static: false }) modal: ModalComponent;
+    localstorage: string[];
+    localstorageUserId: string[];
+    routeParams: any;
+    openModal() {
+        this.modal.open();
+    }
+
     constructor(
         private formBuilder: FormBuilder,
+        private _fuseConfirmationService: FuseConfirmationService,
         private _settingService: SettingsService,
         private _dashboardService: DashboardService,
         private _router: Router,
@@ -56,12 +68,15 @@ export class SettingsComponent {
         private cd: ChangeDetectorRef,
         private _httpClient: HttpClient,
         private apiService: SettingsService
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         const user_id = localStorage.getItem('user_id');
         const routeParams = this.routes.snapshot.params;
+        this.routeParams = this.routes.snapshot.params;
         this.shop_id = routeParams.shopId;
+
+        this.localstorage = Object.keys(localStorage);
 
         this.profileForm = this.formBuilder.group({
             id: [user_id],
@@ -107,6 +122,10 @@ export class SettingsComponent {
                 this.shop_logo = this.shopData.shop_logo;
                 this.shop_status = this.shopData.shop_status;
             });
+    }
+
+    dashbaord(): void {
+        this._router.navigate(['dashboard/']);
     }
 
     onLogoUpload(event) {
@@ -168,5 +187,46 @@ export class SettingsComponent {
                 //     this.ngOnInit();
                 // });
             });
+    }
+
+    deleteAccount() {
+        const confirmation = this._fuseConfirmationService.open({
+            title: 'Account Closure',
+            message:
+                'Please take this action with caution!!! This is an irr-reversible process. All account and financial data will be deleted immediately and cannot be recovered again.',
+            icon: {
+                show: false,
+                color: 'warn',
+            },
+            actions: {
+                confirm: {
+                    label: 'Delete My Account',
+                    color: 'warn',
+                },
+            },
+        });
+
+        // Subscribe to the confirmation dialog closed action
+        confirmation.afterClosed().subscribe((result) => {
+            // If the confirm button pressed...
+            if (result === 'confirmed') {
+                const confirmation = this._fuseConfirmationService.open({
+                    title: 'Account Closure',
+                    message:
+                        'Please take this action with caution!!! This is an irr-reversible process. All account and financial data will be deleted immediately and cannot be recovered again.',
+                    icon: {
+                        show: false,
+                        color: 'warn',
+                    },
+                    actions: {
+                        confirm: {
+                            label: 'Delete My Account',
+                            color: 'warn',
+                        },
+                    },
+                });
+
+            }
+        });
     }
 }

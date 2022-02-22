@@ -42,7 +42,7 @@ export class CreateShopComponent implements OnInit {
         private _router: Router,
         private cd: ChangeDetectorRef,
         private _dashboardService: DashboardService
-    ) {}
+    ) { }
     addForm: FormGroup;
 
     randomString(length) {
@@ -70,7 +70,8 @@ export class CreateShopComponent implements OnInit {
             id: [],
             user_id: [user_id],
             shopId: [shop_id],
-            shop_name: ['', Validators.required],
+            // shop_name: ['', Validators.required, Validators.pattern("^[a-zA-Z']+")],
+            shop_name: ['', [Validators.required, Validators.pattern("^[a-zA-Z']+")]],
             shop_address: ['', Validators.required],
             //shopType: this.formBuilder.array([], [Validators.required]),
         });

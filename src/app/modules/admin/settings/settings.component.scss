@@ -121,32 +121,48 @@ input:checked + .slider:before {
     outline: none;
     text-decoration: none;
 }
-// button.mat-menu-item {
-//     line-height: 24px !important;
-// }
-// a.mat-menu-item > mat-icon {
-//     margin-bottom: 14px;
-// }
-// .mat-icon svg {
-//     height: 24px;
-//     width: 24px;
-// }
-// .mat-step-icon-content .mat-icon svg {
-//     height: 100%;
-//     width: 100%;
-// }
 
-// .my-wrapper .mat-form-field-appearance-legacy .mat-form-field-prefix .mat-icon,
-// .my-wrapper .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-icon {
-//     width: 24px;
-// }
+.accountDltbtn{
+    float:right;
+}
 
-// .my-wrapper .mat-form-field-prefix .mat-icon-button .mat-icon,
-// .my-wrapper .mat-form-field-suffix .mat-icon-button .mat-icon {
-//     height: 24px;
-//     line-height: 27px;
-// }
+.overlay {
+    /* detach from document */
+    position: fixed;
 
-// button .mat-icon svg {
-//     fill: red;
-// }
+    /* ensure in front of rest of page except modal */
+    z-index: 1000;
+
+    /* fill screen to catch mice */
+    top: 0;
+    left: 0;
+    width: 9999px;
+    height: 9999px;
+
+    /* dim screen 20% -- alter to taste */
+    opacity: 0.2;
+    background-color: black;
+}
+
+.modal {
+    /* detach from rest of the document */
+    position: fixed;
+
+    /* center */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    /* ensure in front of rest of page -- increase as needed */
+    z-index: 1001;
+
+    /* visual illusion of being in front -- alter to taste */
+    box-shadow: rgba(0,0,0,0.4) 10px 10px 4px;
+
+    /* visual illusion of being a solid object -- alter to taste */
+    background-color: lightblue;
+    border: 5px solid darkblue;
+
+    /* visual preference of don't crowd the contents -- alter to taste */
+    padding: 10px;
+}

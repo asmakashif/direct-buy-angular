@@ -1,0 +1,15 @@
+<div #myModal class="container">
+  <div class="content">
+    <h4>Account Closure</h4>
+    <p>Please take this action with caution!!!<br> This is an irr-reversible process.<br> All account and financial data
+      will be deleted immediately and cannot be recovered again.</p>
+    <div class="flex items-center">
+      <button mat-raised-button color="primary" (click)="close()">Close</button>
+      <!-- <app-modal #modal1></app-modal> -->
+      <button mat-raised-button color="warn" (click)="deleteAccount()">Delete My Account</button>
+    </div>
+  </div>
+
+</div>
+<!-- <app-modal ></app-modal> -->
+<!-- <button mat-raised-button color="warn" class="accountDltbtn" (click)="openModal1()">Delete My Account</button> -->

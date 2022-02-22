@@ -34,7 +34,7 @@ export class AttachPaymentComponent implements OnInit {
         private routes: ActivatedRoute,
         private cd: ChangeDetectorRef,
         private _fuseConfirmationService: FuseConfirmationService
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         const routeParams = this.routes.snapshot.params;

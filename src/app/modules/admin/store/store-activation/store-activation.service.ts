@@ -28,8 +28,8 @@ export class StoreActivationService {
         );
     }
 
-    updateUser(user: Data): Observable<ApiResponse> {
-        return this.http.post<ApiResponse>('/api/updateShopPayment.php', user);
+    updateShopPayment(shopPayment): Observable<ApiResponse> {
+        return this.http.post<ApiResponse>('/api/updateShopPayment.php', shopPayment);
     }
 
     updateTrialStatus(

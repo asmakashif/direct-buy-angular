@@ -44,7 +44,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         private _overlay: Overlay,
         private _router: Router,
         private _viewContainerRef: ViewContainerRef
-    ) {}
+    ) { }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -73,7 +73,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
             .getAllNotifications(user_id)
             .subscribe((notifications: any) => {
                 this.notifications = notifications;
-                console.log(this.notifications);
                 this._calculateUnreadCount();
                 this._changeDetectorRef.markForCheck();
             });

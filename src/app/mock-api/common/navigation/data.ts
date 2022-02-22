@@ -45,6 +45,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link: '/my-subscription',
     },
     {
+        id: 'session-values',
+        title: 'Session Values',
+        type: 'basic',
+        icon: 'heroicons_outline:credit-card',
+        link: '/session-values',
+    },
+    {
         id: 'sign-out',
         title: 'Sign Out',
         type: 'basic',
@@ -101,6 +108,13 @@ export const compactNavigation: FuseNavigationItem[] = [
         type: 'basic',
         icon: 'heroicons_outline:credit-card',
         link: '/my-subscription',
+    },
+    {
+        id: 'session-values',
+        title: 'Session Values',
+        type: 'basic',
+        icon: 'heroicons_outline:credit-card',
+        link: '/session-values',
     },
     {
         id: 'sign-out',
@@ -161,6 +175,13 @@ export const futuristicNavigation: FuseNavigationItem[] = [
         link: '/my-subscription',
     },
     {
+        id: 'session-values',
+        title: 'Session Values',
+        type: 'basic',
+        icon: 'heroicons_outline:credit-card',
+        link: '/session-values',
+    },
+    {
         id: 'sign-out',
         title: 'Sign Out',
         type: 'basic',
@@ -217,6 +238,13 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         type: 'basic',
         icon: 'heroicons_outline:credit-card',
         link: '/my-subscription',
+    },
+    {
+        id: 'session-values',
+        title: 'Session Values',
+        type: 'basic',
+        icon: 'heroicons_outline:credit-card',
+        link: '/session-values',
     },
     {
         id: 'sign-out',

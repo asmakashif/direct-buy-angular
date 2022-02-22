@@ -16,7 +16,7 @@ export class AuthService {
     constructor(
         private _httpClient: HttpClient,
         private _userService: UserService
-    ) {}
+    ) { }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors
@@ -43,14 +43,6 @@ export class AuthService {
 
     set domainname(domainname: string) {
         localStorage.setItem('domainname', domainname);
-    }
-
-    set validateSignIn(validateSignIn: string) {
-        localStorage.setItem('validateSignIn', validateSignIn);
-    }
-
-    set otpVerify(otpVerify: string) {
-        localStorage.setItem('otpVerify', otpVerify);
     }
 
     get accessToken(): string {
@@ -111,8 +103,6 @@ export class AuthService {
                 this.firstname = response.firstname;
                 this.email = response.email;
                 this.domainname = response.domainname;
-                this.validateSignIn = response.validateSignIn;
-                this.otpVerify = response.otpVerify;
 
                 // Set the authenticated flag to true
                 this._authenticated = true;

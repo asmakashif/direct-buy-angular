@@ -65,14 +65,12 @@
                             domainname
                         }}.direct-buy.in and orders can be placed online.
                         Regards - {{ firstname }}"
-                        mat-flat-button
-                        [color]="'primary'"
+                        style="text-decoration: none;"
                     >
-                        <mat-icon
-                            class="icon-size-5"
-                            [svgIcon]="'heroicons_solid:chat'"
-                        ></mat-icon>
-                        <span class="ml-2">WhatsApp</span>
+                        <button mat-flat-button color="success" style="background-color: #25D366;color: #f0fff3;">
+                            <fa-icon [icon]="faWhatsapp"></fa-icon>
+                            <span class="ml-2">WhatsApp</span>
+                        </button>
                     </a>
                 </div>
             </div>

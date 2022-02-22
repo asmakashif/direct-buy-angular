@@ -13,13 +13,15 @@ import { LayoutModule } from 'app/layout/layout.module';
 import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
 import { SearchPageComponent } from './modules/customer/search-page/search-page.component';
+import { PrivacyComponent } from './modules/auth/privacy/privacy.component';
+
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
     scrollPositionRestoration: 'enabled',
 };
 
 @NgModule({
-    declarations: [AppComponent, SearchPageComponent],
+    declarations: [AppComponent, SearchPageComponent, PrivacyComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
@@ -41,4 +43,4 @@ const routerConfig: ExtraOptions = {
     ],
     bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

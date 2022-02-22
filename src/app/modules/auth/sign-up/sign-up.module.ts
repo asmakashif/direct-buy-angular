@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FuseCardModule } from '@fuse/components/card';
 import { FuseAlertModule } from '@fuse/components/alert';
@@ -26,6 +27,7 @@ import { authSignupRoutes } from 'app/modules/auth/sign-up/sign-up.routing';
         FuseCardModule,
         FuseAlertModule,
         MatSelectModule,
+        MatTooltipModule,
         SharedModule,
     ],
 })

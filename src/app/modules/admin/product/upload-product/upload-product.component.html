@@ -1,0 +1,425 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div class="bg-card">
+        <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
+            <div class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-8 sm:my-12">
+                <!-- Avatar and name -->
+                <div class="flex flex-auto items-center min-w-0">
+                    <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
+                        <img class="w-full h-full object-cover" src="assets/images/avatars/avatar.png" />
+                    </div>
+                    <div class="flex flex-col min-w-0 ml-4">
+                        <ng-container *transloco="let t">
+                            <div
+                                class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">
+                                {{ t("welcome-back") }}, Brian!
+                            </div>
+                        </ng-container>
+                        <div class="flex items-center">
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:bell'"></mat-icon>
+                            <div class="ml-1.5 leading-6 truncate text-secondary">
+                                You have 0 new messages
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Actions -->
+                <div class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3">
+                    <button class="fuse-mat-button-rounded bg-accent-700" mat-flat-button [color]="'accent'"
+                        [routerLink]="['/dashboard']">
+                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:home'"></mat-icon>
+                        <span class="ml-2">Home</span>
+                    </button>
+                    <a target="_blank" class="fuse-mat-button-rounded" href="https://{{ domainname }}.direct-buy.in"
+                        mat-flat-button [color]="'primary'">
+                        <fa-icon [icon]="faStore"></fa-icon>
+                        <span class="ml-2">Store</span>
+                    </a>
+                    <a target="_blank" class="fuse-mat-button-rounded" href="https://wa.me/?text=Dear Customer,We are delighted to inform you that our store is now online on https://{{
+                            domainname
+                        }}.direct-buy.in and orders can be placed online.
+                        Regards - {{ firstname }}" style="text-decoration: none;">
+                        <button mat-flat-button color="success" style="background-color: #25D366;color: #f0fff3;">
+                            <fa-icon [icon]="faWhatsapp"></fa-icon>
+                            <span class="ml-2">WhatsApp</span>
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <div class="flex-1 min-w-0 pl-4">
+                <!-- Breadcrumbs -->
+                <div class="flex flex-wrap items-center font-medium">
+                    <div>
+                        <a href="javascript:void(0);" style="text-decoration: none" [routerLink]="['/dashboard']"
+                            class="whitespace-nowrap text-primary-500">Home</a>
+                    </div>
+
+                    <div class="flex items-center ml-1 whitespace-nowrap">
+                        <mat-icon class="icon-size-5 text-secondary" [svgIcon]="'heroicons_solid:chevron-right'">
+                        </mat-icon>
+                        <a href="javascript:void(0);" style="text-decoration: none" (click)="storeDashboard()"
+                            class="whitespace-nowrap text-primary-500">Store Dashboard</a>
+                    </div>
+
+                    <div class="flex items-center ml-1 whitespace-nowrap">
+                        <mat-icon class="icon-size-5 text-secondary" [svgIcon]="'heroicons_solid:chevron-right'">
+                        </mat-icon>
+                        <span class="ml-1 text-secondary">Upload Product</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col m-8 p-8 pb-4 bg-card rounded-2xl shadow overflow-hidden">
+                <input type="file" (change)="onChange($event)" #inputFile>
+                <br>
+                <!-- <button (click)="removeData()">Remove Data</button> -->
+                <div *ngIf="isExcelFile === false">
+                    This is not an Excel file
+                </div>
+                <span *ngIf="spinnerEnabled" class="k-i-loading k-icon"></span>
+                <!-- <table>
+                    <th *ngFor="let key of keys">
+                        {{key}}
+                    </th>
+                    <tr *ngFor="let item of dataSheet | async">
+                        <td *ngFor="let key of keys">
+                            {{item[key]}}
+                        </td>
+                    </tr>
+                </table> -->
+                <div class="flex flex-col flex-auto min-w-0">
+                    <!-- Main -->
+                    <div class="flex flex-auto justify-center w-full max-w-5xl mx-auto p-6 sm:p-8">
+                        <!-- Column -->
+                        <div class="lg:flex flex-col items-start mr-8">
+                            <!-- Direct-buy database -->
+                            <fuse-card class="flex flex-col max-w-80 w-full p-8">
+                                <div class="text-2xl font-semibold leading-tight">Direct-Buy Database</div>
+                                <div class="mt-4">
+                                    Product Name
+                                </div>
+                                <hr class="w-full border-t my-6">
+                                <div class="flex flex-col">
+                                    <div class="flex items-center">
+                                        <span class="leading-none">Product Brand</span>
+                                    </div>
+                                    <hr class="w-full border-t my-6">
+                                    <div class="flex items-center">
+                                        <span class="leading-none">Product HSN</span>
+                                    </div>
+                                    <hr class="w-full border-t my-6">
+                                    <div class="flex items-center">
+
+                                        <span class="leading-none">Product Type</span>
+                                    </div>
+                                    <hr class="w-full border-t my-6">
+                                    <div class="flex items-center">
+
+                                        <span class="leading-none">Product Sub-Type</span>
+                                    </div>
+                                    <hr class="w-full border-t my-6">
+                                    <div class="flex items-center">
+
+                                        <span class="leading-none">Product Category</span>
+                                    </div>
+                                    <hr class="w-full border-t my-6">
+                                    <div class="flex items-center">
+
+                                        <span class="leading-none">Product Sub-Category</span>
+                                    </div>
+                                    <hr class="w-full border-t my-6">
+                                    <div class="flex items-center">
+
+                                        <span class="leading-none">Product Weight</span>
+                                    </div>
+                                    <hr class="w-full border-t my-6">
+                                    <div class="flex items-center">
+
+                                        <span class="leading-none">Product Weight-Type</span>
+                                    </div>
+                                    <hr class="w-full border-t my-6">
+                                    <div class="flex items-center">
+
+                                        <span class="leading-none">Product MRP</span>
+                                    </div>
+                                    <hr class="w-full border-t my-6">
+                                    <div class="flex items-center">
+
+                                        <span class="leading-none">Product Listing Price</span>
+                                    </div>
+                                    <hr class="w-full border-t my-6">
+                                    <div class="flex items-center">
+
+                                        <span class="leading-none">Product Stock</span>
+                                    </div>
+                                </div>
+                            </fuse-card>
+                        </div>
+
+                        <!-- Column -->
+                        <div class="flex flex-col items-start">
+
+                            <!-- Create Post -->
+                            <!-- <fuse-card class="flex flex-col max-w-140 w-full p-6 sm:p-8 pb-6">
+                                <div class="text-xl font-semibold">Map Headers From Excel To DB</div>
+                                <div class="flex flex-col sm:flex-row items-start mt-8">
+
+                                    <mat-form-field class="w-full">
+                                        <input matInput [formControlName]="'str_msg'" />
+                                    </mat-form-field>
+                                </div>
+                                <div class="flex items-center mt-6 sm:mt-8 -mx-3">
+                                    <mat-form-field class="w-full">
+                                        <input matInput [formControlName]="'str_msg'" />
+                                    </mat-form-field>
+                                </div>
+                                <div class="flex items-center mt-6 sm:mt-8 -mx-3">
+                                    <mat-form-field class="w-full">
+                                        <input matInput [formControlName]="'str_msg'" />
+                                    </mat-form-field>
+                                </div>
+                            </fuse-card> -->
+                            <fuse-card class="flex flex-col max-w-80 w-full p-8">
+                                <div class="text-1xl font-semibold leading-tight">Map Headers From Excel To DB</div>
+                                <div class="mt-4">
+                                    <mat-form-field class="w-full">
+                                        <mat-select class="flex items-center h-10 min-h-10 ">
+                                            <mat-option [value]="
+                                                    'select'
+                                                ">Select</mat-option>
+                                            <ng-container *ngFor="
+                                                    let xlheader of excelHeader
+                                                ">
+                                                <mat-option [value]="
+                                                xlheader
+                                                    ">{{
+                                                    xlheader
+                                                    }}</mat-option>
+                                            </ng-container>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="flex flex-col">
+                                    <div class="flex items-center">
+                                        <mat-form-field class="w-full">
+                                            <mat-select class="flex items-center h-10 min-h-10 px-4">
+                                                <mat-option [value]="
+                                                        'select'
+                                                    ">Select</mat-option>
+                                                <ng-container *ngFor="
+                                                        let xlheader of excelHeader
+                                                    ">
+                                                    <mat-option [value]="
+                                                    xlheader
+                                                        ">{{
+                                                        xlheader
+                                                        }}</mat-option>
+                                                </ng-container>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="flex items-center">
+                                        <mat-form-field class="w-full">
+                                            <mat-select class="flex items-center h-10 min-h-10 px-4">
+                                                <mat-option [value]="
+                                                        'select'
+                                                    ">Select</mat-option>
+                                                <ng-container *ngFor="
+                                                        let xlheader of excelHeader
+                                                    ">
+                                                    <mat-option [value]="
+                                                    xlheader
+                                                        ">{{
+                                                        xlheader
+                                                        }}</mat-option>
+                                                </ng-container>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="flex items-center">
+                                        <mat-form-field class="w-full">
+                                            <mat-select class="flex items-center h-10 min-h-10 px-4">
+                                                <mat-option [value]="
+                                                        'select'
+                                                    ">Select</mat-option>
+                                                <ng-container *ngFor="
+                                                        let xlheader of excelHeader
+                                                    ">
+                                                    <mat-option [value]="
+                                                    xlheader
+                                                        ">{{
+                                                        xlheader
+                                                        }}</mat-option>
+                                                </ng-container>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="flex items-center">
+                                        <mat-form-field class="w-full">
+                                            <mat-select class="flex items-center h-10 min-h-10 px-4">
+                                                <mat-option [value]="
+                                                        'select'
+                                                    ">Select</mat-option>
+                                                <ng-container *ngFor="
+                                                        let xlheader of excelHeader
+                                                    ">
+                                                    <mat-option [value]="
+                                                    xlheader
+                                                        ">{{
+                                                        xlheader
+                                                        }}</mat-option>
+                                                </ng-container>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="flex items-center">
+                                        <mat-form-field class="w-full">
+                                            <mat-select class="flex items-center h-10 min-h-10 px-4">
+                                                <mat-option [value]="
+                                                        'select'
+                                                    ">Select</mat-option>
+                                                <ng-container *ngFor="
+                                                        let xlheader of excelHeader
+                                                    ">
+                                                    <mat-option [value]="
+                                                    xlheader
+                                                        ">{{
+                                                        xlheader
+                                                        }}</mat-option>
+                                                </ng-container>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="flex items-center">
+                                        <mat-form-field class="w-full">
+                                            <mat-select class="flex items-center h-10 min-h-10 px-4">
+                                                <mat-option [value]="
+                                                        'select'
+                                                    ">Select</mat-option>
+                                                <ng-container *ngFor="
+                                                        let xlheader of excelHeader
+                                                    ">
+                                                    <mat-option [value]="
+                                                    xlheader
+                                                        ">{{
+                                                        xlheader
+                                                        }}</mat-option>
+                                                </ng-container>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="flex items-center">
+                                        <mat-form-field class="w-full">
+                                            <mat-select class="flex items-center h-10 min-h-10 px-4">
+                                                <mat-option [value]="
+                                                        'select'
+                                                    ">Select</mat-option>
+                                                <ng-container *ngFor="
+                                                        let xlheader of excelHeader
+                                                    ">
+                                                    <mat-option [value]="
+                                                    xlheader
+                                                        ">{{
+                                                        xlheader
+                                                        }}</mat-option>
+                                                </ng-container>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="flex items-center">
+                                        <mat-form-field class="w-full">
+                                            <mat-select class="flex items-center h-10 min-h-10 px-4">
+                                                <mat-option [value]="
+                                                        'select'
+                                                    ">Select</mat-option>
+                                                <ng-container *ngFor="
+                                                        let xlheader of excelHeader
+                                                    ">
+                                                    <mat-option [value]="
+                                                    xlheader
+                                                        ">{{
+                                                        xlheader
+                                                        }}</mat-option>
+                                                </ng-container>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="flex items-center">
+                                        <mat-form-field class="w-full">
+                                            <mat-select class="flex items-center h-10 min-h-10 px-4">
+                                                <mat-option [value]="
+                                                        'select'
+                                                    ">Select</mat-option>
+                                                <ng-container *ngFor="
+                                                        let xlheader of excelHeader
+                                                    ">
+                                                    <mat-option [value]="
+                                                    xlheader
+                                                        ">{{
+                                                        xlheader
+                                                        }}</mat-option>
+                                                </ng-container>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="flex items-center">
+                                        <mat-form-field class="w-full">
+                                            <mat-select class="flex items-center h-10 min-h-10 px-4">
+                                                <mat-option [value]="
+                                                        'select'
+                                                    ">Select</mat-option>
+                                                <ng-container *ngFor="
+                                                        let xlheader of excelHeader
+                                                    ">
+                                                    <mat-option [value]="
+                                                    xlheader
+                                                        ">{{
+                                                        xlheader
+                                                        }}</mat-option>
+                                                </ng-container>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="flex items-center">
+                                        <mat-form-field class="w-full">
+                                            <mat-select class="flex items-center h-10 min-h-10 px-4">
+                                                <mat-option [value]="
+                                                        'select'
+                                                    ">Select</mat-option>
+                                                <ng-container *ngFor="
+                                                        let xlheader of excelHeader
+                                                    ">
+                                                    <mat-option [value]="
+                                                    xlheader
+                                                        ">{{
+                                                        xlheader
+                                                        }}</mat-option>
+                                                </ng-container>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </fuse-card>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

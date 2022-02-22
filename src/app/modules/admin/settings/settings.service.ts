@@ -13,7 +13,7 @@ export class SettingsService {
     private _products: BehaviorSubject<InventoryProduct[] | null> =
         new BehaviorSubject(null);
 
-    constructor(private _httpClient: HttpClient) {}
+    constructor(private _httpClient: HttpClient) { }
 
     getShops(user_id: string): Observable<any> {
         return this._httpClient.get('/api/getShops.php?user_id=' + user_id);
@@ -25,9 +25,9 @@ export class SettingsService {
     ): Observable<ApiResponse> {
         return this._httpClient.get<ApiResponse>(
             '/api/getShopDetailsById.php?shopId=' +
-                shopId +
-                '&user_id=' +
-                user_id
+            shopId +
+            '&user_id=' +
+            user_id
         );
     }
 
@@ -133,7 +133,7 @@ export class SettingsService {
     getProductById(temp_str_config_id: string): Observable<InventoryProduct> {
         return this._httpClient.get<InventoryProduct>(
             '/api/products/getStoreProductsById.php?temp_str_config_id=' +
-                temp_str_config_id
+            temp_str_config_id
         );
     }
 
@@ -143,9 +143,9 @@ export class SettingsService {
     createProduct(shopId: string, user_id): Observable<InventoryProduct> {
         return this._httpClient.get<InventoryProduct>(
             '/api/products/addProduct.php?shopId=' +
-                shopId +
-                '&user_id=' +
-                user_id
+            shopId +
+            '&user_id=' +
+            user_id
         );
     }
 
@@ -165,7 +165,7 @@ export class SettingsService {
     deleteProduct(temp_str_config_id: string): Observable<InventoryProduct> {
         return this._httpClient.get<InventoryProduct>(
             '/api/products/deleteProduct.php?temp_str_config_id=' +
-                temp_str_config_id
+            temp_str_config_id
         );
     }
 
@@ -210,6 +210,21 @@ export class SettingsService {
     deactivateShop(shopId): Observable<InventoryProduct> {
         return this._httpClient.get<InventoryProduct>(
             '/api/store_setting/deactivateShop.php?shopId=' + shopId
+        );
+    }
+
+    accountDeletion(user: Data): Observable<ApiResponse> {
+        return this._httpClient.post<ApiResponse>(
+            '/api/accountDeletion.php',
+            user
+        );
+    }
+
+    subDomainDeletion(id, subdomain): Observable<any> {
+        return this._httpClient.get<any>(
+            '/api/databaseCreation/subDomainDeletion.php?subdomain=' + subdomain +
+            '&id=' +
+            id
         );
     }
 }

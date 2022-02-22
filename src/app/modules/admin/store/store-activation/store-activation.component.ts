@@ -80,17 +80,17 @@ export class StoreActivationComponent implements OnInit {
     }
 
     createRzpayOrder(data) {
-        console.log(data);
         // call api to create order_id
-        this.payWithRazor();
+        this.payWithRazor(data);
     }
 
-    payWithRazor() {
-        console.log(this.storeCheckoutForm.value);
-        const shop_price = this.storeCheckoutForm.value.shop_price;
+    payWithRazor(data) {
+        //console.log(data);
         const options: any = {
             key: 'rzp_test_xFaGl7So24RVzR',
-            amount: shop_price, // amount should be in paise format to display Rs 1255 without decimal point
+            //key: 'rzp_live_DIWnd6wTffAjzl',
+            amount: 499900, // amount should be in paise format to display Rs 1255 without decimal point
+            //amount: 100,
             currency: 'INR',
             name: 'ARSC Networks', // company name or product name
             description: '', // product description
@@ -99,6 +99,10 @@ export class StoreActivationComponent implements OnInit {
             modal: {
                 // We should prevent closing of the form when esc key is pressed.
                 escape: false,
+            },
+            prefill: {
+                email: data.email,
+                contact: data.contact
             },
             notes: {
                 // include notes if any
@@ -109,13 +113,21 @@ export class StoreActivationComponent implements OnInit {
         };
         options.handler = (response, error) => {
             options.response = response;
-            console.log(response);
-            console.log(options);
+            const routeParams = this.routes.snapshot.params;
+            //console.log(response.razorpay_payment_id);
+            const shopPayment = {
+                shopId: routeParams.shopId,
+                shop_payment_amount: 4999,
+                shop_payment_id: response
+                // shop_payment_id: response.razorpay_payment_id
+            };
             // call your backend api to verify payment signature & capture transaction
             this.apiService
-                .updateUser(this.storeCheckoutForm.value)
+                .updateShopPayment(shopPayment)
                 .subscribe((data) => {
-                    //   this._router.navigate(['shop-details/' ]);
+                    this.showFlashMessage('success');
+                    this.ngOnInit();
+                    this.cd.detectChanges();
                 });
         };
         options.modal.ondismiss = () => {

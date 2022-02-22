@@ -59,17 +59,20 @@
                         <fa-icon [icon]="faStore"></fa-icon>
                         <span class="ml-2">Store</span>
                     </a>
+                    
                     <a
                         target="_blank"
-                        class="fuse-mat-button-rounded whatsappbtn"
+                        class="fuse-mat-button-rounded"
                         href="https://wa.me/?text=Dear Customer,We are delighted to inform you that our store is now online on https://{{
                             domainname
                         }}.direct-buy.in and orders can be placed online.
                         Regards - {{ firstname }}"
-                        
+                        style="text-decoration: none;"
                     >
-                        <fa-icon [icon]="faWhatsapp"></fa-icon>
-                        <span class="ml-2">WhatsApp</span>
+                        <button mat-flat-button color="success" style="background-color: #25D366;color: #f0fff3;">
+                            <fa-icon [icon]="faWhatsapp"></fa-icon>
+                            <span class="ml-2">WhatsApp</span>
+                        </button>
                     </a>
                 </div>
             </div>
@@ -195,7 +198,7 @@
                                                 'heroicons_outline:check'
                                             "
                                         ></mat-icon>
-                                        <span class="ml-2">Product Added</span>
+                                        <span class="ml-2">Shop Activated</span>
                                     </ng-container>
                                     <ng-container
                                         *ngIf="flashMessage === 'error'"
@@ -222,6 +225,7 @@
                                     class="lg:mt-6"
                                     mat-flat-button
                                     [color]="'primary'"
+                                    (click)="createRzpayOrder(data)"
                                 >
                                     Activate
                                 </button>

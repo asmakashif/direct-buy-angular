@@ -24,6 +24,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { SettingsComponent } from './settings.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ModalComponent } from './modal/modal.component';
+import { UiModalComponent } from './ui-modal/ui-modal.component';
+import { MyModalComponent } from './my-modal.component';
 
 const settingRoutes: Route[] = [
     {
@@ -33,7 +36,7 @@ const settingRoutes: Route[] = [
 ];
 
 @NgModule({
-    declarations: [SettingsComponent],
+    declarations: [SettingsComponent, ModalComponent, UiModalComponent, MyModalComponent],
     imports: [
         RouterModule.forChild(settingRoutes),
         FlashMessagesModule.forRoot(),
@@ -61,4 +64,4 @@ const settingRoutes: Route[] = [
         Ng2SearchPipeModule,
     ],
 })
-export class SettingsModule {}
+export class SettingsModule { }

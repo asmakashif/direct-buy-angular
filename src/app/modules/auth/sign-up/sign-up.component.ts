@@ -12,6 +12,7 @@ import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
 import { CreateShopService } from 'app/modules/admin/store/create-shop/create-shop.service';
 
+
 declare var $: any;
 
 @Component({
@@ -34,7 +35,7 @@ export class AuthSignUpComponent implements OnInit {
     value: any;
     desc = '';
     state = '';
-    stateList = ['Karnataka', 'Tamilnadu', 'Hyderabad', 'Mumbai'];
+    stateList = ['Delhi','Maharashtra','Karnataka','Tamil Nadu','Andhra Pradesh','Gujarat','Uttar Pradesh','Rajasthan','Telangana','Madhya Pradesh','Sikkim','West Bengal','Punjab','Kerala','Haryana','Chandigarh (UT)','Puducherry (UT)','Goa','Orissa','Nagaland','Mizoram','Meghalaya','Manipur','Lakshadweep (UT)','Jharkhand','Jammu and Kashmir','Himachal Pradesh','Uttarakhand','Daman and Diu (UT)','Dadra and Nagar Haveli (UT)','Chhattisgarh','Bihar','Assam','Arunachal Pradesh','Tripura','Andaman and Nicobar (UT)'];
     flashMessage: string;
     /**
      * Constructor
@@ -57,7 +58,7 @@ export class AuthSignUpComponent implements OnInit {
     ngOnInit(): void {
         // Create the form
         this.signUpForm = this._formBuilder.group({
-            name: ['', [Validators.required]],
+            name: ['', [Validators.required,  Validators.pattern("^[a-zA-Z ']+")]],
             contact: [
                 '',
                 [Validators.required, Validators.pattern('^[0-9]{10}$')],
@@ -84,8 +85,7 @@ export class AuthSignUpComponent implements OnInit {
                 '',
                 [
                     Validators.required,
-                    Validators.pattern("^[a-zA-Z']+"),
-                    Validators.minLength(4),
+                    Validators.pattern("^[a-zA-Z ']+"),
                 ],
             ],
             state: ['', Validators.required],
@@ -137,6 +137,8 @@ export class AuthSignUpComponent implements OnInit {
                 },
             });
         });
+
+       
     }
 
     // keyup(event) {
@@ -201,6 +203,10 @@ export class AuthSignUpComponent implements OnInit {
                 this.showAlert = true;
             }
         );
+    }
+
+    goToTerms(){
+        window.open('https://direct-buy.in/terms');
     }
 
     /**

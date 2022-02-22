@@ -11,6 +11,7 @@ import { faStore } from '@fortawesome/free-solid-svg-icons';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 import { PaymentGatewayService } from 'app/modules/admin/payment/payment-gateway/payment-gateway.service';
 import { DashboardService } from '../../dashboard/dashboard.service';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
 
 interface Animal {
     name: string;
@@ -39,8 +40,9 @@ export class PaymentGatewayComponent implements OnInit {
         private _dashboardService: DashboardService,
         private _router: Router,
         private routes: ActivatedRoute,
-        private cd: ChangeDetectorRef
-    ) {}
+        private cd: ChangeDetectorRef,
+        private _fuseConfirmationService: FuseConfirmationService,
+    ) { }
     providerType = [
         { provider_name: 'CashOnDelivery' },
         { provider_name: 'GooglePay' },
@@ -160,5 +162,24 @@ export class PaymentGatewayComponent implements OnInit {
                 this._router.navigate(['/dashboard']);
             }
         }
+    }
+
+    comingsoon() {
+        const confirmation = this._fuseConfirmationService.open({
+            title: "",
+            message:
+                'Coming Soon',
+            icon: {
+                "show": false,
+            },
+            actions: {
+                confirm: {
+                    label: 'Okay',
+                },
+                cancel: {
+                    "show": false
+                }
+            },
+        });
     }
 }

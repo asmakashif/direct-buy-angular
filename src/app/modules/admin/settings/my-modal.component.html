@@ -1,0 +1,7 @@
+<div class="modal">
+    Rename {{oldname}}
+    <input type="text" (change)="newname = $event.target.value;" />
+    <button type="button" (click)="ok()">OK</button>
+    <button type="button" (click)="cancel()">Cancel</button>
+</div>
+<div class="overlay"></div>

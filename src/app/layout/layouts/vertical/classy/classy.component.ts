@@ -46,7 +46,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
         private cd: ChangeDetectorRef,
         private routes: ActivatedRoute,
         private _dashboardService: DashboardService
-    ) {}
+    ) { }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors
@@ -77,8 +77,6 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
                 this.firstname = this.profileData.firstname;
                 this.email = this.profileData.email;
                 this.cd.detectChanges();
-                console.log(this.firstname);
-                console.log(this.profileData);
             });
 
         // Subscribe to navigation data

@@ -29,6 +29,8 @@ import { HttpClient } from '@angular/common/http';
 import { DeviceUUID } from 'device-uuid';
 import { formatDate } from '@angular/common';
 
+//import { OneSignalService } from 'onesignal';
+
 declare var $: any;
 
 @Component({
@@ -129,6 +131,14 @@ export class DashboardComponent {
     brand: any;
     category: any;
     mobile: boolean;
+    localstorage: string[];
+    routeParams: any;
+    params: any;
+    URL: string;
+    arr: string[];
+    arrString1: string[];
+    arrString2: string[];
+    sessionValues: any;
 
     constructor(
         @Inject(DOCUMENT)
@@ -140,21 +150,63 @@ export class DashboardComponent {
         private _router: Router,
         private routes: ActivatedRoute,
         private cd: ChangeDetectorRef,
-        private _httpClient: HttpClient
-    ) {}
+        private _httpClient: HttpClient,
+        //private oneSignal: OneSignalService
+    ) {
+        // this.oneSignal.init({
+        //     appId: "1fb93f4e-17c9-40dc-acb3-93a7a13b3286",
+        // });
+    }
 
     public onSave() {
         this.closebutton.nativeElement.click();
     }
 
     ngOnInit(): void {
-        localStorage.removeItem('open_orders');
-        const accessToken = localStorage.getItem('accessToken');
-        //const deviceId = localStorage.getItem('deviceId');
-        //const uuid = new DeviceUUID().get();
         const user_id = localStorage.getItem('user_id');
         const routeParams = this.routes.snapshot.params;
         this.shop_id = routeParams.shopId;
+        localStorage.removeItem('open_orders');
+        const accessToken = localStorage.getItem('accessToken');
+        this.routeParams = this.routes.snapshot.params;
+
+        var site_url = window.location.href;
+        localStorage.setItem('site_url', site_url);
+        var URL = localStorage.getItem('site_url');
+        //var URL = 'https://retailer.direct-buy.in/dashboard?player_id=1234567890';
+        var arr = URL.split('/');
+        var array = arr[3];
+        if (array == 'dashboard?') {
+            var arrString1 = array.split('?');
+            var array1 = arrString1[1];
+            var arrString2 = array1.split('=');
+            var playerId = arrString2[0];
+            localStorage.setItem('playerId', playerId);
+            var player_id = arrString2[1];
+            localStorage.setItem('player_id', player_id);
+            const data = {
+                player_id: player_id,
+                user_id: user_id,
+            };
+
+            this._dashboardService.savePlayerId(user_id, player_id).subscribe((data) => {
+                this.cd.markForCheck();
+            });
+        }
+
+        this.localstorage = Object.keys(localStorage);
+
+        var values = [],
+            keys = Object.keys(localStorage),
+            i = keys.length;
+
+        while (i--) {
+            values.push(localStorage.getItem(keys[i]));
+        }
+        // this.sessionValues = values[0];
+        // console.log(this.sessionValues);
+
+
         if (!accessToken) {
             this._router.navigate(['sign-in']);
         }
@@ -239,9 +291,9 @@ export class DashboardComponent {
         });
 
         this.routes.paramMap.subscribe((params) => {
+            this.params = params;
             this.queryParam = params.get('shopId');
             this.queryParamName = params.get('shop_name');
-            console.log(params);
         });
 
         this._dashboardService
@@ -249,7 +301,6 @@ export class DashboardComponent {
             .subscribe((prevMonthOrderCount) => {
                 this.prevMonthOrderCount = prevMonthOrderCount;
                 this.cd.detectChanges();
-                console.log(this.prevMonthOrderCount);
             });
 
         this._dashboardService
@@ -257,7 +308,6 @@ export class DashboardComponent {
             .subscribe((curMonthOrderCount) => {
                 this.curMonthOrderCount = curMonthOrderCount;
                 this.cd.detectChanges();
-                console.log(this.curMonthOrderCount);
             });
 
         this._dashboardService
@@ -265,14 +315,13 @@ export class DashboardComponent {
             .subscribe((yestOpenOrderCount) => {
                 this.yestOpenOrderCount = yestOpenOrderCount;
                 this.cd.detectChanges();
-                console.log(this.yestOpenOrderCount);
             });
         this._dashboardService
             .getOpenOrderCount(routeParams.shopId)
             .subscribe((openOrderCount) => {
                 this.openOrderCount = openOrderCount;
                 this.cd.detectChanges();
-                console.log(this.openOrderCount);
+
             });
 
         this._dashboardService
@@ -280,7 +329,7 @@ export class DashboardComponent {
             .subscribe((curFulfilledOrderCount) => {
                 this.curFulfilledOrderCount = curFulfilledOrderCount;
                 this.cd.detectChanges();
-                console.log(this.curFulfilledOrderCount);
+
             });
 
         this._dashboardService
@@ -288,7 +337,7 @@ export class DashboardComponent {
             .subscribe((allOrderCount) => {
                 this.allOrderCount = allOrderCount;
                 this.cd.detectChanges();
-                console.log(this.allOrderCount);
+
             });
 
         this._dashboardService
@@ -296,7 +345,7 @@ export class DashboardComponent {
             .subscribe((newCustomerCount) => {
                 this.newCustomerCount = newCustomerCount;
                 this.cd.detectChanges();
-                console.log(this.newCustomerCount);
+
             });
 
         this._dashboardService
@@ -304,7 +353,7 @@ export class DashboardComponent {
             .subscribe((customerCount) => {
                 this.customerCount = customerCount;
                 this.cd.detectChanges();
-                console.log(this.customerCount);
+
             });
 
         this._dashboardService
@@ -312,7 +361,6 @@ export class DashboardComponent {
             .subscribe((payment: any) => {
                 this.payment = payment;
                 this.cd.detectChanges();
-                console.log(this.payment);
             });
 
         this._dashboardService
@@ -331,7 +379,6 @@ export class DashboardComponent {
                 //         this._router.navigate(['sign-in']);
                 //     }
                 // }
-                //console.log(this.profileData);
             });
 
         this._dashboardService
@@ -343,7 +390,6 @@ export class DashboardComponent {
             .getTotalMinOrderVal(user_id)
             .subscribe((data) => {
                 this.totalMinOrder = data;
-                console.log('data');
             });
         this._dashboardService
             .getTotalHomeDel(this.shop_id)
@@ -368,21 +414,18 @@ export class DashboardComponent {
             .getAllOrdersByStore(routeParams.shopId)
             .subscribe((allOrdersByStr) => {
                 this.allOrders = allOrdersByStr;
-                console.log(this.allOrders);
             });
 
         this._dashboardService
             .getPendingOrdersByStore(routeParams.shopId)
             .subscribe((pendingOrdersByStr) => {
                 this.pendingOrder = pendingOrdersByStr;
-                console.log(this.pendingOrder);
             });
 
         this._dashboardService
             .getCompletedOrdersByStore(routeParams.shopId)
             .subscribe((completedOrdersByStr) => {
                 this.completedOrder = completedOrdersByStr;
-                console.log(this.completedOrder);
             });
 
         this._dashboardService.getCategories().subscribe((category) => {
@@ -417,7 +460,7 @@ export class DashboardComponent {
             this._httpClient
                 .get(
                     '/api/mobileAPI/getProductSubType.php?product_type=' +
-                        product_type
+                    product_type
                 )
                 .subscribe((data) => {
                     this.product_sub_type = data;
@@ -432,9 +475,9 @@ export class DashboardComponent {
         localStorage.setItem('payment', paymentRedirect);
         this._router.navigate([
             '/attach-payment/' +
-                payment.payment_id +
-                '/' +
-                payment.payment_name,
+            payment.payment_id +
+            '/' +
+            payment.payment_name,
         ]);
     }
 
@@ -452,7 +495,6 @@ export class DashboardComponent {
     onShopLogoUpload(event) {
         // this.selectedFile = event.target.files[0];
         const file = event.target.files[0];
-        console.log(file);
         this.logoForm.get('shop_logo').setValue(file);
 
         const formData = new FormData();
@@ -501,9 +543,9 @@ export class DashboardComponent {
         localStorage.setItem('redirect', configurations);
         this._router.navigate([
             '/store-payment/' +
-                routeParams.shopId +
-                '/' +
-                routeParams.shop_name,
+            routeParams.shopId +
+            '/' +
+            routeParams.shop_name,
         ]);
     }
 
@@ -555,7 +597,6 @@ export class DashboardComponent {
     }
 
     enableMessageField() {
-        console.log('keyup');
 
         $(document).ready(function () {
             $('#str_msg').prop('readonly', false);
@@ -569,7 +610,6 @@ export class DashboardComponent {
     updateShopDetails(): void {
         // Get the product object
         const shop = this.editShopForm.getRawValue();
-        console.log(shop);
 
         this._dashboardService.updateShopDetails(shop).subscribe(() => {
             // Show a success message
@@ -581,7 +621,6 @@ export class DashboardComponent {
 
     onVacationSubmit(formValue: any) {
         //alert(JSON.stringify(formValue, null, 2));
-        console.log(formValue);
         this._dashboardService
             .updateAdditionalSetting(formValue)
             .subscribe((data) => {
@@ -593,7 +632,6 @@ export class DashboardComponent {
 
     hideproductQtyFormSubmit(formValue: any) {
         //alert(JSON.stringify(formValue, null, 2));
-        console.log(formValue);
         this._dashboardService
             .updateAdditionalSetting(formValue)
             .subscribe((data) => {
@@ -604,7 +642,6 @@ export class DashboardComponent {
     }
 
     onMessageUpdate() {
-        console.log(this.messageForm.value);
         this._dashboardService
             .updateRetailerDetails(this.messageForm.value)
             .subscribe((data) => {
@@ -631,9 +668,9 @@ export class DashboardComponent {
         const routeParams = this.routes.snapshot.params;
         this._router.navigate([
             '/unique-orders/' +
-                routeParams.shopId +
-                '/' +
-                routeParams.shop_name,
+            routeParams.shopId +
+            '/' +
+            routeParams.shop_name,
         ]);
     }
 
@@ -641,9 +678,9 @@ export class DashboardComponent {
         const routeParams = this.routes.snapshot.params;
         this._router.navigate([
             '/orders-fulfilled/' +
-                routeParams.shopId +
-                '/' +
-                routeParams.shop_name,
+            routeParams.shopId +
+            '/' +
+            routeParams.shop_name,
         ]);
     }
 
@@ -665,9 +702,9 @@ export class DashboardComponent {
         const routeParams = this.routes.snapshot.params;
         this._router.navigate([
             '/new-registration/' +
-                routeParams.shopId +
-                '/' +
-                routeParams.shop_name,
+            routeParams.shopId +
+            '/' +
+            routeParams.shop_name,
         ]);
     }
 
@@ -675,9 +712,9 @@ export class DashboardComponent {
         const routeParams = this.routes.snapshot.params;
         this._router.navigate([
             '/minOrderConfig/' +
-                routeParams.shopId +
-                '/' +
-                routeParams.shop_name,
+            routeParams.shopId +
+            '/' +
+            routeParams.shop_name,
         ]);
     }
 
@@ -685,18 +722,18 @@ export class DashboardComponent {
         const routeParams = this.routes.snapshot.params;
         this._router.navigate([
             '/homeDelConfig/' +
-                routeParams.shopId +
-                '/' +
-                routeParams.shop_name,
+            routeParams.shopId +
+            '/' +
+            routeParams.shop_name,
         ]);
     }
 
     managePayment(payment): void {
         this._router.navigate([
             '/manage-payment-gateway/' +
-                payment.payment_id +
-                '/' +
-                payment.payment_name,
+            payment.payment_id +
+            '/' +
+            payment.payment_name,
         ]);
     }
 
@@ -894,7 +931,6 @@ export class DashboardComponent {
         const routeParams = this.routes.snapshot.params;
         // Get the product object
         const product = this.selectedProductForm.getRawValue();
-        console.log(product);
         // Remove the currentImageIndex field
         //delete product.currentImageIndex;
 
@@ -1140,5 +1176,16 @@ export class DashboardComponent {
 
     reactivateShop() {
         alert('reactivate');
+    }
+
+    gonative_onesignal_info(info) {
+        console.log(info);
+    }
+
+    uploadProducts() {
+        const routeParams = this.routes.snapshot.params;
+        this._router.navigate([
+            '/upload-product/' + routeParams.shopId + '/' + routeParams.shop_name,
+        ]);
     }
 }

@@ -224,6 +224,13 @@ export const appRoutes: Route[] = [
                     ).then((m) => m.AddProductModule),
             },
             {
+                path: 'upload-product/:shopId/:shop_name',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/product/upload-product/upload-product.module'
+                    ).then((m) => m.UploadProductModule),
+            },
+            {
                 path: 'add-category/:shopId/:shop_name',
                 loadChildren: () =>
                     import(
@@ -445,6 +452,27 @@ export const appRoutes: Route[] = [
                 loadChildren: () =>
                     import('app/modules/admin/settings/settings.module').then(
                         (m) => m.SettingsModule
+                    ),
+            },
+            {
+                path: 'confirm-deletion',
+                loadChildren: () =>
+                    import('app/modules/admin/settings/confirm-deletion/confirm-deletion.module').then(
+                        (m) => m.ConfirmDeletionModule
+                    ),
+            },
+            {
+                path: 'sms-integration',
+                loadChildren: () =>
+                    import('app/modules/admin/settings/integration/sms-integration/sms-integration.module').then(
+                        (m) => m.SMSIntegrationModule
+                    ),
+            },
+            {
+                path: 'session-values',
+                loadChildren: () =>
+                    import('app/modules/admin/settings/session-values/session-values.module').then(
+                        (m) => m.SessionValuesModule
                     ),
             },
             {
