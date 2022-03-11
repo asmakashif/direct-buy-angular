@@ -44,7 +44,8 @@
         $firstname = $DecodedData['name'];
         
         $contact = $DecodedData['contact'];
-        $domainname= $DecodedData['company'];
+        $domainname= $DecodedData['domain'];
+        $document_root= $DecodedData['domain'];
         $fulldomain= $domainname.'.brokeronline.in';
         $email = $DecodedData['email'];
         $password = $DecodedData['password'];
@@ -61,29 +62,39 @@
         $city=$DecodedData['city'];
         $state =$DecodedData['state'];
 
-    
-        $sql="INSERT INTO `tbl_user`(firstname,domainname,fulldomain,contact,email,password,verify_email,registered_date,status,create_reminder,activate_reminder,trail_activate,payment_g_status,remove_user,otpVerify,city,state) values('$firstname','$domainname','$fulldomain','$contact','$email','$encryptedPassword','$verify_email','$registered_date','$status','$create_reminder','$activate_reminder','$trail_activate','$payment_g_status','$remove_user','$otpVerify','$city','$state')";
-        $R=mysqli_query($CN,$sql)or die("database error:". mysqli_error($CN));
-    
-        if($R)
+        $qry = "SELECT * FROM `tbl_user`as tu WHERE `email` = '$email' ";
+        $res=mysqli_query($CN,$qry) or die("database error:". mysqli_error($CN));     
+
+        if(mysqli_num_rows($res) > 0)
         {
-            // $subDomain = $domainname;
-            // $email = $DecodedData['email'];
-            // $last_id = $CN->insert_id;
-            // //include "databaseCreation/createSubDomain.php";
-            // include "customers/sendMail.php";
-            http_response_code(201);
-        }
-        else{
+            echo 0;
             http_response_code(422);
-            // $nd=[
-            //     'NotificationContent'=>'Order - '.$order_code .' placed an order by'.$customer_name,
-            //     'NotificationRedirect'=>'https://retailer.direct-buy.in/order-details/'.$order_code.'/'.$shopId.'/'.'shop_name',//path to be passed inside site_url()
-            //     'Iscomplete'=>0,
-            //     'NotificationStatus'=>0,
-            //     'CreatedDateTime'=>date('Y-m-d')
-            // ];
-            // 'https://'.$domain.'.direct-buy.in/'
+        }
+        else
+        {
+            $sql="INSERT INTO `tbl_user`(firstname,domainname,document_root,fulldomain,contact,email,password,verify_email,registered_date,status,create_reminder,activate_reminder,trail_activate,payment_g_status,remove_user,otpVerify,city,state) values('$firstname','$domainname','$document_root','$fulldomain','$contact','$email','$encryptedPassword','$verify_email','$registered_date','$status','$create_reminder','$activate_reminder','$trail_activate','$payment_g_status','$remove_user','$otpVerify','$city','$state')";
+            $R=mysqli_query($CN,$sql)or die("database error:". mysqli_error($CN));
+        
+            if($R)
+            {
+                // $subDomain = $domainname;
+                // $email = $DecodedData['email'];
+                // $last_id = $CN->insert_id;
+                // //include "databaseCreation/createSubDomain.php";
+                // include "customers/sendMail.php";
+                http_response_code(201);
+            }
+            else{
+                http_response_code(422);
+                // $nd=[
+                //     'NotificationContent'=>'Order - '.$order_code .' placed an order by'.$customer_name,
+                //     'NotificationRedirect'=>'https://retailer.direct-buy.in/order-details/'.$order_code.'/'.$shopId.'/'.'shop_name',//path to be passed inside site_url()
+                //     'Iscomplete'=>0,
+                //     'NotificationStatus'=>0,
+                //     'CreatedDateTime'=>date('Y-m-d')
+                // ];
+                // 'https://'.$domain.'.direct-buy.in/'
+            }
         }
     }
 ?>

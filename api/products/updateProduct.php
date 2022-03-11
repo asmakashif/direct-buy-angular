@@ -6,8 +6,7 @@
     header("Access-Control-Allow-Methods: PUT, GET, POST, DELETE");
     header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 
-    $CN= mysqli_connect("localhost","root","");
-    $DB=mysqli_select_db($CN,"formal_store");
+    
 
     // $target_dir="uploads/";
     // $target_file = $target_dir.basename($_FILES["myFile"]["name"]);
@@ -41,7 +40,9 @@
     if(isset($EncodedData) && !empty($EncodedData))
     {
         $DecodedData=json_decode($EncodedData,true);
-        
+        $shopId = $DecodedData['temp_shopId'];
+        $CN= mysqli_connect("localhost","root","");
+        $DB=mysqli_select_db($CN,$shopId);
         // print_r($product_status);
         $temp_str_config_id = $DecodedData['temp_str_config_id'];
         

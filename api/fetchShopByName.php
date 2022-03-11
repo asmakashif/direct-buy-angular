@@ -10,17 +10,17 @@
     $DB=mysqli_select_db($CN,"formal_store");
 
     
-        $shop_name = $_POST['shop_name'];
+        $shopName = $_POST['shopName'];
         $shops=[];
 
-        $sql = "SELECT * FROM `shop_details` WHERE `shop_name` = '$shop_name';";
+        $sql = "SELECT * FROM `shop_details` WHERE `shopName` = '$shopName';";
 
         if($result = mysqli_query($CN,$sql))
         {
             // //$cr = 0;
             while($row = mysqli_fetch_assoc($result))
             {
-                $shops['shop_name'] = $row['shop_name'];
+                $shops['shopName'] = $row['shopName'];
                 
             }
             //echo $shops;

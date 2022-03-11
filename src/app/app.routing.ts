@@ -139,6 +139,7 @@ export const appRoutes: Route[] = [
             initialData: InitialDataResolver,
         },
         children: [
+            //dashboard folder
             {
                 path: 'dashboard',
                 loadChildren: () =>
@@ -154,138 +155,107 @@ export const appRoutes: Route[] = [
                     ),
             },
             {
-                path: 'project',
-                loadChildren: () =>
-                    import(
-                        'app/modules/admin/testing/project/project.module'
-                    ).then((m) => m.ProjectModule),
-            },
-            {
-                path: 'example',
-                loadChildren: () =>
-                    import(
-                        'app/modules/admin/testing/example/example.module'
-                    ).then((m) => m.ExampleModule),
-            },
-            {
-                path: 'example/:shopId',
-                loadChildren: () =>
-                    import(
-                        'app/modules/admin/testing/example/example.module'
-                    ).then((m) => m.ExampleModule),
-            },
-            {
-                path: 'create',
-                loadChildren: () =>
-                    import(
-                        'app/modules/admin/testing/create/create.module'
-                    ).then((m) => m.CreateModule),
-            },
-            {
-                path: 'table-edit/:shopId',
-                loadChildren: () =>
-                    import(
-                        'app/modules/admin/testing/table-edit/table-edit.module'
-                    ).then((m) => m.TableEditModule),
-            },
-            {
-                path: 'store',
-                loadChildren: () =>
-                    import('app/modules/admin/store/store.module').then(
-                        (m) => m.StoreModule
-                    ),
-            },
-            {
-                path: 'create-shop',
-                loadChildren: () =>
-                    import(
-                        'app/modules/admin/store/create-shop/create-shop.module'
-                    ).then((m) => m.CreateShopModule),
-            },
-            {
-                path: 'product-config/:shopId',
-                loadChildren: () =>
-                    import(
-                        'app/modules/admin/product/product-config/product-config.module'
-                    ).then((m) => m.ProductConfigModule),
-            },
-            {
-                path: 'product-info/:shopId',
-                loadChildren: () =>
-                    import(
-                        'app/modules/admin/product/product-info/product-info.module'
-                    ).then((m) => m.ProductInfoModule),
-            },
-            {
-                path: 'add-product/:shopId/:shop_name',
-                loadChildren: () =>
-                    import(
-                        'app/modules/admin/product/add-product/add-product.module'
-                    ).then((m) => m.AddProductModule),
-            },
-            {
-                path: 'upload-product/:shopId/:shop_name',
-                loadChildren: () =>
-                    import(
-                        'app/modules/admin/product/upload-product/upload-product.module'
-                    ).then((m) => m.UploadProductModule),
-            },
-            {
-                path: 'add-category/:shopId/:shop_name',
-                loadChildren: () =>
-                    import(
-                        'app/modules/admin/product/add-category/add-category.module'
-                    ).then((m) => m.AddCategoryModule),
-            },
-            {
-                path: 'add-product-type/:shopId/:shop_name/:product_type',
-                loadChildren: () =>
-                    import(
-                        'app/modules/admin/product/add-product-type/add-product-type.module'
-                    ).then((m) => m.AddProductTypeModule),
-            },
-            {
-                path: 'ecommerce',
-                loadChildren: () =>
-                    import('app/modules/admin/ecommerce/ecommerce.module').then(
-                        (m) => m.ECommerceModule
-                    ),
-            },
-            {
-                path: 'academy',
-                loadChildren: () =>
-                    import('app/modules/admin/academy/academy.module').then(
-                        (m) => m.AcademyModule
-                    ),
-            },
-            {
-                path: 'inventory/:shopId',
-                loadChildren: () =>
-                    import(
-                        'app/modules/admin/product/inventory/inventory.module'
-                    ).then((m) => m.InventoryModule),
-            },
-            {
-                path: 'store-summary/:shopId',
-                loadChildren: () =>
-                    import(
-                        'app/modules/admin/store/store-summary/store-summary.module'
-                    ).then((m) => m.StoreSummaryModule),
-            },
-            {
-                path: 'shop-details/:shopId',
-                loadChildren: () =>
-                    import(
-                        'app/modules/admin/store/shop-details/shop-details.module'
-                    ).then((m) => m.ShopDetailsModule),
-            },
-            {
                 path: 'dashboard/:shopId/:shop_name/configurations',
                 loadChildren: () =>
                     import(
                         'app/modules/admin/dashboard/configurations/configurations.module'
                     ).then((m) => m.ConfigurationsModule),
             },
+            //general setting folder
+            {
+                path: 'HomeDeliverySetting',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/general-settings/home-delivery-setting/home-delivery-setting.module'
+                    ).then((m) => m.HomeDeliverySettingModule),
+            },
+            {
+                path: 'minOrderValue',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/general-settings/min-order-val/min-order-val.module'
+                    ).then((m) => m.MinOrderValModule),
+            },
+            {
+                path: 'minOrderConfig/:shopId/:shop_name',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/general-settings/min-order-config/min-order-config.module'
+                    ).then((m) => m.MinOrderConfigModule),
+            },
+            {
+                path: 'homeDelConfig/:shopId/:shop_name',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/general-settings/home-del-config/home-del-config.module'
+                    ).then((m) => m.HomeDelConfigModule),
+            },
+            {
+                path: 'whatsapp',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/general-settings/whatsapp/whatsapp.module'
+                    ).then((m) => m.WhatsAppModule),
+            },
+            //invoice
+            {
+                path: 'invoice/:order_code',
+                loadChildren: () =>
+                    import('app/modules/admin/invoice/invoice.module').then(
+                        (m) => m.InvoiceComponentModule
+                    ),
+            },
+            //mobile folder
+            {
+                path: 'mobile/steps/:shopId',
+                loadChildren: () =>
+                    import('app/modules/admin/mobile/steps/steps.module').then(
+                        (m) => m.StepsModule
+                    ),
+            },
+            {
+                path: 'mobile/product-config/:shopId',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/mobile/product-config/product-config.module'
+                    ).then((m) => m.ProductConfigModule),
+            },
+            // {
+            //     path: 'product-info/:shopId',
+            //     loadChildren: () =>
+            //         import(
+            //             'app/modules/admin/mobile/product-info/product-info.module'
+            //         ).then((m) => m.ProductInfoModule),
+            // },
+            {
+                path: 'A5/:order_code',
+                loadChildren: () =>
+                    import('app/modules/admin/A5/A5.module').then(
+                        (m) => m.A5ComponentModule
+                    ),
+            },
+            {
+                path: 'A6/:order_code',
+                loadChildren: () =>
+                    import('app/modules/admin/A6/A6.module').then(
+                        (m) => m.A6ComponentModule
+                    ),
+            },
+            {
+                path: 'A7/:order_code',
+                loadChildren: () =>
+                    import('app/modules/admin/A7/A7.module').then(
+                        (m) => m.A7ComponentModule
+                    ),
+            },
+            {
+                path: 'A8/:order_code',
+                loadChildren: () =>
+                    import('app/modules/admin/A8/A8.module').then(
+                        (m) => m.A8ComponentModule
+                    ),
+            },
+            //orders folder
             {
                 path: 'completed-orders/:shopId',
                 loadChildren: () =>
@@ -349,13 +319,7 @@ export const appRoutes: Route[] = [
                         'app/modules/admin/orders/unique-orders/unique-orders.module'
                     ).then((m) => m.UniqueOrdersModule),
             },
-            {
-                path: 'steps/:shopId',
-                loadChildren: () =>
-                    import('app/modules/admin/steps/steps.module').then(
-                        (m) => m.StepsModule
-                    ),
-            },
+            //payment folder
             {
                 path: 'payment',
                 loadChildren: () =>
@@ -391,62 +355,80 @@ export const appRoutes: Route[] = [
                         'app/modules/admin/payment/attach-payment/attach-payment.module'
                     ).then((m) => m.AttachPaymentModule),
             },
+            //product folder
             {
-                path: 'store-payment/:shopId/:shop_name',
+                path: 'product-config/:shopId',
                 loadChildren: () =>
                     import(
-                        'app/modules/admin/store/store-payment/store-payment.module'
-                    ).then((m) => m.StorePaymentModule),
-            },
-            {
-                path: 'store-payment/:shopId',
-                loadChildren: () =>
-                    import(
-                        'app/modules/admin/store/store-payment/store-payment.module'
-                    ).then((m) => m.StorePaymentModule),
-            },
-            {
-                path: 'store-activation/:shopId',
-                loadChildren: () =>
-                    import(
-                        'app/modules/admin/store/store-activation/store-activation.module'
-                    ).then((m) => m.StoreActivationModule),
-            },
-            {
-                path: 'mobile/steps/:shopId',
-                loadChildren: () =>
-                    import('app/modules/admin/mobile/steps/steps.module').then(
-                        (m) => m.StepsModule
-                    ),
-            },
-            {
-                path: 'mobile/product-config/:shopId',
-                loadChildren: () =>
-                    import(
-                        'app/modules/admin/mobile/product-config/product-config.module'
+                        'app/modules/admin/product/product-config/product-config.module'
                     ).then((m) => m.ProductConfigModule),
             },
-            // {
-            //     path: 'product-info/:shopId',
-            //     loadChildren: () =>
-            //         import(
-            //             'app/modules/admin/mobile/product-info/product-info.module'
-            //         ).then((m) => m.ProductInfoModule),
-            // },
             {
-                path: 'profile',
-                loadChildren: () =>
-                    import('app/modules/auth/profile/profile.module').then(
-                        (m) => m.ProfileModule
-                    ),
-            },
-            {
-                path: 'my-subscription',
+                path: 'product-info/:shopId',
                 loadChildren: () =>
                     import(
-                        'app/modules/auth/my-subscription/my-subscription.module'
-                    ).then((m) => m.MySubscriptionModule),
+                        'app/modules/admin/product/product-info/product-info.module'
+                    ).then((m) => m.ProductInfoModule),
             },
+            {
+                path: 'add-product/:shopId/:shop_name',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/product/add-product/add-product.module'
+                    ).then((m) => m.AddProductModule),
+            },
+            {
+                path: 'upload-products/:shopId/:shop_name',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/product/upload-products/upload-products.module'
+                    ).then((m) => m.UploadProductsModule),
+            },
+            {
+                path: 'read-xl-data/:shopId/:shop_name',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/product/upload-products/read-xl-data/read-xl-data.module'
+                    ).then((m) => m.ReadXLDataModule),
+            },
+            {
+                path: 'map-table-headers/:shopId/:shop_name',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/product/upload-products/map-table-headers/map-table-headers.module'
+                    ).then((m) => m.MapTableHeadersModule),
+            },
+            {
+                path: 'add-category/:shopId/:shop_name',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/product/add-category/add-category.module'
+                    ).then((m) => m.AddCategoryModule),
+            },
+            {
+                path: 'add-product-type/:shopId/:shop_name/:product_type',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/product/add-product-type/add-product-type.module'
+                    ).then((m) => m.AddProductTypeModule),
+            },
+            //reports
+            {
+                path: 'reports',
+                loadChildren: () =>
+                    import('app/modules/admin/reports/reports.module').then(
+                        (m) => m.ReportsComponentModule
+                    ),
+            },
+            //help & guide
+            {
+                path: 'help',
+                loadChildren: () =>
+                    import('app/modules/admin/help/help.module').then(
+                        (m) => m.HelpModule
+                    ),
+            },
+            //settings folder
             {
                 path: 'settings',
                 loadChildren: () =>
@@ -475,6 +457,115 @@ export const appRoutes: Route[] = [
                         (m) => m.SessionValuesModule
                     ),
             },
+            //steps
+            {
+                path: 'steps/:shopId',
+                loadChildren: () =>
+                    import('app/modules/admin/steps/steps.module').then(
+                        (m) => m.StepsModule
+                    ),
+            },
+            //store folder
+            {
+                path: 'store',
+                loadChildren: () =>
+                    import('app/modules/admin/store/store.module').then(
+                        (m) => m.StoreModule
+                    ),
+            },
+            {
+                path: 'create-shop',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/store/create-shop/create-shop.module'
+                    ).then((m) => m.CreateShopModule),
+            },
+            {
+                path: 'store-summary/:shopId',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/store/store-summary/store-summary.module'
+                    ).then((m) => m.StoreSummaryModule),
+            },
+            {
+                path: 'shop-details/:shopId',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/store/shop-details/shop-details.module'
+                    ).then((m) => m.ShopDetailsModule),
+            },
+            {
+                path: 'store-payment/:shopId/:shop_name',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/store/store-payment/store-payment.module'
+                    ).then((m) => m.StorePaymentModule),
+            },
+            {
+                path: 'store-payment/:shopId',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/store/store-payment/store-payment.module'
+                    ).then((m) => m.StorePaymentModule),
+            },
+            {
+                path: 'store-activation/:shopId',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/store/store-activation/store-activation.module'
+                    ).then((m) => m.StoreActivationModule),
+            },
+            {
+                path: 'store-setting',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/store/store-setting/store-setting.module'
+                    ).then((m) => m.StoreSettingModule),
+            },
+            {
+                path: 'change-domain-success',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/store/store-setting/change-domain-succcess/change-domain-succcess.module'
+                    ).then((m) => m.ChangeDomainSuccessModule),
+            },
+            //auth folder
+            {
+                path: 'profile',
+                loadChildren: () =>
+                    import('app/modules/auth/profile/profile.module').then(
+                        (m) => m.ProfileModule
+                    ),
+            },
+            {
+                path: 'my-subscription',
+                loadChildren: () =>
+                    import(
+                        'app/modules/auth/my-subscription/my-subscription.module'
+                    ).then((m) => m.MySubscriptionModule),
+            },
+            //example folders
+            {
+                path: 'example',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/testing/example/example.module'
+                    ).then((m) => m.ExampleModule),
+            },
+            {
+                path: 'example/:shopId',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/testing/example/example.module'
+                    ).then((m) => m.ExampleModule),
+            },
+            {
+                path: 'create',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/testing/create/create.module'
+                    ).then((m) => m.CreateModule),
+            },
             {
                 path: 'table-edit/:shopId',
                 loadChildren: () =>
@@ -482,90 +573,33 @@ export const appRoutes: Route[] = [
                         'app/modules/admin/testing/table-edit/table-edit.module'
                     ).then((m) => m.TableEditModule),
             },
-
             {
-                path: 'HomeDeliverySetting',
+                path: 'ecommerce',
+                loadChildren: () =>
+                    import('app/modules/admin/ecommerce/ecommerce.module').then(
+                        (m) => m.ECommerceModule
+                    ),
+            },
+            {
+                path: 'academy',
+                loadChildren: () =>
+                    import('app/modules/admin/academy/academy.module').then(
+                        (m) => m.AcademyModule
+                    ),
+            },
+            {
+                path: 'inventory/:shopId',
                 loadChildren: () =>
                     import(
-                        'app/modules/admin/general-settings/home-delivery-setting/home-delivery-setting.module'
-                    ).then((m) => m.HomeDeliverySettingModule),
+                        'app/modules/admin/product/inventory/inventory.module'
+                    ).then((m) => m.InventoryModule),
             },
             {
-                path: 'minOrderValue',
+                path: 'table-edit/:shopId',
                 loadChildren: () =>
                     import(
-                        'app/modules/admin/general-settings/min-order-val/min-order-val.module'
-                    ).then((m) => m.MinOrderValModule),
-            },
-            {
-                path: 'minOrderConfig/:shopId/:shop_name',
-                loadChildren: () =>
-                    import(
-                        'app/modules/admin/general-settings/min-order-config/min-order-config.module'
-                    ).then((m) => m.MinOrderConfigModule),
-            },
-            {
-                path: 'homeDelConfig/:shopId/:shop_name',
-                loadChildren: () =>
-                    import(
-                        'app/modules/admin/general-settings/home-del-config/home-del-config.module'
-                    ).then((m) => m.HomeDelConfigModule),
-            },
-            {
-                path: 'whatsapp',
-                loadChildren: () =>
-                    import(
-                        'app/modules/admin/general-settings/whatsapp/whatsapp.module'
-                    ).then((m) => m.WhatsAppModule),
-            },
-            {
-                path: 'reports',
-                loadChildren: () =>
-                    import('app/modules/admin/reports/reports.module').then(
-                        (m) => m.ReportsComponentModule
-                    ),
-            },
-            {
-                path: 'reports',
-                loadChildren: () =>
-                    import('app/modules/admin/reports/reports.module').then(
-                        (m) => m.ReportsComponentModule
-                    ),
-            },
-            {
-                path: 'invoice/:order_code',
-                loadChildren: () =>
-                    import('app/modules/admin/invoice/invoice.module').then(
-                        (m) => m.InvoiceComponentModule
-                    ),
-            },
-            {
-                path: 'A5/:order_code',
-                loadChildren: () =>
-                    import('app/modules/admin/A5/A5.module').then(
-                        (m) => m.A5ComponentModule
-                    ),
-            },
-            {
-                path: 'A6/:order_code',
-                loadChildren: () =>
-                    import('app/modules/admin/A6/A6.module').then(
-                        (m) => m.A6ComponentModule
-                    ),
-            },
-            {
-                path: 'A7/:order_code',
-                loadChildren: () =>
-                    import('app/modules/admin/A7/A7.module').then(
-                        (m) => m.A7ComponentModule
-                    ),
-            },
-            {
-                path: 'A8/:order_code',
-                loadChildren: () =>
-                    import('app/modules/admin/A8/A8.module').then(
-                        (m) => m.A8ComponentModule
-                    ),
+                        'app/modules/admin/testing/table-edit/table-edit.module'
+                    ).then((m) => m.TableEditModule),
             },
             {
                 path: 'analytics',

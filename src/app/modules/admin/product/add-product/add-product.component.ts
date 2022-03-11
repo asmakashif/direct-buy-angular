@@ -64,7 +64,7 @@ export class AddProductComponent implements OnInit {
         private routes: ActivatedRoute,
         private cd: ChangeDetectorRef,
         private _httpClient: HttpClient
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         const user_id = localStorage.getItem('user_id');
@@ -140,7 +140,7 @@ export class AddProductComponent implements OnInit {
             this._httpClient
                 .get(
                     '/api/mobileAPI/getProductSubType.php?product_type=' +
-                        product_type
+                    product_type
                 )
                 .subscribe((data) => {
                     this.product_sub_type = data;
@@ -274,7 +274,7 @@ export class AddProductComponent implements OnInit {
             user_id,
         };
         // Create tag on the server
-        this._addProductService.createBrand(tag).subscribe((response) => {});
+        this._addProductService.createBrand(tag).subscribe((response) => { });
     }
 
     createProductType(newProductTypeInput): void {
@@ -283,11 +283,11 @@ export class AddProductComponent implements OnInit {
         const routeParams = this.routes.snapshot.params;
         this._router.navigate([
             '/add-product-type/' +
-                routeParams.shopId +
-                '/' +
-                routeParams.shop_name +
-                '/' +
-                newProductTypeInput,
+            routeParams.shopId +
+            '/' +
+            routeParams.shop_name +
+            '/' +
+            newProductTypeInput,
         ]);
     }
 
@@ -412,14 +412,18 @@ export class AddProductComponent implements OnInit {
         // Create the product
         const product = this.selectedProductForm.getRawValue();
         console.log(product);
-        this._addProductService.addProduct(product).subscribe((product) => {
-            this.showFlashMessage('success');
-            this._router.navigate([
-                '/dashboard/' +
+        this._addProductService.addProduct(product).subscribe((data) => {
+            console.log(data);
+            this._addProductService.addProductToTemp(product).subscribe((product) => {
+                this.showFlashMessage('success');
+                this._router.navigate([
+                    '/dashboard/' +
                     routeParams.shopId +
                     '/' +
                     routeParams.shop_name,
-            ]);
+                ]);
+            });
+
             // this._addProductService
             //     .pushProductsTOStrDb(routeParams.shopId)
             //     .subscribe((data) => {

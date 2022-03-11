@@ -40,7 +40,12 @@
                         <fa-icon [icon]="faStore"></fa-icon>
                         <span class="ml-2">Store</span>
                     </button> -->
-                    <a target="_blank" class="fuse-mat-button-rounded" href="https://{{ domainname }}.direct-buy.in"
+                    <!-- <a target="_blank" class="fuse-mat-button-rounded" href="https://{{ domainname }}.direct-buy.in"
+                        mat-flat-button [color]="'primary'">
+                        <fa-icon [icon]="faStore"></fa-icon>
+                        <span class="ml-2">Store</span>
+                    </a> -->
+                    <a class="fuse-mat-button-rounded" href="javascript:void(0);" [routerLink]="['/store-setting']"
                         mat-flat-button [color]="'primary'">
                         <fa-icon [icon]="faStore"></fa-icon>
                         <span class="ml-2">Store</span>
@@ -94,7 +99,7 @@
                         Dashboard
                     </button>
                     <button mat-menu-item (click)="changeStore(stores)" *ngFor="let stores of data">
-                        {{ stores.shop_name }}
+                        {{ stores.shopName }}
                     </button>
                 </mat-menu>
             </div>
@@ -162,7 +167,7 @@
                                             style="text-decoration: none"
                                         > -->
                                         <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                                            {{ data.shop_name }}
+                                            {{ data.shopName }}
                                             <!-- {{ data.shopId }} -->
                                         </div>
                                         <!-- </a> -->
@@ -503,88 +508,29 @@
                         </div>
                     </ng-template>
                 </mat-tab>
-                <!-- Communication -->
-                <mat-tab label="Communication">
+                <!-- Help & Guide -->
+                <mat-tab label="Help & Guide">
                     <ng-template matTabContent>
-                        <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-                            Coming Soon!
-
-                        </div>
-                        <!-- <form
-                            class="flex flex-col w-full"
-                            [formGroup]="messageForm"
-                            autocomplete="off"
-                        >
-                            <div class="flex flex-col sm:flex-row">
-                                <div class="flex flex-auto flex-wrap">
-                                   
-                                    <div
-                                        class="
-                                            flex flex-col
-                                            w-full
-                                            lg:w-2/4
-                                            sm:pl-8
-                                        "
-                                    >
-                                        <mat-form-field class="w-full">
-                                            <mat-label
-                                                >Enter Message for
-                                                Store</mat-label
-                                            >
-                                            <input
-                                                matInput
-                                                [formControlName]="'str_msg'"
-                                            />
-                                        </mat-form-field>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full min-w-0">
+                            <div class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
+                                <div class="flex items-start justify-between">
+                                    <div class="text-lg font-medium tracking-tight leading-6 ">
+                                        Setting up store
                                     </div>
-                                    <div class="flex flex-col lg:w-1/4 sm:pl-8">
-                                        <div
-                                            class="flex items-center mr-4"
-                                            *ngIf="flashMessage"
-                                        >
-                                            <ng-container
-                                                *ngIf="
-                                                    flashMessage === 'success'
-                                                "
-                                            >
-                                                <mat-icon
-                                                    class="text-green-500"
-                                                    [svgIcon]="
-                                                        'heroicons_outline:check'
-                                                    "
-                                                ></mat-icon>
-                                                <span class="ml-2"
-                                                    >Product updated</span
-                                                >
-                                            </ng-container>
-                                            <ng-container
-                                                *ngIf="flashMessage === 'error'"
-                                            >
-                                                <mat-icon
-                                                    class="text-red-500"
-                                                    [svgIcon]="
-                                                        'heroicons_outline:x'
-                                                    "
-                                                ></mat-icon>
-                                                <span class="ml-2"
-                                                    >An error occurred, try
-                                                    again!</span
-                                                >
-                                            </ng-container>
-                                        </div>
-
-                                        <button
-                                            class="lg:mt-6"
-                                            mat-flat-button
-                                            [color]="'primary'"
-                                            (click)="onMessageUpdate()"
-                                        >
-                                            Update
-                                        </button>
+                                    <div class="ml-2 -mt-2 -mr-3">
+                                        <a target="_blank" href="https://www.canva.com/design/DAE50tTRfaM/view"
+                                            style="text-decoration: none;">
+                                            <button mat-flat-button [color]="'primary'" (click)="onMessageUpdate()">
+                                                Open
+                                                &nbsp;
+                                                <fa-icon [icon]=faArrowAltCircleRight transform="rotate-300" size="lg">
+                                                </fa-icon>
+                                            </button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                        </form> -->
+                        </div>
                     </ng-template>
                 </mat-tab>
             </mat-tab-group>
@@ -1125,22 +1071,22 @@
                                                         <div class="flex flex-col items-center image">
                                                             <div class="w-32 h-44 border rounded overflow-hidden">
                                                                 <ng-container *ngIf="
-                                                                        product.product_img;
-                                                                        else noImage
-                                                                    ">
+                                                                            product.product_img;
+                                                                            else noImage
+                                                                        ">
                                                                     <img *ngIf="
-                                                                            product.upload_format ==
-                                                                            1
-                                                                        " [src]="
-                                                                            imagePath +
-                                                                            product.product_img
-                                                                        " />
+                                                                                product.upload_format ==
+                                                                                1
+                                                                            " [src]="
+                                                                                imagePath +
+                                                                                product.product_img
+                                                                            " />
                                                                     <img *ngIf="
-                                                                            product.upload_format ==
-                                                                            0
-                                                                        " [src]="
-                                                                            product.product_img
-                                                                        " />
+                                                                                product.upload_format ==
+                                                                                0
+                                                                            " [src]="
+                                                                                product.product_img
+                                                                            " />
                                                                 </ng-container>
 
                                                                 <ng-template #noImage>
@@ -1148,16 +1094,16 @@
                                                                         <label for="file-input">
                                                                             <img src="assets/images/avatars/upload.png"
                                                                                 style="
-                                                                                    margin-top: 30px; ;
-                                                                                " />
+                                                                                        margin-top: 30px; ;
+                                                                                    " />
                                                                         </label>
                                                                         <input type="file" id="file-input"
                                                                             accept=".png, .jpg, .jpeg"
                                                                             name="product_image" #fileInput (change)="
-                                                                                onFileUpload(
-                                                                                    $event
-                                                                                )
-                                                                            " />
+                                                                                    onFileUpload(
+                                                                                        $event
+                                                                                    )
+                                                                                " />
                                                                     </div>
                                                                 </ng-template>
                                                             </div>
@@ -1169,76 +1115,76 @@
                                                                     <input type="file" id="file-input"
                                                                         accept=".png, .jpg, .jpeg" name="product_image"
                                                                         #fileInput (change)="
-                                                                            onFileUpload(
-                                                                                $event
-                                                                            )
-                                                                        " />
+                                                                                onFileUpload(
+                                                                                    $event
+                                                                                )
+                                                                            " />
                                                                 </div>
                                                             </i>
                                                             <!-- <div
-                                                            class="
-                                                                flex
-                                                                items-center
-                                                                mt-2
-                                                                whitespace-nowrap
-                                                            "
-                                                            *ngIf="
-                                                                selectedProductForm.get(
-                                                                    'images'
-                                                                ).value.length
-                                                            "
-                                                        >
-                                                            <button
-                                                                mat-icon-button
-                                                                (click)="cycleImages(false)"
-                                                            >
-                                                                <mat-icon
-                                                                    class="icon-size-5"
-                                                                    [svgIcon]="
-                                                                        'heroicons_solid:arrow-narrow-left'
-                                                                    "
-                                                                ></mat-icon>
-                                                            </button>
-                                                            <span class="font-sm mx-2">
-                                                                {{
+                                                                class="
+                                                                    flex
+                                                                    items-center
+                                                                    mt-2
+                                                                    whitespace-nowrap
+                                                                "
+                                                                *ngIf="
                                                                     selectedProductForm.get(
-                                                                        "currentImageIndex"
-                                                                    ).value + 1
-                                                                }}
-                                                                of
-                                                                {{
-                                                                    selectedProductForm.get(
-                                                                        "images"
+                                                                        'images'
                                                                     ).value.length
-                                                                }}
-                                                            </span>
-                                                            <button
-                                                                mat-icon-button
-                                                                (click)="cycleImages(true)"
+                                                                "
                                                             >
-                                                                <mat-icon
-                                                                    class="icon-size-5"
-                                                                    [svgIcon]="
-                                                                        'heroicons_solid:arrow-narrow-right'
-                                                                    "
-                                                                ></mat-icon>
-                                                            </button>
-                                                        </div> -->
+                                                                <button
+                                                                    mat-icon-button
+                                                                    (click)="cycleImages(false)"
+                                                                >
+                                                                    <mat-icon
+                                                                        class="icon-size-5"
+                                                                        [svgIcon]="
+                                                                            'heroicons_solid:arrow-narrow-left'
+                                                                        "
+                                                                    ></mat-icon>
+                                                                </button>
+                                                                <span class="font-sm mx-2">
+                                                                    {{
+                                                                        selectedProductForm.get(
+                                                                            "currentImageIndex"
+                                                                        ).value + 1
+                                                                    }}
+                                                                    of
+                                                                    {{
+                                                                        selectedProductForm.get(
+                                                                            "images"
+                                                                        ).value.length
+                                                                    }}
+                                                                </span>
+                                                                <button
+                                                                    mat-icon-button
+                                                                    (click)="cycleImages(true)"
+                                                                >
+                                                                    <mat-icon
+                                                                        class="icon-size-5"
+                                                                        [svgIcon]="
+                                                                            'heroicons_solid:arrow-narrow-right'
+                                                                        "
+                                                                    ></mat-icon>
+                                                                </button>
+                                                            </div> -->
                                                         </div>
                                                         <div class="flex flex-col mt-8" *ngIf="
-                                                                product.product_status ==
-                                                                0
-                                                            ">
+                                                                    product.product_status ==
+                                                                    0
+                                                                ">
                                                             <span class="font-semibold mb-2">Product
                                                                 status</span>
                                                             <label class="switch">
                                                                 <input type="checkbox" [value]="1" [name]="
-                                                                        'product_status'
-                                                                    " (change)="
-                                                                        productStatus(
-                                                                            $event
-                                                                        )
-                                                                    " matCheckbox />{{
+                                                                            'product_status'
+                                                                        " (change)="
+                                                                            productStatus(
+                                                                                $event
+                                                                            )
+                                                                        " matCheckbox />{{
                                                                 "Disabled"
                                                                 }}
                                                                 <span class="slider round">
@@ -1246,19 +1192,19 @@
                                                             </label>
                                                         </div>
                                                         <div class="flex flex-col mt-8" *ngIf="
-                                                                product.product_status ==
-                                                                1
-                                                            ">
+                                                                    product.product_status ==
+                                                                    1
+                                                                ">
                                                             <span class="font-semibold mb-2">Product
                                                                 status</span>
                                                             <label class="switch">
                                                                 <input type="checkbox" [value]="1" [name]="
-                                                                        'product_status'
-                                                                    " checked="true" (change)="
-                                                                        productStatus(
-                                                                            $event
-                                                                        )
-                                                                    " matCheckbox />
+                                                                            'product_status'
+                                                                        " checked="true" (change)="
+                                                                            productStatus(
+                                                                                $event
+                                                                            )
+                                                                        " matCheckbox />
                                                                 <span class="slider round"></span>
                                                                 {{ "Active" }}
                                                             </label>
@@ -1272,8 +1218,8 @@
                                                             <mat-form-field class="w-full">
                                                                 <mat-label>Name</mat-label>
                                                                 <input matInput [formControlName]="
-                                                                        'product_name'
-                                                                    " />
+                                                                            'product_name'
+                                                                        " />
                                                             </mat-form-field>
 
                                                             <!-- Type and Subtype -->
@@ -1284,23 +1230,23 @@
                                                                     <mat-select
                                                                         class="flex items-center h-10 min-h-10 px-4"
                                                                         [formControlName]="
-                                                                            'product_type'
-                                                                        " placeholder="Select Product-Type"
+                                                                                'product_type'
+                                                                            " placeholder="Select Product-Type"
                                                                         (selectionChange)="
-                                                                            onChangeProductType(
-                                                                                $event
-                                                                            )
-                                                                        ">
+                                                                                onChangeProductType(
+                                                                                    $event
+                                                                                )
+                                                                            ">
                                                                         <mat-option [value]="
-                                                                                'select'
-                                                                            ">Select</mat-option>
+                                                                                    'select'
+                                                                                ">Select</mat-option>
 
                                                                         <ng-container *ngFor="
-                                                                                let tag of product_type
-                                                                            ">
+                                                                                    let tag of product_type
+                                                                                ">
                                                                             <mat-option [value]="
-                                                                                    tag.product_type
-                                                                                ">{{
+                                                                                        tag.product_type
+                                                                                    ">{{
                                                                                 tag.product_type
                                                                                 }}</mat-option>
                                                                         </ng-container>
@@ -1314,17 +1260,17 @@
                                                                     <mat-select
                                                                         class="flex items-center h-10 min-h-10 px-4"
                                                                         [formControlName]="
-                                                                            'product_sub_type'
-                                                                        " placeholder="Select Product-SubType">
+                                                                                'product_sub_type'
+                                                                            " placeholder="Select Product-SubType">
                                                                         <mat-option [value]="
-                                                                                'select'
-                                                                            ">Select</mat-option>
+                                                                                    'select'
+                                                                                ">Select</mat-option>
                                                                         <ng-container *ngFor="
-                                                                                let tag of product_sub_type
-                                                                            ">
+                                                                                    let tag of product_sub_type
+                                                                                ">
                                                                             <mat-option [value]="
-                                                                                    tag.product_sub_type
-                                                                                ">{{
+                                                                                        tag.product_sub_type
+                                                                                    ">{{
                                                                                 tag.product_sub_type
                                                                                 }}</mat-option>
                                                                         </ng-container>
@@ -1339,18 +1285,18 @@
                                                                     <mat-select
                                                                         class="flex items-center h-10 min-h-10 px-4"
                                                                         [formControlName]="
-                                                                            'category'
-                                                                        " placeholder="Select Category"
+                                                                                'category'
+                                                                            " placeholder="Select Category"
                                                                         (selectionChange)="
-                                                                            onChangeCategory(
-                                                                                $event
-                                                                            )
-                                                                        ">
-                                                                        <mat-option *ngFor="
-                                                                                let tag of category
-                                                                            " [value]="
-                                                                                tag.category
+                                                                                onChangeCategory(
+                                                                                    $event
+                                                                                )
                                                                             ">
+                                                                        <mat-option *ngFor="
+                                                                                    let tag of category
+                                                                                " [value]="
+                                                                                    tag.category
+                                                                                ">
                                                                             {{
                                                                             tag.category
                                                                             }}
@@ -1364,17 +1310,17 @@
                                                                     <mat-select
                                                                         class="flex items-center h-10 min-h-10 px-4"
                                                                         [formControlName]="
-                                                                            'sub_category'
-                                                                        " placeholder="Select Sub-Category">
+                                                                                'sub_category'
+                                                                            " placeholder="Select Sub-Category">
                                                                         <mat-option [value]="
-                                                                                'select'
-                                                                            ">Select</mat-option>
+                                                                                    'select'
+                                                                                ">Select</mat-option>
                                                                         <ng-container *ngFor="
-                                                                                let subcat of sub_category
-                                                                            ">
+                                                                                    let subcat of sub_category
+                                                                                ">
                                                                             <mat-option [value]="
-                                                                                    subcat.sub_category
-                                                                                ">{{
+                                                                                        subcat.sub_category
+                                                                                    ">{{
                                                                                 subcat.sub_category
                                                                                 }}</mat-option>
                                                                         </ng-container>
@@ -1387,17 +1333,17 @@
                                                                     <mat-select
                                                                         class="flex items-center h-10 min-h-10 px-4"
                                                                         [formControlName]="
-                                                                            'brand'
-                                                                        " placeholder="Select Brand">
+                                                                                'brand'
+                                                                            " placeholder="Select Brand">
                                                                         <mat-option [value]="
-                                                                                'select'
-                                                                            ">Select</mat-option>
+                                                                                    'select'
+                                                                                ">Select</mat-option>
                                                                         <ng-container *ngFor="
-                                                                                let tag of brand
-                                                                            ">
+                                                                                    let tag of brand
+                                                                                ">
                                                                             <mat-option [value]="
-                                                                                    tag.brand
-                                                                                ">{{
+                                                                                        tag.brand
+                                                                                    ">{{
                                                                                 tag.brand
                                                                                 }}</mat-option>
                                                                         </ng-container>
@@ -1410,8 +1356,8 @@
                                                                 <mat-form-field class="w-full">
                                                                     <mat-label>Stock</mat-label>
                                                                     <input type="number" matInput [formControlName]="
-                                                                            'product_qty'
-                                                                        " />
+                                                                                'product_qty'
+                                                                            " />
                                                                 </mat-form-field>
                                                             </div>
                                                         </div>
@@ -1421,31 +1367,31 @@
                                                             <mat-form-field class="w-full">
                                                                 <mat-label>Weight</mat-label>
                                                                 <!-- <span matPrefix
-                                                                >$</span
-                                                            > -->
+                                                                    >$</span
+                                                                > -->
                                                                 <input matInput [formControlName]="
-                                                                        'product_weight'
-                                                                    " />
+                                                                            'product_weight'
+                                                                        " />
                                                             </mat-form-field>
                                                             <mat-form-field class="w-full">
-                                                                <mat-label>Base
+                                                                <mat-label>Selling
                                                                     Price</mat-label>
                                                                 <span matPrefix>₹</span>
                                                                 <input matInput [formControlName]="
-                                                                        'offer_price'
-                                                                    " />
+                                                                            'offer_price'
+                                                                        " />
                                                             </mat-form-field>
                                                             <!-- <mat-form-field class="w-full">
-                                                            <mat-label>Tax</mat-label>
-                                                            <span matSuffix>%</span>
-                                                            <input
-                                                                type="number"
-                                                                matInput
-                                                                [formControlName]="
-                                                                    'taxPercent'
-                                                                "
-                                                            />
-                                                        </mat-form-field> -->
+                                                                <mat-label>Tax</mat-label>
+                                                                <span matSuffix>%</span>
+                                                                <input
+                                                                    type="number"
+                                                                    matInput
+                                                                    [formControlName]="
+                                                                        'taxPercent'
+                                                                    "
+                                                                />
+                                                            </mat-form-field> -->
                                                         </div>
 
                                                         <!-- Weight & Tags -->
@@ -1454,23 +1400,22 @@
                                                                 <mat-label>Weight
                                                                     Type</mat-label>
                                                                 <!-- <span matSuffix
-                                                                >lbs.</span
-                                                            > -->
+                                                                    >lbs.</span
+                                                                > -->
                                                                 <input matInput [formControlName]="
-                                                                        'product_weight_type'
-                                                                    " />
+                                                                            'product_weight_type'
+                                                                        " />
                                                             </mat-form-field>
                                                             <mat-form-field class="w-full">
                                                                 <mat-label>Price</mat-label>
-                                                                <span matSuffix>₹</span>
+                                                                <span matPrefix>₹</span>
                                                                 <input matInput [formControlName]="
-                                                                        'product_price'
-                                                                    " />
+                                                                            'product_price'
+                                                                        " />
                                                             </mat-form-field>
                                                         </div>
                                                     </div>
                                                 </div>
-
                                                 <div
                                                     class="flex items-center justify-between w-full border-t px-8 py-4">
                                                     <button class="-ml-4" mat-button [color]="'warn'" (click)="
@@ -1850,7 +1795,7 @@
                                                                     " />
                                                             </mat-form-field>
                                                             <mat-form-field class="w-full">
-                                                                <mat-label>Base
+                                                                <mat-label>Selling
                                                                     Price</mat-label>
                                                                 <span matPrefix>₹</span>
                                                                 <input matInput [formControlName]="
@@ -1884,7 +1829,8 @@
                                                             </mat-form-field>
                                                             <mat-form-field class="w-full">
                                                                 <mat-label>Price</mat-label>
-                                                                <span matSuffix>₹</span>
+                                                                <span matPrefix>₹</span>
+                                                                <!-- <span matSuffix>₹</span> -->
                                                                 <input matInput [formControlName]="
                                                                         'product_price'
                                                                     " />
@@ -2092,7 +2038,7 @@
                                                 <!-- Name -->
                                                 <mat-form-field class="w-full">
                                                     <mat-label>Name</mat-label>
-                                                    <input matInput formControlName="shop_name" />
+                                                    <input matInput formControlName="shopName" />
                                                 </mat-form-field>
 
                                                 <!-- <mat-form-field class="w-full">

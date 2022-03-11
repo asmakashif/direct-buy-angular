@@ -53,7 +53,7 @@ export class AuthSignInComponent implements OnInit {
         private _formBuilder: FormBuilder,
         private _router: Router,
         private _apiService: SignInService
-    ) {}
+    ) { }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -121,7 +121,8 @@ export class AuthSignInComponent implements OnInit {
         this._authService.verifyEmail(this.signInForm.value).subscribe(
             (data) => {
                 this.retailerData = data;
-                const user_id = this.retailerData.id;
+                console.log(this.retailerData);
+                const user_id = this.retailerData.user_id;
                 console.log(user_id);
                 this._router.navigate(['verify-email/' + user_id]);
             },

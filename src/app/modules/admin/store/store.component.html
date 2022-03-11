@@ -2,33 +2,22 @@
     <!-- Header -->
     <div class="bg-card">
         <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
-            <div
-                class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-8 sm:my-12"
-            >
+            <div class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-8 sm:my-12">
                 <!-- Avatar and name -->
                 <div class="flex flex-auto items-center min-w-0">
                     <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
-                        <img
-                            class="w-full h-full object-cover"
-                            src="assets/images/avatars/avatar.png"
-                        />
+                        <img class="w-full h-full object-cover" src="assets/images/avatars/avatar.png" />
                     </div>
                     <div class="flex flex-col min-w-0 ml-4">
                         <ng-container *transloco="let t">
                             <div
-                                class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate"
-                            >
+                                class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">
                                 {{ t("welcome-back") }}, {{ firstname }}!
                             </div>
                         </ng-container>
                         <div class="flex items-center">
-                            <mat-icon
-                                class="icon-size-5"
-                                [svgIcon]="'heroicons_solid:bell'"
-                            ></mat-icon>
-                            <div
-                                class="ml-1.5 leading-6 truncate text-secondary"
-                            >
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:bell'"></mat-icon>
+                            <div class="ml-1.5 leading-6 truncate text-secondary">
                                 You have 0 new messages
                             </div>
                         </div>
@@ -37,37 +26,20 @@
                 </div>
                 <!-- Actions -->
                 <div class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3">
-                    <button
-                        class="fuse-mat-button-rounded bg-accent-700"
-                        mat-flat-button
-                        [color]="'accent'"
-                        [routerLink]="['/dashboard']"
-                    >
-                        <mat-icon
-                            class="icon-size-5"
-                            [svgIcon]="'heroicons_solid:home'"
-                        ></mat-icon>
+                    <button class="fuse-mat-button-rounded bg-accent-700" mat-flat-button [color]="'accent'"
+                        [routerLink]="['/dashboard']">
+                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:home'"></mat-icon>
                         <span class="ml-2">Home</span>
                     </button>
-                    <a
-                        target="_blank"
-                        class="fuse-mat-button-rounded"
-                        href="https://{{ domainname }}.direct-buy.in"
-                        mat-flat-button
-                        [color]="'primary'"
-                    >
+                    <a class="fuse-mat-button-rounded" href="javascript:void(0);" [routerLink]="['/store-setting']"
+                        mat-flat-button [color]="'primary'">
                         <fa-icon [icon]="faStore"></fa-icon>
                         <span class="ml-2">Store</span>
                     </a>
-                    <a
-                        target="_blank"
-                        class="fuse-mat-button-rounded"
-                        href="https://wa.me/?text=Dear Customer,We are delighted to inform you that our store is now online on https://{{
+                    <a target="_blank" class="fuse-mat-button-rounded" href="https://wa.me/?text=Dear Customer,We are delighted to inform you that our store is now online on https://{{
                             domainname
                         }}.direct-buy.in and orders can be placed online.
-                        Regards - {{ firstname }}"
-                        style="text-decoration: none;"
-                    >
+                        Regards - {{ firstname }}" style="text-decoration: none;">
                         <button mat-flat-button color="success" style="background-color: #25D366;color: #f0fff3;">
                             <fa-icon [icon]="faWhatsapp"></fa-icon>
                             <span class="ml-2">WhatsApp</span>
@@ -83,54 +55,35 @@
                 <!-- Breadcrumbs -->
                 <div class="flex flex-wrap items-center font-medium">
                     <div>
-                        <a
-                            href="javascript:void(0);"
-                            style="text-decoration: none"
-                            [routerLink]="['/dashboard']"
-                            class="whitespace-nowrap text-primary-500"
-                            >Dashboard</a
-                        >
+                        <a href="javascript:void(0);" style="text-decoration: none" [routerLink]="['/dashboard']"
+                            class="whitespace-nowrap text-primary-500">Dashboard</a>
                     </div>
 
                     <div class="flex items-center ml-1 whitespace-nowrap">
-                        <mat-icon
-                            class="icon-size-5 text-secondary"
-                            [svgIcon]="'heroicons_solid:chevron-right'"
-                        ></mat-icon>
+                        <mat-icon class="icon-size-5 text-secondary" [svgIcon]="'heroicons_solid:chevron-right'">
+                        </mat-icon>
                         <span class="ml-1 text-secondary">Shops</span>
                     </div>
                 </div>
             </div>
             <!-- Section title -->
-            <div
-                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full mt-6 md:mt-8"
-            >
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full mt-6 md:mt-8">
                 <ng-container *ngFor="let data of this.shops">
                     <!-- Shops -->
-                    <div
-                        class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden p-6"
-                    >
+                    <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden p-6">
                         <div class="flex items-start justify-between">
-                            <div
-                                class="text-lg font-medium tracking-tight leading-6 truncate"
-                            >
-                                {{ data.shop_name }}
+                            <div class="text-lg font-medium tracking-tight leading-6 truncate">
+                                {{ data.shopName }}
                                 <br />
                                 <p>
                                     {{ data.shop_address }}
                                 </p>
                             </div>
                             <div class="ml-2 -mt-2 -mr-3">
-                                <button
-                                    mat-icon-button
-                                    [matMenuTriggerFor]="summaryMenu"
-                                >
-                                    <mat-icon
-                                        class="icon-size-5"
-                                        [svgIcon]="
+                                <button mat-icon-button [matMenuTriggerFor]="summaryMenu">
+                                    <mat-icon class="icon-size-5" [svgIcon]="
                                             'heroicons_solid:dots-vertical'
-                                        "
-                                    ></mat-icon>
+                                        "></mat-icon>
                                 </button>
                                 <mat-menu #summaryMenu="matMenu">
                                     <button (click)="steps(data)" mat-menu-item>
@@ -140,62 +93,31 @@
                             </div>
                         </div>
                         <div class="flex flex-col items-center mt-2">
-                            <div
-                                class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500"
-                            >
+                            <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500">
                                 {{ data.pending_orders }}
                             </div>
-                            <a
-                                href="javascript:void(0);"
-                                (click)="pendingOrders(data)"
-                                style="text-decoration: none"
-                                *ngIf="data.shop_payment_status == 1"
-                            >
-                                <div
-                                    class="text-lg font-medium text-blue-600 dark:text-blue-500"
-                                >
+                            <a href="javascript:void(0);" (click)="pendingOrders(data)" style="text-decoration: none"
+                                *ngIf="data.shop_payment_status == 1">
+                                <div class="text-lg font-medium text-blue-600 dark:text-blue-500">
                                     Pending Orders
                                 </div>
                             </a>
-                            <a
-                                href="javascript:void(0);"
-                                (click)="steps(data)"
-                                style="text-decoration: none"
-                                *ngIf="data.shop_payment_status == 0"
-                            >
-                                <div
-                                    class="text-lg font-medium text-blue-600 dark:text-blue-500"
-                                >
+                            <a href="javascript:void(0);" (click)="steps(data)" style="text-decoration: none"
+                                *ngIf="data.shop_payment_status == 0">
+                                <div class="text-lg font-medium text-blue-600 dark:text-blue-500">
                                     Pending Orders
                                 </div>
                             </a>
 
-                            <div
-                                class="flex items-baseline justify-center w-full text-secondary"
-                            >
-                                <div
-                                    class="text-md font-medium truncate"
-                                    *ngIf="data.shop_payment_status == 1"
-                                >
-                                    <button
-                                        class="lg:mt-6"
-                                        mat-flat-button
-                                        [color]="'primary'"
-                                        (click)="shopDetails(data)"
-                                    >
+                            <div class="flex items-baseline justify-center w-full text-secondary">
+                                <div class="text-md font-medium truncate" *ngIf="data.shop_payment_status == 1">
+                                    <button class="lg:mt-6" mat-flat-button [color]="'primary'"
+                                        (click)="shopDetails(data)">
                                         Enter Shop
                                     </button>
                                 </div>
-                                <div
-                                    class="text-md font-medium truncate"
-                                    *ngIf="data.shop_payment_status == 0"
-                                >
-                                    <button
-                                        class="lg:mt-6"
-                                        mat-flat-button
-                                        [color]="'primary'"
-                                        (click)="steps(data)"
-                                    >
+                                <div class="text-md font-medium truncate" *ngIf="data.shop_payment_status == 0">
+                                    <button class="lg:mt-6" mat-flat-button [color]="'primary'" (click)="steps(data)">
                                         Enter Shop
                                     </button>
                                 </div>
@@ -203,24 +125,14 @@
                         </div>
                     </div>
                 </ng-container>
-                <div
-                    class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden p-6"
-                >
+                <div class="flex flex-col flex-auto bg-card shadow rounded-2xl overflow-hidden p-6">
                     <div class="flex items-start justify-between">
-                        <div
-                            class="text-lg font-medium tracking-tight leading-6 truncate"
-                        >
+                        <div class="text-lg font-medium tracking-tight leading-6 truncate">
                             Create Shop
                         </div>
                         <div class="ml-2 -mt-2 -mr-3">
-                            <button
-                                mat-icon-button
-                                [matMenuTriggerFor]="summaryMenu"
-                            >
-                                <mat-icon
-                                    class="icon-size-5"
-                                    [svgIcon]="'heroicons_solid:dots-vertical'"
-                                ></mat-icon>
+                            <button mat-icon-button [matMenuTriggerFor]="summaryMenu">
+                                <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:dots-vertical'"></mat-icon>
                             </button>
                             <mat-menu #summaryMenu="matMenu">
                                 <button (click)="createShop()" mat-menu-item>
@@ -230,18 +142,11 @@
                         </div>
                     </div>
                     <div class="flex flex-col items-center mt-2">
-                        <button
-                            class="lg:mt-6"
-                            mat-flat-button
-                            [color]="'primary'"
-                            (click)="createShop()"
-                        >
+                        <button class="lg:mt-6" mat-flat-button [color]="'primary'" (click)="createShop()">
                             Create Shop
                         </button>
                     </div>
-                    <div
-                        class="flex items-baseline justify-center w-full mt-3 text-secondary"
-                    >
+                    <div class="flex items-baseline justify-center w-full mt-3 text-secondary">
                         <div class="text-md font-medium">
                             You can create more than one shop
                         </div>

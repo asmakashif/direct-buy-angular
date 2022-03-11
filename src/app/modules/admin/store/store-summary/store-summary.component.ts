@@ -48,7 +48,7 @@ export class StoreSummaryComponent implements OnInit {
         private routes: ActivatedRoute,
         private cd: ChangeDetectorRef, //private cookieService: CookieService
         private _dashboardService: DashboardService
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         const routeParams = this.routes.snapshot.params;
@@ -137,8 +137,9 @@ export class StoreSummaryComponent implements OnInit {
                 this.shopdata = data;
                 if (this.shopdata.dbcreation_status == 3) {
                     const confirmation = this._fuseConfirmationService.open({
+                        title: "Congratulations",
                         message:
-                            'Congratulations, You are now ready to create the store. Click Okay to continue. You may come back to this step from the menu Shops -> Manage Shop',
+                            'Your store is ready to be managed. Click Menu->Shop->Enter Shop to manage your shop',
                         icon: {
                             show: true,
                             name: 'heroicons_outline:check',
@@ -149,6 +150,10 @@ export class StoreSummaryComponent implements OnInit {
                                 label: 'Okay',
                                 color: 'primary',
                             },
+                            cancel: {
+                                "show": false,
+                                "label": "Cancel"
+                            }
                         },
                     });
                     // Subscribe to the confirmation dialog closed action

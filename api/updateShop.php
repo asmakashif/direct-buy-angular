@@ -16,11 +16,12 @@
 
         $shop_id = $DecodedData['shop_id'];
         $shopId = $DecodedData['shopId'];
-        $shop_name=$DecodedData['shop_name'];
+        $shopName=$DecodedData['shopName'];
+        $shop_name = str_replace(' ', '_', $DecodedData['shopName']);
         $shop_address=$DecodedData['shop_address'];
         $shop_gst=$DecodedData['shop_gst'];
 
-        $sql="UPDATE `shop_details` SET `shopId`='$shopId',`shop_name`='$shop_name',`shop_address`='$shop_address',`shop_gst`='$shop_gst' WHERE `shopId`='{$shopId}' LIMIT 1  ";
+        $sql="UPDATE `shop_details` SET `shopId`='$shopId',`shop_name`='$shop_name',`shopName`='$shopName',`shop_address`='$shop_address',`shop_gst`='$shop_gst' WHERE `shopId`='{$shopId}' LIMIT 1  ";
 
         $R=mysqli_query($CN,$sql) or die("database error:". mysqli_error($CN));
         if($R)

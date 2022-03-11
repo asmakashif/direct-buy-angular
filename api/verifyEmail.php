@@ -10,14 +10,17 @@
     $DB=mysqli_select_db($CN,"formal_store"); 
     
     
-    // $password='Malatesh@1';
+    // $password='ThisIs@StrongP@ssw0rd';
     // $encryptedPassword = base64_encode(json_encode($password));
     // echo $encryptedPassword;
     
-    // $encryptedPassword = 'ImFzbWExMjM0Ig==';
+    // $encryptedPassword = 'Ik5vdmVtYmVyIg==';
     // $decryptedPassword = base64_decode($encryptedPassword);
-    // echo json_decode($decryptedPassword);
+    // echo $decryptedPassword;
     // die();
+
+    // Hani.arsc@123
+    
     $EncodedData=file_get_contents('php://input');
 
     if(isset($EncodedData) && !empty($EncodedData))
@@ -31,70 +34,79 @@
         
         $rndno = rand(100000, 999999);
 
-        require 'Email/PHPMailerAutoload.php';
-        require 'Email/credential.php';
+        
+        $Sql_Query = "SELECT * from `tbl_user` WHERE `email` = '$email' and `password` = '$encryptedPassword' and `remove_user` = 0 ";
 
-        $mail = new PHPMailer;
-
-        // $mail->SMTPDebug = 4;                               // Enable verbose debug output
-
-        $mail->isSMTP();                                      // Set mailer to use SMTP
-        $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
-        $mail->SMTPAuth = true;                               // Enable SMTP authentication
-        $mail->Username = EMAIL;                 // SMTP username
-        $mail->Password = PASS;                           // SMTP password
-        $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-        $mail->Port = 587;                                    // TCP port to connect to
-
-        $mail->setFrom(EMAIL, 'Direct-buy');
-        $mail->addAddress($email);     // Add a recipient
-
-        $mail->addReplyTo(EMAIL);
-        // print_r($_FILES['file']); exit;
-        // for ($i=0; $i < count($_FILES['file']['tmp_name']) ; $i++) { 
-        //  $mail->addAttachment($_FILES['file']['tmp_name'][$i], $_FILES['file']['name'][$i]);    // Optional name
-        // }
-        $mail->isHTML(true);                                  // Set email format to HTML
-
-        $mail->Subject = 'Your One time password';
-        $mail->Body    = 'The One Time Password for your account is ' .$rndno. '. - Regards, Direct-Buy';
-        //$mail->AltBody = 'The One Time Password for your account is ' .$rndno. '. - Regards, Direct-Buy';
-
-        if(!$mail->send()) {
-            echo 'Message could not be sent.';
-            echo 'Mailer Error: ' . $mail->ErrorInfo;
-        } else {
+        $check = mysqli_fetch_array(mysqli_query($CN,$Sql_Query));
+        
+        if(isset($check))
+        {
+            $user_id = $check['id'];  
+            $firstname = $check['firstname'];
+            $domainname = $check['domainname'];
             
-            $rndno;
+            echo json_encode(
+                array(
+                    "message" => "Successful login",
+                    "email"=>$email,
+                    "firstname"=>$firstname,
+                    "user_id"=>$user_id,
+                    "domainname"=>$domainname,
+                )
+            );
             $sql="UPDATE `tbl_user` SET `otp`='$rndno' WHERE `email`='{$email}' LIMIT 1  ";
 
             $R=mysqli_query($CN,$sql)or die("database error:". mysqli_error($CN));
             if($R)
             {
-                $user = [];
-                $Sql_Query = "SELECT * from `tbl_user` WHERE `email` = '$email' and `password` = '$encryptedPassword' ";
-
-                if($result = mysqli_query($CN,$Sql_Query) or die("database error:". mysqli_error($CN)))
-                {
-                    while($row = mysqli_fetch_assoc($result))
-                    {
-                        $user['id'] = $row['id'];
-                        $user['email'] = $row['email'];
-                        $decryptedPassword = base64_decode($row['password']);
-                        $user['password'] = json_decode($decryptedPassword);
-                        $user['otpVerify'] = $row['otpVerify'];
-                    }
-
-                    echo json_encode($user);
-                }
-                else
-                {
-                    http_response_code(404);
-                }
+                http_response_code(200);
             }
             else{
-                http_response_code(422);
+                http_response_code(401);
             }
+               
         }
+        else
+        {
+            http_response_code(401);
+            
+        }
+
+        // if(!$mail->send()) {
+        //     echo 'Message could not be sent.';
+        //     echo 'Mailer Error: ' . $mail->ErrorInfo;
+        // } else {
+            
+        //     $rndno;
+        //     $sql="UPDATE `tbl_user` SET `otp`='$rndno' WHERE `email`='{$email}' LIMIT 1  ";
+
+        //     $R=mysqli_query($CN,$sql)or die("database error:". mysqli_error($CN));
+        //     if($R)
+        //     {
+        //         $user = [];
+        //         $Sql_Query = "SELECT * from `tbl_user` WHERE `email` = '$email' and `password` = '$encryptedPassword' ";
+
+        //         if($result = mysqli_query($CN,$Sql_Query) or die("database error:". mysqli_error($CN)))
+        //         {
+        //             while($row = mysqli_fetch_assoc($result))
+        //             {
+        //                 $user['id'] = $row['id'];
+        //                 $user['email'] = $row['email'];
+        //                 $decryptedPassword = base64_decode($row['password']);
+        //                 $user['password'] = json_decode($decryptedPassword);
+        //                 $user['otpVerify'] = $row['otpVerify'];
+        //             }
+
+        //             echo json_encode($user);
+        //         }
+        //         else
+        //         {
+        //             http_response_code(404);
+        //         }
+        //     }
+        //     else{
+        //         http_response_code(422);
+        //     }
+        // }
     }
 ?>

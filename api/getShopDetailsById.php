@@ -26,6 +26,9 @@
             $users['shop_id'] = $row['shop_id'];
             $users['shopId'] = $row['shopId'];
             $users['shop_name'] = $row['shop_name'];
+            $users['shopName'] = $row['shopName'];
+            $users['contact'] = $row['contact'];
+            $users['email'] = $row['email'];
             $users['shop_address'] = $row['shop_address'];
             $users['shop_logo'] = $row['shop_logo'];
             $users['shop_gst'] = $row['shop_gst'];

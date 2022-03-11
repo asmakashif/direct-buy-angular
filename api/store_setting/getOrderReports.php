@@ -34,8 +34,6 @@
             $i++;
           }
           echo json_encode($products);
-      
-           
         	http_response_code(201);
           }
           else{

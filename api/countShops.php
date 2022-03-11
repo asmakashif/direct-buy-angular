@@ -11,14 +11,16 @@
     $DB=mysqli_select_db($CN,"formal_store");
 
     $user_id = $_GET['user_id'];
-
-    $sql = "SELECT count(*) FROM shop_details WHERE `user_id` = '$user_id' ";
+    //$user_id = 5;
+    $sql = "SELECT * FROM shop_details WHERE `user_id` = '$user_id' ";
 
     if($result = mysqli_query($CN,$sql))
     {
-        $row = mysqli_fetch_array($result);
-        $total = $row[0];
-        echo json_encode($total);
+        $rowcount = mysqli_num_rows( $result );
+        echo json_encode($rowcount);
+        // $row = mysqli_fetch_array($result);
+        // $total = $row;
+        // echo json_encode($total);
 
         //echo json_encode($users);
     }

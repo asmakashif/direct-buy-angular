@@ -37,33 +37,39 @@
         
 
         if(empty($otp)){
-            $Sql_Query = "SELECT * from `tbl_user` WHERE `email` = '$email' and `password` = '$encryptedPassword' ";
+            $Sql_Query = "SELECT * from `tbl_user` WHERE `email` = '$email' and `password` = '$encryptedPassword' and `remove_user` = 0 ";
 
             $check = mysqli_fetch_array(mysqli_query($CN,$Sql_Query));
             
             if(isset($check))
             {
-                $user_id = $check['id'];  
+                $user_id = $check['id'];
                 $firstname = $check['firstname'];
                 $domainname = $check['domainname'];
+                $last_login_date = date('Y-m-d');
                 
-                echo json_encode(
-                    array(
-                        "message" => "Successful login",
-                        "accessToken"=> $jwt,
-                        "email"=>$email,
-                        "firstname"=>$firstname,
-                        "user_id"=>$user_id,
-                        "domainname"=>$domainname,
-                    )
-                );
-                http_response_code(200);
-                   
+                $qry="UPDATE `tbl_user` SET `last_login_date`= '$last_login_date' WHERE `id`='{$user_id}' LIMIT 1  ";
+                if(mysqli_query($CN,$qry) or die("database error:". mysqli_error($CN)))
+                {
+                    echo json_encode(
+                        array(
+                            "message" => "Successful login",
+                            "accessToken"=> $jwt,
+                            "email"=>$email,
+                            "firstname"=>$firstname,
+                            "user_id"=>$user_id,
+                            "domainname"=>$domainname,
+                        )
+                    );
+                    http_response_code(200);
+                }
+                else{
+                    http_response_code(422);
+                }
             }
             else
             {
                 http_response_code(401);
-                
             }
         }
         else
@@ -75,8 +81,9 @@
             if(isset($check))
             {
                 $user_id = $check['id'];
+                $last_login_date = date('Y-m-d');
                 
-                $qry="UPDATE `tbl_user` SET `otpVerify`=1 WHERE `id`='{$user_id}' LIMIT 1  ";
+                $qry="UPDATE `tbl_user` SET `otpVerify`=1, `last_login_date`= '$last_login_date' WHERE `id`='{$user_id}' LIMIT 1  ";
                 if(mysqli_query($CN,$qry) or die("database error:". mysqli_error($CN)))
                 {
                     $sql = "SELECT * from `tbl_user` WHERE `id`='{$user_id}' ";

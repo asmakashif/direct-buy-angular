@@ -14,7 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DashboardService } from 'app/modules/admin/dashboard/dashboard.service';
 import { Data } from '../../../Model/data';
 import { InventoryProduct } from '../../../Model/inventory.types';
-import { faStore } from '@fortawesome/free-solid-svg-icons';
+import { faStore, faArrowAltCircleRight } from '@fortawesome/free-solid-svg-icons';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 import {
     FormArray,
@@ -63,6 +63,7 @@ declare var $: any;
 export class DashboardComponent {
     @ViewChild('closebutton') closebutton;
     faStore = faStore;
+    faArrowAltCircleRight = faArrowAltCircleRight;
     faWhatsapp = faWhatsapp;
     selectedProject: string = 'Dashbaord';
     imagePath: string = '/api/products/uploads/';
@@ -176,7 +177,8 @@ export class DashboardComponent {
         //var URL = 'https://retailer.direct-buy.in/dashboard?player_id=1234567890';
         var arr = URL.split('/');
         var array = arr[3];
-        if (array == 'dashboard?') {
+        let result = URL.includes("player_id");
+        if (result) {
             var arrString1 = array.split('?');
             var array1 = arrString1[1];
             var arrString2 = array1.split('=');
@@ -233,7 +235,7 @@ export class DashboardComponent {
 
         this.editShopForm = this.formBuilder.group({
             shopId: [''],
-            shop_name: [''],
+            shopName: [''],
             shop_address: [''],
             shop_gst: [''],
         });
@@ -369,6 +371,7 @@ export class DashboardComponent {
                 this.messageForm.patchValue(data);
                 this.profileData = data;
                 this.firstname = this.profileData.firstname;
+                console.log(this.firstname);
                 this.domainname = this.profileData.domainname;
                 // this.deviceId = this.profileData.deviceId;
                 this.cd.detectChanges();
@@ -1185,7 +1188,7 @@ export class DashboardComponent {
     uploadProducts() {
         const routeParams = this.routes.snapshot.params;
         this._router.navigate([
-            '/upload-product/' + routeParams.shopId + '/' + routeParams.shop_name,
+            '/upload-products/' + routeParams.shopId + '/' + routeParams.shop_name,
         ]);
     }
 }

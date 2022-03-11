@@ -6,8 +6,7 @@
     header("Access-Control-Allow-Methods: PUT, GET, POST, DELETE");
     header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 
-    $CN= mysqli_connect("localhost","root","");
-    $DB=mysqli_select_db($CN,"formal_store");
+    
 
 
     $EncodedData=file_get_contents('php://input');
@@ -18,6 +17,10 @@
         //print_r($DecodedData);
         $user_id = $DecodedData['user_id'];
         $temp_shopId = $DecodedData['temp_shopId'];
+
+        $CN= mysqli_connect("localhost","root","");
+        $DB=mysqli_select_db($CN,$temp_shopId);
+
         $base_product_id=0;
         $category = $DecodedData['category'];
         $sub_category=$DecodedData['sub_category'];
@@ -50,17 +53,21 @@
             $product_status=$productStatus;
         }
         $store_SKU=$category.$sub_category.$brand.$product_name.$product_type.$product_weight;
-        $hide_product=0;
+        
         $product_added_date=date('Y-m-d');
         $product_updated_date=date('Y-m-d');
         $sold_count=0;
 
         
-            $sql="INSERT INTO `temp_str_config`(user_id,temp_shopId,base_product_id,category,sub_category,brand,product_name,product_type,product_sub_type,product_description,product_weight,product_weight_type,product_qty,product_price,offer_price,product_img,upload_format,product_status,store_SKU,hide_product,product_added_date,product_updated_date,sold_count) values('$user_id','$temp_shopId','$base_product_id','$category','$sub_category','$brand','$product_name','$product_type','$product_sub_type','$product_description','$product_weight','$product_weight_type','$product_qty','$product_price','$offer_price','$product_img','$upload_format','$product_status','$store_SKU','$hide_product','$product_added_date','$product_updated_date','$sold_count')";
+            $sql="INSERT INTO `temp_str_config`(user_id,temp_shopId,base_product_id,category,sub_category,brand,product_name,product_type,product_sub_type,product_description,product_weight,product_weight_type,product_qty,product_price,offer_price,product_img,upload_format,product_status,store_SKU,product_added_date,product_updated_date,sold_count) values('$user_id','$temp_shopId','$base_product_id','$category','$sub_category','$brand','$product_name','$product_type','$product_sub_type','$product_description','$product_weight','$product_weight_type','$product_qty','$product_price','$offer_price','$product_img','$upload_format','$product_status','$store_SKU','$product_added_date','$product_updated_date','$sold_count')";
     
             $R=mysqli_query($CN,$sql) or die("database error:". mysqli_error($CN));
             if($R)
             {
+                echo json_encode(
+                   array(
+                     "message"=>"Success"
+                    ));
                 http_response_code(204);
             }
             else{

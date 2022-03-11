@@ -27,6 +27,7 @@
             $shops[$cr]['shop_id'] = $row1['shop_id'];
             $shops[$cr]['shopId'] = $row1['shopId'];
             $shops[$cr]['shop_name'] = $row1['shop_name'];
+            $shops[$cr]['shopName'] = $row1['shopName'];
             $shops[$cr]['shop_address'] = $row1['shop_address'];
             $shops[$cr]['shop_payment_status'] = $row1['shop_payment_status'];
             $shops[$cr]['shop_payment_date'] = $row1['shop_payment_date'];

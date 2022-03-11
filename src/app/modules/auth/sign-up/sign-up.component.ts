@@ -35,7 +35,7 @@ export class AuthSignUpComponent implements OnInit {
     value: any;
     desc = '';
     state = '';
-    stateList = ['Delhi','Maharashtra','Karnataka','Tamil Nadu','Andhra Pradesh','Gujarat','Uttar Pradesh','Rajasthan','Telangana','Madhya Pradesh','Sikkim','West Bengal','Punjab','Kerala','Haryana','Chandigarh (UT)','Puducherry (UT)','Goa','Orissa','Nagaland','Mizoram','Meghalaya','Manipur','Lakshadweep (UT)','Jharkhand','Jammu and Kashmir','Himachal Pradesh','Uttarakhand','Daman and Diu (UT)','Dadra and Nagar Haveli (UT)','Chhattisgarh','Bihar','Assam','Arunachal Pradesh','Tripura','Andaman and Nicobar (UT)'];
+    stateList = ['Delhi', 'Maharashtra', 'Karnataka', 'Tamil Nadu', 'Andhra Pradesh', 'Gujarat', 'Uttar Pradesh', 'Rajasthan', 'Telangana', 'Madhya Pradesh', 'Sikkim', 'West Bengal', 'Punjab', 'Kerala', 'Haryana', 'Chandigarh (UT)', 'Puducherry (UT)', 'Goa', 'Orissa', 'Nagaland', 'Mizoram', 'Meghalaya', 'Manipur', 'Lakshadweep (UT)', 'Jharkhand', 'Jammu and Kashmir', 'Himachal Pradesh', 'Uttarakhand', 'Daman and Diu (UT)', 'Dadra and Nagar Haveli (UT)', 'Chhattisgarh', 'Bihar', 'Assam', 'Arunachal Pradesh', 'Tripura', 'Andaman and Nicobar (UT)'];
     flashMessage: string;
     /**
      * Constructor
@@ -46,19 +46,32 @@ export class AuthSignUpComponent implements OnInit {
         private _formBuilder: FormBuilder,
         private _router: Router,
         private cd: ChangeDetectorRef
-    ) {}
+    ) { }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
 
+    randomString(length) {
+        var randomChars =
+            'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var result = '';
+        for (var i = 0; i < length; i++) {
+            result += randomChars.charAt(
+                Math.floor(Math.random() * randomChars.length)
+            );
+        }
+        return result;
+    }
+
     /**
      * On init
      */
     ngOnInit(): void {
+        var domainname = this.randomString(8);
         // Create the form
         this.signUpForm = this._formBuilder.group({
-            name: ['', [Validators.required,  Validators.pattern("^[a-zA-Z ']+")]],
+            name: ['', [Validators.required, Validators.pattern("^[a-zA-Z ']+")]],
             contact: [
                 '',
                 [Validators.required, Validators.pattern('^[0-9]{10}$')],
@@ -76,11 +89,11 @@ export class AuthSignUpComponent implements OnInit {
             //password: ['', Validators.required],
             password: ['', [Validators.required, Validators.minLength(8)]],
             confirm_password: ['', Validators.required],
-            company: [
-                '',
-                [Validators.required, Validators.pattern("^[a-zA-Z']+")],
-            ],
-            domain: [''],
+            // company: [
+            //     '',
+            //     [Validators.required, Validators.pattern("^[a-z']+")],
+            // ],
+            domain: [domainname],
             city: [
                 '',
                 [
@@ -94,8 +107,15 @@ export class AuthSignUpComponent implements OnInit {
 
         $(' #confirm_password').on('keyup', function () {
             if ($('#password').val() == $('#confirm_password').val()) {
+                setTimeout(function () {
+                    $('#message').fadeOut('fast');
+                }, 5000);
                 $('#message').html('Matching').css('color', 'green');
-            } else $('#message').html('Not Matching').css('color', 'red');
+            } else
+                setTimeout(function () {
+                    $('#message').fadeOut('fast');
+                }, 5000);
+            $('#message').html('Not Matching').css('color', 'red');
 
             $('#submit').removeAttr('disabled', 'disabled');
         });
@@ -108,11 +128,15 @@ export class AuthSignUpComponent implements OnInit {
                 data: { email: email },
                 success: function (data) {
                     if (data == 0) {
+                        setTimeout(function () {
+                            $('#emailMsg').fadeOut('fast');
+                        }, 5000);
                         $('#emailMsg').html('Good to go').css('color', 'green');
                     } else {
-                        $('#emailMsg')
-                            .html('Email already present')
-                            .css('color', 'red');
+                        setTimeout(function () {
+                            $('#emailMsg').fadeOut('fast');
+                        }, 5000);
+                        $('#emailMsg').html("Email already present").css('color', 'red');
                     }
                 },
             });
@@ -126,10 +150,16 @@ export class AuthSignUpComponent implements OnInit {
                 data: { domainname: domainname },
                 success: function (data) {
                     if (data == 0) {
+                        setTimeout(function () {
+                            $('#domainMsg').fadeOut('fast');
+                        }, 5000);
                         $('#domainMsg')
                             .html('Good to go')
                             .css('color', 'green');
                     } else {
+                        setTimeout(function () {
+                            $('#domainMsg').fadeOut('fast');
+                        }, 5000);
                         $('#domainMsg')
                             .html('Domain already present')
                             .css('color', 'red');
@@ -137,8 +167,6 @@ export class AuthSignUpComponent implements OnInit {
                 },
             });
         });
-
-       
     }
 
     // keyup(event) {
@@ -173,10 +201,10 @@ export class AuthSignUpComponent implements OnInit {
         }
 
         // Disable the form
-        this.signUpForm.disable();
+        // this.signUpForm.disable();
 
         // Hide the alert
-        this.showAlert = false;
+        // this.showAlert = false;
 
         // Sign up
         this._authService.signUp(this.signUpForm.value).subscribe(
@@ -185,27 +213,28 @@ export class AuthSignUpComponent implements OnInit {
                 this._router.navigateByUrl('/confirmation-required');
             },
             (response) => {
-                this.showFlashMessage('error');
                 this.ngOnInit();
+                this.showFlashMessage('error');
+
                 // Re-enable the form
-                this.signUpForm.enable();
+                // this.signUpForm.enable();
 
-                // Reset the form
-                this.signUpNgForm.resetForm();
+                // // Reset the form
+                // this.signUpNgForm.resetForm();
 
-                // Set the alert
-                this.alert = {
-                    type: 'error',
-                    message: 'Something went wrong, please try again.',
-                };
+                // // Set the alert
+                // this.alert = {
+                //     type: 'error',
+                //     message: 'Something went wrong, please try again.',
+                // };
 
-                // Show the alert
-                this.showAlert = true;
+                // // Show the alert
+                // this.showAlert = true;
             }
         );
     }
 
-    goToTerms(){
+    goToTerms() {
         window.open('https://direct-buy.in/terms');
     }
 

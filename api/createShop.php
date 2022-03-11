@@ -20,8 +20,10 @@
         
         $user_id=$DecodedData['user_id'];
         $shopId=$DecodedData['shopId'];
-        $shop_name=$DecodedData['shop_name'];
+        $shop_name = str_replace(' ', '_', $DecodedData['shopName']);
+        $shopName=$DecodedData['shopName'];
         $shop_address=$DecodedData['shop_address'];
+        
         // $checkbox1=$DecodedData['shopType']; 
 
         // $chk="";  
@@ -30,7 +32,7 @@
         //     $chk .= $chk1.",";  
         // }  
         $shops=[];
-        $qry = "SELECT * FROM `shop_details`as sd WHERE `user_id` = '$user_id' AND `shop_name` = '$shop_name' ";
+        $qry = "SELECT * FROM `shop_details`as sd WHERE `user_id` = '$user_id' AND `shopName` = '$shopName' ";
         $res=mysqli_query($CN,$qry) or die("database error:". mysqli_error($CN));     
 
         if(mysqli_num_rows($res) > 0)
@@ -40,7 +42,7 @@
         }
         else
         {
-            $sql="INSERT INTO `shop_details`(user_id,shopId,shop_name,shop_address) values('$user_id','$shopId','$shop_name','$shop_address')";
+            $sql="INSERT INTO `shop_details`(user_id,shopId,shop_name,shopName,shop_address) values('$user_id','$shopId','$shop_name','$shopName','$shop_address')";
         
             $R=mysqli_query($CN,$sql) or die("database error:". mysqli_error($CN));
             

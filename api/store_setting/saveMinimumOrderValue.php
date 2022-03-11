@@ -24,7 +24,7 @@
       
         if($result = mysqli_query($CN,$sql))
         {
-          $DB=mysqli_select_db($CN,"directbuy_gtqpzw1");
+          $DB=mysqli_select_db($CN,"formal_store");
           if($result = mysqli_query($CN,$sql))
         {
       echo json_encode(

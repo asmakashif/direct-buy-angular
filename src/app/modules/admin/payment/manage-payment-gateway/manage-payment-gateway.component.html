@@ -64,13 +64,8 @@
                         ></mat-icon>
                         <span class="ml-2">Home</span>
                     </button>
-                    <a
-                        target="_blank"
-                        class="fuse-mat-button-rounded"
-                        href="https://{{ domainname }}.direct-buy.in"
-                        mat-flat-button
-                        [color]="'primary'"
-                    >
+                    <a class="fuse-mat-button-rounded" href="javascript:void(0);" [routerLink]="['/store-setting']"
+                        mat-flat-button [color]="'primary'">
                         <fa-icon [icon]="faStore"></fa-icon>
                         <span class="ml-2">Store</span>
                     </a>

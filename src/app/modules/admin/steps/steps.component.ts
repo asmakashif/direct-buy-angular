@@ -32,7 +32,7 @@ export class StepsComponent implements OnInit {
         private _router: Router,
         private routes: ActivatedRoute,
         private _fuseConfirmationService: FuseConfirmationService
-    ) {}
+    ) { }
 
     ngOnInit() {
         const routeParams = this.routes.snapshot.params;
@@ -67,41 +67,45 @@ export class StepsComponent implements OnInit {
         // }
     }
 
+    skipAddProduct() {
+        const routeParams = this.routes.snapshot.params;
+        const confirmation = this._fuseConfirmationService.open({
+            message:
+                'Store will be setup with no products. Go to menu->shops->enter shops->products and add product. You will also be able to upload products in bulk here. If not, press back to choose import products option',
+            icon: {
+                show: true,
+                name: 'heroicons_outline:check',
+                color: 'primary',
+            },
+            actions: {
+                confirm: {
+                    label: 'Okay',
+                    color: 'primary',
+                },
+                cancel: {
+                    "show": true,
+                    "label": "Back"
+                }
+            },
+        });
+
+        // Subscribe to the confirmation dialog closed action
+        confirmation.afterClosed().subscribe((result) => {
+            // If the confirm button pressed...
+            if (result === 'confirmed') {
+                this._stepsService
+                    .skipProductSetup(routeParams.shopId)
+                    .subscribe((data) => {
+                        this.ngOnInit();
+                        this._router.navigate(['/steps/' + routeParams.shopId]);
+                    });
+            }
+        });
+    }
+
     setUpProducts(): void {
-        // const confirmation = this._fuseConfirmationService.open({
-        //     message: 'Would you like to add products from our central database or you would like to add your own products',
-        //     // icon: {
-        //     //     show: true,
-        //     //     name: 'heroicons_outline:check',
-        //     //     color: 'primary',
-        //     // },
-        //     actions: {
-        //         confirm: {
-        //             label: 'Okay',
-        //             color: 'primary',
-        //         },
-        //     },
-        // });
-
-        // // Subscribe to the confirmation dialog closed action
-        // confirmation.afterClosed().subscribe((result) => {
-        //     // If the confirm button pressed...
-        //     if (result === 'confirmed') {
-        //         this._router.navigate(['/store/']);
-        //     }
-        // });
-
         const routeParams = this.routes.snapshot.params;
         this._router.navigate(['/product-config/' + routeParams.shopId]);
-        // if (this.isMobile()) {
-        //     //alert('mobile');
-        //     this._router.navigate([
-        //         '/mobile/product-config/' + routeParams.shopId,
-        //     ]);
-        //     // this._router.resetConfig(this.mobileRoutes);
-        // } else {
-        //     this._router.navigate(['/product-config/' + routeParams.shopId]);
-        // }
     }
 
     completePreviousStep(): void {

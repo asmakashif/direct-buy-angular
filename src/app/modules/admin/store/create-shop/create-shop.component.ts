@@ -71,7 +71,7 @@ export class CreateShopComponent implements OnInit {
             user_id: [user_id],
             shopId: [shop_id],
             // shop_name: ['', Validators.required, Validators.pattern("^[a-zA-Z']+")],
-            shop_name: ['', [Validators.required, Validators.pattern("^[a-zA-Z']+")]],
+            shopName: ['', Validators.required],
             shop_address: ['', Validators.required],
             //shopType: this.formBuilder.array([], [Validators.required]),
         });
@@ -87,16 +87,16 @@ export class CreateShopComponent implements OnInit {
     }
 
     validateShop() {
-        $('#shop_name').on('keyup', function () {
-            var shop_name = $('#shop_name').val();
-            if (shop_name != '') {
+        $('#shopName').on('keyup', function () {
+            var shopName = $('#shopName').val();
+            if (shopName != '') {
                 $.ajax({
                     url: 'api/fetchShopByName.php',
                     method: 'POST',
-                    data: { shop_name: shop_name },
+                    data: { shopName: shopName },
                     success: function (data) {
                         var obj = JSON.parse(data);
-                        //console.log(obj);
+                        console.log(obj);
                         if (obj == '') {
                             //console.log('proceed');
                             $('#message')

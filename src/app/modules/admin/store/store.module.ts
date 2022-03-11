@@ -61,4 +61,4 @@ const storeRoutes: Route[] = [
         Ng2SearchPipeModule,
     ],
 })
-export class StoreModule {}
+export class StoreModule { }

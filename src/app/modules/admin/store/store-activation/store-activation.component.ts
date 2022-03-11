@@ -41,7 +41,7 @@ export class StoreActivationComponent implements OnInit {
         private _router: Router,
         private cd: ChangeDetectorRef,
         private _dashboardService: DashboardService
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         const routeParams = this.routes.snapshot.params;
@@ -196,7 +196,14 @@ export class StoreActivationComponent implements OnInit {
     nextStep(): void {
         const routeParams = this.routes.snapshot.params;
         const user_id = localStorage.getItem('user_id');
-        this._router.navigate(['/steps/' + routeParams.shopId]);
+        //window.location.reload();
+        this._router
+            .navigate(['/steps/' + routeParams.shopId])
+            .then(() => {
+                this.ngOnInit();
+                // window.location.reload();
+            });
+
         // this.apiService
         //     .getShopDetailsById(routeParams.shopId, user_id)
         //     .subscribe((data: any) => {

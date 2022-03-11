@@ -4,6 +4,22 @@
 	$password = "";
 
 	$shopId = $_GET['shopId'];
+
+	// $CN= mysqli_connect("localhost","root","");
+ //   	$DB=mysqli_select_db($CN,"formal_store");
+
+ //    $sql = "SELECT * FROM credentials WHERE `host` = 'cPanel'";
+    
+	// $row = mysqli_fetch_assoc( mysqli_query($CN,$sql) );
+	// $username = $row['email'];
+	// $encryptedPassword = $row['password'];
+	// $decryptedPassword = base64_decode($encryptedPassword);
+ //    $password = json_decode($decryptedPassword);
+	// die();
+
+	// $ip_server = $_SERVER['SERVER_ADDR'];
+ //    $cpanel = new CPANEL($username, $password, $ip_server);
+
 	//$user_id = $_GET['user_id'];
 	//$shopId = 'asma';
 	//Create connection

@@ -1,0 +1,118 @@
+<div class="flex flex-col flex-auto min-w-0">
+    <!-- Header -->
+    <div class="bg-card">
+        <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
+            <div class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-8 sm:my-12">
+                <!-- Avatar and name -->
+                <div class="flex flex-auto items-center min-w-0">
+                    <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
+                        <img class="w-full h-full object-cover" src="assets/images/avatars/avatar.png" />
+                    </div>
+                    <div class="flex flex-col min-w-0 ml-4">
+                        <ng-container *transloco="let t">
+                            <div
+                                class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">
+                                {{ t("welcome-back") }}, {{ firstname }}!
+                            </div>
+                        </ng-container>
+                        <div class="flex items-center">
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:bell'"></mat-icon>
+                            <div class="ml-1.5 leading-6 truncate text-secondary">
+                                You have 0 new messages
+                            </div>
+                        </div>
+                        <!-- <flash-messages></flash-messages> -->
+                    </div>
+                </div>
+                <!-- Actions -->
+                <div class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3">
+                    <button class="fuse-mat-button-rounded bg-accent-700" mat-flat-button [color]="'accent'"
+                        [routerLink]="['/dashboard']">
+                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:home'"></mat-icon>
+                        <span class="ml-2">Home</span>
+                    </button>
+                    <a class="fuse-mat-button-rounded" href="javascript:void(0);" [routerLink]="['/store-setting']"
+                        mat-flat-button [color]="'primary'">
+                        <fa-icon [icon]="faStore"></fa-icon>
+                        <span class="ml-2">Store</span>
+                    </a>
+
+                    <a target="_blank" class="fuse-mat-button-rounded" href="https://wa.me/?text=Dear Customer,We are delighted to inform you that our store is now online on https://{{
+                            domainname
+                        }}.direct-buy.in and orders can be placed online.
+                        Regards - {{ firstname }}" style="text-decoration: none;">
+                        <button mat-flat-button color="success" style="background-color: #25D366;color: #f0fff3;">
+                            <fa-icon [icon]="faWhatsapp"></fa-icon>
+                            <span class="ml-2">WhatsApp</span>
+                        </button>
+                    </a>
+                </div>
+            </div>
+            <!-- Project selector -->
+            <div class="relative flex self-start pt-2 pb-1 pl-5 pr-4 cursor-pointer overflow-hidden rounded-t-xl border border-b-0 bg-default"
+                matRipple [matMenuTriggerFor]="projectsMenu">
+                <div class="flex items-center">
+                    <div class="overflow-hidden">
+                        <div class="font-medium leading-6 truncate">
+                            {{ selectedProject | titlecase }}
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center pl-2">
+                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:chevron-down'"></mat-icon>
+                    </div>
+                </div>
+                <mat-menu #projectsMenu="matMenu" [xPosition]="'before'">
+                    <button mat-menu-item (click)="dashbaord()">Dashboard</button>
+                </mat-menu>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto border-t -mt-px pt-4 sm:pt-6">
+        <div class="w-full max-w-screen-xl mx-auto">
+            <!-- Tabs -->
+            <mat-tab-group class="sm:px-2" [animationDuration]="'0'">
+                <!-- Help & Guide -->
+                <mat-tab label="Help & Guide">
+                    <ng-template matTabContent>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full min-w-0">
+                            <div class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
+                                <div class="flex items-start justify-between">
+                                    <div class="text-lg font-medium tracking-tight leading-6 ">
+                                        Setting up store
+                                    </div>
+                                    <div class="ml-2 -mt-2 -mr-3">
+                                        <a target="_blank" href="https://www.canva.com/design/DAE50tTRfaM/view"
+                                            style="text-decoration: none;">
+                                            <button mat-flat-button [color]="'primary'" (click)="onMessageUpdate()">
+                                                Open
+                                                &nbsp;
+                                                <!-- <i class="fa-solid fa-circle-arrow-up-right"></i> -->
+                                                <!-- <fa-icon [icon]="faArrowAltCircleUpRight"></fa-icon> -->
+                                                <!-- <i class="fa-solid fa-arrow-up-right-from-square"></i> -->
+                                                <fa-icon [icon]=faArrowAltCircleRight transform="rotate-300" size="lg">
+                                                </fa-icon>
+                                                <!-- <img src="assets/icons/arrow-up-right-removebg.png"
+                                                    style="height:30px;width:30px;"> -->
+                                            </button>
+                                        </a>
+                                    </div>
+                                    <!-- <a target=" _blank" class="fuse-mat-button-rounded"
+                                                    href="https://www.canva.com/design/DAE50tTRfaM/view"
+                                                    style="text-decoration: none;">
+                                                <button class="lg:mt-6" mat-flat-button [color]="'primary'"
+                                                    (click)="onMessageUpdate()">
+                                                    <span class="ml-2">Open</span>
+                                                    <fa-icon [icon]="faArrowAltCircleRight"></fa-icon>
+                                                </button>
+                                        </a> -->
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</div>

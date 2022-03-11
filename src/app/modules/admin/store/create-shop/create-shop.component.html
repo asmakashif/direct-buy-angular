@@ -30,7 +30,7 @@
                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:home'"></mat-icon>
                         <span class="ml-2">Home</span>
                     </button>
-                    <a target="_blank" class="fuse-mat-button-rounded" href="https://{{ domainname }}.direct-buy.in"
+                    <a class="fuse-mat-button-rounded" href="javascript:void(0);" [routerLink]="['/store-setting']"
                         mat-flat-button [color]="'primary'">
                         <fa-icon [icon]="faStore"></fa-icon>
                         <span class="ml-2">Store</span>
@@ -112,11 +112,11 @@
                                 </mat-form-field> -->
                                 <mat-form-field class="w-full">
                                     <mat-label>Shop Name</mat-label>
-                                    <input id="shop_name" matInput [formControlName]="'shop_name'" />
-                                    <mat-error *ngIf="addForm.get('shop_name').hasError('required')">
+                                    <input id="shopName" matInput [formControlName]="'shopName'" />
+                                    <mat-error *ngIf="addForm.get('shopName').hasError('required')">
                                         Name is required
                                     </mat-error>
-                                    <mat-error *ngIf="addForm.get('shop_name').hasError('pattern')">
+                                    <mat-error *ngIf="addForm.get('shopName').hasError('pattern')">
                                         Please, Enter valid shop name .
                                     </mat-error>
                                 </mat-form-field>
