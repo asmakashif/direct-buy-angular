@@ -3,6 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {
   FormGroup,
   FormBuilder,
+  FormArray,
+  FormControl,
+  Validators,
 } from '@angular/forms';
 import { CreateShopService } from 'app/modules/admin/store/create-shop/create-shop.service';
 import { DashboardService } from '../../../dashboard/dashboard.service';
@@ -40,6 +43,9 @@ export class MapTableHeadersComponent implements OnInit {
   exceldata: unknown[];
   xlForm: FormGroup;
   tblColName: any;
+  xlconfig: any;
+  mapheader: any;
+  xlconfigheaders: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -56,24 +62,28 @@ export class MapTableHeadersComponent implements OnInit {
     const user_id = localStorage.getItem('user_id');
 
     this.addForm = this.formBuilder.group({
-      product_name: [''],
-      product_brand: [''],
-      sku: [''],
+      user_id: [user_id],
+      shopId: [routeParams.shopId],
+      product_name: ['', [Validators.required]],
+      brand: ['', [Validators.required]],
+      store_SKU: [''],
       product_type: [''],
       product_sub_type: [''],
-      product_category: [''],
-      product_subcategory: [''],
+      category: [''],
+      sub_category: [''],
       product_weight: [''],
       product_weight_type: [''],
-      product_price: [''],
-      product_offer_price: [''],
-      product_stock: [''],
+      product_price: ['', [Validators.required]],
+      offer_price: [''],
+      product_qty: [''],
+      xl_config_status: this.formBuilder.array([], [Validators.required]),
     });
 
     this.xlForm = this.formBuilder.group({
       shopId: [routeParams.shopId],
       xl_file_name: ['']
     })
+
     this._dashboardService
       .getRetailerDetailsById(user_id)
       .subscribe((data) => {
@@ -87,16 +97,55 @@ export class MapTableHeadersComponent implements OnInit {
       .readXLColFrmDB(routeParams.shopId)
       .subscribe((colName) => {
         this.tblColName = colName;
-        console.log(this.tblColName);
       });
+
+    this._uploadProductService.getXLConfigData(routeParams.shopId).subscribe((data) => {
+      this.xlconfigheaders = data;
+      console.log(this.xlconfigheaders);
+      if (this.xlconfigheaders.xl_config_status == 1) {
+        // Fill the form
+        this.addForm.patchValue(data);
+      }
+    });
+  }
+
+  configStatus(e) {
+    const xl_config_status: FormArray = this.addForm.get(
+      'xl_config_status'
+    ) as FormArray;
+
+    if (e.target.checked) {
+      xl_config_status.push(new FormControl(e.target.value));
+      // this.ngOnInit();
+    } else {
+      const index = xl_config_status.controls.findIndex(
+        (x) => x.value === e.target.value
+      );
+      xl_config_status.removeAt(index);
+    }
   }
 
   onSubmit() {
     //more code
+    const routeParams = this.routes.snapshot.params;
     console.log(this.addForm.value);
-    // this._dashboardService.savePlayerId().subscribe((data) => {
-    //     this.cd.markForCheck();
-    // });
+    this._uploadProductService.saveXLConfig(this.addForm.value).subscribe((data) => {
+      this.xlconfig = data;
+      console.log(this.xlconfig.message);
+      if (this.xlconfig.message = 'Success') {
+        const mapHeaderFormarray = this.addForm.value;
+        localStorage.setItem('headers', JSON.stringify(mapHeaderFormarray));
+
+        this._router.navigate(['/upload-success/' + routeParams.shopId + '/' + routeParams.shop_name,]);
+        // this._uploadProductService.mapTblHeaders(routeParams.shopId).subscribe((data) => {
+        //   this.mapheader = data;
+        //   console.log(this.mapheader.message);
+        //   if (this.mapheader.message = 'Success') {
+        //     const navigate = this._router.navigate(['/upload-success/' + routeParams.shopId + '/' + routeParams.shop_name,]);
+        //   }
+        // });
+      }
+    });
   }
 
   onXLChange(evt) {

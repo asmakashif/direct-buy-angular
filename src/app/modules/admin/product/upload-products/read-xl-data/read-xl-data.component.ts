@@ -205,6 +205,13 @@ export class ReadXlDataComponent implements OnInit {
     this.keys = null;
   }
 
+  proceed() {
+    const routeParams = this.routes.snapshot.params;
+    this._router.navigate([
+      '/map-table-headers/' + routeParams.shopId + '/' + routeParams.shop_name,
+    ]);
+  }
+
   /**
    * Show flash message
    */

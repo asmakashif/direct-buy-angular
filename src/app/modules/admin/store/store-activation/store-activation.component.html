@@ -82,10 +82,12 @@
                         <div class="col-md-6" *ngIf="this.data.trail_activate == 0">
                             <span>
                                 <strong>
-                                    You are eligible for free trial
+                                    Trail Offer : <span style="color:green">Not Used</span>
                                 </strong>
+                                <p style="color:blue">
+                                    Valid for 3 months
+                                </p>
                             </span>
-                            <br />
                             <div class="flex items-center">
                                 <div class="flex items-center mr-4" *ngIf="flashMessage">
                                     <ng-container *ngIf="flashMessage === 'success'">
@@ -106,7 +108,7 @@
                                 &nbsp;
                                 <button class="lg:mt-6" mat-flat-button [color]="'primary'"
                                     (click)="activateTrial(this.data.shopId)">
-                                    Activate 3 months Trial
+                                    Activate
                                 </button>
                                 <!-- <a
                                     href="javascript:void(0);"
@@ -116,14 +118,18 @@
                                     >Activate 3 months Trial</a
                                 > -->
                             </div>
+                            <p><small>*By activating, you agree to the terms & conditions</small></p>
                         </div>
                         <div class="col-md-6" *ngIf="this.data.trail_activate == 1">
                             <span>
                                 <strong>
-                                    You have used up trial period!
+                                    Trail Offer : <span style="color:green">Used</span>
                                 </strong>
+                                <p style="color:blue">Continue activation, by paying 4999/-
+                                    <br>
+                                    Valid for 12 months
+                                </p>
                             </span>
-                            <br />
                             <div class="flex items-center">
                                 <div class="flex items-center mr-4" *ngIf="flashMessage">
                                     <ng-container *ngIf="flashMessage === 'success'">
@@ -146,6 +152,7 @@
                                     Activate
                                 </button>
                             </div>
+                            <p><small>*By activating, you agree to the terms & conditions</small></p>
                         </div>
                     </div>
                 </div>

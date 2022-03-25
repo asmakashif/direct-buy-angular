@@ -399,6 +399,13 @@ export const appRoutes: Route[] = [
                     ).then((m) => m.MapTableHeadersModule),
             },
             {
+                path: 'upload-success/:shopId/:shop_name',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/product/upload-products/upload-success/upload-success.module'
+                    ).then((m) => m.UploadSuccessModule),
+            },
+            {
                 path: 'add-category/:shopId/:shop_name',
                 loadChildren: () =>
                     import(

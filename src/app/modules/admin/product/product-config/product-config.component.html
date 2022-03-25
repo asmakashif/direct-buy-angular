@@ -2,8 +2,7 @@
     <!-- Header -->
     <div class="bg-card">
         <div class="flex flex-col w-full max-w-screen-xl mx-auto px-6 sm:px-8">
-            <div
-                class="
+            <div class="
                     flex flex-col
                     sm:flex-row
                     flex-auto
@@ -11,20 +10,15 @@
                     min-w-0
                     my-8
                     sm:my-12
-                "
-            >
+                ">
                 <!-- Avatar and name -->
                 <div class="flex flex-auto items-center min-w-0">
                     <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
-                        <img
-                            class="w-full h-full object-cover"
-                            src="assets/images/avatars/avatar.png"
-                        />
+                        <img class="w-full h-full object-cover" src="assets/images/avatars/avatar.png" />
                     </div>
                     <div class="flex flex-col min-w-0 ml-4">
                         <ng-container *transloco="let t">
-                            <div
-                                class="
+                            <div class="
                                     text-2xl
                                     md:text-5xl
                                     font-semibold
@@ -32,19 +26,13 @@
                                     leading-7
                                     md:leading-snug
                                     truncate
-                                "
-                            >
+                                ">
                                 {{ t("welcome-back") }}, Brian!
                             </div>
                         </ng-container>
                         <div class="flex items-center">
-                            <mat-icon
-                                class="icon-size-5"
-                                [svgIcon]="'heroicons_solid:bell'"
-                            ></mat-icon>
-                            <div
-                                class="ml-1.5 leading-6 truncate text-secondary"
-                            >
+                            <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:bell'"></mat-icon>
+                            <div class="ml-1.5 leading-6 truncate text-secondary">
                                 You have 0 new messages
                             </div>
                         </div>
@@ -52,16 +40,9 @@
                 </div>
                 <!-- Actions -->
                 <div class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3">
-                    <button
-                        class="fuse-mat-button-rounded bg-accent-700"
-                        mat-flat-button
-                        [color]="'accent'"
-                        [routerLink]="['/dashboard']"
-                    >
-                        <mat-icon
-                            class="icon-size-5"
-                            [svgIcon]="'heroicons_solid:home'"
-                        ></mat-icon>
+                    <button class="fuse-mat-button-rounded bg-accent-700" mat-flat-button [color]="'accent'"
+                        [routerLink]="['/dashboard']">
+                        <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:home'"></mat-icon>
                         <span class="ml-2">Home</span>
                     </button>
                     <a class="fuse-mat-button-rounded" href="javascript:void(0);" [routerLink]="['/store-setting']"
@@ -69,15 +50,10 @@
                         <fa-icon [icon]="faStore"></fa-icon>
                         <span class="ml-2">Store</span>
                     </a>
-                    <a
-                        target="_blank"
-                        class="fuse-mat-button-rounded"
-                        href="https://wa.me/?text=Dear Customer,We are delighted to inform you that our store is now online on https://{{
+                    <a target="_blank" class="fuse-mat-button-rounded" href="https://wa.me/?text=Dear Customer,We are delighted to inform you that our store is now online on https://{{
                             domainname
                         }}.direct-buy.in and orders can be placed online.
-                        Regards - {{ firstname }}"
-                        style="text-decoration: none;"
-                    >
+                        Regards - {{ firstname }}" style="text-decoration: none;">
                         <button mat-flat-button color="success" style="background-color: #25D366;color: #f0fff3;">
                             <fa-icon [icon]="faWhatsapp"></fa-icon>
                             <span class="ml-2">WhatsApp</span>
@@ -95,108 +71,60 @@
                 <!-- Breadcrumbs -->
                 <div class="flex flex-wrap items-center font-medium">
                     <div>
-                        <a
-                            href="javascript:void(0);"
-                            style="text-decoration: none"
-                            [routerLink]="['/dashboard']"
-                            class="whitespace-nowrap text-primary-500"
-                            >Home</a
-                        >
+                        <a href="javascript:void(0);" style="text-decoration: none" [routerLink]="['/dashboard']"
+                            class="whitespace-nowrap text-primary-500">Home</a>
                     </div>
                     <div class="flex items-center ml-1 whitespace-nowrap">
-                        <mat-icon
-                            class="icon-size-5 text-secondary"
-                            [svgIcon]="'heroicons_solid:chevron-right'"
-                        ></mat-icon>
-                        <a
-                            href="javascript:void(0);"
-                            style="text-decoration: none"
-                            (click)="gotToSteps()"
-                            class="ml-1 text-primary-500"
-                            >Steps</a
-                        >
+                        <mat-icon class="icon-size-5 text-secondary" [svgIcon]="'heroicons_solid:chevron-right'">
+                        </mat-icon>
+                        <a href="javascript:void(0);" style="text-decoration: none" (click)="gotToSteps()"
+                            class="ml-1 text-primary-500">Steps</a>
                     </div>
                     <div class="flex items-center ml-1 whitespace-nowrap">
-                        <mat-icon
-                            class="icon-size-5 text-secondary"
-                            [svgIcon]="'heroicons_solid:chevron-right'"
-                        ></mat-icon>
-                        <span class="ml-1 text-secondary"
-                            >Product Configuration</span
-                        >
+                        <mat-icon class="icon-size-5 text-secondary" [svgIcon]="'heroicons_solid:chevron-right'">
+                        </mat-icon>
+                        <span class="ml-1 text-secondary">Product Configuration</span>
                     </div>
                 </div>
             </div>
             <br />
             <div class="border-2 border-white-300 rounded-2xl">
-                <mat-horizontal-stepper
-                    [linear]="isLinear"
-                    #stepper
-                    labelPosition="bottom"
-                >
+                <mat-horizontal-stepper [linear]="isLinear" #stepper labelPosition="bottom">
                     <mat-step [stepControl]="shopTypeGroup" label="ShopType">
                         <div style="padding-top: 3%">
-                            <form
-                                [formGroup]="shopTypeGroup"
-                                (ngSubmit)="onTypeSubmit()"
-                            >
-                                <span
-                                    ><b>Select Shop Type</b>
-                                    <mat-error
-                                        *ngIf="
+                            <form [formGroup]="shopTypeGroup" (ngSubmit)="onTypeSubmit()">
+                                <span><b>Select Shop Type</b>
+                                    <mat-error *ngIf="
                                             shopTypeGroup
                                                 .get('shopType')
                                                 .hasError('required')
-                                        "
-                                    >
+                                        ">
                                         Select atleast one shoptype
-                                    </mat-error></span
-                                >
+                                    </mat-error>
+                                </span>
                                 <br />
 
                                 <div class="wj-listbox">
                                     <div class="inputChk">
-                                        <input
-                                            type="checkbox"
-                                            [value]="shopType"
-                                            (change)="selectAllShopType($event)"
-                                            style="margin-left: 4px"
-                                            matCheckbox
-                                        />&nbsp;
+                                        <input type="checkbox" [value]="shopType" (change)="selectAllShopType($event)"
+                                            style="margin-left: 4px" matCheckbox />&nbsp;
                                         <label><b>Select All</b></label>
                                     </div>
-                                    <div
-                                        class="checkbox"
-                                        *ngFor="let shopType of shopType"
-                                    >
-                                        <input
-                                            type="checkbox"
-                                            [value]="shopType.shop_type_name"
-                                            name="shopType[]"
-                                            [checked]="shopType.selected"
-                                            (change)="onShopTypeChange($event)"
-                                            matCheckbox
-                                        />
+                                    <div class="checkbox" *ngFor="let shopType of shopType">
+                                        <input type="checkbox" [value]="shopType.shop_type_name" name="shopType[]"
+                                            [checked]="shopType.selected" (change)="onShopTypeChange($event)"
+                                            matCheckbox />
                                         {{ shopType.shop_type_name }}
                                     </div>
                                 </div>
                                 <br />
                                 <div class="flex items-center">
-                                    <button
-                                        mat-raised-button
-                                        color="primary"
-                                        matStepperNext
-                                    >
+                                    <button mat-raised-button color="primary" matStepperNext>
                                         Next
                                     </button>
                                 </div>
                             </form>
-                            <button
-                                mat-raised-button
-                                color="primary"
-                                class="skipbtn"
-                                (click)="skipProductSetup()"
-                            >
+                            <button mat-raised-button color="primary" class="skipbtn" (click)="skipProductSetup()">
                                 Skip
                             </button>
                         </div>
@@ -204,127 +132,78 @@
 
                     <mat-step [stepControl]="categoryGroup" label="Category">
                         <div style="padding-top: 3%">
-                            <form
-                                [formGroup]="categoryGroup"
-                                (ngSubmit)="onCategorySubmit()"
-                            >
+                            <form [formGroup]="categoryGroup" (ngSubmit)="onCategorySubmit()">
                                 <span>
                                     <b>Select Category</b>
-                                    <mat-error
-                                        *ngIf="
+                                    <mat-error *ngIf="
                                             categoryGroup
                                                 .get('categories')
                                                 .hasError('required')
-                                        "
-                                    >
+                                        ">
                                         Select atleast one category
-                                    </mat-error></span
-                                >
+                                    </mat-error>
+                                </span>
                                 <br />
 
                                 <div class="wj-listbox">
                                     <div class="inputChk">
-                                        <input
-                                            type="checkbox"
-                                            [value]="categories"
-                                            (change)="selectAllCategory($event)"
-                                            style="margin-left: 4px"
-                                            matCheckbox
-                                        />&nbsp;
+                                        <input type="checkbox" [value]="categories" (change)="selectAllCategory($event)"
+                                            style="margin-left: 4px" matCheckbox />&nbsp;
                                         <label><b>Select All</b></label>
                                     </div>
 
-                                    <div
-                                        class="checkbox"
-                                        *ngFor="let categories of categories"
-                                    >
-                                        <input
-                                            type="checkbox"
-                                            [value]="categories.category"
-                                            name="categories[]"
-                                            [checked]="categories.selected"
-                                            (change)="onCategoryChange($event)"
-                                            matCheckbox
-                                        />
+                                    <div class="checkbox" *ngFor="let categories of categories">
+                                        <input type="checkbox" [value]="categories.category" name="categories[]"
+                                            [checked]="categories.selected" (change)="onCategoryChange($event)"
+                                            matCheckbox />
                                         {{ categories.category }}
                                     </div>
                                 </div>
                                 <br />
 
-                                <button
-                                    mat-raised-button
-                                    color="primary"
-                                    matStepperNext
-                                >
+                                <button mat-raised-button color="primary" matStepperNext>
                                     Next
                                 </button>
                             </form>
                         </div>
                     </mat-step>
 
-                    <mat-step
-                        [stepControl]="subCategoryGroup"
-                        label="SubCategory"
-                    >
+                    <mat-step [stepControl]="subCategoryGroup" label="SubCategory">
                         <div style="padding-top: 3%">
-                            <form
-                                [formGroup]="subCategoryGroup"
-                                (ngSubmit)="onSubCategorySubmit()"
-                            >
+                            <form [formGroup]="subCategoryGroup" (ngSubmit)="onSubCategorySubmit()">
                                 <span>
                                     <b>Select Sub-Category</b>
-                                    <mat-error
-                                        *ngIf="
+                                    <mat-error *ngIf="
                                             subCategoryGroup
                                                 .get('sub_category')
                                                 .hasError('required')
-                                        "
-                                    >
+                                        ">
                                         Select atleast one sub category
-                                    </mat-error></span
-                                >
+                                    </mat-error>
+                                </span>
                                 <br />
 
                                 <div class="wj-listbox">
                                     <div class="inputChk">
-                                        <input
-                                            type="checkbox"
-                                            [value]="sub_category"
-                                            (change)="
+                                        <input type="checkbox" [value]="sub_category" (change)="
                                                 selectAllSubCategory($event)
-                                            "
-                                            style="margin-left: 4px"
-                                            matCheckbox
-                                        />&nbsp;
+                                            " style="margin-left: 4px" matCheckbox />&nbsp;
                                         <label><b>Select All</b></label>
                                     </div>
 
-                                    <div
-                                        class="checkbox"
-                                        *ngFor="
+                                    <div class="checkbox" *ngFor="
                                             let sub_category of sub_category
-                                        "
-                                    >
-                                        <input
-                                            type="checkbox"
-                                            [value]="sub_category.sub_category"
-                                            name="sub_category[]"
-                                            [checked]="sub_category.selected"
-                                            (change)="
+                                        ">
+                                        <input type="checkbox" [value]="sub_category.sub_category" name="sub_category[]"
+                                            [checked]="sub_category.selected" (change)="
                                                 onSubCategoryChange($event)
-                                            "
-                                            matCheckbox
-                                        />
+                                            " matCheckbox />
                                         {{ sub_category.sub_category }}
                                     </div>
                                 </div>
                                 <br />
 
-                                <button
-                                    mat-raised-button
-                                    color="primary"
-                                    matStepperNext
-                                >
+                                <button mat-raised-button color="primary" matStepperNext>
                                     Next
                                 </button>
                             </form>
@@ -333,58 +212,34 @@
 
                     <mat-step [stepControl]="brandGroup" label="Brand">
                         <div style="padding-top: 3%">
-                            <form
-                                [formGroup]="brandGroup"
-                                (ngSubmit)="onBrandSubmit()"
-                            >
-                                <span
-                                    ><b>Select Brand</b>
-                                    <mat-error
-                                        *ngIf="
+                            <form [formGroup]="brandGroup" (ngSubmit)="onBrandSubmit()">
+                                <span><b>Select Brand</b>
+                                    <mat-error *ngIf="
                                             brandGroup
                                                 .get('brand')
                                                 .hasError('required')
-                                        "
-                                    >
+                                        ">
                                         Select atleast one brand
-                                    </mat-error></span
-                                >
+                                    </mat-error>
+                                </span>
                                 <br />
 
                                 <div class="wj-listbox">
                                     <div class="inputChk">
-                                        <input
-                                            type="checkbox"
-                                            [value]="brand"
-                                            (change)="selectAllBrand($event)"
-                                            style="margin-left: 4px"
-                                            matCheckbox
-                                        />&nbsp;
+                                        <input type="checkbox" [value]="brand" (change)="selectAllBrand($event)"
+                                            style="margin-left: 4px" matCheckbox />&nbsp;
                                         <label><b>Select All</b></label>
                                     </div>
 
-                                    <div
-                                        class="checkbox"
-                                        *ngFor="let brand of brand"
-                                    >
-                                        <input
-                                            type="checkbox"
-                                            [value]="brand.brand"
-                                            name="brand[]"
-                                            [checked]="brand.selected"
-                                            (change)="onBrandChange($event)"
-                                            matCheckbox
-                                        />
+                                    <div class="checkbox" *ngFor="let brand of brand">
+                                        <input type="checkbox" [value]="brand.brand" name="brand[]"
+                                            [checked]="brand.selected" (change)="onBrandChange($event)" matCheckbox />
                                         {{ brand.brand }}
                                     </div>
                                 </div>
                                 <br />
 
-                                <button
-                                    mat-raised-button
-                                    color="primary"
-                                    matStepperNext
-                                >
+                                <button mat-raised-button color="primary" matStepperNext>
                                     Next
                                 </button>
                             </form>
@@ -393,23 +248,17 @@
 
                     <mat-step [stepControl]="productGroup" label="Products">
                         <div style="padding-top: 3%">
-                            <form
-                                [formGroup]="dataFilteredGroup"
-                                (ngSubmit)="onDataFilterSubmit()"
-                            >
-                                <span
-                                    >Select Product Items
-                                    <mat-error
-                                        *ngIf="
+                            <form [formGroup]="dataFilteredGroup" (ngSubmit)="onDataFilterSubmit()">
+                                <span>Select Product Items
+                                    <mat-error *ngIf="
                                             dataFilteredGroup
                                                 .get('base_product_id')
                                                 .hasError('required')
-                                        "
-                                    >
+                                        ">
                                         Select atleast one product
                                     </mat-error>
                                 </span>
-                                <br />
+                                <!-- <br />
                                 <span
                                     ><b>ShopType:</b> {{ this.shop_type }}</span
                                 >
@@ -423,14 +272,13 @@
                                     {{ this.subCategory }}</span
                                 >
                                 <br />
-                                <span><b>Brand:</b> {{ this.brands }}</span>
+                                <span><b>Brand:</b> {{ this.brands }}</span> -->
                                 <br />
 
                                 <div class="fixedheader">
                                     <div class="grid">
                                         <!-- Header -->
-                                        <div
-                                            class="
+                                        <div class="
                                                 inventory-grid
                                                 z-10
                                                 sticky
@@ -446,50 +294,31 @@
                                                 text-secondary
                                                 bg-gray-50
                                                 dark:bg-black dark:bg-opacity-5
-                                            "
-                                            matSort
-                                            matSortDisableClear
-                                        >
+                                            " matSort matSortDisableClear>
                                             <div>
-                                                <input
-                                                    type="checkbox"
-                                                    [value]="dataset"
-                                                    (change)="
+                                                <input type="checkbox" [value]="dataset" (change)="
                                                         selectAllProducts(
                                                             $event
                                                         )
-                                                    "
-                                                />
+                                                    " />
                                                 &nbsp; Select
                                             </div>
 
                                             <div [mat-sort-header]="'name'">
                                                 Name
                                             </div>
-                                            <div
-                                                class="hidden sm:block"
-                                                [mat-sort-header]="'type'"
-                                            >
+                                            <div class="hidden sm:block" [mat-sort-header]="'type'">
                                                 Type
                                             </div>
-                                            <div
-                                                class="hidden lg:block"
-                                                [mat-sort-header]="'weight'"
-                                            >
+                                            <div class="hidden lg:block" [mat-sort-header]="'weight'">
                                                 Weight
                                             </div>
-                                            <div
-                                                class="hidden lg:block"
-                                                [mat-sort-header]="'weighttype'"
-                                            >
+                                            <div class="hidden lg:block" [mat-sort-header]="'weighttype'">
                                                 Weight Type
                                             </div>
                                         </div>
-                                        <ng-container
-                                            *ngFor="let product of dataset"
-                                        >
-                                            <div
-                                                class="
+                                        <ng-container *ngFor="let product of dataset">
+                                            <div class="
                                                     inventory-grid
                                                     grid
                                                     items-center
@@ -499,26 +328,18 @@
                                                     md:px-8
                                                     border-b
                                                     bg-card
-                                                "
-                                            >
+                                                ">
                                                 <!-- Image -->
                                                 <div class="flex items-center">
-                                                    <input
-                                                        type="checkbox"
-                                                        [value]="
+                                                    <input type="checkbox" [value]="
                                                             product.base_product_id
-                                                        "
-                                                        name="base_product_id[]"
-                                                        [checked]="
+                                                        " name="base_product_id[]" [checked]="
                                                             product.selected
-                                                        "
-                                                        (change)="
+                                                        " (change)="
                                                             onCheckboxChange(
                                                                 $event
                                                             )
-                                                        "
-                                                        matCheckbox
-                                                    />
+                                                        " matCheckbox />
                                                 </div>
 
                                                 <!-- Name -->
@@ -527,13 +348,11 @@
                                                 </div>
 
                                                 <!-- Type -->
-                                                <div
-                                                    class="
+                                                <div class="
                                                         hidden
                                                         md:block
                                                         truncate
-                                                    "
-                                                >
+                                                    ">
                                                     {{ product.product_type }}
                                                 </div>
 
@@ -543,16 +362,14 @@
                                                 </div>
 
                                                 <!-- Stock -->
-                                                <div
-                                                    class="
+                                                <div class="
                                                         hidden
                                                         lg:flex
                                                         items-center
-                                                    "
-                                                >
+                                                    ">
                                                     <div class="min-w-4">
                                                         {{
-                                                            product.product_weight_type
+                                                        product.product_weight_type
                                                         }}
                                                     </div>
                                                 </div>
@@ -562,12 +379,7 @@
                                 </div>
 
                                 <br />
-                                <button
-                                    mat-raised-button
-                                    color="primary"
-                                    matStepperNext
-                                    id="checkBtn"
-                                >
+                                <button mat-raised-button color="primary" matStepperNext id="checkBtn">
                                     Next
                                 </button>
                             </form>
@@ -579,20 +391,11 @@
                         <h5>Congratulations on adding your product</h5>
                         <div>
                             &nbsp; &nbsp;
-                            <button
-                                mat-raised-button
-                                color="accent"
-                                (click)="move(0)"
-                            >
+                            <button mat-raised-button color="accent" (click)="move(0)">
                                 Add More Products
                             </button>
                             &nbsp; &nbsp;
-                            <button
-                                mat-raised-button
-                                color="primary"
-                                id="complete"
-                                (click)="done()"
-                            >
+                            <button mat-raised-button color="primary" id="complete" (click)="done()">
                                 Next
                             </button>
                         </div>

@@ -172,7 +172,7 @@
                                     <div class="flex flex-col">
                                         <div class="flex items-center">
                                             <mat-form-field class="w-full">
-                                                <mat-select [formControlName]="'product_brand'"
+                                                <mat-select [formControlName]="'brand'"
                                                     class="flex items-center h-10 min-h-10 px-4">
                                                     <mat-option [value]="
                                                             'select'
@@ -192,7 +192,7 @@
 
                                         <div class="flex items-center">
                                             <mat-form-field class="w-full">
-                                                <mat-select [formControlName]="'sku'"
+                                                <mat-select [formControlName]="'store_SKU'"
                                                     class="flex items-center h-10 min-h-10 px-4">
                                                     <mat-option [value]="
                                                             'select'
@@ -252,7 +252,7 @@
 
                                         <div class="flex items-center">
                                             <mat-form-field class="w-full">
-                                                <mat-select [formControlName]="'product_category'"
+                                                <mat-select [formControlName]="'category'"
                                                     class="flex items-center h-10 min-h-10 px-4">
                                                     <mat-option [value]="
                                                             'select'
@@ -272,7 +272,7 @@
 
                                         <div class="flex items-center">
                                             <mat-form-field class="w-full">
-                                                <mat-select [formControlName]="'product_subcategory'"
+                                                <mat-select [formControlName]="'sub_category'"
                                                     class="flex items-center h-10 min-h-10 px-4">
                                                     <mat-option [value]="
                                                             'select'
@@ -352,7 +352,7 @@
 
                                         <div class="flex items-center">
                                             <mat-form-field class="w-full">
-                                                <mat-select [formControlName]="'product_offer_price'"
+                                                <mat-select [formControlName]="'offer_price'"
                                                     class="flex items-center h-10 min-h-10 px-4">
                                                     <mat-option [value]="
                                                             'select'
@@ -372,7 +372,7 @@
 
                                         <div class="flex items-center">
                                             <mat-form-field class="w-full">
-                                                <mat-select [formControlName]="'product_stock'"
+                                                <mat-select [formControlName]="'product_qty'"
                                                     class="flex items-center h-10 min-h-10 px-4">
                                                     <mat-option [value]="
                                                             'select'
@@ -391,9 +391,9 @@
                                         </div>
 
                                         <div class="flex items-center">
-
-                                            <input type="checkbox" matCheckbox />
-
+                                            <input type="checkbox" [value]="1" [name]="'xl_config_status'"
+                                                (change)="configStatus($event)" matCheckbox /> &nbsp; {{"Save
+                                            Configuration"}}
                                         </div>
                                     </div>
                                 </fuse-card>

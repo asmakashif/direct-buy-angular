@@ -69,6 +69,7 @@ export class AuthSignUpComponent implements OnInit {
      */
     ngOnInit(): void {
         var domainname = this.randomString(8);
+        //console.log(domainname);
         // Create the form
         this.signUpForm = this._formBuilder.group({
             name: ['', [Validators.required, Validators.pattern("^[a-zA-Z ']+")]],

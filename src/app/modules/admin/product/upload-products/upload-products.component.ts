@@ -11,6 +11,9 @@ import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
 import * as XLSX from 'xlsx';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { UploadProductsService } from './upload-products.service';
+import { Subscription, timer } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 declare var $: any;
 type AOA = any[][];
@@ -38,10 +41,14 @@ export class UploadProductsComponent implements OnInit {
     excelHeader: any;
     exceldata: unknown[];
     xlForm: FormGroup;
+    xlsuccess: any;
+    XLUploadStatus: any;
+    xlconfig: any;
+    timerSubscription: any;
 
     constructor(
         private formBuilder: FormBuilder,
-        private apiService: CreateShopService,
+        private _uploadProductService: UploadProductsService,
         private _router: Router,
         private cd: ChangeDetectorRef,
         private _dashboardService: DashboardService,
@@ -80,6 +87,20 @@ export class UploadProductsComponent implements OnInit {
                 this.domainname = this.profileData.domainname;
                 this.cd.detectChanges();
             });
+
+        this.timerSubscription = timer(0, 20000).pipe(
+            map(() => {
+                this.getData(); // load data contains the http request 
+            })
+        ).subscribe();
+
+        // setTimeout(() => {
+        //     this._uploadProductService.getShopDetailsById(routeParams.shopId, user_id).subscribe((data) => {
+        //         this.xlconfig = data;
+        //         this.XLUploadStatus = this.xlconfig.maptblheader;
+        //         console.log(this.XLUploadStatus);
+        //     });
+        // }, 30000);
     }
 
     onSubmit() {
@@ -88,6 +109,16 @@ export class UploadProductsComponent implements OnInit {
         // this._dashboardService.savePlayerId().subscribe((data) => {
         //     this.cd.markForCheck();
         // });
+    }
+
+    getData() {
+        const routeParams = this.routes.snapshot.params;
+        const user_id = localStorage.getItem('user_id');
+        this._uploadProductService.getShopDetailsById(routeParams.shopId, user_id).subscribe((data) => {
+            this.xlconfig = data;
+            this.XLUploadStatus = this.xlconfig.xl_upload_status;
+            console.log(this.XLUploadStatus);
+        });
     }
 
     onXLChange(evt) {
@@ -109,21 +140,30 @@ export class UploadProductsComponent implements OnInit {
                 this.xlForm.get('shopId').value
             );
             formData.append(
-                'myFile',
+                'excel',
                 this.xlForm.get('xl_file_name').value
             );
             this._httpClient
                 .post<any>('/api/products/uploadXL.php', formData)
                 .subscribe(() => {
-                    const routeParams = this.routes.snapshot.params;
-                    this._router.navigate([
-                        '/read-xl-data/' + routeParams.shopId + '/' + routeParams.shop_name,
-                    ]);
+                    // this._httpClient.get<any>(
+                    //     '/api/getShopDetailsById.php?shopId=' +
+                    //     routeParams.shopId).subscribe((data) => {
+                    //         this.xlconfig = data;
+                    //         this.XLUploadStatus = this.xlconfig.maptblheader;
+                    //         console.log(this.XLUploadStatus);
+                    //     })
+
                 });
         }
-
     }
 
+    uploadXL() {
+        const routeParams = this.routes.snapshot.params;
+        this._router.navigate([
+            '/map-table-headers/' + routeParams.shopId + '/' + routeParams.shop_name,
+        ]);
+    }
     onChange(evt) {
 
         JSON.stringify(localStorage.removeItem('excelHeader'));

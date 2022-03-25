@@ -18,7 +18,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
     },
     {
         id: 'payment',
-        title: 'My Payment',
+        title: 'My Payments',
         type: 'basic',
         icon: 'heroicons_outline:credit-card',
         link: '/payment',
@@ -69,7 +69,7 @@ export const compactNavigation: FuseNavigationItem[] = [
     },
     {
         id: 'payment',
-        title: 'My Payment',
+        title: 'My Payments',
         type: 'basic',
         icon: 'heroicons_outline:credit-card',
         link: '/payment',
@@ -120,7 +120,7 @@ export const futuristicNavigation: FuseNavigationItem[] = [
     },
     {
         id: 'payment',
-        title: 'My Payment',
+        title: 'My Payments',
         type: 'basic',
         icon: 'heroicons_outline:credit-card',
         link: '/payment',
@@ -171,7 +171,7 @@ export const horizontalNavigation: FuseNavigationItem[] = [
     },
     {
         id: 'payment',
-        title: 'My Payment',
+        title: 'My Payments',
         type: 'basic',
         icon: 'heroicons_outline:credit-card',
         link: '/payment',

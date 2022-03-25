@@ -79,6 +79,14 @@
                     <input type="file" (change)="onXLChange($event)" #inputFile>
                 </form>
                 <br>
+                <ng-container *ngIf="XLUploadStatus==1; else notuploaded">
+                    <button mat-flat-button [color]="'primary'" (click)="uploadXL()">Proceed</button>
+                </ng-container>
+                <ng-template #notuploaded>
+                    <button mat-flat-button [color]="'primary'" disabled="true">Upload</button>
+                </ng-template>
+
+
                 <!-- <button (click)="removeData()">Remove Data</button> -->
                 <div *ngIf="isExcelFile === false">
                     This is not an Excel file

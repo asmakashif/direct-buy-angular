@@ -94,7 +94,7 @@ export class ProductConfigComponent implements OnInit {
         private fb: FormBuilder,
         private cd: ChangeDetectorRef,
         private _httpClient: HttpClient
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         const routeParams = this.routes.snapshot.params;
@@ -227,8 +227,8 @@ export class ProductConfigComponent implements OnInit {
     }
 
     onTypeSubmit() {
-        const arr = this.shopTypeGroup.value;
-        localStorage.setItem('dshop_type', JSON.stringify(arr.shopType));
+        // const arr = this.shopTypeGroup.value;
+        // localStorage.setItem('dshop_type', JSON.stringify(arr.shopType));
 
         this.apiService
             .getCategoryByShopType(this.shopTypeGroup.value)
@@ -272,8 +272,8 @@ export class ProductConfigComponent implements OnInit {
     onCategorySubmit() {
         //more code
         //console.log(this.categoryGroup.value);
-        const arr = this.categoryGroup.value;
-        localStorage.setItem('dcategory', JSON.stringify(arr.categories));
+        // const arr = this.categoryGroup.value;
+        // localStorage.setItem('dcategory', JSON.stringify(arr.categories));
         this.apiService
             .getSubCatbyCategory(this.categoryGroup.value)
             .subscribe((subCategory) => {
@@ -315,9 +315,9 @@ export class ProductConfigComponent implements OnInit {
 
     onSubCategorySubmit() {
         //more code
-        console.log(this.subCategoryGroup.value);
-        const arr = this.subCategoryGroup.value;
-        localStorage.setItem('dsubCategory', JSON.stringify(arr.sub_category));
+        // console.log(this.subCategoryGroup.value);
+        // const arr = this.subCategoryGroup.value;
+        // localStorage.setItem('dsubCategory', JSON.stringify(arr.sub_category));
         this.apiService
             .getBrandBySubCat(this.subCategoryGroup.value)
             .subscribe((brand) => {
@@ -355,23 +355,21 @@ export class ProductConfigComponent implements OnInit {
 
     onBrandSubmit() {
         //more code
-        // console.log(this.subCategoryGroup.value);
-        console.log(this.brandGroup.value);
-        const arr = this.brandGroup.value;
-        //const sub_category = this.subCategoryGroup.value;
-        localStorage.setItem('dbrands', JSON.stringify(arr.brand));
+        // console.log(this.brandGroup.value);
+        // const arr = this.brandGroup.value;
+        // localStorage.setItem('dbrands', JSON.stringify(arr.brand));
 
         this.apiService
             .getProductsByBrand(this.brandGroup.value)
             .subscribe((products) => {
                 this.dataset = products;
                 console.log(this.dataset);
-                this.shop_type = JSON.parse(localStorage.getItem('dshop_type'));
-                this.category = JSON.parse(localStorage.getItem('dcategory'));
-                this.subCategory = JSON.parse(
-                    localStorage.getItem('dsubCategory')
-                );
-                this.brands = JSON.parse(localStorage.getItem('dbrands'));
+                // this.shop_type = JSON.parse(localStorage.getItem('dshop_type'));
+                // this.category = JSON.parse(localStorage.getItem('dcategory'));
+                // this.subCategory = JSON.parse(
+                //     localStorage.getItem('dsubCategory')
+                // );
+                // this.brands = JSON.parse(localStorage.getItem('dbrands'));
             });
     }
 
@@ -415,7 +413,7 @@ export class ProductConfigComponent implements OnInit {
             .subscribe((data) => {
                 this.apiService
                     .pushProductsTOStrDb(routeParams.shopId)
-                    .subscribe((data) => {});
+                    .subscribe((data) => { });
             });
     }
 

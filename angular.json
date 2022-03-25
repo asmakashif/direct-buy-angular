@@ -34,6 +34,8 @@
                             "src/favicon-16x16.png",
                             "src/favicon-32x32.png",
                             "src/assets",
+                            "src/OneSignalSDKUpdaterWorker.js",
+                            "src/OneSignalSDKWorker.js",
                             {
                                 "glob": "_redirects",
                                 "input": "src",
@@ -41,7 +43,9 @@
                             }
                         ],
                         "stylePreprocessorOptions": {
-                            "includePaths": ["src/@fuse/styles"]
+                            "includePaths": [
+                                "src/@fuse/styles"
+                            ]
                         },
                         "styles": [
                             "src/@fuse/styles/tailwind.scss",
@@ -52,7 +56,9 @@
                             "src/styles/tailwind.scss",
                             "node_modules/bootstrap/dist/css/bootstrap.min.css"
                         ],
-                        "scripts": ["node_modules/jquery/dist/jquery.min.js"]
+                        "scripts": [
+                            "node_modules/jquery/dist/jquery.min.js"
+                        ]
                     },
                     "configurations": {
                         "production": {
@@ -89,7 +95,6 @@
                 },
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
-
                     "configurations": {
                         "production": {
                             "browserTarget": "fuse:build:production"
@@ -133,7 +138,10 @@
                 "lint": {
                     "builder": "@angular-eslint/builder:lint",
                     "options": {
-                        "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+                        "lintFilePatterns": [
+                            "src/**/*.ts",
+                            "src/**/*.html"
+                        ]
                     }
                 }
             }
